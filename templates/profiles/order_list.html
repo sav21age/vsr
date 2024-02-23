@@ -1,0 +1,57 @@
+{% extends 'profiles/main.html' %}
+{% load static humanize thumbnail django_bootstrap_breadcrumbs %}
+
+{% block breadcrumb %}
+  {% breadcrumb_for '/' %}<i class="fas fa-home text-white"></i>{% endbreadcrumb_for %}
+  {% breadcrumb_for 'profiles:order_list' %}Мои заказы{% endbreadcrumb_for %}
+  {% render_breadcrumbs 'breadcrumb.html' %}
+{% endblock %}
+
+{% block head %}
+  <title>Мои заказы</title>
+{% endblock %}
+
+{% block breadcrumb_name %}
+  Мои заказы
+{% endblock %}
+
+{% block profile_content %}
+  <div class="row">
+    <div class="col-12 col-md-10 col-lg-12">
+      {% if object_list %}
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Номер заказа</th>
+              <th scope="col">Дата</th>
+              <th scope="col">Цена</th>
+              <th scope="col">Количество</th>
+              <th scope="col">Статус заказа</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for order in object_list %}
+              <tr>
+                <td>
+                  № <a href="{% url 'profiles:order_detail' order.id %}">{{ order.number }}</a>
+                </td>
+                <td>{{ order.created_at|date:"DATE_FORMAT" }}</td>
+                <td>{{ order.total_price }} руб.</td>
+                <td>{{ order.total_quantity }}</td>
+                <td>{{ order.status }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <div class="row">
+          <div class="col-12">
+            {% include 'common/empty.html' %}
+          </div>
+        </div>
+      {% endif %}
+
+      {% include 'pagination.html' %}
+    </div>
+  </div>
+{% endblock %}

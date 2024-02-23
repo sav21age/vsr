@@ -1,0 +1,8 @@
+{% extends 'orders/email/base_message.html' %}
+{% autoescape off %}
+{% block content %}
+<p><strong>Заказ № {{ order.number }} от {{ order.created_at|date:'DATE_FORMAT' }}</strong> на сайте <a href="https://viride.spb.ru">ООО «Вириде»</a>.</p>
+<p>Статус Вашего заказа изменен.</p>
+<p>Новый статус: {{order.status|lower}}</p>
+{% endblock content %}
+{% endautoescape %}

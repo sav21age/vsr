@@ -1,0 +1,26 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg bg-white navbar-light pt-lg-3 pb-lg-4 px-4 px-lg-3">
+  <a href="/" class="navbar-brand p-0"><img src="{% static 'images/logo.svg' %}" width="150" alt="Питомник растений Вириде" /></a>
+  <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"><span class="navbar-toggler-icon"></span></button>
+  <div class="collapse navbar-collapse py-4 py-lg-0" id="navbarCollapse">
+    <div class="navbar-nav ms-auto">
+      {% comment %} <a href="#" class="nav-item nav-link" itemprop="url" disabled>Покупателям</a> {% endcomment %}
+
+      <div class="nav-item dropdown">
+        <a href="{% url 'catalog_template' %}" class="nav-link dropdown-toggle d-none d-lg-block" aria-expanded="false">Каталог</a>
+        <div class="dropdown-menu rounded-0 rounded-bottom m-0">
+          {% include 'navbar/menu.html' %}
+        </div>
+
+        <a href="{% url 'catalog_template' %}" class="nav-link dropdown-toggle d-block d-lg-none" data-bs-toggle="dropdown" aria-expanded="false">Каталог</a>
+        <div class="dropdown-menu rounded-0 rounded-bottom m-0">
+          {% include 'navbar/menu.html' %}
+        </div>
+      </div>
+
+      <a href="/contacts/" class="nav-item nav-link" itemprop="url">Контакты</a>
+      <a href="{% get_media_prefix %}documents/price-list-viride.xlsx" class="nav-item nav-link" itemprop="url"><i class="far fa-file-excel fa-lg text-primary"></i> Загрузить прайс</a>
+    </div>
+  </div>
+</nav>

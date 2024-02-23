@@ -1,0 +1,148 @@
+{% extends "main.html" %}
+{% load thumbnail markdownify getprice django_bootstrap_breadcrumbs ctid %}
+
+{% block head %}
+  {% include 'head.html' %}
+  {% comment %} <meta property="og:url" content="{{host}}{% url 't-r_list' %}"> {% endcomment %}
+{% endblock %} 
+
+{% block breadcrumb_name %}
+{{ object.name }}
+{% endblock %}
+
+{% block breadcrumb %}
+{% comment %} <nav aria-label="breadcrumb">
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/"><i class="fas fa-home text-white"></i></a></li>
+    <li class="breadcrumb-item"><a href="{% url 'catalog_template' %}">Каталог</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'conifers:list' %}">Хвойные растения</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ object.name }}</li>
+</ol>
+</nav> {% endcomment %}
+
+{% breadcrumb_for '/' %}<i class="fas fa-home text-white"></i>{% endbreadcrumb_for %}
+{% breadcrumb_for 'catalog_template' %}Каталог{% endbreadcrumb_for %}
+{% breadcrumb_for 'conifers:list' %}Хвойные растения{% endbreadcrumb_for %}
+{% breadcrumb_for 'conifers:detail' object.slug %}{{ object.name }}{% endbreadcrumb_for %}
+{% render_breadcrumbs 'breadcrumb.html' %}
+
+{% endblock%}
+
+{% block content %}
+
+
+<div class="row mt-3 mx-2">
+        <div class="col-12 col-md-5">
+            {% include 'common/detailview/images_gallery.html' %}
+        </div>
+        <div class="col-12 col-md-7">
+
+            <p>{{object.short_description}}</p>
+
+            {% if object.scientific_name %}
+            <p class="detail-property"><span>Научное название:</span> {{object.scientific_name}}</p>
+            {% endif %}
+            
+            {% if object.needles %}
+            <p class="detail-property"><span>Хвоя:</span> {{object.needles}}</p>
+            {% endif %}
+            
+            {% include 'common/detailview/adult_plant_size.html' %}
+
+            {% if object.height10 or object.width10 %}
+                <p class="detail-property"><span>Размеры растения в 10 лет:</span> 
+                    {% if object.height10 %}высота {{object.height10}}{% if object.width10 %},{%else%}.{% endif %}{% endif %}
+                    {% if object.width10 %}ширина {{object.width10}}.{% endif %}
+                </p>
+            {% endif %}
+
+            {% if object.height1 or object.width1 %}
+                <p class="detail-property"><span>Годовой прирост:</span> 
+                    {% if object.height1 %}высота {{object.height1}}{% if object.width1 %},{%else%}.{% endif %}{% endif %}
+                    {% if object.width1 %}ширина {{object.width1}}.{% endif %}
+                </p>
+            {% endif %}
+
+            {% if object.planting.all %}
+                <p class="detail-property"><span>Место посадки:</span>
+                {% for planting in object.planting.all %}
+                    {{planting.name}}{% if forloop.last %}.{% else %}, {% endif%}
+                {% endfor %}
+                </p>
+            {% endif %}
+
+            {% if object.shelter %}
+                <p class="detail-property"><span>Укрытие:</span> {{object.shelter}}.</p>
+            {% endif %}
+
+            {% if object.winter_zone %}
+                <p class="detail-property"><span>Зона зимостойкости в градусах:</span> {{object.winter_zone}}</p>
+            {% endif %}
+
+            {% if object.advantages.all %}
+            <p class="detail-property"><span>Достоинства:</span>
+            {% for advantage in object.advantages.all %}
+                {{advantage.name}}{% if forloop.last %}.{% else %}, {% endif%}
+            {% endfor %}
+            </p>
+            {% endif %}
+
+            {% if object.features%}
+            <p class="detail-property"><span>Особенности:</span> {{object.features}}</p>
+            {%endif%}
+
+            {% with object_set_all=object.coniferproductprice_set.all %}
+                {% include 'common/detailview/add_to_cart.html' %}
+            {% endwith %}
+            
+            {% comment %} {% if object.coniferproductprice_set.all %}
+                <table class="table table-responsive mt-3">
+                <thead>
+                    <tr>
+                    <th class="text-secondary">Параметры</th>
+                    <th class="text-secondary text-end">Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for obj in object.coniferproductprice_set.all %}
+                <tr>
+                    <td>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" value={{obj.id}}
+                        data-ct-id={{obj|toctid}} data-id={{obj.id}}
+                        id="flexRadioDefault"{% if forloop.first %} checked{% endif %}>
+                        <label class="form-check-label" for="flexRadioDefault">
+                          {% get_price_params obj %}
+                          <i class="far fa-question-circle fa-xs info" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="{% get_price_params_popover obj %}"></i>
+                        </label>
+                      </div>
+                    </td>
+                    <td class="text-end">
+                    {{ obj.price }} руб.
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {%endif%}
+            {% csrf_token %}
+            <button type="button" class="btn btn-primary" id="addToCart" value="{% url 'carts:add' %}">Добавить в корзину</button> {% endcomment %}
+
+<div class="row mt-4">
+    {% include 'common/detailview/delivery.html' %}
+
+							</div>
+							</div>
+
+
+
+        <div class="row">
+            <div class="col-12">
+                <p>{{object.description|safe}}</p>
+            </div>
+        </div>
+        
+        
+</div>
+
+{% endblock %}

@@ -1,0 +1,36 @@
+// :root {
+// //   --default: #364d59;
+//   --primary: #2d7656;
+// //   --secondary: #52565e;
+// }
+
+$primary: #2d7656;
+// $primary: #7F7D27;
+
+
+// $secondary: #86776f;
+$secondary: #5d534d;
+// $secondary: #7f5127;
+
+// $bg_eclipse: rgba(0, 0, 0, 0.6);
+// $bg_eclipse: rgba(45, 118, 86, 0.8);
+
+$bg_eclipse: rgba(134, 119, 111, 0.85);
+// $bg_eclipse_light: rgba(45, 118, 86, 0.6);
+$bg_eclipse_light: rgba(0, 0, 0, 0.2);
+
+$bg_footer: #faf4e4;
+
+$secondary_light: #86776f;
+// $secondary_light: #557f27;
+
+// $border-color: rgba(134, 119, 111, 0.85);
+
+// .border-primary{ 
+//     --bs-card-border-color: rgba(134, 119, 111, 0.75);
+// } 
+
+.form-check-input{
+    --bs-border-color: rgba(134, 119, 111, 0.75);
+}
+

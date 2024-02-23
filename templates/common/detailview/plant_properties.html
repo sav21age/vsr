@@ -1,0 +1,19 @@
+<p>{{object.short_description}}</p>
+
+{% if object.scientific_name %}
+<p class="detail-property"><span>Научное название:</span> {{object.scientific_name}}</p>
+{%endif%}
+
+{% include 'common/detailview/adult_plant_size.html' %}
+
+{% if object.advantages.all %}
+<p class="detail-property"><span>Достоинства:</span>
+{% for advantage in object.advantages.all %}
+    {{advantage.name}}{% if forloop.last %}.{% else %}, {% endif%}
+{% endfor %}
+</p>
+{% endif %}
+
+{% if object.features%}
+<p class="detail-property"><span>Особенности:</span> {{object.features}}</p>
+{%endif%}

@@ -1,0 +1,94 @@
+{% extends "main.html" %}
+{% load thumbnail markdownify django_bootstrap_breadcrumbs %}
+
+{% block head %}
+  {% include 'head.html' %}
+  {% comment %} <meta property="og:url" content="{{host}}{% url 't-r_list' %}"> {% endcomment %}
+{% endblock %} 
+
+{% block breadcrumb_name %}
+{{ object.name }}
+{% endblock %}
+
+{% block breadcrumb %}
+{% breadcrumb_for '/' %}<i class="fas fa-home text-white"></i>{% endbreadcrumb_for %}
+{% breadcrumb_for 'catalog_template' %}Каталог{% endbreadcrumb_for %}
+{% breadcrumb_for 'fruits:list' %}Плодовые растения{% endbreadcrumb_for %}
+{% breadcrumb_for 'fruits:detail' object.slug %}{{ object.name }}{% endbreadcrumb_for %}
+{% render_breadcrumbs 'breadcrumb.html' %}
+{% endblock%}
+
+{% block content %}
+<div class="row mt-3 mx-2">
+    <div class="col-12 col-md-5">
+        {% include 'common/detailview/images_gallery.html' %}
+    </div>
+    <div class="col-12 col-md-7">
+        {% comment %} {% include 'common/detailview/plant_properties.html' %} {% endcomment %}
+
+        <p>{{object.short_description}}</p>
+
+        {% if object.scientific_name %}
+            <p class="detail-property"><span>Научное название:</span> {{object.scientific_name}}</p>
+        {%endif%}
+
+        {% include 'common/detailview/adult_plant_size.html' %}
+
+        {% if object.flowering %}
+            <p class="detail-property"><span>Цветение:</span> {{object.flowering}}</p>
+        {% endif %}
+
+        {% if object.rootstock %}
+            <p class="detail-property"><span>Подвой:</span> {{object.rootstock}}</p>
+        {% endif %}
+
+        {% if object.fruit_ripening %}
+            <p class="detail-property"><span>Время созревания плодов:</span> {{object.fruit_ripening}}</p>
+        {% endif %}
+        
+        {% if object.fruit_size %}
+            <p class="detail-property"><span>Размер плодов:</span> {{object.fruit_size}} см.</p>
+        {% endif %}
+
+        {% if object.fruit_taste %}
+            <p class="detail-property"><span>Вкус плодов:</span> {{object.fruit_taste}}</p>
+        {% endif %}
+
+        {% if object.fruit_keeping_quality %}
+            <p class="detail-property"><span>Лежкость плодов:</span> {{object.fruit_keeping_quality}}</p>
+        {% endif %}
+
+        {% if object.beginning_fruiting %}
+            <p class="detail-property"><span>Начало плодоношения у растения в годах:</span> {{object.beginning_fruiting}}</p>
+        {% endif %}
+
+        {% if object.advantages.all %}
+        <p class="detail-property"><span>Достоинства:</span>
+        {% for advantage in object.advantages.all %}
+            {{advantage.name}}{% if forloop.last %}.{% else %}, {% endif%}
+        {% endfor %}
+        </p>
+        {% endif %}
+
+        {% if object.features%}
+            <p class="detail-property"><span>Особенности:</span> {{object.features}}</p>
+        {%endif%}
+
+        {% comment %} {% with price_set=object.fruitproductprice_set.all %}
+            {% include 'common/detailview/prices.html' %}
+        {% endwith %} {% endcomment %}
+        {% with object_set_all=object.fruitproductprice_set.all %}
+            {% include 'common/detailview/add_to_cart.html' %}
+        {% endwith %}
+
+        <div class="row mt-4">
+            {% include 'common/detailview/delivery.html' %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <p>{{object.description|safe}}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,112 @@
+{% load static %}
+
+    <!-- Topbar Start -->
+    <div class="container-fluid p-0 bg-light">
+      <div class="row py-2 gx-0">
+        <div class="col-lg-7 d-none d-lg-flex px-2 text-start">
+          <div class="h-100 d-inline-flex align-items-center me-4">
+            <small class="fa fa-map-marker-alt me-2"></small>
+            <small>Лен. обл., Гатчинский район, д. Борницы</small>
+          </div>
+          <div class="h-100 d-inline-flex align-items-center">
+            <small class="far fa-clock me-2"></small>
+            <small>Пн-Сб: 09:00 - 18:00, Вс: <span class="text-danger fw-bold">выходной</span></small>
+          </div>
+        </div>
+        <div class="col-lg-5 px-2 text-end">
+          {% comment %} <div class="h-100 d-inline-flex align-items-center py-3 me-4"> {% endcomment %}
+          <div class="h-100 d-inline-flex align-items-center">
+            
+            {% comment %} <a class="me-1" href="#">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="badge rounded-pill text-bg-light">2</span>
+            </a> {% endcomment %}
+
+            <a class="nav-icon d-none d-lg-inline me-4" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
+                {% comment %} <i class="fa fa-fw fa-search text-dark mr-2"></i> {% endcomment %}
+                <i class="fas fa-search"></i>
+            </a>
+
+            <a class="nav-icon position-relative text-decoration-none me-4" href="#">
+                <i class="fas fa-shopping-cart mr-1"></i>
+                <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill text-bg-danger text-light">7</span>
+            </a>
+            
+            <a href="#" class="btn btn-sm btn-primary" role="button">
+              <i class="fas fa-sign-in-alt"></i><span class="ms-1">Войти</span>
+            </a>
+            {% comment %} <a class="me-1" href=""><i class="fas fa-sign-in-alt"></i> Вход</a> {% endcomment %}
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Topbar End -->
+
+    <!-- Navbar Start -->
+{% comment %} <header class="bg-light"> {% endcomment %}
+<header>
+  <div class="container-fluid py-4">
+    <nav class="navbar navbar-light">
+        <a href="/" class="navbar-brand p-0">
+          <img src="{% static 'images/logo.svg' %}" alt="Питомник Вириде" width="240">
+        </a>
+        {% comment %} <form class="col-12 col-lg-4 mb-3 mb-lg-0 me-lg-3" role="search"> {% endcomment %}
+        <form class="col-12 col-md-6 col-lg-4" role="search">
+          <input type="search" class="form-control" placeholder="Поиск..." aria-label="Поиск">
+        </form>
+    </nav>
+  </div>
+</header>
+    <!-- Navbar End -->
+<nav class="navbar navbar-expand-md navbar-dark bg-primary" itemscope itemtype="http://schema.org/SiteNavigationElement">
+  <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-label="Меню">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <div class="navbar-nav">
+      <a href="" class="nav-item nav-link" itemprop="url">Новости</a>
+      
+      <div class="nav-item dropdown">
+        <button class="nav-link btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Каталог</button>
+        <div class="dropdown-menu rounded-0 rounded-bottom m-0">
+          <a href="{% url 'conifers:list' %}" class="dropdown-item" itemprop="url">Хвойные растения</a>
+          <a href="" class="dropdown-item" itemprop="url">Плодовые растения</a>
+          <a href="" class="dropdown-item" itemprop="url">Лиственные растения</a>
+          <a href="" class="dropdown-item" itemprop="url">Многолетники</a>
+          <a href="" class="dropdown-item" itemprop="url">Мульча, грунты</a>
+          <a href="" class="dropdown-item" itemprop="url">Для сада</a>
+          <a href="" class="dropdown-item" itemprop="url">Книги</a>
+        </div>
+      </div>
+
+      {% comment %}
+      <div class="nav-item dropdown">
+        <button class="nav-link btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Крыльцо</button>
+        <div class="dropdown-menu rounded-0 rounded-bottom m-0">
+          {% for val in menu|dict:'porch' %}
+          <a href="{% url 'porch:detail' val.slug %}" class="dropdown-item" itemprop="url">{{val.menu_name}}</a>
+          {%endfor%}
+        </div>
+      </div>
+
+      <a href="{% url 'terrace' %}" class="nav-item nav-link" itemprop="url">Терраса</a>
+
+      <a href="{% url 'decorative-bridge' %}" class="nav-item nav-link" itemprop="url">Мостик</a>
+
+      <div class="nav-item dropdown">
+        <button class="nav-link btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Ограждения</button>
+        <div class="dropdown-menu rounded-0 rounded-bottom m-0">
+          {% for val in menu|dict:'railings' %}
+          <a href="{% url 'railings:detail' val.slug %}" class="dropdown-item" itemprop="url">{{val.menu_name}}</a>
+          {%endfor%}
+        </div>
+      </div> {% endcomment %}
+
+      {% comment %} <a href="{% url 'contacts' %}" class="nav-item nav-link" itemprop="url">Контакты</a> {% endcomment %}
+      {% comment %} <a href="" class="nav-item nav-link" itemprop="url">Каталог</a> {% endcomment %}
+      <a href="" class="nav-item nav-link" itemprop="url">Контакты</a>
+
+    </div>
+  </div> 
+</nav>

@@ -1,0 +1,36 @@
+{% load thumbnail static %}
+
+<div id="imagesGallery" class="carousel slide">
+
+    <div class="carousel-inner">
+        {% for image in object.images.all %}
+        <div class="carousel-item{% if forloop.first %} active{% endif %}">
+            <img src="{{ image.path|thumbnail_url:'detail' }}" class="d-block w-100" alt="{{ image.title }}">
+        </div>
+        {% empty %}
+        <div class="carousel-item active">
+            {% include 'common/no_image_h.html' %}
+            {% comment %} <img class="card-img img-fluid" src="{% static 'images/no-image.svg' %}" alt="Нет изображения" title="Нет изображения"> {% endcomment %}
+        </div>
+        {% endfor %}
+    </div>
+    
+    {% if object.images.count > 1 %}
+    <div class="carousel-indicators">
+        {% for image in object.images.all %}
+        <button type="button" data-bs-target="#imagesGallery" data-bs-slide-to="{{ forloop.counter0 }}" class="thumbnail{% if forloop.first %} active{% endif %}" {% if forloop.first %} aria-current="true"{% endif %} aria-label="{{forloop.counter}}">
+            <img src="{{ image.path|thumbnail_url:'detail_thumbnail' }}" class="d-block w-100" alt="{{ image.title }}">
+        </button>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+
+{% comment %} <svg class="bd-placeholder-img figure-img img-fluid rounded" width="400" height="300"
+    xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 400x300"
+    preserveAspectRatio="xMidYMid slice" focusable="false">
+    <title>Placeholder</title>
+    <rect width="100%" height="100%" fill="#868e96"/>
+    <text x="50%" y="50%" fill="#dee2e6" dy=".3em">400x300</text>
+</svg> {% endcomment %}

@@ -1,0 +1,27 @@
+{% comment %} <div class="form-group">
+    <label class="control-label col-form-label-sm mb-0 pb-0" for="per-page">на страницу:</label>
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text form-control-sm">
+                <i class="fa fa-list-alt" aria-hidden="true"></i>
+            </span>
+        </div>
+        <select id="per-page" class="form-control form-control-sm" onchange="setLocation(this.value)">
+            {% for option in options %}
+            <option value="?{{ option.querystring }}"{% if option.selected %} selected{% endif %}>{{ option.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div> {% endcomment %}
+
+<div class="col-2">
+    <label for="perPage">на страницу:</label>
+    <div class="input-group">
+        <div class="input-group-text"><i class="fas fa-th-large"></i></div>
+        <select id="perPage" class="form-select" aria-label="на страницу" onchange="setLocation(this.value)">
+        {% for option in options %}
+        <option value="{{ option.querystring }}"{% if option.selected %} selected{% endif %}>{{ option.name }}</option>
+        {% endfor %}
+        </select>
+    </div>
+</div>

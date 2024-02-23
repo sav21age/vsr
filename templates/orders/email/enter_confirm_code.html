@@ -1,0 +1,7 @@
+{% extends 'orders/email/base_message.html' %}
+{% autoescape off %}
+{% block content %}
+<p>На сайте <a href="https://viride.spb.ru">ООО «Вириде»</a> Вам необходимо подтвердить заказ.</p>
+<p>Код подтверждения: {{code}}</p>
+{% endblock content %}
+{% endautoescape %}

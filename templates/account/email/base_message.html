@@ -1,0 +1,20 @@
+{% autoescape off %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    {% comment %} <title>Подтвердите адрес электронной почты</title> {% endcomment %}
+    <style type="text/css">
+        body {
+            font-family: Arial, Tahoma, Verdana, sans-serif;
+            font-size: 15px;
+        }
+</style>
+</head>
+<body>
+<h3>Здравствуйте!</h3>
+{% block content %}{% endblock content %}
+</body>
+</head>
+</html>
+{% endautoescape %}

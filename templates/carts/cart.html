@@ -1,0 +1,89 @@
+{% load static %}
+
+{% if cart_items %}
+  <div class="card border-0 border-bottom">
+    <ul class="list-group">
+      <li class="list-group-item border-0">
+        <div class="row">
+          <div class="col col-lg-4 d-flex align-items-center">
+            <h6>Наименование</h6>
+          </div>
+          <div class="col">
+            <h6>Количество</h6>
+          </div>
+          <div class="col d-flex align-items-center justify-content-center">
+            <h6>Цена</h6>
+          </div>
+          <div class="col d-flex align-items-center justify-content-center">
+            <h6>Сумма</h6>
+          </div>
+          <div class="col col-lg-1 d-flex align-items-center justify-content-end"></div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="card border-0 border-bottom">
+    {% for cart_item in cart_items %}
+      <ul class="list-group">
+        <li class="list-group-item border-0">
+          <div class="row">
+            <div class="col col-lg-4 d-flex align-items-center">{{ cart_item.product }}</div>
+            <div class="col">
+              <div class="input-group">
+                <button type="button" class="btn decrement" data-ci-id="{{ cart_item.id }}" data-value="-" value="{% url 'carts:update' %}">
+                  {% csrf_token %}
+                  <i class="fas fa-minus"></i>
+                </button>
+                <input type="text" value="{{ cart_item.quantity }}" name="quantity" style="flex: 0 1 50px;" class="form-control text-center number mx-2" />
+                <button type="button" class="btn increment" data-ci-id="{{ cart_item.id }}" data-value="+" value="{% url 'carts:update' %}">
+                  {% csrf_token %}
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="col d-flex align-items-center justify-content-center">&times; {{ cart_item.price }} руб.</div>
+            <div class="col d-flex align-items-center justify-content-center">= {{ cart_item.total_price }} руб.</div>
+            <div class="col col-lg-1 d-flex align-items-center justify-content-end">
+              <button type="button" class="btn remove" data-ci-id="{{ cart_item.id }}" value="{% url 'carts:remove' %}">
+                {% csrf_token %}
+                <i class="far fa-trash-alt"></i>
+              </button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    {% endfor %}
+  </div>
+  <div class="card border-0 mb-4">
+    <div class="card-footer border-0">
+      <ul class="list-group">
+        <li class="list-group-item border-0 text-bg-light">
+          <div class="row">
+            <div class="col col-lg-4 d-flex align-items-center"></div>
+            <div class="col"></div>
+            <div class="col d-flex align-items-center justify-content-center">
+              <h6>Итого:</h6>
+            </div>
+            <div class="col d-flex align-items-center justify-content-center">
+              <h5 class="float-left"><strong>{{ cart.total_price }} руб.</strong></h5>
+            </div>
+            <div class="col col-lg-1 d-flex align-items-center justify-content-end"></div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  {% if user.is_authenticated %}
+    <a href="{% url 'orders:create' %}" class="btn btn-primary me-3">Оформить заказ</a>
+  {% else %}
+    {% if cart.user %}
+      <a href="{% url 'account_login' %}" class="btn btn-primary me-3">Войти и оформить заказ</a>
+    {% else %}
+      <a href="{% url 'account_login' %}" class="btn btn-primary me-3">Войти и оформить заказ</a>
+      <a href="{% url 'orders:create' %}" class="btn btn-secondary">Оформить заказ без регистрации</a>
+    {% endif %}
+  {% endif %}
+{% else %}
+  Ваша корзина пуста.
+{% endif %}

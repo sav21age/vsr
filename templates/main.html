@@ -1,0 +1,37 @@
+{% extends 'base.html' %} {% block main %}
+  <section id="breadcrumb" class="mb-3">
+    <div class="breadcrumb-eclipse py-1 pt-md-1 pb-md-3">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12 col-md-10">
+            <h1 class="text-white mb-0">
+              {% block breadcrumb_name %}
+
+              {% endblock %}
+            </h1>
+            {% block breadcrumb %}
+
+            {% endblock %}
+          </div>
+          <div class="col-12 col-md-2 text-end pe-4">
+            <div class="h-100 d-inline-flex align-items-center">
+              {% comment %} <a class="social pe-4" href="#" title="Добавить в избранное"><i class="fas fa-heart fa-lg"></i></a> {% endcomment %}
+
+              {% include 'favorites/index.html' %}
+
+              <a class="social" href="#" title="В контакте"><i class="fab fa-vk fa-lg"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section">
+    <div class="container-fluid">
+      {% block content %}
+
+      {% endblock %}
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "allauth/layouts/entrance.html" %}
+{% comment %} {% load i18n %}
+{% load allauth %}
+{% block head_title %}
+    {% trans "Account Inactive" %}
+{% endblock head_title %}
+{% block content %}
+    {% element h1 %}
+        {% trans "Account Inactive" %}
+    {% endelement %}
+    <p>{% trans "This account is inactive." %}</p>
+{% endblock content %} {% endcomment %}
+
+{% block content %}
+<h3>Аккаунт неактивен</h3>
+<p>Эта учетная запись отключена.</p>
+{% endblock content %}

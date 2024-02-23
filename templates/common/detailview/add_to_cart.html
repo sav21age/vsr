@@ -1,0 +1,35 @@
+{% load getprice ctid %}
+{% if object_set_all %}
+    <table class="table table-responsive mt-3">
+    <thead>
+        <tr>
+            <th class="text-secondary">Параметры</th>
+            <th class="text-secondary text-end">Цена</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for obj in object_set_all %}
+    <tr>
+        <td>
+            <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" value="{{obj.id}}"
+            data-ct-id="{{ obj|toctid }}" data-id="{{obj.id}}"
+            id="flexRadioDefault"{% if forloop.first %} checked{% endif %}>
+            <label class="form-check-label" for="flexRadioDefault">
+                {% get_price_params obj %}
+                {% if not obj.property %}
+                <i class="far fa-question-circle fa-xs info" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="{% get_price_params_popover obj %}"></i>
+                {% endif %}
+            </label>
+            </div>
+        </td>
+        <td class="text-end">
+        {{ obj.price }} руб.
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% csrf_token %}
+<button type="button" class="btn btn-primary" id="addToCart" value="{% url 'carts:add' %}">Добавить в корзину</button>

@@ -1,0 +1,25 @@
+.species-filter span{
+    font-size: 16px!important;
+    // --bs-badge-padding-x: 0.9em!important;
+    --bs-badge-padding-y: 0.3em!important;
+    --bs-badge-font-weight: 400!important;
+}
+.species-filter span.active{
+    color: #fff;
+    background-color: $secondary_light;
+}
+.species-filter a, .card-body a {
+    // color: $secondary;
+    text-decoration: none;
+    border-bottom: 1px dashed $secondary_light;
+}
+
+// .card-body{
+//     padding-left: 5px;
+//     padding-right: 5px;
+// }
+.card-price{
+    // margin-bottom: 0.25em;
+    margin-bottom: 0;
+    font-size: 24px;
+}

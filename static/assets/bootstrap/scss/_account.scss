@@ -1,0 +1,46 @@
+main {
+    max-width: 400px;
+    padding: 1rem;
+    padding: 5px 10px 30px 10px;
+
+    // input[type=text], input[type=password]{
+    //     @extend .form-control;
+    // }
+    // input[type=checkbox]{
+    //     @extend .form-check-input;
+    // }
+    ul li, span.text-danger {
+        font-size: 12px;
+    }
+
+    h1 {
+        color: $secondary_light;
+        font-size: 24px
+    }
+    
+    div.messages span{
+        color: $secondary_light;
+        font-weight: 500;
+    }
+
+    .btn{
+        min-width: 100px!important;
+        margin-bottom: 10px;
+    }
+
+    .alert{
+        padding: 3px 10px 3px!important;
+        line-height: 0.9;
+    }
+
+    a.close{
+        font-size: 20px;
+        color: #000;
+        text-decoration: none;
+        // display: block;
+    }
+    p{
+        // margin-bottom: 8px;
+        font-size: 15px;
+    }
+}

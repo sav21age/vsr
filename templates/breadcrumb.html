@@ -1,0 +1,15 @@
+<nav aria-label="breadcrumb">
+<ol class="breadcrumb">
+    {% for url, label in breadcrumbs %}
+    {% if forloop.counter != breadcrumbs_total %}
+    <li class="breadcrumb-item">
+        <a href="{{ url }}">{{ label|safe }}</a>
+    </li>
+    {% else %}
+    <li  class="breadcrumb-item active">
+        {{ label|safe }}
+    </li>
+    {% endif %}
+    {% endfor %}
+</ol>
+</nav>

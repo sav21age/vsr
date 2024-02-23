@@ -1,0 +1,32 @@
+#breadcrumb {
+    background-size: cover;
+}
+#breadcrumb {
+    background: url(../../../images/background/breadcrumb-bg.jpg) no-repeat center;
+    // background-size: auto 100%;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+// #breadcrumb .breadcrumb-eclipse{
+//   background-color: $bg_eclipse_light;
+// }
+
+ol.breadcrumb{
+  margin-bottom: 0!important;
+}
+
+ol.breadcrumb li.breadcrumb-item a, ol.breadcrumb li.breadcrumb-item, .breadcrumb-item + .breadcrumb-item::before {
+  color: #fff!important;
+  font-size: 15px;
+}
+
+ol.breadcrumb li.breadcrumb-item a {
+    text-decoration: none;
+    border-bottom: 1px dashed #fff;
+}
+
+.social .fas, .social .fab, .social .far {
+    color: #fff!important;
+}

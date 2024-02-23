@@ -1,0 +1,53 @@
+{% extends "main.html" %}
+{% load thumbnail markdownify django_bootstrap_breadcrumbs %}
+
+{% block head %}
+  {% include 'head.html' %}
+  {% comment %} <meta property="og:url" content="{{host}}{% url 't-r_list' %}"> {% endcomment %}
+{% endblock %} 
+
+{% block breadcrumb_name %}
+{{ object.name }}
+{% endblock %}
+
+{% block breadcrumb %}
+{% breadcrumb_for '/' %}<i class="fas fa-home text-white"></i>{% endbreadcrumb_for %}
+{% breadcrumb_for 'catalog_template' %}Каталог{% endbreadcrumb_for %}
+{% if object.category.name == 'BOOK' %}
+{% breadcrumb_for 'book_list' %}Книги{% endbreadcrumb_for %}
+{% breadcrumb_for 'book_detail' object.slug %}{{ object.name }}{% endbreadcrumb_for %}
+{% else %}
+{% breadcrumb_for 'related_list' %}Сопутствующие товары{% endbreadcrumb_for %}
+{% breadcrumb_for 'related_detail' object.slug %}{{ object.name }}{% endbreadcrumb_for %}
+{% endif %}
+{% render_breadcrumbs 'breadcrumb.html' %}
+{% endblock%}
+
+{% block content %}
+<div class="row mt-3 mx-2">
+    <div class="col-12 col-md-5">
+        {% include 'common/detailview/images_gallery.html' %}
+    </div>
+    <div class="col-12 col-md-7">
+
+        <p>{{object.short_description}}</p>
+
+        {% comment %} {% with price_set=object.otherproductprice_set.all %}
+            {% include 'common/detailview/prices.html' %}
+        {% endwith %} {% endcomment %}
+
+        {% with object_set_all=object.otherproductprice_set.all %}
+            {% include 'common/detailview/add_to_cart.html' %}
+        {% endwith %}
+
+        <div class="row mt-4">
+            {% include 'common/detailview/delivery.html' %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <p>{{object.description|safe}}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

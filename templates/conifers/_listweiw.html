@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load thumbnail humanize %}
+
+{% block content %}
+<div class="section">
+    <div class="container-fluid">
+        <div class="section-title">
+        <h1>Главная</h1>
+        </div>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+        {% for object in object_list %}
+
+            <div class="col">
+
+                <div class="card rounded-0 border-0 h-100">
+
+                    {% comment %} <div class="listview-image-container">
+                        {% comment %} <div class="listview-image-wrapper"> {% endcomment %}
+                            <div class="card-eclipse">
+                            <img class="card-img img-fluid" src="{{ object.get_image.path|thumbnail_url:'list' }}" alt="" title="">
+                            </div>
+                        {% comment %} </div> {% endcomment %}
+
+                        {% comment %}<div class="content">
+                            <div class="description">
+                                    Чудесный, обильноцветущий сорт, который можно выращивать как куст или плетистую розу.
+                            </div>
+                        </div>
+
+                    </div> {% endcomment %}
+
+                    <div class="card-img-overlay d-flex justify-content-center align-items-center">
+                        <p class="card-text text-white text-center">{{ object.short_description }}</p>
+                        {% comment %} <a class="btn btn-primary" href="#">Join the Revolution!</a> {% endcomment %}
+                    </div>
+
+
+                    <div class="card-body">
+                        <p class="card-text"><a href="{% url 'conifers:detail' object.slug %}">{{ object.name }}</a></p>
+                        {% if object.get_min_price %}
+                            <p class="card-text">от {{ object.get_min_price }} руб.</p>
+                        {% else %}
+                            <p class="card-text">нет в наличии</p>
+                        {%endif%}
+                        
+                    </div>
+
+                </div>
+            </div>
+
+        {% empty %}
+            <div class="col-lg-12">
+                {% comment %} {% include 'empty.html' %} {% endcomment %}
+            </div>
+        {% endfor %}
+
+        </div>
+
+    {% include "pagination.html" %}
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends "account/base_entrance.html" %}
+{% load allauth %}
+{% load allauth i18n %}
+{% block head_title %}
+    {% trans "Signup" %}
+{% endblock head_title %}
+{% block content %}
+    {% element h1 %}
+        {% trans "Sign Up" %}
+    {% endelement %}
+    <p>
+        {% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}
+    </p>
+    {% url 'account_signup' as action_url %}
+    {% element form form=form method="post" action=action_url tags="entrance,signup" %}
+        {% slot body %}
+            {% csrf_token %}
+            {% element fields form=form unlabeled=True %}
+            {% endelement %}
+            {% if redirect_field_value %}
+                <input type="hidden"
+                       name="{{ redirect_field_name }}"
+                       value="{{ redirect_field_value }}" />
+            {% endif %}
+        {% endslot %}
+        {% slot actions %}
+            {% element button tags="prominent,signup" type="submit" %}
+                {% trans "Sign Up" %}
+            {% endelement %}
+        {% endslot %}
+    {% endelement %}
+    
+{% comment %} {% block content %} {% endcomment %}
+{% comment %} <h3>Регистрация</h3>
+<p>Уже зарегистрированы? 
+    <a href="{{ login_url }}">Войдите</a>.
+</p>
+{% url 'account_signup' as action_url %}
+<form class="mt-5 mt-md-0" method="post" action="{{action_url}}">{% csrf_token %}
+    <div class="mb-3">
+        <label for="id_email">Адрес электронной почты</label>
+        <input class="form-control" type="email" name="email" autocomplete="email" maxlength="320" required id="id_email">
+        {% if form.email.errors %}
+            <span class="text-danger">{{ form.email.errors.as_text }}</span>
+        {% endif %}
+    </div>
+  
+    <div class="mb-3">
+        <label for="id_password1">Пароль</label>
+        <input class="form-control" type="password" name="password1" autocomplete="new-password" required aria-describedby="id_password1_helptext" id="id_password1">
+        {% if form.password1.errors %}
+            <span class="text-danger">{{ form.password1.errors.as_text }}</span>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label for="id_password2">Повторите пароль</label>
+        <input class="form-control" type="password" name="password2" autocomplete="new-password" required id="id_password2">
+        {% if form.password2.errors %}
+            <span class="text-danger">{{ form.password2.errors.as_text }}</span>
+        {% endif %}
+    </div>
+
+    <div id="typePassword"><ul><li>Пароль не должен быть слишком похож на другую вашу личную информацию.</li><li>Ваш пароль должен содержать как минимум 7 символов.</li><li>Пароль не должен быть слишком простым и распространенным.</li><li>Пароль не может состоять только из цифр.</li></ul></div>
+ 
+    {{ form.captcha }}
+    {{ form.captcha.errors }}
+
+    {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
+    {% endif %}
+
+    <button class="btn btn-primary" type="submit">Регистрация</button>
+</form>
+{% if SOCIALACCOUNT_ENABLED %}
+    {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+{% endif %} {% endcomment %}
+{% endblock content %}

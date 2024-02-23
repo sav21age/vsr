@@ -1,0 +1,109 @@
+{% extends "main.html" %} 
+{% load static django_bootstrap_breadcrumbs tel %} 
+
+{% block head %}
+  {% include 'head.html' %}
+  {% comment %} <meta property="og:url" content="{{host}}{% url 't-r_list' %}"> {% endcomment %}
+{% endblock %} 
+
+{% block breadcrumb %}
+{% breadcrumb_for '/' %}<i class="fas fa-home text-white"></i>{% endbreadcrumb_for %}
+{% breadcrumb_for 'contacts' %}{{ object.name }}{% endbreadcrumb_for %}
+{% render_breadcrumbs 'breadcrumb.html' %}
+{% endblock %}
+
+{% block breadcrumb_name %}
+{{ object.name }}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+    
+    {% comment %} <div class="col-md-6">
+      <div class="h-100 d-flex p-3">
+        <div class="btn-lg-square flex-shrink-0 mt-2">
+          <i class="fas fa-signature fa-lg"></i>
+        </div>
+        <div class="ms-4">
+          <p class="mb-1 fw-bold text-secondary">Название</p>
+          {{ object.company_name }}
+        </div>
+      </div>
+    </div> {% endcomment %}
+
+    <div class="col-md-6">
+      <div class="h-100 d-flex p-3 text-bg-light">
+        <div class="btn-lg-square flex-shrink-0 mt-2">
+          <i class="far fa-id-card fa-lg"></i>
+        </div>
+        <div class="ms-4">
+          <p class="mb-1 fw-bold text-secondary">Реквизиты</p>
+          <p>Название: {{ object.company_name }}<br>
+          ИНН: {{ object.inn }}<br>
+          ОГРН: {{ object.ogrn }}<br>
+          КПП: {{ object.kpp }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="h-100 d-flex p-3">
+        <div class="btn-lg-square flex-shrink-0 mt-2">
+          <i class="fas fa-phone-alt fa-lg"></i>
+        </div>
+        <div class="ms-4">
+          <p class="mb-1 fw-bold text-secondary">Телефон</p>
+          Розница:  <a class="mb-0" href="tel:{{ object.phone_retail|tel }}">{{ object.phone_retail }}</a><br>
+          Опт: <a class="mb-0" href="tel:{{ object.phone_wholesale|tel }}">{{ object.phone_wholesale }}</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="h-100 d-flex p-3">
+        <div class="btn-lg-square flex-shrink-0 mt-2">
+          <i class="far fa-envelope fa-lg"></i>
+        </div>
+        <div class="ms-4">
+          <p class="mb-1 fw-bold text-secondary">Электронная почта</p>
+          <a class="mb-0 big" href="mailto:{{ object.email }}">{{ object.email }}</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="h-100 d-flex p-3">
+        <div class="btn-lg-square flex-shrink-0 mt-2">
+          <i class="far fa-clock fa-lg"></i>
+        </div>
+        <div class="ms-4">
+          <p class="mb-1 fw-bold text-secondary">График работы</p>
+          {{ object.work_schedule }}
+        </div>
+      </div>
+    </div>
+
+  </div>
+      
+    <div class="row">
+      <div class="col-12">
+        <div class="h-100 d-flex p-3">
+          <div class="btn-lg-square flex-shrink-0 mt-2">
+            <i class="fas fa-map-marker-alt fa-lg"></i>
+          </div>
+          <div class="ms-4">
+            <p class="mb-1 fw-bold text-secondary">Адрес</p>
+            <p class="mb-0">{{ object.address }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="row px-3 pb-3">
+          <div class="col-12">
+            {{ object.map|safe }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

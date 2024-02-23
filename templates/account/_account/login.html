@@ -1,0 +1,77 @@
+{% extends "account/base_entrance.html" %}
+{% comment %} {% load allauth account %}
+{% load i18n %}
+{% block head_title %}
+    {% trans "Sign In" %}
+{% endblock head_title %}
+{% block content %}
+    {% element h1 %}
+        {% trans "Sign In" %}
+    {% endelement %}
+    <p>
+        {% blocktrans %}If you have not created an account yet, then please
+    <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}
+    </p>
+    {% url 'account_login' as login_url %}
+    {% element form form=form method="post" action=login_url tags="entrance,login" %}
+        {% slot body %}
+            {% csrf_token %}
+            {% element fields form=form unlabeled=True %}
+            {% endelement %}
+            {% if redirect_field_value %}
+                <input type="hidden"
+                       name="{{ redirect_field_name }}"
+                       value="{{ redirect_field_value }}" />
+            {% endif %}
+        {% endslot %}
+        {% slot actions %}
+            {% element button type="submit" tags="prominent,login" %}
+                {% trans "Sign In" %}
+            {% endelement %}
+        {% endslot %}
+    {% endelement %}
+    {% if SOCIALACCOUNT_ENABLED %}
+        {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+    {% endif %} {% endcomment %}
+
+{% block content %}
+<h3>Войти</h3>
+
+<p>Если у вас ещё нет учётной записи, пожалуйста, сначала 
+    <a href="{{ signup_url }}">зарегистрируйтесь</a>.
+</p>
+{% url 'account_login' as login_url %}
+<form class="mt-5 mt-md-0" method="post" action="{{login_url}}">{% csrf_token %}
+    <div class="mb-3">
+        <label for="id_login">Адрес электронной почты</label>
+        <input class="form-control" type="email" name="login" autocomplete="email" maxlength="320" required id="id_login">
+        {% if form.login.errors %}
+            <span class="text-danger">{{ form.login.errors.as_text }}</span>
+        {% endif %}
+    </div>
+
+    <div class="mb-1">
+        <label for="id_password">Пароль</label>
+        <input class="form-control" type="password" name="password" autocomplete="current-password" required aria-describedby="id_password_helptext" id="id_password">
+        {% if form.password.errors %}
+            <span class="text-danger">{{ form.password.errors.as_text }}</span>
+        {% endif %}
+    </div>
+    <div class="mb-3" id="forgotPassword"><a href="/accounts/password/reset/">Забыли свой пароль?</a></div>
+
+    <div class="form-check mb-3">
+        <label class="form-check-label" for="id_remember">Запомнить меня</label>
+        <input class="form-check-input" type="checkbox" checked name="remember" id="id_remember">
+    </div>
+    
+    {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
+    {% endif %}
+    <button class="btn btn-primary" type="submit">Войти</button>
+</form>
+
+{% if SOCIALACCOUNT_ENABLED %}
+    {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+{% endif %}
+
+{% endblock content %}

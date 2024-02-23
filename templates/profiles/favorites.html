@@ -1,0 +1,63 @@
+{% extends "profiles/main.html" %}
+{% load static humanize thumbnail django_bootstrap_breadcrumbs %}
+
+{% block breadcrumb %}
+{% breadcrumb_for '/' %}<i class="fas fa-home text-white"></i>{% endbreadcrumb_for %}
+{% breadcrumb_for 'profiles:index' %}Избранное{% endbreadcrumb_for %}
+{% render_breadcrumbs 'breadcrumb.html' %}
+{% endblock %}
+
+{% block head %}
+<title>Избранное</title>
+{% endblock %}
+
+{% block breadcrumb_name %}
+Избранное
+{% endblock %}
+
+{% block profile_content %}
+<div class="row">
+    <div class="col-12 col-md-10 col-lg-12">
+        {% if object_list %}
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3 mt-3">
+            {% for obj in object_list %}
+                {% with object=obj.content_object%}
+                <div class="col">
+                    <div class="card rounded-0 border-0 h-100 mx-2">
+                        {% if object.get_image %}
+                            <a href="{{ object.get_absolute_url }}"><img class="card-img rounded-0 img-fluid" src="{{ object.get_image.path|thumbnail_url:'list' }}" alt="{{object.get_image.title}}" title="{{object.get_image.title}}"></a>
+                        {% else %}
+                            <a href="{{ object.get_absolute_url }}">
+                                {% include 'common/no_image_v.html' %}
+                            </a>
+                        {% endif %}
+
+                        <div class="card-body px-1">
+                            <p class="card-price">
+                            {% if object.get_min_price %}
+                                от {{ object.get_min_price }} руб.
+                            {% else %}
+                                нет в наличии
+                            {%endif%}
+                            </p>
+                            <p class="card-text"><a href="{{ object.get_absolute_url }}">{{ object.name }}</a></p>
+                        </div>
+                    </div>
+                </div>
+                {% endwith %}
+            {% endfor %}
+            </div>
+        {% else %}
+            <div class="row">
+                <div class="col-12">
+                    {% include 'common/empty.html' %}
+                </div>
+            </div>  
+        {% endif %}
+
+        {% include 'pagination.html' %}
+
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,32 @@
+#imagesGallery .carousel-indicators button.thumbnail {
+  width: 100px;
+}
+#imagesGallery .carousel-indicators button.thumbnail:not(.active) {
+  opacity: .75;
+}
+
+// .carousel-indicators li.thumbnail {
+//   width: 100px;
+// }
+// .carousel-indicators li.thumbnail:not(.active) {
+//   opacity: .75;
+// }
+
+#imagesGallery .carousel-indicators [data-bs-target] {
+    height: 100px!important;
+}
+
+#imagesGallery .carousel-indicators {
+  position: static!important;
+  margin-right: 0!important;
+  margin-left: 0!important;
+}
+
+// .carousel .carousel-inner{
+//   max-height: 50vh;
+// }
+
+#imagesGallery{
+  max-width: 80%;
+  margin: 0 auto;
+}
