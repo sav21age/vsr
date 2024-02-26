@@ -1,12 +1,11 @@
 from django.db import models
 from django.urls import reverse
-from common.models import ProductPriceAbstract
-from plants.models import (
-    PlantPriceContainer, PlantPriceRootSystem,
-    PlantProductAbstract, PlantSpeciesAbstract)
-from common.validators import SizeValidator
 from django.contrib.postgres.indexes import GinIndex
 from django.contrib.postgres.search import SearchVectorField
+from common.models import ProductPriceAbstract
+from common.validators import SizeValidator
+from plants.models import (
+    PlantPriceContainer, PlantPriceRootSystem, PlantProductAbstract, PlantSpeciesAbstract)
 
 
 class FruitSpecies(PlantSpeciesAbstract):

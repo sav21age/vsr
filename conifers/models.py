@@ -1,14 +1,14 @@
 from django.db import models
 from django.urls import reverse
-from carts.models import CartItem
-from common.models import ProductPriceAbstract
-from plants.models import (
-    PlantPlanting, PlantPriceContainer, PlantPriceRootSystem, PlantProductAbstract,
-    PlantSpeciesAbstract)
-from common.validators import SizeUnitValidator, SizeValidator
 from django.contrib.postgres.indexes import GinIndex
 from django.contrib.postgres.search import SearchVectorField
 from django.contrib.contenttypes import fields
+from carts.models import CartItem
+from common.models import ProductPriceAbstract
+from common.validators import SizeUnitValidator, SizeValidator
+from plants.models import (
+    PlantPlanting, PlantPriceContainer, PlantPriceRootSystem, PlantProductAbstract,
+    PlantSpeciesAbstract)
 
 
 class ConiferSpecies(PlantSpeciesAbstract):
@@ -82,13 +82,13 @@ class ConiferProduct(PlantProductAbstract):
                 fields=['name'],
                 opclasses=['gin_trgm_ops'],
             ),
-            ]
+        ]
         # indexes = [GinIndex(SearchVector(
         #     'name', config="russian"), name="search_vector_idx",),]
         # indexes = [
         #     GinIndex(
         #         name='vector_coniferproduct_idx',
-        #         fields=['name'], 
+        #         fields=['name'],
         #         opclasses=['gin_trgm_ops'],
         #     )
         # ]
@@ -153,7 +153,8 @@ class ConiferProductPrice(ProductPriceAbstract):
 
         if self.extra:
             field = self._meta.get_field('extra')
-            s = f"{field.verbose_name}" if len(s) == 0 else f"{s} {field.verbose_name}"
+            s = f"{field.verbose_name}" if len(
+                s) == 0 else f"{s} {field.verbose_name}"
 
         return f"{self.price}" if len(s) == 0 else f"{s} ={self.price} руб."
 

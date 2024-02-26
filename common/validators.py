@@ -3,7 +3,7 @@ from django.core.validators import RegexValidator
 decimal_comma = '\d{1,3}(\,\d{1,3})?'
 
 SizeValidator = RegexValidator(
-    r'^[0-9+\-\+дот, ]+$', 'Можно вводить цифры, "-" и "+"')
+    r'^[0-9+\-\+\/дот, ]+$', 'Можно вводить цифры, "/", "-" и "+"')
 
 # SizeUnitValidator = RegexValidator(
 #     r'^[0-9+\-дотсм, ]+$', 'Можно вводить цифры, от, до, м, см, "-" и ","')
