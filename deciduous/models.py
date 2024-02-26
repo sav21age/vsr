@@ -9,7 +9,8 @@ from django.contrib.postgres.search import SearchVectorField
 
 
 class DecSpecies(PlantSpeciesAbstract):
-    class Meta:
+    class Meta(PlantSpeciesAbstract.Meta):
+        abstract = False
         verbose_name = 'вид лиственных растений'
         verbose_name_plural = 'виды лиственных растений'
 
@@ -43,11 +44,11 @@ class DecProduct(PlantProductAbstract):
         'размер соцветия, см', max_length=7, blank=True,
         validators=(SizeValidator,),
         help_text='Можно вводить цифры, от, до, "-". Например: 5, 5-10, от 5, до 5.', )
-   
+
     planting = models.ManyToManyField(
         PlantPlanting, verbose_name='место посадки', related_name='+',
         blank=True,)
-    
+
     winter_zone = models.CharField(
         'зона зимостойкости в градусах', max_length=15, blank=True,)
 

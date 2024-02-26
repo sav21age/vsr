@@ -12,7 +12,8 @@ from django.contrib.contenttypes import fields
 
 
 class ConiferSpecies(PlantSpeciesAbstract):
-    class Meta:
+    class Meta(PlantSpeciesAbstract.Meta):
+        abstract = False
         verbose_name = 'вид хвойных растений'
         verbose_name_plural = 'виды хвойных растений'
 

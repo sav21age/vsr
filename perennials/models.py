@@ -9,7 +9,8 @@ from django.contrib.postgres.search import SearchVectorField
 
 
 class PerSpecies(PlantSpeciesAbstract):
-    class Meta:
+    class Meta(PlantSpeciesAbstract.Meta):
+        abstract = False
         verbose_name = 'вид многолетних растений'
         verbose_name_plural = 'виды многолетних растений'
 
