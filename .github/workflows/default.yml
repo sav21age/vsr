@@ -36,6 +36,13 @@ jobs:
           file: Dockerfile-nginx
           tags: ${{ secrets.DOCKER_USER }}/vsr-nginx:latest
 
+      - name: push vsr-postgres
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          file: Dockerfile-postgres
+          tags: ${{ secrets.DOCKER_USER }}/vsr-postgres:latest
+
 
   deploy:
     environment: production
