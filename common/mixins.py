@@ -13,7 +13,7 @@ class LoginRequiredMixin():
 
 
 class PerPageMixin():
-    per_page_allowed = (8, 12, 16, 24, 36)
+    per_page_allowed = (12, 24, 36, 48, 60)
     per_page_default = 12
 
     def get_paginate_by(self, queryset):
