@@ -19,7 +19,7 @@ class ConiferSpeciesAdmin(PlantSpeciesAbstractAdmin):
 
 class ConiferProductPriceInline(ProductPriceInline):
     model = ConiferProductPrice
-    fields = ('container', 'height', 'width',
+    fields = ('container', 'height', 'width', 'trunk_diameter',
               'rs', 'shtamb', 'extra', 'price', )
 
 

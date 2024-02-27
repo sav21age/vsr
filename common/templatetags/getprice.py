@@ -19,12 +19,15 @@ def get_price_params_popover(obj):
     if hasattr(obj, 'height') and obj.height:
         s = f"{s}<div><strong>{obj.height}</strong> - Высота, см.</div>"
 
+    if hasattr(obj, 'width') and obj.width:
+        s = f"{s}<div><strong>{obj.width}</strong> - Ширина, см.</div>"
+
+    if hasattr(obj, 'trunk_diameter') and obj.trunk_diameter:
+        s = f"{s}<div><strong>{obj.trunk_diameter}</strong> - Диаметр ствола, см.</div>"
+
     if hasattr(obj, 'shtamb') and obj.shtamb:
         field = obj._meta.get_field('shtamb')
         s = f"{s}<div><strong>{field.verbose_name} {obj.shtamb}</strong> - {field.help_text}</div>"
-
-    if hasattr(obj, 'width') and obj.width:
-        s = f"{s}<div><strong>{obj.width}</strong> - Ширина, см.</div>"
 
     if hasattr(obj, 'rs') and obj.rs:
         s = f"{s}<div><strong>{obj.rs}</strong> - {obj.rs.description}</div>"

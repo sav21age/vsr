@@ -16,7 +16,7 @@ class FruitSpeciesAdmin(PlantSpeciesAbstractAdmin):
 
 class FruitProductPriceInline(ProductPriceInline):
     model = FruitProductPrice
-    fields = ('container', 'height', 'width',
+    fields = ('container', 'height', 'width', 'trunk_diameter',
               'rs', 'age', 'price', )
 
 

@@ -38,14 +38,20 @@ def get_price_properties(obj):
     if hasattr(obj, 'container') and obj.container:
         s = f"{obj.container} "
 
-    if hasattr(obj, 'height') and obj.height:
-        s = f"{s}{obj.height} "
+    if (hasattr(obj, 'height') and obj.height) and (hasattr(obj, 'width') and obj.width):
+        s = f"{s}{obj.height}x{obj.width} "
+    else:
+        if hasattr(obj, 'height') and obj.height:
+            s = f"{s}{obj.height} "
+
+        if hasattr(obj, 'width') and obj.width:
+            s = f"{s}{obj.width} "
+
+    if hasattr(obj, 'trunk_diameter') and obj.trunk_diameter:
+        s = f"{s}{obj.trunk_diameter} "
 
     if hasattr(obj, 'shtamb') and obj.shtamb:
         s = f"{s}{obj._meta.get_field('shtamb').verbose_name} {obj.shtamb} "
-
-    if hasattr(obj, 'width') and obj.width:
-        s = f"{s}{obj.width} "
 
     if hasattr(obj, 'rs') and obj.rs:
         s = f"{s}{obj.rs} "
