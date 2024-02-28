@@ -78,7 +78,7 @@ class RoseProductPriceAdmin(ProductPriceAbstractAdmin):
     list_filter = (RosePriceContainerFilter,)
     fields = ('product', 'container', 'price', )
     list_display = ('get_product', 'price', )
-    show_facets = admin.ShowFacets.ALWAYS
+    show_facets = admin.ShowFacets.ALLOW
 
     def get_product(self, obj=None):
         if obj:

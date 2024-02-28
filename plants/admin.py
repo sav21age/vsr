@@ -11,6 +11,9 @@ admin.site.register(PlantDivision)
 @admin.register(PlantGenus)
 class PlantGenusAdmin(admin.ModelAdmin):
     list_display = ('name', 'division', )
+    list_filter = ('division',)
+    search_fields = ('name',)
+    search_help_text = 'Поиск по роду'
 
     # def get_permission(self, request):
     #     resolved = resolve(request.path_info)
@@ -40,7 +43,7 @@ admin.site.register(PlantPlanting)
 
 @admin.register(PlantPriceContainer)
 class PlantPriceContainerAdmin(admin.ModelAdmin):
-    list_display = ('name', 'order_number', )
+    list_display = ('name', 'order_number', 'description', )
 
 
 admin.site.register(PlantAdvantage)

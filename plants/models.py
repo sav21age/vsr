@@ -27,7 +27,7 @@ class PlantGenus(models.Model):
         PlantDivision, verbose_name='отдел', on_delete=models.CASCADE,
         help_text='Классификация растений: Отдел. Пример: Хвойные.',)
     name = models.CharField(
-        'род', max_length=100, unique=True, 
+        'род', max_length=100,
         help_text='Классификация растений: Отдел \ Род. Пример: Хвойные \ Ель.',)
 
     def __str__(self):
@@ -55,6 +55,7 @@ class PlantSpeciesAbstract(models.Model):
     class Meta:
         abstract = True
         ordering = ('name', )
+        unique_together = (('name', 'genus'),)
 
 # --
 
