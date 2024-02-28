@@ -40,6 +40,8 @@ class FruitProduct(PlantProductAbstract):
         FruitSpecies, verbose_name='вид', on_delete=models.CASCADE,
         help_text='Классификация растений: Отдел \ Род \ Вид. Пример: Хвойные \ Ель \ Ель канадская.', )
 
+    features = models.CharField('особенности', max_length=250, blank=True)
+    
     flowering = models.CharField('цветение', max_length=7, blank=True, )
     
     rootstock = models.CharField('подвой', max_length=15, blank=True, )

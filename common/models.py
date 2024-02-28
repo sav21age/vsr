@@ -33,8 +33,7 @@ class ProductAbstract(PageAbstract):
     # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     short_description = models.CharField('короткое описание', max_length=250)
     description = models.TextField('описание', blank=True)
-    features = models.CharField('особенности', max_length=250, blank=True)
-
+    
     images = fields.GenericRelation(Image)
     favorites = fields.GenericRelation(Favorites)
 

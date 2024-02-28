@@ -26,6 +26,8 @@ class ConiferProduct(PlantProductAbstract):
         ConiferSpecies, verbose_name='вид', on_delete=models.CASCADE,
         help_text='Классификация растений: Отдел \ Род \ Вид. Пример: Хвойные \ Ель \ Ель канадская.', )
 
+    features = models.CharField('особенности', max_length=250, blank=True)
+
     needles = models.CharField('хвоя', max_length=250, blank=True, )
 
     height10 = models.CharField(

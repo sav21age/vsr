@@ -13,6 +13,7 @@ class PageAbstractAdmin(admin.ModelAdmin):
     show_facets = admin.ShowFacets.NEVER
     save_on_top = True
     prepopulated_fields = {'slug': ('name', )}
+    list_per_page = 40
     formfield_overrides = formfield_overrides
     fieldsets = (
         ('', {
