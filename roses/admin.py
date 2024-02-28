@@ -20,7 +20,7 @@ class RoseProductPriceInline(ProductPriceInline):
 @admin.register(RoseProduct)
 class RoseProductAdmin(ProductAbstractAdmin):
     form = RoseProductAdminForm
-    # list_filter = (DecProductGenusFilter, )
+    list_filter = ('species', )
     inlines = [RoseProductPriceInline, ImageInline, ]
     filter_horizontal = ('advantages', )
     fieldsets = (
