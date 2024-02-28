@@ -1,10 +1,10 @@
 from django.contrib import admin
 from common.admin import ProductAbstractAdmin, ProductPriceAbstractAdmin, ProductPriceInline
 from common.filters import PriceContainerFilter
-from common.templatetags.getprice import get_price_params
+from common.helpers import get_price_properties
 from fruits.filters import FruitProductGenusFilter, FruitProductPriceGenusFilter
 from fruits.forms import FruitProductAdminForm, FruitSpeciesAdminForm
-from fruits.models import FruitProduct, FruitProductPrice, FruitProductPriceAge, FruitSpecies
+from fruits.models import FruitProduct, FruitProductPrice, FruitSpecies
 from images.admin import ImageInline
 from plants.admin import PlantSpeciesAbstractAdmin
 
@@ -16,7 +16,7 @@ class FruitSpeciesAdmin(PlantSpeciesAbstractAdmin):
 
 class FruitProductPriceInline(ProductPriceInline):
     model = FruitProductPrice
-    fields = ('container', 'height', 'width', 'trunk_diameter',
+    fields = ('container', 'height', 'width',
               'rs', 'age', 'price', )
 
 
@@ -73,6 +73,6 @@ class FruitProductPriceAdmin(ProductPriceAbstractAdmin):
 
     def get_product(self, obj=None):
         if obj:
-            return f"{obj.product} {get_price_params(obj)}"
+            return f"{obj.product} {get_price_properties(obj)}"
         return ''
     get_product.short_description = 'растение'

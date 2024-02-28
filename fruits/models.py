@@ -132,9 +132,6 @@ class FruitProductPrice(ProductPriceAbstract):
     width = models.CharField(
         'ширина, см', max_length=7, blank=True, validators=(SizeValidator,))
 
-    trunk_diameter = models.CharField(
-        'диаметр ствола, см', max_length=7, blank=True, validators=(SizeValidator,))
-
     rs = models.ForeignKey(
         PlantPriceRootSystem, verbose_name='корневая система', blank=True, null=True, on_delete=models.CASCADE)
 

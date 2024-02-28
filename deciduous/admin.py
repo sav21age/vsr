@@ -1,8 +1,7 @@
 from django.contrib import admin
 from common.admin import ProductAbstractAdmin, ProductPriceAbstractAdmin, ProductPriceInline
 from common.filters import PriceContainerFilter
-from common.forms import ProductAdminForm
-from common.templatetags.getprice import get_price_params
+from common.helpers import get_price_properties
 from deciduous.filters import DecProductGenusFilter, DecProductPriceGenusFilter
 from deciduous.forms import DecProductAdminForm, DecSpeciesAdminForm
 from deciduous.models import DecProduct, DecProductPrice, DecSpecies
@@ -70,6 +69,6 @@ class DecProductPriceAdmin(ProductPriceAbstractAdmin):
 
     def get_product(self, obj=None):
         if obj:
-            return f"{obj.product} {get_price_params(obj)}"
+            return f"{obj.product} {get_price_properties(obj)}"
         return ''
     get_product.short_description = 'растение'

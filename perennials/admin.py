@@ -1,7 +1,7 @@
 from django.contrib import admin
 from common.admin import ProductAbstractAdmin, ProductPriceAbstractAdmin, ProductPriceInline
 from common.filters import PriceContainerFilter
-from common.forms import ProductAdminForm
+from common.helpers import get_price_properties
 from images.admin import ImageInline
 from perennials.filters import PerProductGenusFilter, PerProductPriceGenusFilter
 from perennials.forms import PerProductAdminForm, PerSpeciesAdminForm
@@ -63,4 +63,10 @@ class PerProductPriceAdmin(ProductPriceAbstractAdmin):
     
     list_filter = (PerProductPriceGenusFilter, PriceContainerFilter,)
     fields = ('product', 'container', 'price', )
-    list_display = ('product', 'container', 'price', )
+    list_display = ('get_product', 'price', )
+
+    def get_product(self, obj=None):
+        if obj:
+            return f"{obj.product} {get_price_properties(obj)}"
+        return ''
+    get_product.short_description = 'растение'
