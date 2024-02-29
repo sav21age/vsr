@@ -30,6 +30,12 @@
     {% endfor %}
     </tbody>
 </table>
+<button type="button" class="btn btn-primary" id="addToCart" value="{% url 'carts:add' %}">Добавить в корзину</button>
+
+<div class="row mt-4">
+    {% include 'common/detailview/delivery.html' %}
+</div>
+{% else %}
+<button type="button" class="btn btn-dark mt-3" disabled>Нет в наличии</button>
 {% endif %}
 {% csrf_token %}
-<button type="button" class="btn btn-primary" id="addToCart" value="{% url 'carts:add' %}">Добавить в корзину</button>
