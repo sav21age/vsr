@@ -35,6 +35,7 @@ class PlantGenus(models.Model):
 
     class Meta:
         ordering = ('name', )
+        unique_together = (('name', 'division'),)
         verbose_name = 'род растений'
         verbose_name_plural = 'рода растений'
 
@@ -55,7 +56,7 @@ class PlantSpeciesAbstract(models.Model):
     class Meta:
         abstract = True
         ordering = ('name', )
-        unique_together = (('name', 'genus'),)
+        # unique_together = (('name', 'genus'),)
 
 # --
 
