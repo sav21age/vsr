@@ -55,9 +55,9 @@ class RoseProductAdminForm(PlantWinterZoneAdminForm, ProductAdminForm):
 
     CHOICES_LMS = (
         (None, '---------'),
-        ('слабая', 'слабая'),
+        ('низкая', 'низкая'),
         ('средняя', 'средняя'),
-        ('сильная', 'сильная'),
+        ('высокая', 'высокая'),
     )
     resistance_fungus = forms.ChoiceField(
         widget=forms.Select(attrs={'style': 'width: 150px;'}),
