@@ -1,12 +1,13 @@
 from django.contrib import admin
 from common.admin import ProductAbstractAdmin, ProductPriceAbstractAdmin, ProductPriceInline
-from common.filters import PriceContainerFilter
+from common.filters import (
+    ProductGenusAdminFilter, ProductPriceContainerAdminFilter, ProductPriceGenusAdminFilter)
 from common.helpers import get_price_properties
 from images.admin import ImageInline
-from perennials.filters import PerProductGenusFilter, PerProductPriceGenusFilter
 from perennials.forms import PerProductAdminForm, PerSpeciesAdminForm
 from perennials.models import PerProduct, PerProductPrice, PerSpecies
 from plants.admin import PlantSpeciesAbstractAdmin
+from plants.models import PlantPriceContainer
 
 
 @admin.register(PerSpecies)
@@ -19,10 +20,17 @@ class PerProductPriceInline(ProductPriceInline):
     fields = ('container', 'price', )
 
 
+# --
+
+
+class PerProductGenusAdminFilter(ProductGenusAdminFilter):
+    division_name = 'PER'
+
+
 @admin.register(PerProduct)
 class PerProductAdmin(ProductAbstractAdmin):
     form = PerProductAdminForm
-    list_filter = (PerProductGenusFilter, )
+    list_filter = (PerProductGenusAdminFilter, )
     inlines = [PerProductPriceInline, ImageInline, ]
     filter_horizontal = ('advantages', )
     fieldsets = (
@@ -54,14 +62,37 @@ class PerProductAdmin(ProductAbstractAdmin):
     )
 
 
+# --
+
+
+class PerProductPriceGenusAdminFilter(ProductPriceGenusAdminFilter):
+    division_name = 'PER'
+
+
+class PerProductPriceContainerAdminFilter(ProductPriceContainerAdminFilter):
+    def lookups(self, request, model_admin):
+        qs = PerProductPrice.objects.exclude(container_id__isnull=True)\
+            .order_by('container_id')\
+            .distinct('container_id')\
+            .values_list('container_id', flat=True)
+
+        lst = list(qs)
+
+        qs = PlantPriceContainer.objects.filter(id__in=lst)\
+            .order_by('order_number')
+
+        return [(o.id, o.name) for o in qs]
+
+
 @admin.register(PerProductPrice)
 class PerProductPriceAdmin(ProductPriceAbstractAdmin):
     def get_queryset(self, request):
         return super().get_queryset(request) \
             .select_related('product') \
             .select_related('container')
-    
-    list_filter = (PerProductPriceGenusFilter, PriceContainerFilter,)
+
+    list_filter = (PerProductPriceGenusAdminFilter,
+                   PerProductPriceContainerAdminFilter,)
     fields = ('product', 'container', 'price', )
     list_display = ('get_product', 'price', )
 

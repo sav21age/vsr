@@ -1,12 +1,13 @@
 from django.contrib import admin
 from common.admin import ProductAbstractAdmin, ProductPriceAbstractAdmin, ProductPriceInline
-from common.filters import PriceContainerFilter
+from common.filters import (
+    ProductGenusAdminFilter, ProductPriceContainerAdminFilter, ProductPriceGenusAdminFilter)
 from common.helpers import get_price_properties
-from deciduous.filters import DecProductGenusFilter, DecProductPriceGenusFilter
 from deciduous.forms import DecProductAdminForm, DecSpeciesAdminForm
 from deciduous.models import DecProduct, DecProductPrice, DecSpecies
 from images.admin import ImageInline
 from plants.admin import PlantSpeciesAbstractAdmin
+from plants.models import PlantPriceContainer
 
 
 @admin.register(DecSpecies)
@@ -18,12 +19,19 @@ class DecProductPriceInline(ProductPriceInline):
     model = DecProductPrice
     fields = ('container', 'height', 'width', 'trunk_diameter',
               'rs', 'shtamb', 'extra', 'price', )
-   
+
+
+#--
+
+
+class DecProductGenusAdminFilter(ProductGenusAdminFilter):
+    division_name = 'DEC'
+
 
 @admin.register(DecProduct)
 class DecProductAdmin(ProductAbstractAdmin):
     form = DecProductAdminForm
-    list_filter = (DecProductGenusFilter, )
+    list_filter = (DecProductGenusAdminFilter, )
     inlines = [DecProductPriceInline, ImageInline, ]
     filter_horizontal = ('advantages', )
     fieldsets = (
@@ -54,6 +62,29 @@ class DecProductAdmin(ProductAbstractAdmin):
         }),
     )
 
+
+#--
+
+
+class DecProductPriceGenusAdminFilter(ProductPriceGenusAdminFilter):
+    division_name = 'DEC'
+
+
+class DecProductPriceContainerAdminFilter(ProductPriceContainerAdminFilter):
+    def lookups(self, request, model_admin):
+        qs = DecProductPrice.objects.exclude(container_id__isnull=True)\
+            .order_by('container_id')\
+            .distinct('container_id')\
+            .values_list('container_id', flat=True)
+
+        lst = list(qs)
+
+        qs = PlantPriceContainer.objects.filter(id__in=lst)\
+            .order_by('order_number')
+
+        return [(o.id, o.name) for o in qs]
+
+
 @admin.register(DecProductPrice)
 class DecProductPriceAdmin(ProductPriceAbstractAdmin):
     def get_queryset(self, request):
@@ -62,7 +93,7 @@ class DecProductPriceAdmin(ProductPriceAbstractAdmin):
             .select_related('container') \
             .select_related('rs')
 
-    list_filter = (DecProductPriceGenusFilter, PriceContainerFilter,)
+    list_filter = (DecProductPriceGenusAdminFilter, DecProductPriceContainerAdminFilter,)
     fields = ('product', 'container', 'height', 'width',
               'rs', 'shtamb', 'extra', 'price', )
     list_display = ('get_product', 'price', )

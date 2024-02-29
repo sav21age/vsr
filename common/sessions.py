@@ -38,25 +38,25 @@ class persist_session_vars(object):
             return response
 
         return inner
-    
 
-class PersistLogoutMixin():
-    vars = ['cart_id',]
 
-    def logout(self):
-        session_backup = {}
-        for var in self.vars:
-            try:
-                session_backup[var] = self.request.session[var]
-            except KeyError:
-                # print('KeyError')
-                pass
+# class PersistLogoutMixin():
+#     vars = ['cart_id',]
 
-        response = super().logout()
+#     def logout(self):
+#         session_backup = {}
+#         for var in self.vars:
+#             try:
+#                 session_backup[var] = self.request.session[var]
+#             except KeyError:
+#                 # print('KeyError')
+#                 pass
 
-        for var, value in session_backup.items():
-            self.request.session[var] = value
+#         response = super().logout()
 
-        # request.session.modified = True
+#         for var, value in session_backup.items():
+#             self.request.session[var] = value
 
-        return response
+#         # request.session.modified = True
+
+#         return response

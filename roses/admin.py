@@ -1,11 +1,12 @@
 from django.contrib import admin
-from django.contrib.admin import SimpleListFilter
 from common.admin import ProductAbstractAdmin, ProductPriceAbstractAdmin, ProductPriceInline
-from common.filters import PriceContainerFilter
+from common.filters import ProductPriceContainerAdminFilter
 from common.helpers import get_price_properties
 from images.admin import ImageInline
+from plants.models import PlantPriceContainer
 from roses.forms import RoseProductAdminForm, RoseSpeciesAdminForm
 from roses.models import RoseProduct, RoseProductPrice, RoseSpecies
+
 
 @admin.register(RoseSpecies)
 class RoseSpeciesAdmin(admin.ModelAdmin):
@@ -15,6 +16,9 @@ class RoseSpeciesAdmin(admin.ModelAdmin):
 class RoseProductPriceInline(ProductPriceInline):
     model = RoseProductPrice
     fields = ('container', 'price', )
+
+
+# --
 
 
 @admin.register(RoseProduct)
@@ -49,24 +53,23 @@ class RoseProductAdmin(ProductAbstractAdmin):
     )
 
 
-class RosePriceContainerFilter(SimpleListFilter):
-    title = 'Контейнер'
-    parameter_name = 'container'
-    container = ''
+# --
 
+
+class RoseProductPriceContainerAdminFilter(ProductPriceContainerAdminFilter):
     def lookups(self, request, model_admin):
-        qs = RoseProductPrice.objects.select_related('container')\
-            .only('container__id', 'container__name')\
-            .order_by('container__id')\
-            .distinct('container__id')
-        return [(o.container.id, o.container.name) for o in qs]
+        qs = RoseProductPrice.objects.exclude(container_id__isnull=True)\
+            .order_by('container_id')\
+            .distinct('container_id')\
+            .values_list('container_id', flat=True)
 
-    def queryset(self, request, queryset):
-        if self.value():
-            return queryset.filter(container__id__exact=self.value())
+        lst = list(qs)
 
-        return queryset
-    
+        qs = PlantPriceContainer.objects.filter(id__in=lst)\
+            .order_by('order_number')
+
+        return [(o.id, o.name) for o in qs]
+
 
 @admin.register(RoseProductPrice)
 class RoseProductPriceAdmin(ProductPriceAbstractAdmin):
@@ -75,7 +78,7 @@ class RoseProductPriceAdmin(ProductPriceAbstractAdmin):
             .select_related('product') \
             .select_related('container')
 
-    list_filter = (RosePriceContainerFilter,)
+    list_filter = (RoseProductPriceContainerAdminFilter,)
     fields = ('product', 'container', 'price', )
     list_display = ('get_product', 'price', )
     show_facets = admin.ShowFacets.ALLOW

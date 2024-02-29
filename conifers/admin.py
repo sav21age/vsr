@@ -1,13 +1,14 @@
 from django.contrib import admin
 from common.admin import ProductAbstractAdmin, ProductPriceAbstractAdmin, ProductPriceInline
-from common.filters import PriceContainerFilter
+from common.filters import (
+    ProductGenusAdminFilter, ProductPriceContainerAdminFilter, ProductPriceGenusAdminFilter)
 from common.helpers import get_price_properties
-from conifers.filters import ConiferProductGenusFilter, ConiferProductPriceGenusFilter
 from conifers.forms import ConiferSpeciesAdminForm, ConiferProductAdminForm
 from conifers.models import (
     ConiferSpecies, ConiferProduct, ConiferProductPrice)
 from images.admin import ImageInline
 from plants.admin import PlantSpeciesAbstractAdmin
+from plants.models import PlantPriceContainer
 
 
 @admin.register(ConiferSpecies)
@@ -21,10 +22,17 @@ class ConiferProductPriceInline(ProductPriceInline):
               'rs', 'shtamb', 'extra', 'price', )
 
 
+# --
+
+
+class ConiferProductGenusAdminFilter(ProductGenusAdminFilter):
+    division_name = 'CON'
+
+
 @admin.register(ConiferProduct)
 class ConiferProductAdmin(ProductAbstractAdmin):
     form = ConiferProductAdminForm
-    list_filter = (ConiferProductGenusFilter, )
+    list_filter = (ConiferProductGenusAdminFilter, )
     inlines = [ConiferProductPriceInline, ImageInline, ]
     filter_horizontal = ('advantages', )
     fieldsets = (
@@ -56,6 +64,34 @@ class ConiferProductAdmin(ProductAbstractAdmin):
     )
 
 
+# --
+
+
+class ConiferProductPriceGenusAdminFilter(ProductPriceGenusAdminFilter):
+    division_name = 'CON'
+
+
+class ConiferProductPriceContainerAdminFilter(ProductPriceContainerAdminFilter):
+    def lookups(self, request, model_admin):
+        # qs = ConiferProductPrice.objects.exclude(container__isnull=True)\
+        #     .select_related('container')\
+        #     .only('container__id', 'container__name')\
+        #     .order_by('container__id')\
+        #     .distinct('container__id')
+        # return [(o.container.id, o.container.name) for o in qs]
+        qs = ConiferProductPrice.objects.exclude(container_id__isnull=True)\
+            .order_by('container_id')\
+            .distinct('container_id')\
+            .values_list('container_id', flat=True)
+
+        lst = list(qs)
+
+        qs = PlantPriceContainer.objects.filter(id__in=lst)\
+            .order_by('order_number')
+        
+        return [(o.id, o.name) for o in qs]
+
+
 @admin.register(ConiferProductPrice)
 class ConiferProductPriceAdmin(ProductPriceAbstractAdmin):
     def get_queryset(self, request):
@@ -64,7 +100,7 @@ class ConiferProductPriceAdmin(ProductPriceAbstractAdmin):
             .select_related('container') \
             .select_related('rs')
     
-    list_filter = (ConiferProductPriceGenusFilter, PriceContainerFilter,)
+    list_filter = (ConiferProductPriceGenusAdminFilter, ConiferProductPriceContainerAdminFilter,)
     fields = ('product', 'container', 'height', 'width',
               'rs', 'shtamb', 'extra', 'price', )
     list_display = ('get_product', 'price', )

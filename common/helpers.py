@@ -1,13 +1,13 @@
-from datetime import datetime
+# from datetime import datetime
 from urllib.parse import urljoin
 from django.conf import settings
-from django.core.files.storage import FileSystemStorage
+# from django.core.files.storage import FileSystemStorage
 import os
 from django.forms import NumberInput, TextInput, Textarea
 from django.db import models
 from codemirror import CodeMirrorTextarea
-from easy_thumbnails.fields import ThumbnailerImageField
-from images.widgets import ImageAdminWidget
+# from easy_thumbnails.fields import ThumbnailerImageField
+# from images.widgets import ImageAdminWidget
 
 
 codemirror_widget = CodeMirrorTextarea(

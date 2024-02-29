@@ -1,8 +1,8 @@
 from django.contrib.admin import SimpleListFilter
-from plants.models import PlantGenus, PlantPriceContainer
+from plants.models import PlantGenus
 
 
-class PlantGenusFilter(SimpleListFilter):
+class PlantGenusAdminFilter(SimpleListFilter):
     title = 'Род'
     parameter_name = 'genus'
     division_name = ''
@@ -12,36 +12,48 @@ class PlantGenusFilter(SimpleListFilter):
         return [(o.id, o.name) for o in qs]
 
 
-class ProductGenusFilter(SimpleListFilter):
+class ProductGenusAdminFilter(PlantGenusAdminFilter):
     def queryset(self, request, queryset):
         if self.value():
             return queryset.filter(species__genus=self.value())
         return queryset
 
 
-class ProductPriceGenusFilter(SimpleListFilter):
+class ProductPriceGenusAdminFilter(PlantGenusAdminFilter):
     def queryset(self, request, queryset):
         if self.value():
-            return queryset.filter(product__species__genus=self.value())
+            return queryset.filter(product__species__genus__exact=self.value())
         return queryset
 
 
-class PriceContainerFilter(SimpleListFilter):
+class ProductPriceContainerAdminFilter(SimpleListFilter):
     title = 'Контейнер'
     parameter_name = 'container'
-    container = ''
-
-    def lookups(self, request, model_admin):
-        qs = PlantPriceContainer.objects.all()
-        lst = [(o.id, o.name) for o in qs]
-        lst.append(('None', 'Нет'))
-        return lst
 
     def queryset(self, request, queryset):
-        if self.value() == 'None':
-            return queryset.filter(container__isnull=True)
-
         if self.value():
             return queryset.filter(container__id__exact=self.value())
 
         return queryset
+
+
+
+# class PriceContainerFilter(SimpleListFilter):
+#     title = 'Контейнер'
+#     parameter_name = 'container'
+#     container = ''
+
+#     def lookups(self, request, model_admin):
+#         qs = PlantPriceContainer.objects.all()
+#         lst = [(o.id, o.name) for o in qs]
+#         lst.append(('None', 'Нет'))
+#         return lst
+
+#     def queryset(self, request, queryset):
+#         if self.value() == 'None':
+#             return queryset.filter(container__isnull=True)
+
+#         if self.value():
+#             return queryset.filter(container__id__exact=self.value())
+
+#         return queryset

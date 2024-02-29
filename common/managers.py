@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models import Q
 from django.contrib.postgres.search import SearchVector, SearchQuery, TrigramSimilarity
 
+
 class IsVisibleManager(models.Manager):
     def get_queryset(self):
         return super(IsVisibleManager, self).get_queryset()\
