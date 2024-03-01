@@ -49,10 +49,25 @@ class PlantWinterZoneAdminForm(forms.ModelForm):
         ('3 (-40)', '3 (-40)'),
     )
     winter_zone = forms.ChoiceField(
-        widget=forms.Select(attrs={'style': 'width: 100px;'}),
+        widget=forms.Select(attrs={'style': 'width: 150px;'}),
         choices=CHOICES_WINTER_ZONE, 
         required=False,
         label='Зона зимостойкости в градусах',
+    )
+    
+
+class ShelterWinterAdminForm(forms.ModelForm):
+    CHOICES_SHELTER_WINTER = (
+        (None, '---------'),
+        ('обязательно', 'обязательно'),
+        ('рекомендуется первые 2 года', 'рекомендуется первые 2 года'),
+        ('не нужно', 'не нужно'),
+    )
+    shelter_winter = forms.ChoiceField(
+        widget=forms.Select(attrs={'style': 'width: 200px;'}),
+        choices=CHOICES_SHELTER_WINTER,
+        required=False,
+        label='Укрытие на зиму',
     )
     
     # class Media:

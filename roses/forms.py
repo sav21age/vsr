@@ -1,6 +1,6 @@
 from django import forms
 from common.forms import ProductAdminForm
-from plants.forms import PlantWinterZoneAdminForm
+from plants.forms import PlantWinterZoneAdminForm, ShelterWinterAdminForm
 from plants.models import PlantGenus
 from roses.models import RoseProduct, RoseSpecies
 
@@ -22,7 +22,7 @@ class RoseSpeciesAdminForm(forms.ModelForm):
         exclude = []
 
 
-class RoseProductAdminForm(PlantWinterZoneAdminForm, ProductAdminForm):
+class RoseProductAdminForm(PlantWinterZoneAdminForm, ShelterWinterAdminForm, ProductAdminForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['winter_zone'].widget.attrs['style'] = 'width: 150px;'
@@ -71,20 +71,6 @@ class RoseProductAdminForm(PlantWinterZoneAdminForm, ProductAdminForm):
         required=False,
         label='Устойчивость к дождю',
     )
-    
-    CHOICES_SHELTER_WINTER = (
-        (None, '---------'),
-        ('обязательно', 'обязательно'),
-        ('рекомендуется', 'рекомендуется'),
-        ('первые 2 года', 'первые 2 года'),
-    )
-    shelter_winter = forms.ChoiceField(
-        widget=forms.Select(attrs={'style': 'width: 150px;'}),
-        choices=CHOICES_SHELTER_WINTER,
-        required=False,
-        label='Укрытие на зиму',
-    )
-
 
     class Meta(ProductAdminForm.Meta):
         model = RoseProduct
