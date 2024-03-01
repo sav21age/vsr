@@ -31,6 +31,11 @@ class ConiferProductGenusAdminFilter(ProductGenusAdminFilter):
 
 @admin.register(ConiferProduct)
 class ConiferProductAdmin(ProductAbstractAdmin):
+    def get_queryset(self, request):
+        return super().get_queryset(request) \
+            .prefetch_related('images') \
+            .prefetch_related('coniferproductprice_set')
+
     form = ConiferProductAdminForm
     list_filter = (ConiferProductGenusAdminFilter, )
     inlines = [ConiferProductPriceInline, ImageInline, ]

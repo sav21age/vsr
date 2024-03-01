@@ -1,6 +1,7 @@
 from django.contrib import admin
 from adminsortable2.admin import SortableAdminBase
 from common.helpers import formfield_overrides
+from images.admin import GetImageAdminMixin
 
 
 # class ProductPriceInline(SortableInlineAdminMixin, admin.StackedInline):
@@ -28,9 +29,21 @@ class PageAbstractAdmin(admin.ModelAdmin):
     )
 
 
-class ProductAbstractAdmin(SortableAdminBase, PageAbstractAdmin):
+class GetMinPriceAdminMixin():
+    def get_min_price(self, obj):
+        try:
+            if obj.get_min_price:
+                return f"{obj.get_min_price} руб."
+            return 'нет в наличии'
+        except:
+            return '-'
+    get_min_price.short_description = 'Минимальная цена'
+
+
+class ProductAbstractAdmin(SortableAdminBase, PageAbstractAdmin, GetImageAdminMixin, GetMinPriceAdminMixin):
     search_fields = ('name',)
     search_help_text = 'Поиск по названию'
+    list_display = ('name', 'get_min_price', 'get_image',)
 
 
 class ProductPriceAbstractAdmin(admin.ModelAdmin):
@@ -44,3 +57,4 @@ class ProductPriceAbstractAdmin(admin.ModelAdmin):
 
     def has_add_permission(self, request, obj=None):
         return False
+

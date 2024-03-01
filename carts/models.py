@@ -17,7 +17,7 @@ class Cart(models.Model):
 
     ip = models.CharField(
         'IP адрес', max_length=39, blank=True, )
-    user_agent = models.TextField('user agent', blank=True,)
+    user_agent = models.TextField('user agent', blank=True, null=True)
 
     created_at = models.DateTimeField('дата создания', auto_now_add=True)
     updated_at = models.DateTimeField('дата обновления', auto_now=True)

@@ -31,6 +31,11 @@ class FruitProductGenusAdminFilter(ProductGenusAdminFilter):
 
 @admin.register(FruitProduct)
 class FruitProductAdmin(ProductAbstractAdmin):
+    def get_queryset(self, request):
+        return super().get_queryset(request) \
+            .prefetch_related('images') \
+            .prefetch_related('fruitproductprice_set')
+
     form = FruitProductAdminForm
     list_filter = (FruitProductGenusAdminFilter, )
     inlines = [FruitProductPriceInline, ImageInline, ]
