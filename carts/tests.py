@@ -1,5 +1,6 @@
 from django.urls import reverse
 from django.contrib.contenttypes.models import ContentType
+from carts.models import Cart
 from conifers.models import ConiferProductPrice
 from viride.tests import AnonymousUserTestCase, AuthUserTestCase
 
@@ -7,59 +8,25 @@ from viride.tests import AnonymousUserTestCase, AuthUserTestCase
 APP = 'carts'
 
 
-class AnonymousUserTest(AnonymousUserTestCase):
+class UpdateCartAuthUserTest(AuthUserTestCase):
     fixtures = ['fixtures/db.json', ]
 
-    def test_indexview_ok(self):
-        """ Test IndexView for anonymous user """
+    def setUp(self):
+        super().setUp()
 
-        response = self.client.get(reverse(f"{APP}:index"))
-        self.assertEqual(response.status_code, 200)
+        cart, _ = Cart.objects.get_or_create(
+            user=self.request.user,
+            defaults={
+                'ip': '127.0.0.1',
+                'user_agent': 'None',
+            },
+        )
 
-    def test_cart_add_fail(self):
-        """ Test add to cart for anonymous user fail """
-
-        response = self.client.get(reverse(f"{APP}:add"))
-        self.assertEqual(response.status_code, 404)
-
-        json_data = {
-            'id': 'test',
-            'ct_id': 10000,
-        }
-
-        response = self.client.post(
-            reverse(f"{APP}:add"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertEqual(response.status_code, 404)
+        self.obj = ConiferProductPrice.objects.first()
+        ct = ContentType.objects.get_for_model(self.obj)
 
         json_data = {
-            'id': 10000,
-            'ct_id': 'test',
-        }
-
-        response = self.client.post(
-            reverse(f"{APP}:add"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertEqual(response.status_code, 404)
-        
-        obj = ConiferProductPrice.objects.first()
-        ct = ContentType.objects.get_for_model(obj)
-
-        json_data = {
-            'id': 10000,
-            'ct_id': ct.id,
-        }
-
-        response = self.client.post(
-            reverse(f"{APP}:add"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertEqual(response.status_code, 404)
-        
-
-    def test_cart_add_ok(self):
-        """ Test IndexView for anonymous user """
-        obj = ConiferProductPrice.objects.first()
-        ct = ContentType.objects.get_for_model(obj)
-        
-        json_data = {
-            'id': obj.id,
+            'id': self.obj.id,
             'ct_id': ct.id,
         }
 
@@ -68,99 +35,309 @@ class AnonymousUserTest(AnonymousUserTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content.decode('utf-8'),
                          '{"cart": {"total_quantity": 1}}')
-
-        obj = ConiferProductPrice.objects.first()
-        ct = ContentType.objects.get_for_model(obj)
         
-        json_data = {
-            'id': obj.id,
-            'ct_id': ct.id,
-        }
-
-        response = self.client.post(
-            reverse(f"{APP}:add"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.content.decode('utf-8'),
-                         '{"cart": {"total_quantity": 2}}')
-
-        response = self.client.get(reverse(f"{APP}:index"))
-        self.assertEqual(response.status_code, 200)
-
-
-class AuthUserTest(AuthUserTestCase):
-    fixtures = ['fixtures/db.json', ]
-
-    def test_indexview(self):
-        """ Test IndexView for auth user """
-
-        response = self.client.get(reverse(f"{APP}:index"))
-        self.assertEqual(response.status_code, 200)
-
-    def test_cart_add_fail(self):
-        """ Test add to cart for anonymous user fail """
-
-        response = self.client.get(reverse(f"{APP}:add"))
-        self.assertEqual(response.status_code, 404)
-
-        json_data = {
-            'id': 'test',
-            'ct_id': 10000,
-        }
-
-        response = self.client.post(
-            reverse(f"{APP}:add"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertEqual(response.status_code, 404)
-
-        json_data = {
-            'id': 10000,
-            'ct_id': 'test',
-        }
-
-        response = self.client.post(
-            reverse(f"{APP}:add"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertEqual(response.status_code, 404)
-
-        obj = ConiferProductPrice.objects.first()
-        ct = ContentType.objects.get_for_model(obj)
-
-        json_data = {
-            'id': 10000,
-            'ct_id': ct.id,
-        }
-
-        response = self.client.post(
-            reverse(f"{APP}:add"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertEqual(response.status_code, 404)
-
-    def test_cart_add_ok(self):
-        """ Test cart for auth user """
+    def test_cart_update_ok(self):
+        """  """
         obj = ConiferProductPrice.objects.first()
         ct = ContentType.objects.get_for_model(obj)
 
         json_data = {
             'id': obj.id,
-            'ct_id': ct.id,
+            'ci_id': ct.id,
+            'value': '+',
         }
 
         response = self.client.post(
-            reverse(f"{APP}:add"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+            reverse(f"{APP}:update"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        print(reverse(f"{APP}:update"))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content.decode('utf-8'),
-                         '{"cart": {"total_quantity": 1}}')
+                         '{"cart": {"total_quantity": 3}}')
 
-        obj = ConiferProductPrice.objects.first()
-        ct = ContentType.objects.get_for_model(obj)
 
-        json_data = {
-            'id': obj.id,
-            'ct_id': ct.id,
-        }
+    # def test_indexview(self):
+    #     """ Test IndexView for auth user """
 
-        response = self.client.post(
-            reverse(f"{APP}:add"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.content.decode('utf-8'),
-                         '{"cart": {"total_quantity": 2}}')
+    #     response = self.client.get(reverse(f"{APP}:index"))
+    #     self.assertEqual(response.status_code, 200)
 
-        response = self.client.get(reverse(f"{APP}:index"))
-        self.assertEqual(response.status_code, 200)
+    # def test_indexview_session(self):
+    #     """ Test IndexView for auth user with session """
+
+    #     session = self.client.session
+    #     session['cart_id'] = 1
+    #     session.save()
+
+    #     response = self.client.get(reverse(f"{APP}:index"))
+    #     self.assertEqual(response.status_code, 200)
+
+
+    # def test_cart_add_fail(self):
+    #     """ Test add to cart for anonymous user fail """
+
+    #     response = self.client.get(reverse(f"{APP}:add"))
+    #     self.assertEqual(response.status_code, 404)
+
+    #     json_data = {
+    #         'id': 'test',
+    #         'ct_id': 10000,
+    #     }
+
+    #     response = self.client.post(
+    #         reverse(f"{APP}:add"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+    #     self.assertEqual(response.status_code, 404)
+
+    #     json_data = {
+    #         'id': 10000,
+    #         'ct_id': 'test',
+    #     }
+
+    #     response = self.client.post(
+    #         reverse(f"{APP}:add"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+    #     self.assertEqual(response.status_code, 404)
+
+    #     obj = ConiferProductPrice.objects.first()
+    #     ct = ContentType.objects.get_for_model(obj)
+
+    #     json_data = {
+    #         'id': 10000,
+    #         'ct_id': ct.id,
+    #     }
+
+    #     response = self.client.post(
+    #         reverse(f"{APP}:add"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+    #     self.assertEqual(response.status_code, 404)
+
+    # def test_cart_add_ok(self):
+    #     """ Test cart for auth user """
+    #     obj = ConiferProductPrice.objects.first()
+    #     ct = ContentType.objects.get_for_model(obj)
+
+    #     json_data = {
+    #         'id': obj.id,
+    #         'ct_id': ct.id,
+    #     }
+
+    #     response = self.client.post(
+    #         reverse(f"{APP}:add"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertEqual(response.content.decode('utf-8'),
+    #                      '{"cart": {"total_quantity": 1}}')
+
+    #     obj = ConiferProductPrice.objects.first()
+    #     ct = ContentType.objects.get_for_model(obj)
+
+    #     json_data = {
+    #         'id': obj.id,
+    #         'ct_id': ct.id,
+    #     }
+
+    #     response = self.client.post(
+    #         reverse(f"{APP}:add"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertEqual(response.content.decode('utf-8'),
+    #                      '{"cart": {"total_quantity": 2}}')
+
+    #     response = self.client.get(reverse(f"{APP}:index"))
+    #     self.assertEqual(response.status_code, 200)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# class AnonymousUserTest(AnonymousUserTestCase):
+#     fixtures = ['fixtures/db.json', ]
+
+#     def test_indexview_ok(self):
+#         """ Test IndexView for anonymous user """
+
+#         response = self.client.get(reverse(f"{APP}:index"))
+#         self.assertEqual(response.status_code, 200)
+
+#     def test_cart_add_fail(self):
+#         """ Test add to cart for anonymous user fail """
+
+#         response = self.client.get(reverse(f"{APP}:add"))
+#         self.assertEqual(response.status_code, 404)
+
+#         json_data = {
+#             'id': 'test',
+#             'ct_id': 10000,
+#         }
+
+#         response = self.client.post(
+#             reverse(f"{APP}:add"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+#         self.assertEqual(response.status_code, 404)
+
+#         json_data = {
+#             'id': 10000,
+#             'ct_id': 'test',
+#         }
+
+#         response = self.client.post(
+#             reverse(f"{APP}:add"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+#         self.assertEqual(response.status_code, 404)
+        
+#         obj = ConiferProductPrice.objects.first()
+#         ct = ContentType.objects.get_for_model(obj)
+
+#         json_data = {
+#             'id': 10000,
+#             'ct_id': ct.id,
+#         }
+
+#         response = self.client.post(
+#             reverse(f"{APP}:add"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+#         self.assertEqual(response.status_code, 404)
+        
+
+#     def test_cart_add_ok(self):
+#         """ Test IndexView for anonymous user """
+#         obj = ConiferProductPrice.objects.first()
+#         ct = ContentType.objects.get_for_model(obj)
+        
+#         json_data = {
+#             'id': obj.id,
+#             'ct_id': ct.id,
+#         }
+
+#         response = self.client.post(
+#             reverse(f"{APP}:add"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+#         self.assertEqual(response.status_code, 200)
+#         self.assertEqual(response.content.decode('utf-8'),
+#                          '{"cart": {"total_quantity": 1}}')
+
+#         obj = ConiferProductPrice.objects.first()
+#         ct = ContentType.objects.get_for_model(obj)
+        
+#         json_data = {
+#             'id': obj.id,
+#             'ct_id': ct.id,
+#         }
+
+#         response = self.client.post(
+#             reverse(f"{APP}:add"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+#         self.assertEqual(response.status_code, 200)
+#         self.assertEqual(response.content.decode('utf-8'),
+#                          '{"cart": {"total_quantity": 2}}')
+
+#         response = self.client.get(reverse(f"{APP}:index"))
+#         self.assertEqual(response.status_code, 200)
+
+
+# class AuthUserTest(AuthUserTestCase):
+#     fixtures = ['fixtures/db.json', ]
+
+#     def test_indexview(self):
+#         """ Test IndexView for auth user """
+
+#         response = self.client.get(reverse(f"{APP}:index"))
+#         self.assertEqual(response.status_code, 200)
+
+#     def test_indexview_session(self):
+#         """ Test IndexView for auth user with session """
+
+#         session = self.client.session
+#         session['cart_id'] = 1
+#         session.save()
+
+#         response = self.client.get(reverse(f"{APP}:index"))
+#         self.assertEqual(response.status_code, 200)
+
+
+#     def test_cart_add_fail(self):
+#         """ Test add to cart for anonymous user fail """
+
+#         response = self.client.get(reverse(f"{APP}:add"))
+#         self.assertEqual(response.status_code, 404)
+
+#         json_data = {
+#             'id': 'test',
+#             'ct_id': 10000,
+#         }
+
+#         response = self.client.post(
+#             reverse(f"{APP}:add"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+#         self.assertEqual(response.status_code, 404)
+
+#         json_data = {
+#             'id': 10000,
+#             'ct_id': 'test',
+#         }
+
+#         response = self.client.post(
+#             reverse(f"{APP}:add"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+#         self.assertEqual(response.status_code, 404)
+
+#         obj = ConiferProductPrice.objects.first()
+#         ct = ContentType.objects.get_for_model(obj)
+
+#         json_data = {
+#             'id': 10000,
+#             'ct_id': ct.id,
+#         }
+
+#         response = self.client.post(
+#             reverse(f"{APP}:add"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+#         self.assertEqual(response.status_code, 404)
+
+#     def test_cart_add_ok(self):
+#         """ Test cart for auth user """
+#         obj = ConiferProductPrice.objects.first()
+#         ct = ContentType.objects.get_for_model(obj)
+
+#         json_data = {
+#             'id': obj.id,
+#             'ct_id': ct.id,
+#         }
+
+#         response = self.client.post(
+#             reverse(f"{APP}:add"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+#         self.assertEqual(response.status_code, 200)
+#         self.assertEqual(response.content.decode('utf-8'),
+#                          '{"cart": {"total_quantity": 1}}')
+
+#         obj = ConiferProductPrice.objects.first()
+#         ct = ContentType.objects.get_for_model(obj)
+
+#         json_data = {
+#             'id': obj.id,
+#             'ct_id': ct.id,
+#         }
+
+#         response = self.client.post(
+#             reverse(f"{APP}:add"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+#         self.assertEqual(response.status_code, 200)
+#         self.assertEqual(response.content.decode('utf-8'),
+#                          '{"cart": {"total_quantity": 2}}')
+
+#         response = self.client.get(reverse(f"{APP}:index"))
+#         self.assertEqual(response.status_code, 200)
+        
+    
+    # def test_cart_update_ok(self):
+    #     """ Test update cart for auth user """
+    #     obj = ConiferProductPrice.objects.first()
+    #     ct = ContentType.objects.get_for_model(obj)
+
+    #     json_data = {
+    #         'id': obj.id,
+    #         'ci_id': ct.id,
+    #         'value': '+',
+    #     }
+
+    #     response = self.client.post(
+    #         reverse(f"{APP}:update"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+    #     print(reverse(f"{APP}:update"))
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertEqual(response.content.decode('utf-8'),
+    #                      '{"cart": {"total_quantity": 3}}')

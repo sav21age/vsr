@@ -60,7 +60,7 @@ class DecProductAdmin(ProductAbstractAdmin):
             'fields': ('flowering',  'flowering_period', 'flower_size', 'inflorescence', 'inflorescence_size', )
         }),
         ('', {
-            'fields': ('planting', 'winter_zone', )
+            'fields': ('planting', 'shelter_winter', 'winter_zone', )
         }),
         ('', {
             'fields': ('advantages', 'features', 'description',)

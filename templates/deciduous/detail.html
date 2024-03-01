@@ -65,6 +65,10 @@
             </p>
         {% endif %}
 
+        {% if object.shelter_winter %}
+            <p class="detail-property"><span>Укрытие на зиму:</span> {{object.shelter_winter}}</p>
+        {%endif%}
+
         {% if object.winter_zone %}
             <p class="detail-property"><span>Зона зимостойкости в градусах:</span> {{object.winter_zone}}</p>
         {% endif %}
