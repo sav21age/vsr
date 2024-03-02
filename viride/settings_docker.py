@@ -68,6 +68,6 @@ CACHES = {
     # },
     'file_resubmit': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': os.path.join(os.path.join(BASE_DIR, 'cache'), 'file_resubmit'),
+        'LOCATION': '/tmp/file_resubmit/',
     },
 }

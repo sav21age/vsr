@@ -1,9 +1,11 @@
 from django.utils.safestring import mark_safe
-from django.contrib.admin.widgets import AdminFileWidget
+# from django.contrib.admin.widgets import AdminFileWidget
 from easy_thumbnails.files import get_thumbnailer
+from file_resubmit.admin import AdminResubmitImageWidget
 
 
-class ImageAdminWidget(AdminFileWidget):
+# class ImageAdminWidget(AdminFileWidget):
+class ImageAdminWidget(AdminResubmitImageWidget):
     def render(self, name, value, attrs=None, renderer=None):
         output = []
         if value and getattr(value, 'url', None):
@@ -21,8 +23,7 @@ class ImageAdminWidget(AdminFileWidget):
                          t=thumb
                 )
                 output.append(result)
-            except Exception as e:
-                # logger.error(e)
+            except:
                 pass
 
         output.append(super().render(name, value, attrs))

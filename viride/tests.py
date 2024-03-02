@@ -25,6 +25,8 @@ class AuthUserTestCase(TestCase):
         self.request.user = self.user
 
 
-class AnonymousUserTestCase(TestCase):
+class AnonymUserTestCase(TestCase):
     def setUp(self):
         self.client = Client()
+        self.factory = RequestFactory()
+        self.request = self.factory.get('')

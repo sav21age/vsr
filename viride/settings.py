@@ -223,25 +223,25 @@ THUMBNAIL_ALIASES = {
         # '1920w_poor': {'crop': 'scale', 'size': (1920, 1920), 'quality': 10, 'bw': True},
         # '1920w': {'crop': 'scale', 'size': (1920, 1920), 'quality': 95, },
 
-        'list': {'crop': 'smart', 'size': (270, 320)},
+        'list': {'crop': ',0', 'size': (270, 320)},
 
-        'detail_thumbnail': {'crop': 'smart', 'size': (60, 60)},
+        'detail_thumbnail': {'crop': ',0', 'size': (60, 60)},
         
         'detail': {'crop': 'scale', 'size': (720, 720)},
 
-        '90w': {'crop': 'scale', 'size': (90, 90), 'quality': 95, },
+        # '90w': {'crop': 'scale', 'size': (90, 90), 'quality': 95, },
 
-        '360w_poor': {'crop': 'scale', 'size': (360, 360), 'quality': 10, 'bw': True},
-        '360w': {'crop': 'scale', 'size': (360, 360), 'quality': 95, },
+        # '360w_poor': {'crop': 'scale', 'size': (360, 360), 'quality': 10, 'bw': True},
+        # '360w': {'crop': 'scale', 'size': (360, 360), 'quality': 95, },
 
-        '540w_poor': {'crop': 'scale', 'size': (540, 540), 'quality': 10, 'bw': True},
-        '540w': {'crop': 'scale', 'size': (540, 540), 'quality': 95, },
+        # '540w_poor': {'crop': 'scale', 'size': (540, 540), 'quality': 10, 'bw': True},
+        # '540w': {'crop': 'scale', 'size': (540, 540), 'quality': 95, },
 
-        '720w_poor': {'crop': 'scale', 'size': (720, 720), 'quality': 10, 'bw': True},
-        '720w': {'crop': 'scale', 'size': (720, 720), 'quality': 95, },
+        # '720w_poor': {'crop': 'scale', 'size': (720, 720), 'quality': 10, 'bw': True},
+        # '720w': {'crop': 'scale', 'size': (720, 720), 'quality': 95, },
 
-        '1080w_poor': {'crop': 'scale', 'size': (1080, 1080), 'quality': 10, 'bw': True},
-        '1080w': {'crop': 'scale', 'size': (1080, 1080), 'quality': 95, },
+        # '1080w_poor': {'crop': 'scale', 'size': (1080, 1080), 'quality': 10, 'bw': True},
+        # '1080w': {'crop': 'scale', 'size': (1080, 1080), 'quality': 95, },
     }
 }
 
