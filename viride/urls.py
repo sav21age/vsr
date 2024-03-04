@@ -3,23 +3,40 @@ from django.urls import path, include
 from django.conf import settings
 from django.views.generic import TemplateView
 from django.shortcuts import render
+from django.contrib.auth import views as auth_views
+from django.views.defaults import page_not_found
+from django.contrib.sitemaps.views import sitemap
+from django.views.decorators.cache import cache_page
 from catalog.views import CatalogItemList
+from conifers.sitemap import ConiferProductSitemap
+from contacts.sitemap import ContactsSitemap
 from contacts.views import contacts
+from deciduous.sitemap import DecProductSitemap
 from favorites.views import favorites
+from fruits.sitemap import FruitProductSitemap
 from index.views import index
 from other.views import (
     BookProductDetail, BookProductList, RelatedProductDetail, RelatedProductList)
+from perennials.sitemap import PerProductSitemap
 from profiles.allauth.views import PersistLogoutView, RedirectedPasswordChangeView
+from roses.sitemap import RoseProductSitemap
 from search.views import SearchView
-from django.contrib.auth import views as auth_views
-from django.views.defaults import page_not_found
-
 
 admin.site.site_header = admin.site.site_title = 'Питомник растений «Вириде»'
 
 
 #--
 
+sitemaps = {
+    'roses': RoseProductSitemap,
+    'conifers': ConiferProductSitemap,
+    'decs': DecProductSitemap,
+    'fruits': FruitProductSitemap,
+    'pers': PerProductSitemap,
+    'contacts': ContactsSitemap,
+}
+
+# --
 
 urlpatterns = [
     path('ckeditor5/', include('django_ckeditor_5.urls')),
@@ -72,10 +89,8 @@ urlpatterns = [
     path('privacy-policy/', TemplateView.as_view(
         template_name="privacy-policy/index.html"), name="p-p_template"),
 
-
-    # path('accounts/login/', RedirectView.as_view(pattern_name='', permanent=False)),
-    # path('chaining/', include('smart_selects.urls')),
-    # path("select2/", include("django_select2.urls")),
+    path('sitemap.xml', cache_page(86400, cache='sitemap')(sitemap), {'sitemaps': sitemaps},
+        name='django.contrib.sitemaps.views.sitemap'),
 ]
 
 #--

@@ -53,6 +53,7 @@ RECAPTCHA_PRIVATE_KEY = os.environ.get("SECRET_KEY")
 
 # CACHE_BACKEND = "django.core.cache.backends.dummy.DummyCache"
 CACHE_BACKEND = 'django.core.cache.backends.locmem.LocMemCache'
+CACHE_LOCATION_DIR = os.path.join(BASE_DIR, 'cache')
 
 CACHE_TIMEOUT = os.environ.get("CACHE_TIMEOUT")
 CACHES = {
@@ -70,4 +71,9 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
         'LOCATION': '/tmp/file_resubmit/',
     },
+    'sitemap': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(CACHE_LOCATION_DIR, 'sitemap'),
+    },
+
 }
