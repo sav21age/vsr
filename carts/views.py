@@ -26,7 +26,7 @@ class IndexView(View):
         if request.user.is_authenticated:
             try:
                 cart = Cart.objects.get(user=request.user)
-                request.session['cart_id'] = cart_id
+                request.session['cart_id'] = cart.id
             except:
                 if cart_id:
                     try:

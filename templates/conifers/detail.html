@@ -128,10 +128,9 @@
             {% csrf_token %}
             <button type="button" class="btn btn-primary" id="addToCart" value="{% url 'carts:add' %}">Добавить в корзину</button> {% endcomment %}
 
-<div class="row mt-4">
+{% comment %} <div class="row mt-4">
     {% include 'common/detailview/delivery.html' %}
-
-							</div>
+</div> {% endcomment %}
 							</div>
 
 

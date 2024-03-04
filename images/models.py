@@ -3,16 +3,16 @@ import uuid
 from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
-from common.managers import IsVisibleManager
 from easy_thumbnails.fields import ThumbnailerImageField
+from common.managers import IsVisibleManager
 
 
 def get_image_path(instance, filename):
     f = os.path.splitext(filename)
-    dir = 'images'
+    d = 'images'
     if hasattr(instance, 'upload_to_dir'):
-        dir = '{0}/{1}'.format(dir, instance.upload_to_dir)
-    return '{0}/{1}{2}'.format(dir, uuid.uuid1().hex, f[1].lower())
+        d = f"{d}/{instance.upload_to_dir}"
+    return f"{d}/{uuid.uuid1().hex}{f[1].lower()}"
 
 
 class Image(models.Model):

@@ -1,4 +1,3 @@
-from enum import unique
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
@@ -13,7 +12,7 @@ from common.helpers import get_price_properties
     
 
 class Cart(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True,
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True,
                              related_name='cart', verbose_name='Пользователь',)
 
     ip = models.CharField(

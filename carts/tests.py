@@ -10,15 +10,7 @@ from viride.tests import AnonymUserTestCase, AuthUserTestCase
 APP = 'carts'
 
 
-class IndexCartTestMixin(object):
-    def test_indexview_ok(self):
-        """ Test IndexView for anonymous user """
-
-        response = self.client.get(reverse(f"{APP}:index"))
-        self.assertEqual(response.status_code, 200)
-
-
-class IndexCartAuthUserTest(IndexCartTestMixin, AuthUserTestCase):
+class CartAuthUserTestCase(AuthUserTestCase):
     fixtures = ['fixtures/db.json', ]
 
     def setUp(self):
@@ -52,36 +44,8 @@ class IndexCartAuthUserTest(IndexCartTestMixin, AuthUserTestCase):
 
         self.cart_item = CartItem.objects.get(cart=self.cart)
 
-    def test_indexview_cart_user_not_exists(self):
-        """ Test IndexView for auth user with session """
 
-        Cart.objects.filter(user=self.request.user).delete()
-
-        defaults = {
-            'ip': '127.0.0.1',
-            'user_agent': 'None',
-        }
-
-        cart = Cart(**defaults)
-        cart.save()
-
-        session = self.client.session
-        session['cart_id'] = cart.id
-        session.save()
-
-        response = self.client.get(reverse(f"{APP}:index"))
-        self.assertEqual(response.status_code, 200)
-
-    def test_indexview_cart_not_exists(self):
-        """ Test IndexView for auth user with session """
-
-        Cart.objects.filter(user=self.request.user).delete()
-
-        response = self.client.get(reverse(f"{APP}:index"))
-        self.assertEqual(response.status_code, 200)
-
-
-class IndexCartAnonymUserTest(IndexCartTestMixin, AnonymUserTestCase):
+class CartAnonymUserTest(AnonymUserTestCase):
     fixtures = ['fixtures/db.json', ]
 
     def setUp(self):
@@ -114,6 +78,50 @@ class IndexCartAnonymUserTest(IndexCartTestMixin, AnonymUserTestCase):
                          '{"cart": {"total_quantity": 1}}')
 
         self.cart_item = CartItem.objects.get(cart=self.cart)
+
+
+#--
+
+
+class IndexCartTestMixin(object):
+    def test_show_cart_ok(self):
+        """ Test show cart """
+
+        response = self.client.get(reverse(f"{APP}:index"))
+        self.assertEqual(response.status_code, 200)
+
+
+class IndexCartAuthUserTest(IndexCartTestMixin, CartAuthUserTestCase):
+    def test_indexview_cart_user_not_exists(self):
+        """ Test IndexView for auth user with session """
+
+        Cart.objects.filter(user=self.request.user).delete()
+
+        defaults = {
+            'ip': '127.0.0.1',
+            'user_agent': 'None',
+        }
+
+        cart = Cart(**defaults)
+        cart.save()
+
+        session = self.client.session
+        session['cart_id'] = cart.id
+        session.save()
+
+        response = self.client.get(reverse(f"{APP}:index"))
+        self.assertEqual(response.status_code, 200)
+
+    def test_indexview_cart_not_exists(self):
+        """ Test IndexView for auth user with session """
+
+        Cart.objects.filter(user=self.request.user).delete()
+
+        response = self.client.get(reverse(f"{APP}:index"))
+        self.assertEqual(response.status_code, 200)
+
+
+class IndexCartAnonymUserTest(IndexCartTestMixin, CartAnonymUserTest):
 
     def test_indexview_cart_not_exists(self):
         """ Test IndexView for auth user with session """

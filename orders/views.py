@@ -74,7 +74,7 @@ class CreateOrderAuthUserView(FormView):
         try:
             with transaction.atomic():
                 user = self.request.user
-
+                
                 try:
                     cart = Cart.objects.get(user=user)
                 except:

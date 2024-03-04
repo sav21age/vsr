@@ -4,6 +4,8 @@ from django.test import TestCase, Client, RequestFactory
 from django.http import HttpRequest
 from axes.decorators import axes_dispatch
 
+from profiles.models import Profile
+
 
 class AuthUserTestCase(TestCase):
     # @axes_dispatch
@@ -11,6 +13,7 @@ class AuthUserTestCase(TestCase):
         self.client = Client()
         # self.user = User.objects.create(username='testuser', password='12345', is_active=True, is_staff=True, is_superuser=True)
         self.user = User.objects.create(username='test', email='test@test.com')
+        # self.user.profile = Profile.objects.create(user=self.user)
         self.user.set_password('123456789')
         self.user.save()
         request = HttpRequest()

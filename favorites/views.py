@@ -2,19 +2,28 @@ import json
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponse
+# from conifers.models import ConiferProduct
+# from deciduous.models import DecProduct
+# from fruits.models import FruitProduct
+# from other.models import OtherProduct
+# from perennials.models import PerProduct
+# from roses.models import RoseProduct
+
+
+# CT_ALLOWED = (ConiferProduct, DecProduct, FruitProduct,
+#               PerProduct, RoseProduct, OtherProduct, )
 
 
 @login_required
 def favorites(request):
     if request.META.get('HTTP_X_REQUESTED_WITH') != 'XMLHttpRequest':
         return HttpResponse(status=405)
-    
-    user = request.user
 
     if request.GET.get('id') and (request.GET.get('id')).isdigit():
         object_id = request.GET.get('id')
     else:
         return HttpResponse(status=404)
+
 
     try:
         content_type = ContentType.objects.get_for_id(
@@ -22,17 +31,21 @@ def favorites(request):
     except:
         return HttpResponse(status=404)
 
+    # ct_allowed = ContentType.objects.get_for_models(*CT_ALLOWED)
+    # if content_type.id not in [v.id for v in ct_allowed.values()]:
+    #     return HttpResponse(status=405)
+
     try:
         content_type.get_object_for_this_type(pk=object_id)
     except:
         return HttpResponse(status=404)
 
-    if user.favorites_set.filter(content_type=content_type, object_id=object_id):
-        user.favorites_set.get(content_type=content_type,
-                                object_id=object_id).delete()
+    if request.user.favorites_set.filter(content_type=content_type, object_id=object_id):
+        request.user.favorites_set.get(content_type=content_type,
+                                       object_id=object_id).delete()
         state = False
     else:
-        user.favorites_set.create(
+        request.user.favorites_set.create(
             content_type=content_type, object_id=object_id)
         state = True
 
@@ -41,8 +54,6 @@ def favorites(request):
     }
 
     return HttpResponse(json.dumps(response))
-
-
 
 
 # def favorites(request):

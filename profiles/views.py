@@ -66,7 +66,7 @@ def profile_update(request):
     )
 
 
-class ProfileFavorites(PaginationMixin, LoginRequiredMixin, ListView):
+class ProfileFavorites(LoginRequiredMixin, PaginationMixin, ListView):
     model = Favorites
     template_name = 'profiles/favorites.html'
     paginate_by = 8
@@ -92,7 +92,7 @@ class ProfileFavorites(PaginationMixin, LoginRequiredMixin, ListView):
 #         return qs
 
 
-class ProfileOrderList(PaginationMixin, LoginRequiredMixin, ListView):
+class ProfileOrderList(LoginRequiredMixin, PaginationMixin, ListView):
     model = Order
     template_name = 'profiles/order_list.html'
     paginate_by = 24
