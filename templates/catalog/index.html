@@ -1,198 +1,42 @@
-{% extends "main.html" %} 
-{% load django_bootstrap_breadcrumbs %}
+{% extends 'main.html' %}
+{% load thumbnail django_bootstrap_breadcrumbs %}
 {% block head %}
-<title>Каталог | Viride - садово-парковые растения</title>
-<meta property="og:title" content="Каталог | Viride - садово-парковые растения">
-<meta name="description" content="Каталог">
-<meta property="og:description" content="Каталог">
-<meta property="og:type" content="website">
-{% comment %} <meta property="og:image" content="{{host}}{% static 'images/logo.png' %}"> {% endcomment %}
-{% comment %} <meta property="og:url" content="{{host}}{% url 't-r_list' %}"> {% endcomment %}
-{% endblock %} 
+  <title>Каталог | Viride - садово-парковые растения</title>
+  <meta property="og:title" content="Каталог | Viride - садово-парковые растения" />
+  <meta name="description" content="Каталог" />
+  <meta property="og:description" content="Каталог" />
+  <meta property="og:type" content="website" />
+  {% comment %} <meta property="og:image" content="{{ host }}{% static 'images/logo.png' %}" /> {% endcomment %}
+  {% comment %} <meta property="og:url" content="{{ host }}{% url 't-r_list' %}" /> {% endcomment %}
+{% endblock %}
 
 {% block breadcrumb %}
-{% breadcrumb_for '/' %}<i class="fas fa-home text-white"></i>{% endbreadcrumb_for %}
-{% breadcrumb_for 'catalog' %}Каталог{% endbreadcrumb_for %}
-{% render_breadcrumbs 'breadcrumb.html' %}
+  {% breadcrumb_for '/' %}<i class="fas fa-home text-white"></i>{% endbreadcrumb_for %}
+  {% breadcrumb_for 'catalog' %}Каталог{% endbreadcrumb_for %}
+  {% render_breadcrumbs 'breadcrumb.html' %}
 {% endblock %}
 
 {% block breadcrumb_name %}
-Каталог
+  Каталог
 {% endblock %}
 
 {% block content %}
-<div class="row mt-3 mx-2">
+  <div class="row mt-3 mx-2">
     <div class="col-12">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3 catalog">
-            <div class="col">
-                <div class="carousel-inner card rounded-0 border-0 h-100 mx-2">
-                    <a class="item active" href="{% url 'conifers:list' %}">
-                        <img class="card-img rounded-0 img-fluid" src="/static/images/banners/conifers.jpg" alt="" title="">
-                        <div class="carousel-caption text-center p-4">
-                            <div class="carousel-caption-bg">
-                                Хвойные растения
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col">
-                <div class="carousel-inner card rounded-0 border-0 h-100 mx-2">
-                    <a class="item active" href="{% url 'decs:list' %}">
-                        <img class="card-img rounded-0 img-fluid" src="/static/images/banners/decs.jpg" alt="" title="">
-                        <div class="carousel-caption text-center p-4">
-                                <div class="carousel-caption-bg">
-                                Лиственные растения
-                                </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col">
-                <div class="carousel-inner card rounded-0 border-0 h-100 mx-2">
-                    <a class="item active" href="{% url 'fruits:list' %}">
-                        <img class="card-img rounded-0 img-fluid" src="/static/images/banners/fruits.jpg" alt="" title="">
-                        <div class="carousel-caption text-center p-4">
-                                <div class="carousel-caption-bg">
-                                Плодовые растения
-                                </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col">
-                <div class="carousel-inner card rounded-0 border-0 h-100 mx-2">
-                    <a class="item active" href="{% url 'pers:list' %}">
-                        <img class="card-img rounded-0 img-fluid" src="/static/images/banners/pers.jpg" alt="" title="">
-                        <div class="carousel-caption text-center p-4">
-                                <div class="carousel-caption-bg">
-                                Многолетники
-                                </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col">
-                <div class="carousel-inner card rounded-0 border-0 h-100 mx-2">
-                    <a class="item active" href="{% url 'roses:list' %}">
-                        <img class="card-img rounded-0 img-fluid" src="/static/images/banners/roses.jpg" alt="" title="">
-                        <div class="carousel-caption text-center p-4">
-                                <div class="carousel-caption-bg">
-                                Розы
-                                </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col">
-                <div class="carousel-inner card rounded-0 border-0 h-100 mx-2">
-                    <a class="item active" href="{% url 'pers:list' %}?genus=19">
-                        <img class="card-img rounded-0 img-fluid" src="/static/images/banners/phloxes.jpg" alt="" title="">
-                        <div class="carousel-caption text-center p-4">
-                                <div class="carousel-caption-bg">
-                                Флоксы
-                                </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col">
-                <div class="carousel-inner card rounded-0 border-0 h-100 mx-2">
-                    <a class="item active" href="{% url 'pers:list' %}?genus=20">
-                        <img class="card-img rounded-0 img-fluid" src="/static/images/banners/irises.jpg" alt="" title="">
-                        <div class="carousel-caption text-center p-4">
-                                <div class="carousel-caption-bg">
-                                Ирисы
-                                </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col">
-                <div class="carousel-inner card rounded-0 border-0 h-100 mx-2">
-                    <a class="item active" href="{% url 'pers:list' %}?genus=21">
-                        <img class="card-img rounded-0 img-fluid" src="/static/images/banners/peonies.jpg" alt="" title="">
-                        <div class="carousel-caption text-center p-4">
-                                <div class="carousel-caption-bg">
-                                Пионы
-                                </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col">
-                <div class="carousel-inner card rounded-0 border-0 h-100 mx-2">
-                    <a class="item active" href="{% url 'pers:list' %}?genus=22">
-                        <img class="card-img rounded-0 img-fluid" src="/static/images/banners/hosts.jpg" alt="" title="">
-                        <div class="carousel-caption text-center p-4">
-                                <div class="carousel-caption-bg">
-                                Хосты
-                                </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col">
-                <div class="carousel-inner card rounded-0 border-0 h-100 mx-2">
-                    <a class="item active" href="{% url 'pers:list' %}?genus=25">
-                        <img class="card-img rounded-0 img-fluid" src="/static/images/banners/grasses.jpg" alt="" title="">
-                        <div class="carousel-caption text-center p-4">
-                                <div class="carousel-caption-bg">
-                                Злаки
-                                </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col">
-                <div class="carousel-inner card rounded-0 border-0 h-100 mx-2">
-                    <a class="item active" href="{% url 'decs:list' %}?genus=24">
-                        <img class="card-img rounded-0 img-fluid" src="/static/images/banners/hydrangeas.jpg" alt="" title="">
-                        <div class="carousel-caption text-center p-4">
-                                <div class="carousel-caption-bg">
-                                Гортензии
-                                </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col">
-                <div class="carousel-inner card rounded-0 border-0 h-100 mx-2">
-                    <a class="item active" href="{% url 'decs:list' %}?genus=23">
-                        <img class="card-img rounded-0 img-fluid" src="/static/images/banners/lilac.jpg" alt="" title="">
-                        <div class="carousel-caption text-center p-4">
-                                <div class="carousel-caption-bg">
-                                Сирени
-                                </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col">
-                <div class="carousel-inner card rounded-0 border-0 h-100 mx-2">
-                    <a class="item active" href="{% url 'related_list' %}">
-                        <img class="card-img rounded-0 img-fluid" src="/static/images/banners/garden.jpg" alt="" title="">
-                        <div class="carousel-caption text-center p-4">
-                                <div class="carousel-caption-bg">
-                                Сопутствующие товары
-                                </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col">
-                <div class="carousel-inner card rounded-0 border-0 h-100 mx-2">
-                    <a class="item active" href="{% url 'book_list' %}">
-                        <img class="card-img rounded-0 img-fluid" src="/static/images/banners/books.jpg" alt="" title="">
-                        <div class="carousel-caption text-center p-4">
-                                <div class="carousel-caption-bg">
-                                Книги
-                                </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 catalog">
+        {% for obj in object_list %}
+        <div class="col">
+          <div class="carousel-inner card rounded-0 border-0 h-100 mx-2">
+            <a class="item active" href="{{obj.url}}">
+              <img class="card-img rounded-0 img-fluid" src="{{obj.image_path.path|thumbnail_url:'list'}}" alt="{{obj.image_title}}" title="{{obj.image_title}}">
+              <div class="carousel-caption text-center p-4">
+                <div class="carousel-caption-bg">{{obj.name}}</div>
+              </div>
+            </a>
+          </div>
         </div>
+        {% endfor %}
+      </div>
     </div>
-</div>
+  </div>
 {% endblock %}

@@ -1,9 +1,9 @@
 from django.contrib import admin
-from django.http import Http404
 from django.urls import path, include
 from django.conf import settings
-from django.views.generic import TemplateView, RedirectView
+from django.views.generic import TemplateView
 from django.shortcuts import render
+from catalog.views import CatalogItemList
 from contacts.views import contacts
 from favorites.views import favorites
 from index.views import index
@@ -14,9 +14,12 @@ from search.views import SearchView
 from django.contrib.auth import views as auth_views
 from django.views.defaults import page_not_found
 
-admin.site.site_header = admin.site.site_title = 'Питомник «Вириде»'
+
+admin.site.site_header = admin.site.site_title = 'Питомник растений «Вириде»'
+
 
 #--
+
 
 urlpatterns = [
     path('ckeditor5/', include('django_ckeditor_5.urls')),
@@ -38,8 +41,10 @@ urlpatterns = [
     path('search/', SearchView.as_view(), name='search'),
     path('contacts/', contacts, name='contacts'),
 
-    path('catalog/', TemplateView.as_view(
-        template_name="catalog/index.html"), name="catalog_template"),
+    path('catalog/', CatalogItemList.as_view(), name="catalog_item_list"),
+    # path('catalog/', TemplateView.as_view(
+    #     template_name="catalog/index.html"), name="catalog_template"),
+
     path('catalog/conifers/', include(('conifers.urls','conifers'), namespace='conifers')),
     path('catalog/deciduous/',
          include(('deciduous.urls', 'deciduous'), namespace='decs')),

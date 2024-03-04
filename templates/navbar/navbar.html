@@ -8,12 +8,12 @@
       {% comment %} <a href="#" class="nav-item nav-link" itemprop="url" disabled>Покупателям</a> {% endcomment %}
 
       <div class="nav-item dropdown">
-        <a href="{% url 'catalog_template' %}" class="nav-link dropdown-toggle d-none d-lg-block" aria-expanded="false">Каталог</a>
+        <a href="{% url 'catalog_item_list' %}" class="nav-link dropdown-toggle d-none d-lg-block" aria-expanded="false">Каталог</a>
         <div class="dropdown-menu rounded-0 rounded-bottom m-0">
           {% include 'navbar/menu.html' %}
         </div>
 
-        <a href="{% url 'catalog_template' %}" class="nav-link dropdown-toggle d-block d-lg-none" data-bs-toggle="dropdown" aria-expanded="false">Каталог</a>
+        <a href="{% url 'catalog_item_list' %}" class="nav-link dropdown-toggle d-block d-lg-none" data-bs-toggle="dropdown" aria-expanded="false">Каталог</a>
         <div class="dropdown-menu rounded-0 rounded-bottom m-0">
           {% include 'navbar/menu.html' %}
         </div>

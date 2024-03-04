@@ -14,14 +14,14 @@
 {% comment %} <nav aria-label="breadcrumb">
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="/"><i class="fas fa-home text-white"></i></a></li>
-    <li class="breadcrumb-item"><a href="{% url 'catalog_template' %}">Каталог</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'catalog_item_list' %}">Каталог</a></li>
     <li class="breadcrumb-item"><a href="{% url 'conifers:list' %}">Хвойные растения</a></li>
     <li class="breadcrumb-item active" aria-current="page">{{ object.name }}</li>
 </ol>
 </nav> {% endcomment %}
 
 {% breadcrumb_for '/' %}<i class="fas fa-home text-white"></i>{% endbreadcrumb_for %}
-{% breadcrumb_for 'catalog_template' %}Каталог{% endbreadcrumb_for %}
+{% breadcrumb_for 'catalog_item_list' %}Каталог{% endbreadcrumb_for %}
 {% breadcrumb_for 'conifers:list' %}Хвойные растения{% endbreadcrumb_for %}
 {% breadcrumb_for 'conifers:detail' object.slug %}{{ object.name }}{% endbreadcrumb_for %}
 {% render_breadcrumbs 'breadcrumb.html' %}

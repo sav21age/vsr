@@ -391,7 +391,7 @@ p.detail-property span {
 }
 
 .catalog .carousel-caption {
-  font-size: 28px;
+  font-size: 150%;
   font-weight: 500;
   text-transform: uppercase;
 }

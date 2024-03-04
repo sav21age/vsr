@@ -1,32 +1,32 @@
-{% extends "main.html" %}
+{% extends 'main.html' %}
 {% load thumbnail django_bootstrap_breadcrumbs static %}
 
 {% block head %}
-<title>Многолетние растения | Viride - садово-парковые растения</title>
-<meta property="og:title" content="Многолетние растения | Viride - садово-парковые растения">
-<meta name="description" content="Многолетние растения">
-<meta property="og:description" content="Многолетние растения">
-<meta property="og:type" content="website">
-<meta property="og:url" content="{{host}}{% url 'pers:list' %}">
-{% endblock %} 
+  <title>Многолетние растения | Viride - садово-парковые растения</title>
+  <meta property="og:title" content="Многолетние растения | Viride - садово-парковые растения" />
+  <meta name="description" content="Многолетние растения" />
+  <meta property="og:description" content="Многолетние растения" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="{{ host }}{% url 'pers:list' %}" />
+{% endblock %}
 
 {% block breadcrumb_name %}
-Многолетние растения 
+  Многолетние растения
 {% endblock %}
 
 {% block breadcrumb %}
-{% breadcrumb_for '/' %}<i class="fas fa-home text-white"></i>{% endbreadcrumb_for %}
-{% breadcrumb_for 'catalog_template' %}Каталог{% endbreadcrumb_for %}
-{% breadcrumb_for 'pers:list' %}Многолетние растения{% endbreadcrumb_for %}
-{% render_breadcrumbs 'breadcrumb.html' %}
-{% endblock%}
+  {% breadcrumb_for '/' %}<i class="fas fa-home text-white"></i>{% endbreadcrumb_for %}
+  {% breadcrumb_for 'catalog_item_list' %}Каталог{% endbreadcrumb_for %}
+  {% breadcrumb_for 'pers:list' %}Многолетние растения{% endbreadcrumb_for %}
+  {% render_breadcrumbs 'breadcrumb.html' %}
+{% endblock %}
 
 {% block content %}
-<div class="row mx-2">
+  <div class="row mx-2">
     <div class="col-12">
-        {% include 'common/listview/filters.html' %}
-        {% include 'common/listview/cards.html' %}
-        {% include 'pagination.html' %}
+      {% include 'common/listview/filters.html' %}
+      {% include 'common/listview/cards.html' %}
+      {% include 'pagination.html' %}
     </div>
-</div>
+  </div>
 {% endblock %}

@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'common',
     'search',
     'index',
+    'catalog',
     'plants',
     'pricelist',
     'contacts',

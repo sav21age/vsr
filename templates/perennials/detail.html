@@ -1,107 +1,143 @@
-{% extends "main.html" %}
+{% extends 'main.html' %}
 {% load thumbnail markdownify django_bootstrap_breadcrumbs %}
 
 {% block head %}
   {% include 'head.html' %}
-  {% comment %} <meta property="og:url" content="{{host}}{% url 't-r_list' %}"> {% endcomment %}
-{% endblock %} 
+  {% comment %} <meta property="og:url" content="{{ host }}{% url 't-r_list' %}" /> {% endcomment %}
+{% endblock %}
 
 {% block breadcrumb_name %}
-{{ object.name }}
+  {{ object.name }}
 {% endblock %}
 
 {% block breadcrumb %}
-{% breadcrumb_for '/' %}<i class="fas fa-home text-white"></i>{% endbreadcrumb_for %}
-{% breadcrumb_for 'catalog_template' %}Каталог{% endbreadcrumb_for %}
-{% breadcrumb_for 'pers:list' %}Многолетние растения{% endbreadcrumb_for %}
-{% breadcrumb_for 'pers:detail' object.slug %}{{ object.name }}{% endbreadcrumb_for %}
-{% render_breadcrumbs 'breadcrumb.html' %}
-{% endblock%}
+  {% breadcrumb_for '/' %}<i class="fas fa-home text-white"></i>{% endbreadcrumb_for %}
+  {% breadcrumb_for 'catalog_item_list' %}Каталог{% endbreadcrumb_for %}
+  {% breadcrumb_for 'pers:list' %}Многолетние растения{% endbreadcrumb_for %}
+  {% breadcrumb_for 'pers:detail' object.slug %}{{ object.name }}{% endbreadcrumb_for %}
+  {% render_breadcrumbs 'breadcrumb.html' %}
+{% endblock %}
 
 {% block content %}
-<div class="row mt-3 mx-2">
+  <div class="row mt-3 mx-2">
     <div class="col-12 col-md-5">
-        {% include 'common/detailview/images_gallery.html' %}
+      {% include 'common/detailview/images_gallery.html' %}
     </div>
     <div class="col-12 col-md-7">
-        <p>{{object.short_description}}</p>
+      <p>{{ object.short_description }}</p>
 
-        {% if object.scientific_name %}
-        <p class="detail-property"><span>Научное название:</span> {{object.scientific_name}}</p>
-        {% endif %}
-
-        {% if object.leaves %}
-            <p class="detail-property"><span>Листва:</span> {{object.leaves}}</p>
-        {% endif %}
-
-        {% if object.height or object.width %}
-        <p class="detail-property"><span>Размеры взрослого растения:</span> 
-            {% if object.height %}высота {{object.height}}{% if object.width %},{%else%}.{% endif %}{% endif %}
-            {% if object.width %}ширина {{object.width}}.{% endif %}
+      {% if object.scientific_name %}
+        <p class="detail-property">
+          <span>Научное название:</span> {{ object.scientific_name }}
         </p>
-        {% endif%}
+      {% endif %}
 
-        {% if object.flowering %}
-            <p class="detail-property"><span>Цветение:</span> {{object.flowering}}</p>
-        {% endif %}
-
-        {% if object.flowering_duration %}
-            <p class="detail-property"><span>Продолжительность цветения в днях:</span> {{object.flowering_duration}}</p>
-        {% endif %}
-
-        {% if object.flowering_period %}
-            <p class="detail-property"><span>Период цветения:</span> {{object.flowering_period}}</p>
-        {% endif %}
-
-        {% if object.flower_size %}
-            <p class="detail-property"><span>Размер цветка:</span> {{object.flower_size}} см.</p>
-        {% endif%}
-
-        {% if object.inflorescence_size %}
-            <p class="detail-property"><span>Размер соцветия:</span> {{object.inflorescence_size}} см.</p>
-        {% endif%}
-
-        {% if object.planting.all %}
-            <p class="detail-property"><span>Место посадки:</span>
-            {% for planting in object.planting.all %}
-                {{planting.name}}{% if forloop.last %}.{% else %}, {% endif%}
-            {% endfor %}
-            </p>
-        {% endif %}
-
-        {% if object.winter_zone %}
-            <p class="detail-property"><span>Зона зимостойкости в градусах:</span> {{object.winter_zone}}</p>
-        {%endif%}
-
-        {% if object.advantages.all %}
-        <p class="detail-property"><span>Достоинства:</span>
-        {% for advantage in object.advantages.all %}
-            {{advantage.name}}{% if forloop.last %}.{% else %}, {% endif%}
-        {% endfor %}
+      {% if object.leaves %}
+        <p class="detail-property">
+          <span>Листва:</span> {{ object.leaves }}
         </p>
-        {% endif %}
+      {% endif %}
 
-        {% if object.features %}
-        <p class="detail-property"><span>Особенности:</span> {{object.features}}</p>
-        {% endif%}
+      {% if object.height or object.width %}
+        <p class="detail-property">
+          <span>Размеры взрослого растения:</span>
+          {% if object.height %}
+            высота {{ object.height }}{% if object.width %}
+              ,
+            {% else %}
+              .
+            {% endif %}
+          {% endif %}
+          {% if object.width %}
+            ширина {{ object.width }}.
+          {% endif %}
+        </p>
+      {% endif %}
 
-        {% comment %} {% with price_set=object.perproductprice_set.all %}
-            {% include 'common/detailview/prices.html' %}
-        {% endwith %} {% endcomment %}
+      {% if object.flowering %}
+        <p class="detail-property">
+          <span>Цветение:</span> {{ object.flowering }}
+        </p>
+      {% endif %}
 
-        {% with object_set_all=object.perproductprice_set.all %}
-            {% include 'common/detailview/add_to_cart.html' %}
-        {% endwith %}
+      {% if object.flowering_duration %}
+        <p class="detail-property">
+          <span>Продолжительность цветения в днях:</span> {{ object.flowering_duration }}
+        </p>
+      {% endif %}
 
+      {% if object.flowering_period %}
+        <p class="detail-property">
+          <span>Период цветения:</span> {{ object.flowering_period }}
+        </p>
+      {% endif %}
 
-        {% comment %} <div class="row mt-4">
-            {% include 'common/detailview/delivery.html' %}
-        </div> {% endcomment %}
+      {% if object.flower_size %}
+        <p class="detail-property">
+          <span>Размер цветка:</span> {{ object.flower_size }} см.
+        </p>
+      {% endif %}
+
+      {% if object.inflorescence_size %}
+        <p class="detail-property">
+          <span>Размер соцветия:</span> {{ object.inflorescence_size }} см.
+        </p>
+      {% endif %}
+
+      {% if object.planting.all %}
+        <p class="detail-property">
+          <span>Место посадки:</span>
+          {% for planting in object.planting.all %}
+            {{ planting.name }}{% if forloop.last %}
+              .
+            {% else %}
+              ,
+            {% endif %}
+          {% endfor %}
+        </p>
+      {% endif %}
+
+      {% if object.winter_zone %}
+        <p class="detail-property">
+          <span>Зона зимостойкости в градусах:</span> {{ object.winter_zone }}
+        </p>
+      {% endif %}
+
+      {% if object.advantages.all %}
+        <p class="detail-property">
+          <span>Достоинства:</span>
+          {% for advantage in object.advantages.all %}
+            {{ advantage.name }}{% if forloop.last %}
+              .
+            {% else %}
+              ,
+            {% endif %}
+          {% endfor %}
+        </p>
+      {% endif %}
+
+      {% if object.features %}
+        <p class="detail-property">
+          <span>Особенности:</span> {{ object.features }}
+        </p>
+      {% endif %}
+
+      {% comment %} {% with price_set = object.perproductprice_set.all %}
+        {% include 'common/detailview/prices.html' %}
+      {% endwith %} {% endcomment %}
+
+      {% with object_set_all=object.perproductprice_set.all %}
+        {% include 'common/detailview/add_to_cart.html' %}
+      {% endwith %}
+
+      {% comment %} <div class="row mt-4">
+        {% include 'common/detailview/delivery.html' %}
+      </div> {% endcomment %}
     </div>
     <div class="row">
-        <div class="col-12">
-            <p>{{object.description|safe}}</p>
-        </div>
+      <div class="col-12">
+        <p>{{ object.description|safe }}</p>
+      </div>
     </div>
-</div>
+  </div>
 {% endblock %}

@@ -1,103 +1,95 @@
-{% extends "main.html" %}
+{% extends 'main.html' %}
 {% load thumbnail django_bootstrap_breadcrumbs static %}
 
 {% block head %}
-<title>Хвойные растения | Viride - садово-парковые растения</title>
-<meta property="og:title" content="Хвойные растения | Viride - садово-парковые растения">
-<meta name="description" content="Хвойные растения">
-<meta property="og:description" content="Хвойные растения">
-<meta property="og:type" content="website">
-{% comment %} <meta property="og:url" content="{{host}}{% url 't-r_list' %}"> {% endcomment %}
-{% endblock %} 
+  <title>Хвойные растения | Viride - садово-парковые растения</title>
+  <meta property="og:title" content="Хвойные растения | Viride - садово-парковые растения" />
+  <meta name="description" content="Хвойные растения" />
+  <meta property="og:description" content="Хвойные растения" />
+  <meta property="og:type" content="website" />
+  {% comment %} <meta property="og:url" content="{{ host }}{% url 't-r_list' %}" /> {% endcomment %}
+{% endblock %}
 
 {% block breadcrumb_name %}
-Хвойные растения
+  Хвойные растения
 {% endblock %}
 
 {% block breadcrumb %}
-{% breadcrumb_for '/' %}<i class="fas fa-home text-white"></i>{% endbreadcrumb_for %}
-{% breadcrumb_for 'catalog_template' %}Каталог{% endbreadcrumb_for %}
-{% breadcrumb_for 'conifers:list' %}Хвойные растения{% endbreadcrumb_for %}
-{% render_breadcrumbs 'breadcrumb.html' %}
+  {% breadcrumb_for '/' %}<i class="fas fa-home text-white"></i>{% endbreadcrumb_for %}
+  {% breadcrumb_for 'catalog_item_list' %}Каталог{% endbreadcrumb_for %}
+  {% breadcrumb_for 'conifers:list' %}Хвойные растения{% endbreadcrumb_for %}
+  {% render_breadcrumbs 'breadcrumb.html' %}
 
-
-{% comment %} <nav aria-label="breadcrumb">
-<ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/"><i class="fas fa-home text-white"></i></a></li>
-    <li class="breadcrumb-item"><a href="{% url 'catalog_template' %}">Каталог</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Хвойные растения</li>
-</ol>
-</nav> {% endcomment %}
-{% endblock%}
+  {% comment %} <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="/"><i class="fas fa-home text-white"></i></a>
+      </li>
+      <li class="breadcrumb-item">
+        <a href="{% url 'catalog_item_list' %}">Каталог</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">Хвойные растения</li>
+    </ol>
+  </nav> {% endcomment %}
+{% endblock %}
 
 {% block content %}
-<div class="row mx-2">
+  <div class="row mx-2">
     <div class="col-12">
-        <form class="row gy-2 gx-3 align-items-center">
-        {{ per_page }}
-        {{ genus_filter }}
-        </form>
+      <form class="row gy-2 gx-3 align-items-center">{{ per_page }}
+        {{ genus_filter }}</form>
 
-        {{ species_filter }}
+      {{ species_filter }}
 
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3 mt-3">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3 mt-3">
         {% for object in object_list %}
+          <div class="col">
+            <div class="card rounded-0 border-0 h-100 mx-2">
+              {% if object.get_image %}
+                <a href="{% url 'conifers:detail' object.slug %}"><img class="card-img rounded-0 img-fluid" src="{{ object.get_image.path|thumbnail_url:'list' }}" alt="{{ object.get_image.title }}" title="{{ object.get_image.title }}" /></a>
+              {% else %}
+                <a href="{% url 'conifers:detail' object.slug %}">
+                  {% comment %} <img class="card-img img-fluid" src="{% static 'images/no-image.svg' %}" alt="Нет изображения" title="Нет изображения" /> {% endcomment %}
+                  {% include 'common/no_image_v.html' %}
+                </a>
+              {% endif %}
 
-            <div class="col">
-
-                <div class="card rounded-0 border-0 h-100 mx-2">
-
-                            {% if object.get_image %}
-                                <a href="{% url 'conifers:detail' object.slug %}"><img class="card-img rounded-0 img-fluid" src="{{ object.get_image.path|thumbnail_url:'list' }}" alt="{{object.get_image.title}}" title="{{object.get_image.title}}"></a>
-                            {% else %}
-                                <a href="{% url 'conifers:detail' object.slug %}">
-                                    {% comment %} <img class="card-img img-fluid" src="{% static 'images/no-image.svg' %}" alt="Нет изображения" title="Нет изображения"> {% endcomment %}
-                                    {% include 'common/no_image_v.html' %}
-                                </a>
-                            {% endif %}
-
-
-                    {% comment %} <div class="listview-image-container">
-                        <div class="listview-image-wrapper">
-                            {% if object.get_image %}
-                                <a href="{% url 'conifers:detail' object.slug %}"><img class="card-img img-fluid" src="{{ object.get_image.path|thumbnail_url:'list' }}" alt="{{object.get_image.title}}" title="{{object.get_image.title}}"></a>
-                            {% else %}
-                                <a href="{% url 'conifers:detail' object.slug %}">
-                                    {% include 'common/no_image.html' %}
-                                </a>
-                            {% endif %}
-                        </div>
-                        <div class="content">
-                            <div class="description">
-                                {{ object.short_description }}
-                            </div>
-                        </div>
-                    </div> {% endcomment %}
-
-                    <div class="card-body px-1">
-                        <p class="card-price">
-                        {% if object.get_min_price %}
-                            от {{ object.get_min_price }} руб.
-                        {% else %}
-                            нет в наличии
-                        {%endif%}
-                        </p>
-                        <p class="card-text"><a href="{% url 'conifers:detail' object.slug %}">{{ object.name }}</a></p>
-                    </div>
-
+              {% comment %} <div class="listview-image-container">
+                <div class="listview-image-wrapper">
+                  {% if object.get_image %}
+                    <a href="{% url 'conifers:detail' object.slug %}"><img class="card-img img-fluid" src="{{ object.get_image.path|thumbnail_url:'list' }}" alt="{{ object.get_image.title }}" title="{{ object.get_image.title }}" /></a>
+                  {% else %}
+                    <a href="{% url 'conifers:detail' object.slug %}">{% include 'common/no_image.html' %}</a>
+                  {% endif %}
                 </div>
-            </div>
+                <div class="content">
+                  <div class="description">{{ object.short_description }}</div>
+                </div>
+              </div> {% endcomment %}
 
-        {% empty %}
-            <div class="col-lg-12">
-                {% comment %} {% include 'empty.html' %} {% endcomment %}
+              <div class="card-body px-1">
+                <p class="card-price">
+                  {% if object.get_min_price %}
+                    от {{ object.get_min_price }} руб.
+                  {% else %}
+                    нет в наличии
+                  {% endif %}
+                </p>
+                <p class="card-text">
+                  <a href="{% url 'conifers:detail' object.slug %}">{{ object.name }}</a>
+                </p>
+              </div>
             </div>
+          </div>
+
+          {% empty %}
+          <div class="col-lg-12">
+            {% comment %} {% include 'empty.html' %} {% endcomment %}
+          </div>
         {% endfor %}
-
-        </div> 
+      </div>
     </div>
-</div>
+  </div>
 
-    {% include 'pagination.html' %}
-
+  {% include 'pagination.html' %}
 {% endblock %}
