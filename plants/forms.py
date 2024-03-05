@@ -61,7 +61,7 @@ class ShelterWinterAdminForm(forms.ModelForm):
         (None, '---------'),
         ('обязательно', 'обязательно'),
         ('рекомендуется первые 2 года', 'рекомендуется первые 2 года'),
-        ('не нужно', 'не нужно'),
+        ('не требуется', 'не требуется'),
     )
     shelter_winter = forms.ChoiceField(
         widget=forms.Select(attrs={'style': 'width: 200px;'}),
