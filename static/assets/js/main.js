@@ -123,7 +123,7 @@ let xhr = new XMLHttpRequest();
     e.preventDefault();
     self = this;
 
-    let productPrice = select("input[name=flexRadioDefault]:checked", false);
+    let productPrice = select("input[name=productPrice]:checked", false);
     let csrfToken = select("input[name=csrfmiddlewaretoken]", false);
 
     body = {
