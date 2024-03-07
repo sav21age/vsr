@@ -1,0 +1,70 @@
+{% extends "admin/base_site.html" %}
+{% load i18n l10n %}
+{% load admin_urls static %}
+
+{% block extrastyle %}
+{{ block.super }}
+{% endblock %}
+
+{% block title %}Пакетное копирование свойств{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+&rsaquo; Пакетное копирование свойств
+</div>
+{% endblock %}
+
+{% block content_title %}
+<h1>Пакетное копирование свойств</h1>
+{% endblock %}
+
+{% block content %}
+<form action="" method="post">{% csrf_token %}
+<input type="hidden" name="do_action" value="yes">
+<input type="hidden" name="action" value="{{ action }}">
+<fieldset class="module aligned">
+    <div class="form-row field-object-donor">
+        <div>
+            <label class="required" for="{{ form.object_donor.id_for_label }}"><strong>{{ form.object_donor.label }}</strong></label>
+            <div class="related-widget-wrapper">
+            {{ form.object_donor }}
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="form-row field-object-attrs">
+    <strong>Свойства:</strong>
+    <table>
+    {% for field in form.visible_fields %}
+        {% if field.name != 'object_donor'%}
+        <tr>
+            <td>{{ field.label_tag }}</td>
+            <td>{{ field }}</td>
+        </tr>
+      {% endif%}
+    {% endfor %}
+    </table>
+    </div>
+
+    <br>
+
+    <div class="form-row field-object-recipients">
+        <div>
+            <label><strong>Копировать в:</strong></label>
+            <div class="related-widget-wrapper">
+            <ul>{{ object_recipients|unordered_list }}</ul>
+            </div>
+        </div>
+    </div>
+</fieldset>
+<div class="submit-row" style="text-align:left;">
+<input type="submit" value="Сохранить" name="submit">
+</div>
+</form>
+{% endblock %}

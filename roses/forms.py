@@ -1,8 +1,53 @@
 from django import forms
 from common.forms import ProductAdminForm
 from plants.forms import PlantWinterZoneAdminForm, ShelterWinterAdminForm
-from plants.models import PlantGenus
 from roses.models import RoseProduct, RoseSpecies
+
+
+class RoseProductBatchCopyAdminForm(forms.Form):
+    _selected_action = forms.CharField(widget=forms.MultipleHiddenInput)
+
+    scientific_name_chk = forms.BooleanField(
+        required=False, initial=True, label='Научное название')
+
+    advantages_chk = forms.BooleanField(
+        required=False, initial=True, label='Достоинства')
+
+    height_chk = forms.BooleanField(
+        required=False, initial=True, label='Высота взрослого растения')
+
+    width_chk = forms.BooleanField(
+        required=False, initial=True, label='Ширина взрослого растения')
+
+    flowering_chk = forms.BooleanField(
+        required=False, initial=True, label='Цветение')
+    
+    quantity_on_stem_chk = forms.BooleanField(
+        required=False, initial=True, label='Количество на стебле')
+
+    flavor_chk = forms.BooleanField(
+        required=False, initial=True, label='Аромат')
+
+    flower_size_chk = forms.BooleanField(
+        required=False, initial=True, label='Размер цветка')
+
+    resistance_fungus_chk = forms.BooleanField(
+        required=False, initial=True, label='Устойчивость к грибковым инфекциям')
+
+    resistance_rain_chk = forms.BooleanField(
+        required=False, initial=True, label='Устойчивость к дождю')
+
+    shelter_winter_chk = forms.BooleanField(
+        required=False, initial=True, label='Укрытие на зиму')
+
+    winter_zone_chk = forms.BooleanField(
+        required=False, initial=True, label='Зона зимостойкости')
+
+    object_donor = forms.ModelChoiceField(
+        queryset=RoseProduct.objects.all(),
+        label='Копировать из',
+        required=True,
+    )
 
 
 class RoseSpeciesAdminForm(forms.ModelForm):
@@ -13,7 +58,7 @@ class RoseSpeciesAdminForm(forms.ModelForm):
 
     # def has_add_permission(self, request, obj=None):
     #     return False
-    
+
     # def has_delete_permission(self, request, obj=None):
     #     return False
 
@@ -35,7 +80,7 @@ class RoseProductAdminForm(PlantWinterZoneAdminForm, ShelterWinterAdminForm, Pro
     )
     flowering = forms.ChoiceField(
         widget=forms.Select(attrs={'style': 'width: 200px;'}),
-        choices=CHOICES_FLOWERING, 
+        choices=CHOICES_FLOWERING,
         required=False,
         label='Цветение',
     )
