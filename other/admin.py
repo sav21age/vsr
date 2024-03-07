@@ -15,7 +15,7 @@ class OtherProductPriceInline(ProductPriceInline):
 
 @admin.register(OtherProduct)
 class OtherProductAdmin(ProductAbstractAdmin):
-    list_display = ('name', 'category', )
+    list_display = ('name', 'category', 'is_visible')
     list_filter = ('category', )
     form = OtherProductAdminForm
     inlines = [OtherProductPriceInline, ImageInline, ]

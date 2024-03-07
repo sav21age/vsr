@@ -43,7 +43,7 @@ class GetMinPriceAdminMixin():
 class ProductAbstractAdmin(SortableAdminBase, PageAbstractAdmin, GetImageAdminMixin, GetMinPriceAdminMixin):
     search_fields = ('name',)
     search_help_text = 'Поиск по названию'
-    list_display = ('name', 'get_min_price', 'get_image',)
+    list_display = ('name', 'get_min_price', 'get_image', 'is_visible')
 
 
 class ProductPriceAbstractAdmin(admin.ModelAdmin):

@@ -16,7 +16,7 @@ class PageAbstract(models.Model):
 
     created_at = models.DateTimeField('дата создания', auto_now_add=True)
     updated_at = models.DateTimeField('дата обновления', auto_now=True)
-    is_visible = models.BooleanField('показывать', default=1, db_index=True)
+    is_visible = models.BooleanField('показывать?', default=1, db_index=True)
 
     objects = models.Manager()
     
