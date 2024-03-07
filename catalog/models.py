@@ -2,12 +2,14 @@ from urllib.parse import urlsplit, urlunsplit
 from django.db import models
 from django.urls import reverse
 from easy_thumbnails.fields import ThumbnailerImageField
+from common.managers import IsVisibleManager
 from images.models import get_image_path
 
 
 class CatalogItem(models.Model):
+    is_visible = models.BooleanField('показывать', default=1, db_index=True)
     name = models.CharField('название', max_length=250)
-    url = models.CharField('url', max_length=250)
+    url = models.CharField('url-адрес', max_length=250)
     order_number = models.PositiveSmallIntegerField('порядковый номер',)
     image_path = ThumbnailerImageField(
         'Путь к картинке',
@@ -19,6 +21,9 @@ class CatalogItem(models.Model):
         'аттрибут title картинки', max_length=200, blank=True,)
 
     upload_to_dir = 'catalog'
+
+    objects = models.Manager()
+    is_visible_objects = IsVisibleManager()
 
     def __str__(self):
         return f"{self.name}"

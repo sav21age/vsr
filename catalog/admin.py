@@ -8,7 +8,7 @@ from common.helpers import formfield_overrides
 
 @admin.register(CatalogItem)
 class CatalogAdmin(admin.ModelAdmin):
-    list_display = ('name', 'get_image', 'order_number',)
+    list_display = ('name', 'get_image', 'order_number', 'is_visible',)
     list_editable = ('order_number',)
     form = CatalogItemAdminForm
     formfield_overrides = formfield_overrides
