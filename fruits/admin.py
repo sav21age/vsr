@@ -28,6 +28,10 @@ class FruitProductPriceInline(ProductPriceInline):
 
 # --
 
+admin.site.register(FruitProductPriceAge)
+
+# --
+
 
 class FruitProductGenusAdminFilter(ProductGenusAdminFilter):
     division_name = 'FRU'
