@@ -40,7 +40,6 @@ class ConiferProductAdmin(ProductAbstractAdmin):
             .prefetch_related('images') \
             .prefetch_related('coniferproductprice_set')
 
-    save_as = True
     form = ConiferProductAdminForm
     list_filter = (ConiferProductGenusAdminFilter, )
     inlines = [ConiferProductPriceInline, ImageInline, ]

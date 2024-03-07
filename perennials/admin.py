@@ -38,7 +38,6 @@ class PerProductAdmin(ProductAbstractAdmin):
             .prefetch_related('images') \
             .prefetch_related('perproductprice_set')
 
-    save_as = True
     form = PerProductAdminForm
     list_filter = (PerProductGenusAdminFilter, )
     inlines = [PerProductPriceInline, ImageInline, ]

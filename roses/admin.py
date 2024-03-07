@@ -106,7 +106,6 @@ class RoseProductAdmin(ProductAbstractAdmin):
             .prefetch_related('images') \
             .prefetch_related('roseproductprice_set')
 
-    save_as = True
     form = RoseProductAdminForm
     show_facets = admin.ShowFacets.ALWAYS
     list_filter = ('species', )

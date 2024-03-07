@@ -39,7 +39,6 @@ class DecProductAdmin(ProductAbstractAdmin):
             .prefetch_related('images') \
             .prefetch_related('decproductprice_set')
 
-    save_as = True
     form = DecProductAdminForm
     list_filter = (DecProductGenusAdminFilter, )
     inlines = [DecProductPriceInline, ImageInline, ]

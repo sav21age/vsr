@@ -40,7 +40,6 @@ class FruitProductAdmin(ProductAbstractAdmin):
             .prefetch_related('images') \
             .prefetch_related('fruitproductprice_set')
 
-    save_as = True
     form = FruitProductAdminForm
     list_filter = (FruitProductGenusAdminFilter, )
     inlines = [FruitProductPriceInline, ImageInline, ]
