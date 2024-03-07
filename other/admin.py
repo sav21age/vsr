@@ -1,6 +1,6 @@
 from django.contrib import admin
 from common.admin import ProductAbstractAdmin, ProductPriceAbstractAdmin, ProductPriceInline
-from images.admin import ImageInline
+from images.admin import GetImageAdminMixin, ImageInline
 from other.forms import OtherProductAdminForm
 from other.models import OtherProduct, OtherProductCategory, OtherProductPrice
 
@@ -14,8 +14,8 @@ class OtherProductPriceInline(ProductPriceInline):
 
 
 @admin.register(OtherProduct)
-class OtherProductAdmin(ProductAbstractAdmin):
-    list_display = ('name', 'category', 'is_visible')
+class OtherProductAdmin(ProductAbstractAdmin, GetImageAdminMixin):
+    list_display = ('name', 'category', 'get_image', 'is_visible')
     list_filter = ('category', )
     form = OtherProductAdminForm
     inlines = [OtherProductPriceInline, ImageInline, ]
