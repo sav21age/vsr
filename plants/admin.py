@@ -1,4 +1,4 @@
-from django.urls import resolve
+# from django.urls import resolve
 from django.contrib import admin
 from plants.models import (
     PlantAdvantage, PlantDivision, PlantGenus, PlantPlanting,

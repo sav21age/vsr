@@ -41,11 +41,11 @@ class FruitProduct(PlantProductAbstract):
         help_text='Классификация растений: Отдел \ Род \ Вид. Пример: Хвойные \ Ель \ Ель канадская.', )
 
     features = models.CharField('особенности', max_length=250, blank=True)
-    
+
     flowering = models.CharField('цветение', max_length=7, blank=True, )
-    
+
     rootstock = models.CharField('подвой', max_length=15, blank=True, )
-        
+
     fruit_ripening = models.CharField(
         'время созревания плодов', max_length=250, blank=True, )
 
@@ -64,7 +64,7 @@ class FruitProduct(PlantProductAbstract):
         'начало плодоношения у растения, г', max_length=7, blank=True,
         validators=(SizeValidator,),
         help_text='Можно вводить цифры, от, до, "-". Например: 5, 5-10, от 5, до 5.', )
-    
+
     search_vector = SearchVectorField(null=True)
 
     @property
@@ -142,7 +142,7 @@ class FruitProductPrice(ProductPriceAbstract):
 
     age = models.ForeignKey(
         FruitProductPriceAge, verbose_name='возраст', blank=True, null=True, on_delete=models.CASCADE)
-    
+
     # CHOICES = (
     #     ('1-летка','1-летка'),
     #     ('2-летка','2-летка'),
@@ -156,7 +156,6 @@ class FruitProductPrice(ProductPriceAbstract):
     # )
     # age = models.CharField('возраст', max_length=7, choices=CHOICES,
     #                              blank=True, default='',)
-
 
     # shtamb = models.CharField(
     #     'штамб', max_length=7, blank=True, validators=(SizeValidator,),

@@ -38,6 +38,12 @@
         </p>
       {% endif %}
 
+      {% if object.crown %}
+        <p class="detail-property">
+          <span>Крона:</span> {{ object.crown }}
+        </p>
+      {% endif %}
+
       {% include 'common/detailview/adult_plant_size.html' %}
 
       {% if object.flowering %}

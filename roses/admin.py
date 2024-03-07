@@ -12,6 +12,7 @@ from plants.models import PlantPriceContainer
 from roses.forms import RoseProductAdminForm, RoseProductBatchCopyAdminForm, RoseSpeciesAdminForm
 from roses.models import RoseProduct, RoseProductPrice, RoseSpecies
 
+
 @admin.register(RoseSpecies)
 class RoseSpeciesAdmin(admin.ModelAdmin):
     form = RoseSpeciesAdminForm
@@ -27,7 +28,7 @@ class RoseProductPriceInline(ProductPriceInline):
 
 
 # --
-    
+
 
 def batch_copy(modeladmin, request, queryset):
     if 'do_action' in request.POST:
@@ -41,10 +42,10 @@ def batch_copy(modeladmin, request, queryset):
                     with transaction.atomic():
                         if clean['scientific_name_chk']:
                             recipient.scientific_name = donor.scientific_name
-                        
+
                         if clean['height_chk']:
                             recipient.height = donor.height
-                        
+
                         if clean['width_chk']:
                             recipient.width = donor.width
 
@@ -56,22 +57,22 @@ def batch_copy(modeladmin, request, queryset):
 
                         if clean['flavor_chk']:
                             recipient.flavor = donor.flavor
-                        
+
                         if clean['flower_size_chk']:
                             recipient.flower_size = donor.flower_size
-                        
+
                         if clean['resistance_fungus_chk']:
                             recipient.resistance_fungus = donor.resistance_fungus
 
                         if clean['resistance_rain_chk']:
                             recipient.resistance_rain = donor.resistance_rain
-                        
+
                         if clean['shelter_winter_chk']:
                             recipient.shelter_winter = donor.shelter_winter
-                        
+
                         if clean['winter_zone_chk']:
                             recipient.winter_zone = donor.winter_zone
-                        
+
                         if clean['advantages_chk']:
                             recipient.advantages.clear()
                             for attr in donor.advantages.all():
@@ -96,6 +97,8 @@ def batch_copy(modeladmin, request, queryset):
             'form': form,
         }
     )
+
+
 batch_copy.short_description = 'Пакетное копирование свойств'
 
 

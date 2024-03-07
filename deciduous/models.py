@@ -27,6 +27,8 @@ class DecProduct(PlantProductAbstract):
 
     leaves = models.CharField('листва', max_length=250, blank=True, )
 
+    crown = models.CharField('крона', max_length=250, blank=True, )
+
     flowering = models.CharField('цветение', max_length=250, blank=True, )
 
     flowering_period = models.CharField(
