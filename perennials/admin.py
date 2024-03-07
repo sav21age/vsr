@@ -16,6 +16,10 @@ class PerSpeciesAdmin(PlantSpeciesAbstractAdmin):
 
 
 class PerProductPriceInline(ProductPriceInline):
+    def get_queryset(self, request):
+        return super().get_queryset(request) \
+            .select_related('container')
+
     model = PerProductPrice
     fields = ('container', 'price', )
 
@@ -34,6 +38,7 @@ class PerProductAdmin(ProductAbstractAdmin):
             .prefetch_related('images') \
             .prefetch_related('perproductprice_set')
 
+    save_as = True
     form = PerProductAdminForm
     list_filter = (PerProductGenusAdminFilter, )
     inlines = [PerProductPriceInline, ImageInline, ]

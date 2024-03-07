@@ -17,6 +17,10 @@ class ConiferSpeciesAdmin(PlantSpeciesAbstractAdmin):
 
 
 class ConiferProductPriceInline(ProductPriceInline):
+    def get_queryset(self, request):
+        return super().get_queryset(request) \
+            .select_related('container', 'rs')
+    
     model = ConiferProductPrice
     fields = ('container', 'height', 'width',
               'rs', 'shtamb', 'extra', 'price', )
@@ -36,6 +40,7 @@ class ConiferProductAdmin(ProductAbstractAdmin):
             .prefetch_related('images') \
             .prefetch_related('coniferproductprice_set')
 
+    save_as = True
     form = ConiferProductAdminForm
     list_filter = (ConiferProductGenusAdminFilter, )
     inlines = [ConiferProductPriceInline, ImageInline, ]

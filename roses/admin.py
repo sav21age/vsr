@@ -18,6 +18,10 @@ class RoseSpeciesAdmin(admin.ModelAdmin):
 
 
 class RoseProductPriceInline(ProductPriceInline):
+    def get_queryset(self, request):
+        return super().get_queryset(request) \
+            .select_related('container')
+
     model = RoseProductPrice
     fields = ('container', 'price', )
 
@@ -102,6 +106,7 @@ class RoseProductAdmin(ProductAbstractAdmin):
             .prefetch_related('images') \
             .prefetch_related('roseproductprice_set')
 
+    save_as = True
     form = RoseProductAdminForm
     show_facets = admin.ShowFacets.ALWAYS
     list_filter = ('species', )
