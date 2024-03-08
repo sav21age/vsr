@@ -23,7 +23,7 @@ class Image(models.Model):
     path = ThumbnailerImageField(
         'Путь к картинке',
         # blank=True,
-        max_length=200,
+        max_length=250,
         upload_to=get_image_path,
         resize_source={'size': (800, 800), 'crop': 'scale'}
     )
