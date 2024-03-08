@@ -24,3 +24,5 @@ settings_local.py
 .pylintrc
 
 webpack*
+
+common/management/commands/grab/*
