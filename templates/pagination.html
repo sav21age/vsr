@@ -1,5 +1,5 @@
 {% if is_paginated %}
-<ul class="pagination pagination-circle">
+<ul class="pagination pagination-lg pagination-light">
     {% if page_obj.has_previous %}
     <li class="page-item">
         <a href="{% if page_obj.number == 2 %}{{ request.path }}{% else %}?{{ page_obj.previous_page_number.querystring }}{% endif %}" class="page-link">&laquo;</a>
@@ -9,7 +9,7 @@
         {% if page %}
             {% if page == page_obj.number %}
                 <li class="page-item active">
-                    <span class="page-link">{{ page }}</span>
+                    <a href="#" class="page-link">{{ page }}</a>
                 </li>
             {% else %}
                 <li class="page-item">
