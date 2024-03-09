@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from common.admin import ProductAbstractAdmin, ProductPriceAbstractAdmin, ProductPriceInline
 from common.filters import (
-    ProductGenusAdminFilter, ProductPriceContainerAdminFilter, ProductPriceGenusAdminFilter)
+    ProductGenusAdminFilter, ProductPriceContainerAdminFilter, ProductPriceGenusAdminFilter, SpeciesGenusAdminFilter)
 from common.helpers import get_price_properties
 from deciduous.forms import DecProductAdminForm, DecProductBatchCopyAdminForm, DecSpeciesAdminForm
 from deciduous.models import DecProduct, DecProductPrice, DecSpecies
@@ -15,9 +15,31 @@ from plants.admin import PlantSpeciesAbstractAdmin
 from plants.models import PlantPriceContainer
 
 
+class DecSpeciesGenusAdminFilter(SpeciesGenusAdminFilter):
+    division_name = 'DEC'
+
+
 @admin.register(DecSpecies)
 class DecSpeciesAdmin(PlantSpeciesAbstractAdmin):
     form = DecSpeciesAdminForm
+    list_display = ('name', 'genus', 'get_count')
+    list_filter = (DecSpeciesGenusAdminFilter,)
+
+    def get_count(self, obj=None):
+        if obj:
+            return DecProduct.objects.filter(species__name=obj.name).count()
+        return ''
+    get_count.short_description = 'количество'
+
+    def has_delete_permission(self, request, obj=None):
+        if obj:
+            count = DecProduct.objects.filter(species__name=obj.name).count()
+            if count > 0:
+                return False
+        return True
+
+
+# --
 
 
 class DecProductPriceInline(ProductPriceInline):
@@ -30,7 +52,7 @@ class DecProductPriceInline(ProductPriceInline):
               'rs', 'shtamb', 'extra', 'price', )
 
 
-#--
+# --
 
 
 def batch_copy(modeladmin, request, queryset):
@@ -159,7 +181,7 @@ class DecProductAdmin(ProductAbstractAdmin):
     )
 
 
-#--
+# --
 
 
 class DecProductPriceGenusAdminFilter(ProductPriceGenusAdminFilter):
@@ -189,7 +211,8 @@ class DecProductPriceAdmin(ProductPriceAbstractAdmin):
             .select_related('container') \
             .select_related('rs')
 
-    list_filter = (DecProductPriceGenusAdminFilter, DecProductPriceContainerAdminFilter,)
+    list_filter = (DecProductPriceGenusAdminFilter,
+                   DecProductPriceContainerAdminFilter,)
     fields = ('product', 'container', 'height', 'width',
               'rs', 'shtamb', 'extra', 'price', )
     list_display = ('get_product', 'price', )

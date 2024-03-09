@@ -26,6 +26,13 @@ class ProductPriceGenusAdminFilter(PlantGenusAdminFilter):
         return queryset
 
 
+class SpeciesGenusAdminFilter(PlantGenusAdminFilter):
+    def queryset(self, request, queryset):
+        if self.value():
+            return queryset.filter(genus=self.value())
+        return queryset
+
+
 class ProductPriceContainerAdminFilter(SimpleListFilter):
     title = 'Контейнер'
     parameter_name = 'container'

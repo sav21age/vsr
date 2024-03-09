@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.admin import SimpleListFilter
 from common.admin import ProductAbstractAdmin, ProductPriceAbstractAdmin, ProductPriceInline
 from common.filters import (
-    ProductGenusAdminFilter, ProductPriceContainerAdminFilter, ProductPriceGenusAdminFilter)
+    ProductGenusAdminFilter, ProductPriceContainerAdminFilter, ProductPriceGenusAdminFilter, SpeciesGenusAdminFilter)
 from common.helpers import get_price_properties
 from fruits.forms import FruitProductAdminForm, FruitProductBatchCopyAdminForm, FruitSpeciesAdminForm
 from fruits.models import FruitProduct, FruitProductPrice, FruitProductPriceAge, FruitSpecies
@@ -16,9 +16,31 @@ from plants.admin import PlantSpeciesAbstractAdmin
 from plants.models import PlantPriceContainer
 
 
+class FruitSpeciesGenusAdminFilter(SpeciesGenusAdminFilter):
+    division_name = 'FRU'
+
+
 @admin.register(FruitSpecies)
 class FruitSpeciesAdmin(PlantSpeciesAbstractAdmin):
     form = FruitSpeciesAdminForm
+    list_display = ('name', 'genus', 'get_count')
+    list_filter = (FruitSpeciesGenusAdminFilter,)
+
+    def get_count(self, obj=None):
+        if obj:
+            return FruitProduct.objects.filter(species__name=obj.name).count()
+        return ''
+    get_count.short_description = 'количество'
+
+    def has_delete_permission(self, request, obj=None):
+        if obj:
+            count = FruitProduct.objects.filter(species__name=obj.name).count()
+            if count > 0:
+                return False
+        return True
+
+
+# --
 
 
 class FruitProductPriceInline(ProductPriceInline):

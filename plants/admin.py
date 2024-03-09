@@ -33,7 +33,10 @@ class PlantGenusAdmin(admin.ModelAdmin):
 
 class PlantSpeciesAbstractAdmin(admin.ModelAdmin):
     list_display = ('name', 'genus', )
-
+    # list_filter = ('genus',)
+    list_per_page = 40
+    search_fields = ('name',)
+    search_help_text = 'Поиск по виду'
 
 admin.site.register(PlantPriceRootSystem)
 

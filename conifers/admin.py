@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from common.admin import ProductAbstractAdmin, ProductPriceAbstractAdmin, ProductPriceInline
 from common.filters import (
-    ProductGenusAdminFilter, ProductPriceContainerAdminFilter, ProductPriceGenusAdminFilter)
+    ProductGenusAdminFilter, ProductPriceContainerAdminFilter, ProductPriceGenusAdminFilter, SpeciesGenusAdminFilter)
 from common.helpers import get_price_properties
 from conifers.forms import ConiferProductBatchCopyAdminForm, ConiferSpeciesAdminForm, ConiferProductAdminForm
 from conifers.models import (
@@ -16,16 +16,39 @@ from plants.admin import PlantSpeciesAbstractAdmin
 from plants.models import PlantPriceContainer
 
 
+class ConiferSpeciesGenusAdminFilter(SpeciesGenusAdminFilter):
+    division_name = 'CON'
+
+
 @admin.register(ConiferSpecies)
 class ConiferSpeciesAdmin(PlantSpeciesAbstractAdmin):
     form = ConiferSpeciesAdminForm
+    list_display = ('name', 'genus', 'get_count')
+    list_filter = (ConiferSpeciesGenusAdminFilter,)
+
+    def get_count(self, obj=None):
+        if obj:
+            return ConiferProduct.objects.filter(species__name=obj.name).count()
+        return ''
+    get_count.short_description = 'количество'
+
+    def has_delete_permission(self, request, obj=None):
+        if obj:
+            count = ConiferProduct.objects.filter(
+                species__name=obj.name).count()
+            if count > 0:
+                return False
+        return True
+
+
+# --
 
 
 class ConiferProductPriceInline(ProductPriceInline):
     def get_queryset(self, request):
         return super().get_queryset(request) \
             .select_related('container', 'rs')
-    
+
     model = ConiferProductPrice
     fields = ('container', 'height', 'width',
               'rs', 'shtamb', 'extra', 'price', )
@@ -150,7 +173,7 @@ class ConiferProductAdmin(ProductAbstractAdmin):
         }),
         ('', {
             'fields': ('planting', 'shelter_winter', 'winter_zone', )
-        }),        
+        }),
         ('', {
             'fields': ('advantages', 'features', 'description', )
         }),
@@ -181,7 +204,7 @@ class ConiferProductPriceContainerAdminFilter(ProductPriceContainerAdminFilter):
 
         qs = PlantPriceContainer.objects.filter(id__in=lst)\
             .order_by('order_number')
-        
+
         return [(o.id, o.name) for o in qs]
 
 
@@ -192,8 +215,9 @@ class ConiferProductPriceAdmin(ProductPriceAbstractAdmin):
             .select_related('product') \
             .select_related('container') \
             .select_related('rs')
-    
-    list_filter = (ConiferProductPriceGenusAdminFilter, ConiferProductPriceContainerAdminFilter,)
+
+    list_filter = (ConiferProductPriceGenusAdminFilter,
+                   ConiferProductPriceContainerAdminFilter,)
     fields = ('product', 'container', 'height', 'width',
               'rs', 'shtamb', 'extra', 'price', )
     list_display = ('get_product', 'price', )

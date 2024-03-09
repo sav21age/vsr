@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from common.admin import ProductAbstractAdmin, ProductPriceAbstractAdmin, ProductPriceInline
 from common.filters import (
-    ProductGenusAdminFilter, ProductPriceContainerAdminFilter, ProductPriceGenusAdminFilter)
+    ProductGenusAdminFilter, ProductPriceContainerAdminFilter, ProductPriceGenusAdminFilter, SpeciesGenusAdminFilter)
 from common.helpers import get_price_properties
 from images.admin import ImageInline
 from perennials.forms import PerProductAdminForm, PerProductBatchCopyAdminForm, PerSpeciesAdminForm
@@ -15,9 +15,31 @@ from plants.admin import PlantSpeciesAbstractAdmin
 from plants.models import PlantPriceContainer
 
 
+class PerSpeciesGenusAdminFilter(SpeciesGenusAdminFilter):
+    division_name = 'PER'
+
+
 @admin.register(PerSpecies)
 class PerSpeciesAdmin(PlantSpeciesAbstractAdmin):
     form = PerSpeciesAdminForm
+    list_display = ('name', 'genus', 'get_count')
+    list_filter = (PerSpeciesGenusAdminFilter,)
+
+    def get_count(self, obj=None):
+        if obj:
+            return PerProduct.objects.filter(species__name=obj.name).count()
+        return ''
+    get_count.short_description = 'количество'
+
+    def has_delete_permission(self, request, obj=None):
+        if obj:
+            count = PerProduct.objects.filter(species__name=obj.name).count()
+            if count > 0:
+                return False
+        return True
+
+
+# --
 
 
 class PerProductPriceInline(ProductPriceInline):
