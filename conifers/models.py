@@ -61,6 +61,8 @@ class ConiferProduct(PlantProductAbstract):
         'зона зимостойкости в градусах', max_length=30, blank=True,)
 
     search_vector = SearchVectorField(null=True)
+    
+    upload_to_dir = 'conifers'
 
     @property
     def get_min_price(self):

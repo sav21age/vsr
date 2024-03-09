@@ -59,6 +59,8 @@ class RoseProduct(PlantProductAbstract):
 
     search_vector = SearchVectorField(null=True)
 
+    upload_to_dir = 'roses'
+
     @property
     def get_min_price(self):
         try:

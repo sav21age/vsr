@@ -61,6 +61,8 @@ class DecProduct(PlantProductAbstract):
 
     search_vector = SearchVectorField(null=True)
 
+    upload_to_dir = 'deciduous'
+
     @property
     def get_min_price(self):
         try:

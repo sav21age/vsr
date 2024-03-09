@@ -29,6 +29,8 @@ class OtherProduct(ProductAbstract):
     
     search_vector = SearchVectorField(null=True)
 
+    upload_to_dir = 'other'
+
     def get_absolute_url(self):
         return reverse(f"{self.category.name.lower()}_detail", kwargs={"slug": self.slug})
 
@@ -62,7 +64,7 @@ class OtherProductPrice(ProductPriceAbstract):
         OtherProduct, verbose_name='товар', on_delete=models.CASCADE)
 
     property = models.CharField(
-        'параметры', max_length=150, blank=True,)
+        'параметры', max_length=150,)
 
     def __str__(self):
         s = ''

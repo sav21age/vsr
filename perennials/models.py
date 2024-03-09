@@ -57,6 +57,8 @@ class PerProduct(PlantProductAbstract):
         'зона зимостойкости в градусах', max_length=15, blank=True,)
 
     search_vector = SearchVectorField(null=True)
+    
+    upload_to_dir = 'perennials'
 
     @property
     def get_min_price(self):

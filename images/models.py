@@ -10,8 +10,14 @@ from common.managers import IsVisibleManager
 def get_image_path(instance, filename):
     f = os.path.splitext(filename)
     d = 'images'
+
     if hasattr(instance, 'upload_to_dir'):
         d = f"{d}/{instance.upload_to_dir}"
+
+    if hasattr(instance, 'content_object'):
+        if hasattr(instance.content_object, 'upload_to_dir'):
+            d = f"{d}/{instance.content_object.upload_to_dir}"
+
     return f"{d}/{uuid.uuid1().hex}{f[1].lower()}"
 
 
