@@ -31,6 +31,7 @@
 
   {% compress css %}
   <link type="text/css" href="{% static 'assets/bootstrap/css/main.css' %}" rel="stylesheet" media="screen">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
   {% endcompress %}
 </head>
 <body class="d-flex flex-column h-100">
@@ -48,6 +49,7 @@
   {% compress js %}
   {% comment %} <script src="{% static 'assets/vendor/popper/popper.min.js' %}"></script> {% endcomment %}
   {% comment %} <script src="{% static 'assets/bootstrap/js/bundle.js' %}"></script> {% endcomment %}
+  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
   <script src="{% static 'assets/vendor/phone-mask/phone-mask.min.js' %}"></script>
   <script src="{% static 'assets/js/main.js' %}"></script>
   {% endcompress %}

@@ -78,9 +78,9 @@ let xhr = new XMLHttpRequest();
   /**
    * Initiate portfolio lightbox
    */
-  // const portfolioLightbox = GLightbox({
-  //   selector: ".portfolio-lightbox",
-  // });
+  const lightbox = GLightbox({
+    selector: ".glightbox",
+  });
 
   /**
    * Animation on scroll
@@ -259,6 +259,5 @@ let xhr = new XMLHttpRequest();
   }
 
   on("click", "#cartContainer button.decrement", decrement, true);
-
 
 })();

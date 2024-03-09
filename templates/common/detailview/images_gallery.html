@@ -1,11 +1,10 @@
 {% load thumbnail static %}
 
 <div id="imagesGallery" class="carousel slide">
-
     <div class="carousel-inner">
         {% for image in object.images.all %}
         <div class="carousel-item{% if forloop.first %} active{% endif %}">
-            <img src="{{ image.path|thumbnail_url:'detail' }}" class="d-block w-100" alt="{{ image.title }}">
+            <a href="{{ image.path|thumbnail_url:'detail' }}" class="glightbox" aria-label="Увеличить"><img src="{{ image.path|thumbnail_url:'detail' }}" class="d-block w-100" alt="{{ image.title }}"></a>
         </div>
         {% empty %}
         <div class="carousel-item active">
