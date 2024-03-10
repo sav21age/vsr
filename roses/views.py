@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView
-from common.mixins import PerPageMixin
+from common.mixins import PerPageMixin, RecommendedDetailMixin
 from pure_pagination.mixins import PaginationMixin
 from roses.mixins import RoseSpeciesFilterMixin
 from roses.models import RoseProduct, RoseSpecies
@@ -15,7 +15,7 @@ class RoseProductList(PaginationMixin, PerPageMixin, RoseSpeciesFilterMixin, Lis
     species_model = RoseSpecies
 
 
-class RoseProductDetail(DetailView):
+class RoseProductDetail(RecommendedDetailMixin, DetailView):
     model = RoseProduct
     template_name = 'roses/detail.html'
     queryset = RoseProduct.is_visible_objects.all() \

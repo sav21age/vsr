@@ -42,6 +42,54 @@ class PerPageMixin():
         return context
 
 
+class RecommendedDetailMixin():
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        obj = context['object']
+        # lst = list(obj.store_items.all().values_list('id', flat=True))
+        # price_min = StoreItem.is_visible_objects\
+        #     .filter(id__in=lst) \
+        #     .filter(low__gt=0) \
+        #     .aggregate(Min('low'))\
+
+        # context['store_item'] = obj.store_items \
+        #     .filter(store__site__is_visible=True) \
+        #     .filter(low=price_min['low__min']) \
+        #     .order_by('-rating')\
+        #     .first()
+
+        # if obj.series:
+        #     context['series'] = self.model.is_visible_objects \
+        #         .annotate(min_price=Min(
+        #             'store_items__low',
+        #             filter=Q(store_items__is_visible=True, store_items__low__gt=0))) \
+        #         .select_related('brand') \
+        #         .prefetch_related('images') \
+        #         .exclude(id=obj.id) \
+        #         .filter(series=obj.series)
+
+        # context['recommended'] = self.model.is_visible_objects \
+        #     .select_related('brand') \
+        #     .annotate(min_price=Min(
+        #         'store_items__low',
+        #         filter=Q(store_items__is_visible=True, store_items__low__gt=0))) \
+        #     .filter(store_items__is_visible=True) \
+        #     .prefetch_related('images') \
+        #     .filter(gender__in=obj.gender.all()) \
+        #     .filter(Q(features__in=obj.features.all()) | Q(features=None))\
+        #     .exclude(id=obj.id)\
+        #     .distinct()\
+        #     .order_by('-reviews_average_rating__average_rating', '-reviews_average_rating__total_reviews')[:4]
+
+        context['recommended'] = self.model.is_visible_objects \
+            .prefetch_related('images') \
+            .exclude(id=obj.id)\
+            .distinct()[:4]
+
+        return context
+
+
 class PlantGenusFilterMixin():
     genus_id = None
 

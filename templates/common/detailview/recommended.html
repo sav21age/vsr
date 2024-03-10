@@ -1,0 +1,29 @@
+{% load thumbnail static %}
+{% if recommended %}
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3 mt-3">
+    {% for object in recommended %}
+        <div class="col">
+            <div class="card rounded-0 border-0 h-100 mx-2">
+                {% if object.get_image %}
+                    <a href="{{ object.get_absolute_url }}"><img class="card-img rounded-0 img-fluid" src="{{ object.get_image.path|thumbnail_url:'list' }}" alt="{{object.get_image.title}}" title="{{object.get_image.title}}"></a>
+                {% else %}
+                    <a href="{{ object.get_absolute_url }}">
+                        {% include 'common/no_image_v.html' %}
+                    </a>
+                {% endif %}
+
+                <div class="card-body px-1">
+                    <p class="card-price">
+                    {% if object.get_min_price %}
+                        от {{ object.get_min_price }} руб.
+                    {% else %}
+                        нет в наличии
+                    {%endif%}
+                    </p>
+                    <p class="card-text"><a href="{{ object.get_absolute_url }}">{{ object.name }}</a></p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+{% endif %}

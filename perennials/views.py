@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView
-from common.mixins import PlantGenusFilterMixin, PerPageMixin, PlantSpeciesFilterMixin
+from common.mixins import PlantGenusFilterMixin, PerPageMixin, PlantSpeciesFilterMixin, RecommendedDetailMixin
 from perennials.models import PerProduct, PerSpecies
 from pure_pagination.mixins import PaginationMixin
 
@@ -16,7 +16,7 @@ class PerProductList(PaginationMixin, PerPageMixin, PlantSpeciesFilterMixin,
     species_model = PerSpecies
 
 
-class PerProductDetail(DetailView):
+class PerProductDetail(RecommendedDetailMixin, DetailView):
     model = PerProduct
     template_name = 'perennials/detail.html'
     queryset = PerProduct.is_visible_objects.all() \
