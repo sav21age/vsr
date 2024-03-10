@@ -1,14 +1,18 @@
-body {
-  font-family: "Roboto", "Open Sans", sans-serif;
-  font-size: 16px;
-  line-height: 1.75;
-  color: #222;
-  font-display: swap;
-}
+// body {
+//   font-family: "Roboto", "Open Sans", sans-serif;
+//   font-size: 16px;
+//   line-height: 1.75;
+//   color: #222;
+//   font-display: swap;
+// }
 
 .bg-primary{
   background-color: $primary;
 }
+.bg-tertiary{
+  background-color: $tertiary;
+}
+
 
 .bg-secondary-light{
   background-color: $secondary_light;
@@ -24,23 +28,4 @@ i.fas, i.far, i.fab{
 
 i.info{
   vertical-align: top;
-}
-
-.section:not(#hero) {
-  padding: 5px 0 5px;
-}
-
-.section-title {
-  padding: 10px 0 10px;
-  position: relative;
-  h2, h3, span {
-    font-size: 24px;
-    font-weight: 700;
-    text-transform: uppercase;
-    padding-bottom: 0;
-    // color: #191919;
-    color: $secondary;
-    position: relative;
-    z-index: 2;
-  }
 }

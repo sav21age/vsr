@@ -4,20 +4,49 @@
 // //   --secondary: #52565e;
 // }
 
-$primary: #2d7656;
-// $primary: #7F7D27;
+// $primary: #2d7656;
 
+
+$primary: #7F7D27;
+$secondary: #000000;
+$tertiary: #557F27;
+
+// #7F7D27
+// #557F27
+// #7F5127
+
+// #277F51
+// #27297F
+// #7F2755
+
+// $per: #F5F5DF;
+$per: rgb(127, 125, 39, 0.05);
+// $con: #DFF5E9;
+// $con: #f2fbf6;
+$con: rgba(39, 127, 81, 0.05);
+
+// $dec: #DFDFF5;
+// $dec: #f2f2fb;
+$dec: rgba(39,41,127,0.05);
+// $fru: #F5DFEA;
+$fru: #fbf2f7;
 
 // $secondary: #86776f;
-$secondary: #5d534d;
+// $secondary: #5d534d;
+// $secondary: #000;
+// $secondary: #7F5127;
+
+
 // $secondary: #7f5127;
 
 // $bg_eclipse: rgba(0, 0, 0, 0.6);
 // $bg_eclipse: rgba(45, 118, 86, 0.8);
 
-$bg_eclipse: rgba(134, 119, 111, 0.85);
+// $bg_eclipse: rgba(134, 119, 111, 0.85);
 // $bg_eclipse_light: rgba(45, 118, 86, 0.6);
 $bg_eclipse_light: rgba(0, 0, 0, 0.2);
+
+$bg_eclipse: rgba(85,127,39, 0.9);
 
 $bg_footer: #faf4e4;
 

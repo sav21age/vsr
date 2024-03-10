@@ -1,0 +1,43 @@
+.section:not(#hero) {
+    padding: 20px 0 20px;
+}
+
+section.main {
+    padding: 50px 0;
+    .card{
+        background-color: transparent;
+    }
+}
+
+section.main.con {
+    background-color: $con;
+}
+
+section.main.dec {
+    background-color: $dec;
+}
+
+section.main.per {
+    background-color: $per;
+}
+
+section{
+    .title {
+        padding: 10px 0 10px;
+        position: relative;
+
+        h1 {
+            // font-size: 30px;
+            // margin-bottom: 12px;
+            text-transform: uppercase;
+            // color: $secondary;
+        }
+
+        h2 {
+            // font-size: 30px;
+            // margin-bottom: 12px;
+            text-transform: uppercase;
+            // color: $secondary;
+        }
+    }
+} 

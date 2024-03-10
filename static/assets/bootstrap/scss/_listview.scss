@@ -8,8 +8,9 @@
     color: #fff;
     background-color: $secondary_light;
 }
+
 .species-filter a, .card-body a {
-    // color: $secondary;
+    color: $tertiary;
     text-decoration: none;
     border-bottom: 1px dashed $secondary_light;
 }

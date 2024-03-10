@@ -1,4 +1,5 @@
-{% extends 'base.html' %} {% block main %}
+{% extends 'base.html' %}
+{% block main %}
   <section id="breadcrumb" class="mb-3">
     <div class="breadcrumb-eclipse py-1 pt-md-1 pb-md-3">
       <div class="container-fluid">
@@ -27,11 +28,5 @@
     </div>
   </section>
 
-  <div class="section">
-    <div class="container-fluid">
-      {% block content %}
-
-      {% endblock %}
-    </div>
-  </div>
+  {% block content %}{% endblock %}
 {% endblock %}

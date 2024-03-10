@@ -1,9 +1,9 @@
 {% load static cartquantity %}
 
     <!-- Topbar Start -->
-    <div class="container-fluid p-0">
+    <div class="container p-0">
       <div class="row py-3 gx-0">
-        <div class="col-lg-7 d-none d-lg-flex ps-3 pe-2 text-start">
+        <div class="col-lg-7 d-none d-lg-flex text-start">
           <div class="h-100 d-inline-flex align-items-center me-4">
             <i class="fas fa-map-marker-alt me-2"></i>
             <small>Гатчинский район, д. Борницы</small>
@@ -13,7 +13,7 @@
             <small>Пн-Сб: 09:00 - 18:00, Вс: <span class="text-danger fw-bold">выходной</span></small>
           </div>
         </div>
-        <div class="col-lg-5 ps-2 pe-4 text-end">
+        <div class="col-lg-5 text-end">
           {% comment %} <div class="h-100 d-inline-flex align-items-center py-3 me-4"> {% endcomment %}
           <div class="h-100 d-inline-flex align-items-center">
 
@@ -36,7 +36,7 @@
 
             <a class="nav-icon position-relative text-decoration-none me-4" href="{% url 'carts:index' %}" id="cartProductQuantity" title="Корзина">
                 <i class="fas fa-shopping-cart mr-1"></i>
-                <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-secondary-light text-light">{% get_cart_quantity %}</span>
+                <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-tertiary text-light">{% get_cart_quantity %}</span>
             </a>
             
             {% comment %} <a href="{% url 'account_login' %}?next={{ request.get_full_path }}" class="btn btn-sm btn-primary" role="button">

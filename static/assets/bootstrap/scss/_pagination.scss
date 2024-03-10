@@ -1,28 +1,38 @@
 ul.pagination {
-  margin-top: 15px;
-  margin-bottom: 5px;
+  margin-top: 20px;
+  margin-bottom: 25px;
+  --bs-pagination-border-radius: 0;
 }
 .pagination-light.pagination {
-  --bs-pagination-color: #212529;
-  --bs-pagination-hover-color: #6c757d;
-  --bs-pagination-active-bg: #fff;
-  --bs-pagination-active-color: var(--bs-link-color);
+  // --bs-pagination-color: #212529;
+  --bs-pagination-color: #557F27;
+  // --bs-pagination-hover-color: #6c757d;
+  // --bs-pagination-hover-color: $primary;
+  --bs-pagination-active-bg: var(--bs-link-color);
+  // --bs-pagination-active-color: var(--bs-link-color);
+  --bs-pagination-active-color: #fff;
 }
 .pagination-light.pagination .page-item .page-link {
-  background-color: rgba(0, 0, 0, 0);
+  // background-color: rgba(0, 0, 0, 0);
   border: none;
 }
-.pagination-light.pagination .page-item.active .page-link,
-.pagination-light.pagination .page-item .page-link.active {
-  border-bottom: var(--bs-pagination-border-width) solid
-    var(--bs-pagination-border-color);
+
+.pagination-light.pagination .page-item span.page-link {
+  background-color: transparent!important;
+  // border: none;
 }
+
+// .pagination-light.pagination .page-item.active .page-link,
+// .pagination-light.pagination .page-item .page-link.active {
+//   border-bottom: var(--bs-pagination-border-width) dashed
+//     var(--bs-pagination-border-color);
+// }
+
 @media (max-width: 767.98px) {
   .pagination-light.pagination.pagination-lg {
     --bs-pagination-padding-x: 0.75rem;
     --bs-pagination-padding-y: 0.375rem;
     --bs-pagination-font-size: 1rem;
-    --bs-pagination-border-radius: 0.375rem;
   }
 }
 

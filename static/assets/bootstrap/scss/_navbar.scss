@@ -59,12 +59,12 @@
 
 .navbar .navbar-nav .nav-link {
     // color: var(--dark);
-    color: $secondary_light;
-    font-weight: 500;
+    color: $secondary;
+    // font-weight: 500;
 }
 
 .navbar .navbar-nav .nav-link {
-    margin-right: 20px;
+    margin-left: 20px;
     padding: 25px 0;
     font-size: 16px;
     text-transform: uppercase;
@@ -77,8 +77,8 @@
 }
 
 .navbar .dropdown-menu{
---bs-dropdown-min-width: 300px!important;
-    font-size: 15px!important;
+--bs-dropdown-min-width: 320px!important;
+    font-size: 14px!important;
 }
 
 
