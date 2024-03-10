@@ -1,8 +1,14 @@
 .footer {
     font-size: 15px;
 
+    // background: $bg_footer;
+    // color: #fff;
+    background: url(../../../images/background/footer-bg4.png);
+    background-position: bottom;
+    background-repeat: repeat-x;
+
     .copyright {
-        padding: 0 0 20px;
+        padding: 0 0 60px;
     }
 
     a {
@@ -31,7 +37,9 @@
         text-decoration: none;
     }
 
-    i.fab.fa-whatsapp, i.fab.fa-telegram-plane, i.fab.fa-vk {
+    i.fab.fa-whatsapp,
+    i.fab.fa-telegram-plane,
+    i.fab.fa-vk {
         color: #fff !important;
     }
 

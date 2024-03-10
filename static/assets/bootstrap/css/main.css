@@ -5,9 +5,12 @@
 
 .footer {
   font-size: 15px;
+  background: url(../../../images/background/footer-bg4.png);
+  background-position: bottom;
+  background-repeat: repeat-x;
 }
 .footer .copyright {
-  padding: 0 0 20px;
+  padding: 0 0 60px;
 }
 .footer a {
   color: #000000;
@@ -38,7 +41,9 @@
   border-bottom: none !important;
   text-decoration: none;
 }
-.footer i.fab.fa-whatsapp, .footer i.fab.fa-telegram-plane, .footer i.fab.fa-vk {
+.footer i.fab.fa-whatsapp,
+.footer i.fab.fa-telegram-plane,
+.footer i.fab.fa-vk {
   color: #fff !important;
 }
 .footer .btn-whatsapp {
