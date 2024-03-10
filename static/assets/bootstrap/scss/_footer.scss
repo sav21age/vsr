@@ -1,41 +1,76 @@
-// .footer {
-//     // background: $bg_footer;
-//     // color: #fff;
-//     background: url(../../../images/background/footer-bg.png);
-//     background-position: bottom;
-//     background-repeat: repeat-x;
-// }
-
-.footer{
+.footer {
     font-size: 15px;
+
+    .copyright {
+        padding: 0 0 20px;
+    }
+
+    a {
+        color: $secondary;
+        text-decoration: none;
+        border-bottom: 1px dashed $secondary_light;
+    }
+
+    i {
+        width: 19px;
+        margin-right: 7px;
+    }
+
+    .btn-social {
+        margin: 5px 5px 0;
+        width: 38px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--light);
+        // border: 1px solid #FFFFFF;
+        transition: .3s;
+        border-radius: 50%;
+        border-bottom: none !important;
+        text-decoration: none;
+    }
+
+    i.fab.fa-whatsapp, i.fab.fa-telegram-plane, i.fab.fa-vk {
+        color: #fff !important;
+    }
+
+    .btn-whatsapp {
+        background-color: #4fce5d;
+        font-size: 23px;
+        padding-top: 1px;
+        padding-left: 6px;
+    }
+
+    .btn-telegram {
+        background-color: #0088cc;
+        font-size: 21px;
+        padding-top: 1px;
+        padding-left: 4px;
+    }
+
+    .btn-vk {
+        background-color: #45668e;
+        font-size: 19px;
+        padding-top: 1px;
+        padding-left: 5px;
+    }
+
+    // .btn-instagram {
+    //     background-color: #dd2a7b;
+    //     font-size: 21px;
+    //     padding-top: 1px;
+    // }
+
+    // .btn-youtube {
+    //     background-color: #c4302b;
+    //     font-size: 19px;
+    // }
 }
 
-.footer .copyright {
-    padding: 20px 0;
-    // height: 125px;
-}
-
-.footer a {
-    // color: var(--light);
-    // text-decoration: none;
-    // border-bottom: 1px dashed #fff;
-    color: $primary;
-    text-decoration: none;
-    border-bottom: 1px dashed $primary;
-}
-
-.footer-address{
+.footer-address {
     display: flex;
     font-size: 0.9em;
     line-height: 1.5;
     flex-direction: row;
 }
-
-.footer{
-    i {
-        width: 19px;
-        margin-right: 7px;
-    }
-}
-
-

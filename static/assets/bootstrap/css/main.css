@@ -6,15 +6,58 @@
 .footer {
   font-size: 15px;
 }
-
 .footer .copyright {
-  padding: 20px 0;
+  padding: 0 0 20px;
 }
-
 .footer a {
-  color: #7F7D27;
+  color: #000000;
   text-decoration: none;
-  border-bottom: 1px dashed #7F7D27;
+  border-bottom: 1px dashed #86776f;
+}
+.footer i {
+  width: 19px;
+  margin-right: 7px;
+}
+.footer .btn-social {
+  margin: 5px 5px 0;
+  width: 38px;
+  height: 38px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  color: var(--light);
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  border-radius: 50%;
+  border-bottom: none !important;
+  text-decoration: none;
+}
+.footer i.fab.fa-whatsapp, .footer i.fab.fa-telegram-plane, .footer i.fab.fa-vk {
+  color: #fff !important;
+}
+.footer .btn-whatsapp {
+  background-color: #4fce5d;
+  font-size: 23px;
+  padding-top: 1px;
+  padding-left: 6px;
+}
+.footer .btn-telegram {
+  background-color: #0088cc;
+  font-size: 21px;
+  padding-top: 1px;
+  padding-left: 4px;
+}
+.footer .btn-vk {
+  background-color: #45668e;
+  font-size: 19px;
+  padding-top: 1px;
+  padding-left: 5px;
 }
 
 .footer-address {
@@ -27,11 +70,6 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-}
-
-.footer i {
-  width: 19px;
-  margin-right: 7px;
 }
 
 .bg-primary {
