@@ -51,7 +51,8 @@ def get_price_properties(obj):
         s = f"{s}{obj.trunk_diameter} "
 
     if hasattr(obj, 'shtamb') and obj.shtamb:
-        s = f"{s}{obj._meta.get_field('shtamb').verbose_name} {obj.shtamb} "
+        # s = f"{s}{obj._meta.get_field('shtamb').verbose_name} {obj.shtamb} "
+        s = f"{s} штамб {obj.shtamb} "
 
     if hasattr(obj, 'rs') and obj.rs:
         s = f"{s}{obj.rs} "

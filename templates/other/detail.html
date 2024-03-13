@@ -6,12 +6,12 @@
   {% comment %} <meta property="og:url" content="{{ host }}{% url 't-r_list' %}" /> {% endcomment %}
 {% endblock %}
 
-{% block breadcrumb_name %}
+{% block name %}
   {{ object.name }}
 {% endblock %}
 
 {% block breadcrumb %}
-  {% breadcrumb_for '/' %}<i class="fas fa-home text-white"></i>{% endbreadcrumb_for %}
+  {% breadcrumb_for '/' %}<i class="fas fa-home"></i>{% endbreadcrumb_for %}
   {% breadcrumb_for 'catalog_item_list' %}Каталог{% endbreadcrumb_for %}
   {% if object.category.name == 'BOOK' %}
     {% breadcrumb_for 'book_list' %}Книги{% endbreadcrumb_for %}
@@ -24,11 +24,12 @@
 {% endblock %}
 
 {% block content %}
-  <div class="row mt-3 mx-2">
-    <div class="col-12 col-md-5">
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-4">
       {% include 'common/detailview/images_gallery.html' %}
     </div>
-    <div class="col-12 col-md-7">
+    <div class="col-12 col-md-8">
       <p>{{ object.short_description }}</p>
 
       {% comment %} {% with price_set = object.otherproductprice_set.all %}
@@ -49,4 +50,5 @@
       </div>
     </div>
   </div>
+</div>
 {% endblock %}

@@ -2,7 +2,7 @@
 {% load humanize django_bootstrap_breadcrumbs %}
 
 {% block breadcrumb %}
-{% breadcrumb_for '/' %}<i class="fas fa-home text-white"></i>{% endbreadcrumb_for %}
+{% breadcrumb_for '/' %}<i class="fas fa-home"></i>{% endbreadcrumb_for %}
 {% breadcrumb_for 'profiles:index' %}Профиль пользователя{% endbreadcrumb_for %}
 {% render_breadcrumbs 'breadcrumb.html' %}
 {% endblock %}
@@ -11,7 +11,7 @@
 <title>Профиль пользователя</title>
 {% endblock %}
 
-{% block breadcrumb_name %}
+{% block name %}
 Профиль пользователя
 {% endblock %}
 

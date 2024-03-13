@@ -2,13 +2,13 @@
 
 {% get_favorites as in_favorites %}
 {% if in_favorites != None %}
-<button class="btn social pe-4" id="favorites" title="Добавить в избранное"
+<button class="btn social" id="favorites" title="Добавить в избранное"
 {% if user.is_authenticated %}
     data-ct-id="{{object|toctid}}" data-id="{{ object.id }}"
 {% else %}
     data-toggle="modal" data-target="#loginModal" 
 {% endif %}
 >
-<i class="{% if in_favorites %}fas{% else %}far{% endif %} fa-heart fa-lg" aria-hidden="true"></i>
+<i class="{% if in_favorites %}fas{% else %}far{% endif %} fa-heart fa-lg fa-fw" aria-hidden="true"></i>
 </button>
 {% endif%}

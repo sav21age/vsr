@@ -28,4 +28,27 @@ i.fas, i.far, i.fab{
 
 i.info{
   vertical-align: top;
+  color: $tertiary;
+}
+
+a {
+  // color: $primary-link!important;
+  // --bs-link-color: $primary-link;
+  // --bs-link-color-rgb: #4D4C17;
+  --bs-link-color-rgb: 77, 76, 23;
+  text-decoration: none!important;
+  border-bottom: 1px dashed $secondary_light;
+}
+
+.card {
+  --bs-card-bg: transparent!important;
+}
+
+.navbar-toggler {
+  border: 0 !important;
+}
+
+.navbar-toggler:focus {
+  border: 0 !important;
+  box-shadow: none !important;
 }

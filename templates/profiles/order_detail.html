@@ -2,7 +2,7 @@
 {% load static humanize thumbnail django_bootstrap_breadcrumbs %}
 
 {% block breadcrumb %}
-  {% breadcrumb_for '/' %}<i class="fas fa-home text-white"></i>{% endbreadcrumb_for %}
+  {% breadcrumb_for '/' %}<i class="fas fa-home"></i>{% endbreadcrumb_for %}
   {% breadcrumb_for 'profiles:order_list' %}Мои заказы{% endbreadcrumb_for %}
   {% breadcrumb_for 'profiles:order_detail' %}Заказ № {{ order.number }}{% endbreadcrumb_for %}
   {% render_breadcrumbs 'breadcrumb.html' %}
@@ -12,7 +12,7 @@
   <title>Заказ № {{ order.number }}</title>
 {% endblock %}
 
-{% block breadcrumb_name %}
+{% block name %}
   Заказ № {{ order.number }}
 {% endblock %}
 

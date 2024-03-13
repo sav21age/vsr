@@ -83,6 +83,7 @@ class RecommendedDetailMixin():
         #     .order_by('-reviews_average_rating__average_rating', '-reviews_average_rating__total_reviews')[:4]
 
         context['recommended'] = self.model.is_visible_objects \
+            .filter(species=obj.species) \
             .prefetch_related('images') \
             .exclude(id=obj.id)\
             .distinct()[:4]

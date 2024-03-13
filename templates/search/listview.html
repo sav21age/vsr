@@ -11,18 +11,18 @@
 {% comment %} <meta property="og:url" content="{{host}}{% url 't-r_list' %}"> {% endcomment %}
 {% endblock %} 
 
-{% block breadcrumb_name %}
+{% block name %}
 Поиск
 {% endblock %}
 
 {% block breadcrumb %}
-{% breadcrumb_for '/' %}<i class="fas fa-home text-white"></i>{% endbreadcrumb_for %}
+{% breadcrumb_for '/' %}<i class="fas fa-home"></i>{% endbreadcrumb_for %}
 {% breadcrumb_for 'search' %}Поиск{% endbreadcrumb_for %}
 {% render_breadcrumbs 'breadcrumb.html' %}
 {% endblock %}
 
 {% block content %}
-<div class="row mt-3 mx-2">
+<div class="row">
     <div class="col-12">
         {% if object_list %}
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">

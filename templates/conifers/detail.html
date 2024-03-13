@@ -6,7 +6,7 @@
   {% comment %} <meta property="og:url" content="{{host}}{% url 't-r_list' %}"> {% endcomment %}
 {% endblock %} 
 
-{% block breadcrumb_name %}
+{% block name %}
 {{ object.name }}
 {% endblock %}
 
@@ -20,7 +20,7 @@
 </ol>
 </nav> {% endcomment %}
 
-{% breadcrumb_for '/' %}<i class="fas fa-home text-white"></i>{% endbreadcrumb_for %}
+{% breadcrumb_for '/' %}<i class="fas fa-home"></i>{% endbreadcrumb_for %}
 {% breadcrumb_for 'catalog_item_list' %}Каталог{% endbreadcrumb_for %}
 {% breadcrumb_for 'conifers:list' %}Хвойные растения{% endbreadcrumb_for %}
 {% breadcrumb_for 'conifers:detail' object.slug %}{{ object.name }}{% endbreadcrumb_for %}
@@ -29,14 +29,12 @@
 {% endblock%}
 
 {% block content %}
-
-
-<div class="row mt-3 mx-2">
-        <div class="col-12 col-md-5">
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-4">
             {% include 'common/detailview/images_gallery.html' %}
         </div>
-        <div class="col-12 col-md-7">
-
+        <div class="col-12 col-md-8">
             <p>{{object.short_description}}</p>
 
             {% if object.scientific_name %}
@@ -94,54 +92,14 @@
             {% with object_set_all=object.coniferproductprice_set.all %}
                 {% include 'common/detailview/add_to_cart.html' %}
             {% endwith %}
-            
-            {% comment %} {% if object.coniferproductprice_set.all %}
-                <table class="table table-responsive mt-3">
-                <thead>
-                    <tr>
-                    <th class="text-secondary">Параметры</th>
-                    <th class="text-secondary text-end">Цена</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for obj in object.coniferproductprice_set.all %}
-                <tr>
-                    <td>
-                      <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" value={{obj.id}}
-                        data-ct-id={{obj|toctid}} data-id={{obj.id}}
-                        id="flexRadioDefault"{% if forloop.first %} checked{% endif %}>
-                        <label class="form-check-label" for="flexRadioDefault">
-                          {% get_price_params obj %}
-                          <i class="far fa-question-circle fa-xs info" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="{% get_price_params_popover obj %}"></i>
-                        </label>
-                      </div>
-                    </td>
-                    <td class="text-end">
-                    {{ obj.price }} руб.
-                    </td>
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-            {%endif%}
-            {% csrf_token %}
-            <button type="button" class="btn btn-primary" id="addToCart" value="{% url 'carts:add' %}">Добавить в корзину</button> {% endcomment %}
-
-{% comment %} <div class="row mt-4">
-    {% include 'common/detailview/delivery.html' %}
-</div> {% endcomment %}
-							</div>
-
-
+    	</div>
 
         <div class="row">
             <div class="col-12">
                 <p>{{object.description|safe}}</p>
             </div>
         </div>
-            {% include 'common/detailview/recommended.html' %}
-        
+    </div>
 </div>
-
+{% include 'common/detailview/recommended.html' %}
 {% endblock %}

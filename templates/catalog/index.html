@@ -10,18 +10,19 @@
   {% comment %} <meta property="og:url" content="{{ host }}{% url 't-r_list' %}" /> {% endcomment %}
 {% endblock %}
 
-{% block breadcrumb %}
-  {% breadcrumb_for '/' %}<i class="fas fa-home text-white"></i>{% endbreadcrumb_for %}
+{% comment %} {% block breadcrumb %}
+  {% breadcrumb_for '/' %}<i class="fas fa-home"></i>{% endbreadcrumb_for %}
   {% breadcrumb_for 'catalog' %}Каталог{% endbreadcrumb_for %}
   {% render_breadcrumbs 'breadcrumb.html' %}
-{% endblock %}
+{% endblock %} {% endcomment %}
 
-{% block breadcrumb_name %}
+{% block name %}
   Каталог
 {% endblock %}
 
 {% block content %}
-  <div class="row mt-3 mx-2">
+<div class="container px-1">
+  <div class="row">
     <div class="col-12">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 catalog">
         {% for obj in object_list %}
@@ -39,4 +40,5 @@
       </div>
     </div>
   </div>
+</div>
 {% endblock %}

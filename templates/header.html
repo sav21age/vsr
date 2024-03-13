@@ -1,8 +1,9 @@
 {% load static cartquantity %}
 
     <!-- Topbar Start -->
-    <div class="container p-0">
-      <div class="row py-3 gx-0">
+    {% comment %} <section class="con"> {% endcomment %}
+    <div class="container">
+      <div class="row pt-3 pb-2 gx-0">
         <div class="col-lg-7 d-none d-lg-flex text-start">
           <div class="h-100 d-inline-flex align-items-center me-4">
             <i class="fas fa-map-marker-alt me-2"></i>
@@ -30,11 +31,11 @@
                 </div>
             </div>
 
-            <a class="nav-icon d-none d-lg-inline me-4" href="#" title="Поиск" data-bs-toggle="modal" data-bs-target="#templatemo_search">
+            <a class="nav-icon d-none d-lg-inline me-4 border-bottom-0" href="#" title="Поиск" data-bs-toggle="modal" data-bs-target="#templatemo_search">
                 <i class="fas fa-search"></i>
             </a>
 
-            <a class="nav-icon position-relative text-decoration-none me-4" href="{% url 'carts:index' %}" id="cartProductQuantity" title="Корзина">
+            <a class="nav-icon position-relative text-decoration-none border-bottom-0 me-4" href="{% url 'carts:index' %}" id="cartProductQuantity" title="Корзина">
                 <i class="fas fa-shopping-cart mr-1"></i>
                 <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-tertiary text-light">{% get_cart_quantity %}</span>
             </a>
@@ -99,7 +100,7 @@
       </div>
     </div>
     <!-- Topbar End -->
-
+  {% comment %} </section> {% endcomment %}
     
 
 

@@ -5,12 +5,12 @@
   <title>Корзина</title>
 {% endblock %}
 
-{% block breadcrumb_name %}
+{% block name %}
   Корзина
 {% endblock %}
 
 {% block breadcrumb %}
-  {% breadcrumb_for '/' %}<i class="fas fa-home text-white"></i>{% endbreadcrumb_for %}
+  {% breadcrumb_for '/' %}<i class="fas fa-home"></i>{% endbreadcrumb_for %}
   {% breadcrumb_for 'carts:index' %}Корзина{% endbreadcrumb_for %}
   {% render_breadcrumbs 'breadcrumb.html' %}
 {% endblock %}

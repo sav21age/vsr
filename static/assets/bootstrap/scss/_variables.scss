@@ -7,9 +7,15 @@
 // $primary: #2d7656;
 
 
-$primary: #7F7D27;
+// $primary: #7F7D27;
+$primary: #66651F;
 $secondary: #000000;
 $tertiary: #557F27;
+
+$danger: #7F2755;
+// $danger: #ff4136;
+
+// $primary-link:#4D4C17;
 
 // #7F7D27
 // #557F27
@@ -19,17 +25,18 @@ $tertiary: #557F27;
 // #27297F
 // #7F2755
 
+$ter: rgba(85, 127, 39, 0.04);
 // $per: #F5F5DF;
-$per: rgb(127, 125, 39, 0.05);
+$per: rgba(127, 125, 39, 0.04);
 // $con: #DFF5E9;
 // $con: #f2fbf6;
-$con: rgba(39, 127, 81, 0.05);
+$con: rgba(39, 127, 81, 0.04);
 
 // $dec: #DFDFF5;
 // $dec: #f2f2fb;
-$dec: rgba(39,41,127,0.05);
+$dec: rgba(39,41,127,0.04);
 // $fru: #F5DFEA;
-$fru: #fbf2f7;
+$fru: rgba(251, 242, 247, 0.07);
 
 // $secondary: #86776f;
 // $secondary: #5d534d;
@@ -46,7 +53,7 @@ $fru: #fbf2f7;
 // $bg_eclipse_light: rgba(45, 118, 86, 0.6);
 $bg_eclipse_light: rgba(0, 0, 0, 0.2);
 
-$bg_eclipse: rgba(85,127,39, 0.9);
+$bg_eclipse: rgba(85,127,39, 0.75);
 
 $bg_footer: #faf4e4;
 
@@ -60,6 +67,7 @@ $secondary_light: #86776f;
 // } 
 
 .form-check-input{
-    --bs-border-color: rgba(134, 119, 111, 0.75);
+    // --bs-border-color: rgba(134, 119, 111, 0.75);
+    --bs-border-color: #66651F;
 }
 

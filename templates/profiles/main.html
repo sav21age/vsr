@@ -1,34 +1,35 @@
 {% extends "main.html" %}
 
 {% block content %}
- <div class="row">
-    <div class="col-12 col-md-3 col-lg-2 mb-3">
-        <ul class="list-group">
-            <li class="list-group-item">
-                <i class="far fa-user fa-fw"></i>
-                <a href="{% url 'profiles:index' %}">Профиль</a>
-            </li>
-            {% comment %} <li class="list-group-item">
-                <i class="fas fa-shopping-cart fa-fw"></i>
-                <a href="{% url 'carts:index' %}">Корзина</a>
-            </li> {% endcomment %}
-            <li class="list-group-item">
-                <i class="fas fa-box-open fa-fw"></i>
-                <a href="{% url 'profiles:order_list' %}">Мои заказы</a>
-            </li>
-            <li class="list-group-item">
-                <i class="fas fa-heart fa-fw"></i>
-                <a href="{% url 'profiles:favorites' %}">Избранное</a>
-            </li>
-            <li class="list-group-item">
-                <i class="fas fa-sign-out-alt fa-fw"></i>
-                <a href="{% url 'account_logout' %}">Выйти</a>
-            </li>
-        </ul>
+ <div class="container pb-3">
+    <div class="row">
+        <div class="col-12 col-md-3 col-lg-2">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <i class="far fa-user fa-fw"></i>
+                    <a href="{% url 'profiles:index' %}">Профиль</a>
+                </li>
+                {% comment %} <li class="list-group-item">
+                    <i class="fas fa-shopping-cart fa-fw"></i>
+                    <a href="{% url 'carts:index' %}">Корзина</a>
+                </li> {% endcomment %}
+                <li class="list-group-item">
+                    <i class="fas fa-box-open fa-fw"></i>
+                    <a href="{% url 'profiles:order_list' %}">Мои заказы</a>
+                </li>
+                <li class="list-group-item">
+                    <i class="fas fa-heart fa-fw"></i>
+                    <a href="{% url 'profiles:favorites' %}">Избранное</a>
+                </li>
+                <li class="list-group-item">
+                    <i class="fas fa-sign-out-alt fa-fw"></i>
+                    <a href="{% url 'account_logout' %}">Выйти</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-12 col-md-9 col-lg-10">
+            {% block profile_content %}{% endblock %}
+        </div>
     </div>
-    <div class="col-12 col-md-9 col-lg-10">
-        {% block profile_content %}{% endblock %}
-    </div>
-</div>      
-   
+</div>
 {% endblock %}

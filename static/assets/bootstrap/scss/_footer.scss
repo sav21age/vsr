@@ -3,7 +3,7 @@
 
     // background: $bg_footer;
     // color: #fff;
-    background: url(../../../images/background/footer-bg4.png);
+    background: url(../../../images/background/footer-bg-last.png);
     background-position: bottom;
     background-repeat: repeat-x;
 
@@ -11,11 +11,11 @@
         padding: 0 0 60px;
     }
 
-    a {
-        color: $secondary;
-        text-decoration: none;
-        border-bottom: 1px dashed $secondary_light;
-    }
+    // a {
+    //     // color: $secondary;
+    //     text-decoration: none;
+    //     border-bottom: 1px dashed $secondary_light;
+    // }
 
     i {
         width: 19px;

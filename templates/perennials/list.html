@@ -10,23 +10,25 @@
   <meta property="og:url" content="{{ host }}{% url 'pers:list' %}" />
 {% endblock %}
 
-{% block breadcrumb_name %}
+{% block name %}
   Многолетние растения
 {% endblock %}
 
 {% block breadcrumb %}
-  {% breadcrumb_for '/' %}<i class="fas fa-home text-white"></i>{% endbreadcrumb_for %}
+  {% breadcrumb_for '/' %}<i class="fas fa-home"></i>{% endbreadcrumb_for %}
   {% breadcrumb_for 'catalog_item_list' %}Каталог{% endbreadcrumb_for %}
   {% breadcrumb_for 'pers:list' %}Многолетние растения{% endbreadcrumb_for %}
   {% render_breadcrumbs 'breadcrumb.html' %}
 {% endblock %}
 
 {% block content %}
-  <div class="row mx-2">
-    <div class="col-12">
-      {% include 'common/listview/filters.html' %}
-      {% include 'common/listview/cards.html' %}
-      {% include 'pagination.html' %}
+  {% include 'common/listview/filters.html' %}
+  <div class="container px-1">
+    <div class="row">
+      <div class="col-12">
+        {% include 'common/listview/cards.html' %}
+      </div>
     </div>
   </div>
+  {% include 'pagination.html' %}
 {% endblock %}

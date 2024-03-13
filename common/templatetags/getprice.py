@@ -27,7 +27,7 @@ def get_price_params_popover(obj):
 
     if hasattr(obj, 'shtamb') and obj.shtamb:
         field = obj._meta.get_field('shtamb')
-        s = f"{s}<div><strong>{field.verbose_name} {obj.shtamb}</strong> - {field.help_text}</div>"
+        s = f"{s}<div><strong>штамб {obj.shtamb}</strong> - {field.help_text}</div>"
 
     if hasattr(obj, 'rs') and obj.rs:
         s = f"{s}<div><strong>{obj.rs}</strong> - {obj.rs.description}</div>"

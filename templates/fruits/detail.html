@@ -6,12 +6,12 @@
   {% comment %} <meta property="og:url" content="{{ host }}{% url 't-r_list' %}" /> {% endcomment %}
 {% endblock %}
 
-{% block breadcrumb_name %}
+{% block name %}
   {{ object.name }}
 {% endblock %}
 
 {% block breadcrumb %}
-  {% breadcrumb_for '/' %}<i class="fas fa-home text-white"></i>{% endbreadcrumb_for %}
+  {% breadcrumb_for '/' %}<i class="fas fa-home"></i>{% endbreadcrumb_for %}
   {% breadcrumb_for 'catalog_item_list' %}Каталог{% endbreadcrumb_for %}
   {% breadcrumb_for 'fruits:list' %}Плодовые растения{% endbreadcrumb_for %}
   {% breadcrumb_for 'fruits:detail' object.slug %}{{ object.name }}{% endbreadcrumb_for %}
@@ -19,11 +19,12 @@
 {% endblock %}
 
 {% block content %}
-  <div class="row mt-3 mx-2">
-    <div class="col-12 col-md-5">
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-4">
       {% include 'common/detailview/images_gallery.html' %}
     </div>
-    <div class="col-12 col-md-7">
+    <div class="col-12 col-md-8">
       {% comment %} {% include 'common/detailview/plant_properties.html' %} {% endcomment %}
 
       <p>{{ object.short_description }}</p>
@@ -82,11 +83,7 @@
         <p class="detail-property">
           <span>Достоинства:</span>
           {% for advantage in object.advantages.all %}
-            {{ advantage.name }}{% if forloop.last %}
-              .
-            {% else %}
-              ,
-            {% endif %}
+            {{ advantage.name }}{% if forloop.last %}.{% else %},{% endif %}
           {% endfor %}
         </p>
       {% endif %}
@@ -113,6 +110,7 @@
         <p>{{ object.description|safe }}</p>
       </div>
     </div>
-        {% include 'common/detailview/recommended.html' %}
   </div>
+</div>
+{% include 'common/detailview/recommended.html' %}
 {% endblock %}

@@ -6,19 +6,25 @@
 }
 .species-filter span.active{
     color: #fff;
-    background-color: $secondary_light;
+    // background-color: $secondary_light;
+    background-color: $tertiary;
 }
 
-.species-filter a, .card-body a {
-    color: $tertiary;
-    text-decoration: none;
-    border-bottom: 1px dashed $secondary_light;
+// .species-filter a, .card-body a {
+//     // color: $tertiary;
+//     text-decoration: none;
+//     border-bottom: 1px dashed $secondary_light;
+// }
+
+.card > a{
+    border-bottom: none!important;
 }
 
 // .card-body{
 //     padding-left: 5px;
 //     padding-right: 5px;
 // }
+
 .card-price{
     // margin-bottom: 0.25em;
     margin-bottom: 0;

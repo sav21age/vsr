@@ -6,18 +6,19 @@
   {% comment %} <meta property="og:url" content="{{host}}{% url 't-r_list' %}"> {% endcomment %}
 {% endblock %} 
 
-{% block breadcrumb %}
-{% breadcrumb_for '/' %}<i class="fas fa-home text-white"></i>{% endbreadcrumb_for %}
+{% comment %} {% block breadcrumb %}
+{% breadcrumb_for '/' %}<i class="fas fa-home"></i>{% endbreadcrumb_for %}
 {% breadcrumb_for 'contacts' %}{{ object.name }}{% endbreadcrumb_for %}
 {% render_breadcrumbs 'breadcrumb.html' %}
-{% endblock %}
+{% endblock %} {% endcomment %}
 
-{% block breadcrumb_name %}
+{% block name %}
 {{ object.name }}
 {% endblock %}
 
 {% block content %}
-    <div class="row">
+<div class="container">
+  <div class="row">
     
     {% comment %} <div class="col-md-6">
       <div class="h-100 d-flex p-3">
@@ -32,7 +33,7 @@
     </div> {% endcomment %}
 
     <div class="col-md-6">
-      <div class="h-100 d-flex p-3 text-bg-light">
+      <div class="h-100 d-flex p-3">
         <div class="btn-lg-square flex-shrink-0 mt-2">
           <i class="far fa-id-card fa-lg"></i>
         </div>
@@ -82,28 +83,29 @@
         </div>
       </div>
     </div>
-
   </div>
-      
-    <div class="row">
-      <div class="col-12">
-        <div class="h-100 d-flex p-3">
-          <div class="btn-lg-square flex-shrink-0 mt-2">
-            <i class="fas fa-map-marker-alt fa-lg"></i>
-          </div>
-          <div class="ms-4">
-            <p class="mb-1 fw-bold text-secondary">Адрес</p>
-            <p class="mb-0">{{ object.address }}</p>
-          </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="h-100 d-flex p-3">
+        <div class="btn-lg-square flex-shrink-0 mt-2">
+          <i class="fas fa-map-marker-alt fa-lg"></i>
+        </div>
+        <div class="ms-4">
+          <p class="mb-1 fw-bold text-secondary">Адрес</p>
+          <p class="mb-0">{{ object.address }}</p>
         </div>
       </div>
-      <div class="col-12">
-        <div class="row px-3 pb-3">
-          <div class="col-12">
+    </div>
+    <div class="col-12">
+      <div class="row px-3 pb-3">
+        <div class="col-12">
+          <div id="wrapMap">
             {{ object.map|safe }}
           </div>
         </div>
       </div>
     </div>
+  </div>
+</div>
 
 {% endblock %}

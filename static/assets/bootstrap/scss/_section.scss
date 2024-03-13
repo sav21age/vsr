@@ -4,21 +4,29 @@
 
 section.main {
     padding: 50px 0;
-    .card{
-        background-color: transparent;
-    }
+    // .card{
+    //     background-color: transparent;
+    // }
 }
 
-section.main.con {
+.con {
     background-color: $con;
 }
 
-section.main.dec {
+.dec {
     background-color: $dec;
 }
 
-section.main.per {
+.per {
     background-color: $per;
+}
+
+.fru {
+    background-color: $fru;
+}
+
+.ter {
+    background-color: $ter;
 }
 
 section{
@@ -26,18 +34,8 @@ section{
         padding: 10px 0 10px;
         position: relative;
 
-        h1 {
-            // font-size: 30px;
-            // margin-bottom: 12px;
+        h1, h2, h3 {
             text-transform: uppercase;
-            // color: $secondary;
-        }
-
-        h2 {
-            // font-size: 30px;
-            // margin-bottom: 12px;
-            text-transform: uppercase;
-            // color: $secondary;
         }
     }
 } 
