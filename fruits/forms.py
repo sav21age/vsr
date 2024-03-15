@@ -31,8 +31,14 @@ class FruitProductBatchCopyAdminForm(forms.Form):
     fruit_taste_chk = forms.BooleanField(
         required=False, initial=True, label='Вкус плодов')
 
+    fruit_dimension_chk = forms.BooleanField(
+        required=False, initial=True, label='Величина плодов')
+
     fruit_size_chk = forms.BooleanField(
         required=False, initial=True, label='Размер плодов')
+
+    fruit_weight_chk = forms.BooleanField(
+        required=False, initial=True, label='Вес плодов')
 
     fruit_keeping_quality_chk = forms.BooleanField(
         required=False, initial=True, label='Лежкость плодов')
@@ -59,6 +65,19 @@ class FruitSpeciesAdminForm(forms.ModelForm):
 
 
 class FruitProductAdminForm(ProductAdminForm):
+    CHOICES_FLOWERING = (
+        (None, '---'),
+        ('мелкие', 'мелкие'),
+        ('среднии', 'среднии'),
+        ('крупные', 'крупные'),
+    )
+    fruit_dimension = forms.ChoiceField(
+        widget=forms.Select(attrs={'style': 'width: 150px;'}),
+        choices=CHOICES_FLOWERING, 
+        required=False,
+        label='Величина плодов',
+    )
+
     CHOICES_FLOWERING = (
         (None, '---'),
         ('раннее', 'раннее'),

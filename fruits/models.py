@@ -52,10 +52,18 @@ class FruitProduct(PlantProductAbstract):
     fruit_taste = models.CharField(
         'вкус плодов', max_length=250, blank=True, )
 
+    fruit_dimension = models.CharField(
+        'Величина плодов', max_length=7, blank=True, )
+
     fruit_size = models.CharField(
-        'размер плодов, см', max_length=7, blank=True,
+        'размер плодов, см', max_length=12, blank=True,
         validators=(SizeValidator,),
-        help_text='Можно вводить цифры, от, до, "-". Например: 5, 5-10, от 5, до 5.', )
+        help_text='Можно вводить цифры, от, до, "-".',)
+
+    fruit_weight = models.CharField(
+        'вес плодов, гр', max_length=12, blank=True,
+        validators=(SizeValidator,),
+        help_text='Можно вводить цифры, от, до, "-".', )
 
     fruit_keeping_quality = models.CharField(
         'лежкость плодов', max_length=250, blank=True, )

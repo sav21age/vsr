@@ -98,8 +98,14 @@ def batch_copy(modeladmin, request, queryset):
                         if clean['fruit_taste_chk']:
                             recipient.fruit_taste = donor.fruit_taste
 
+                        if clean['fruit_dimension_chk']:
+                            recipient.fruit_dimension = donor.fruit_dimension
+
                         if clean['fruit_size_chk']:
                             recipient.fruit_size = donor.fruit_size
+
+                        if clean['fruit_weight_chk']:
+                            recipient.fruit_weight = donor.fruit_weight
 
                         if clean['fruit_keeping_quality_chk']:
                             recipient.fruit_keeping_quality = donor.fruit_keeping_quality
@@ -169,7 +175,7 @@ class FruitProductAdmin(ProductAbstractAdmin):
         }),
         ('Плоды', {
             'classes': ('collapse',),
-            'fields': ('fruit_ripening', 'fruit_size', 'fruit_taste', 'fruit_keeping_quality', 'beginning_fruiting', )
+            'fields': ('fruit_ripening', ('fruit_dimension', 'fruit_size', 'fruit_weight', ), 'fruit_taste', 'fruit_keeping_quality', 'beginning_fruiting', )
         }),
         ('', {
             'fields': ('advantages', 'features', 'description', )

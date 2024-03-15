@@ -55,9 +55,21 @@
         </p>
       {% endif %}
 
+      {% if object.fruit_dimension %}
+        <p class="detail-property">
+          <span>Величина плодов:</span> {{ object.fruit_dimension }}
+        </p>
+      {% endif %}
+
       {% if object.fruit_size %}
         <p class="detail-property">
           <span>Размер плодов:</span> {{ object.fruit_size }} см.
+        </p>
+      {% endif %}
+
+      {% if object.fruit_weight %}
+        <p class="detail-property">
+          <span>Вес плодов:</span> {{ object.fruit_weight }} гр.
         </p>
       {% endif %}
 
