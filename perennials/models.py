@@ -35,7 +35,7 @@ class PerProduct(PlantProductAbstract):
         help_text='Можно вводить цифры, от, до, "-". Например: 5, 5-10, от 5, до 5.', )
 
     flowering_period = models.CharField(
-        'период цветения', max_length=7, blank=True,
+        'период цветения', max_length=9, blank=True,
         validators=(FloweringPeriodValidator,),
         help_text='Можно вводить только римские цифры и "-". Например: IV, IV-VI.', )
 
