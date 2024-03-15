@@ -61,7 +61,7 @@ class FruitProduct(PlantProductAbstract):
         'лежкость плодов', max_length=250, blank=True, )
 
     beginning_fruiting = models.CharField(
-        'начало плодоношения у растения, г', max_length=7, blank=True,
+        'начало плодоношения на год', max_length=7, blank=True,
         validators=(SizeValidator,),
         help_text='Можно вводить цифры, от, до, "-". Например: 5, 5-10, от 5, до 5.', )
 
