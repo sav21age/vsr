@@ -52,7 +52,10 @@ class PerProduct(PlantProductAbstract):
     planting = models.ManyToManyField(
         PlantPlanting, verbose_name='место посадки', related_name='+',
         blank=True,)
-    
+
+    shelter_winter = models.CharField(
+        'укрытие на зиму', max_length=50, blank=True, )
+
     winter_zone = models.CharField(
         'зона зимостойкости в градусах', max_length=15, blank=True,)
 

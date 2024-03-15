@@ -132,7 +132,10 @@ class RoseProductAdmin(ProductAbstractAdmin):
             'fields': ('height', 'width', )
         }),
         ('', {
-            'fields': ('flowering', 'flavor', 'flower_size', 'quantity_on_stem', 'resistance_fungus', 'resistance_rain', 'shelter_winter', 'winter_zone', )
+            'fields': ('flowering', 'flavor', 'flower_size', 'quantity_on_stem', 'resistance_fungus', 'resistance_rain', )
+        }),
+        ('', {
+            'fields': ('shelter_winter', 'winter_zone', )
         }),
         ('', {
             'fields': ('advantages', 'description',)

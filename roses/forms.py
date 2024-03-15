@@ -68,9 +68,9 @@ class RoseSpeciesAdminForm(forms.ModelForm):
 
 
 class RoseProductAdminForm(PlantWinterZoneAdminForm, ShelterWinterAdminForm, ProductAdminForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['winter_zone'].widget.attrs['style'] = 'width: 150px;'
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['winter_zone'].widget.attrs['style'] = 'width: 150px;'
 
     CHOICES_FLOWERING = (
         (None, '---------'),

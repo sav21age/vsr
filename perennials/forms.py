@@ -1,7 +1,7 @@
 from django import forms
 from common.forms import ProductAdminForm
 from perennials.models import PerProduct, PerSpecies
-from plants.forms import PlantPlantingAdminForm, PlantWinterZoneAdminForm
+from plants.forms import PlantPlantingAdminForm, PlantWinterZoneAdminForm, ShelterWinterAdminForm
 from plants.models import PlantGenus
 
 
@@ -41,6 +41,9 @@ class PerProductBatchCopyAdminForm(forms.Form):
     planting_chk = forms.BooleanField(
         required=False, initial=True, label='Место посадки')
 
+    shelter_winter_chk = forms.BooleanField(
+        required=False, initial=True, label='Укрытие на зиму')
+
     winter_zone_chk = forms.BooleanField(
         required=False, initial=True, label='Зона зимостойкости')
 
@@ -63,12 +66,13 @@ class PerSpeciesAdminForm(forms.ModelForm):
 
 
 class PerProductAdminForm(PlantPlantingAdminForm, PlantWinterZoneAdminForm, 
-                          ProductAdminForm):
+                          ShelterWinterAdminForm,  ProductAdminForm):
     
     CHOICES_FLOWERING = (
         (None, '---'),
         ('обильное', 'обильное'),
         ('повторное', 'повторное'),
+        ('продолжительное', 'продолжительное'),
     )
     flowering = forms.ChoiceField(
         widget=forms.Select(attrs={'style': 'width: 150px;'}),
