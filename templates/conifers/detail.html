@@ -1,5 +1,5 @@
 {% extends "main.html" %}
-{% load thumbnail markdownify getprice django_bootstrap_breadcrumbs ctid %}
+{% load thumbnail markdownify django_bootstrap_breadcrumbs cache %}
 
 {% block head %}
   {% include 'head.html' %}
@@ -29,6 +29,7 @@
 {% endblock%}
 
 {% block content %}
+{% cache cache_timeout coniferproduct_detail object.id %}
 <div class="container-fluid px-3 px-md-5">
     <div class="row">
         <div class="col-12 col-md-4">
@@ -102,4 +103,5 @@
     </div>
 </div>
 {% include 'common/detailview/recommended.html' %}
+{% endcache %}
 {% endblock %}

@@ -1,5 +1,5 @@
 {% extends 'main.html' %}
-{% load thumbnail markdownify django_bootstrap_breadcrumbs %}
+{% load thumbnail markdownify django_bootstrap_breadcrumbs cache %}
 
 {% block head %}
   {% include 'head.html' %}
@@ -24,6 +24,7 @@
 {% endblock %}
 
 {% block content %}
+{% cache cache_timeout otherproduct_detail object.id %}
 <div class="container-fluid px-3 px-md-5">
   <div class="row">
     <div class="col-12 col-md-4">
@@ -51,4 +52,5 @@
     </div>
   </div>
 </div>
+{% endcache %}
 {% endblock %}

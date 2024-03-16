@@ -1,4 +1,8 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.core.cache.utils import make_template_fragment_key
+from django.dispatch import receiver
+from django.core.cache import caches
 from common.models import PageAbstract
 
 
@@ -32,3 +36,14 @@ class Index(PageAbstract):
     class Meta:
         verbose_name = 'главная страница'
         verbose_name_plural = 'главная страница'
+
+
+@receiver(post_save, sender=Index)
+def invalidate_cache(instance, **kwargs):
+    if kwargs.get('raw'):  # add for test, pass fixtures
+        return
+
+    key = make_template_fragment_key(
+        f"{instance._meta.model_name}_detail", [instance.id]
+    )
+    caches['default'].delete(key)

@@ -1,5 +1,7 @@
 from django.db.models.signals import post_save, post_delete
-from django.core.cache import cache
+# from django.core.cache import cache
+from django.core.cache.utils import make_template_fragment_key
+from django.core.cache import caches
 from django.contrib.postgres.search import SearchVector
 from conifers.models import ConiferProduct
 from deciduous.models import DecProduct
@@ -41,10 +43,20 @@ def update_search_vector(sender, instance, created, update_fields, **kwargs):
 
 
 # senders = []
-
 # @receiver_multiple([post_save, post_delete], senders)
 # def cache_invalidate(instance, **kwargs):
 #     if kwargs.get('raw'):  # add for test, pass fixtures
 #         return
 
-#     cache.clear()
+
+
+@receiver_multiple([post_save,], senders=senders)
+def invalidate_cache(instance, **kwargs):
+    if kwargs.get('raw'):  # add for test, pass fixtures
+        return
+
+    key = make_template_fragment_key(
+        f"{instance._meta.model_name}_detail", [instance.id]
+    )
+    caches['default'].delete(key)
+    # cache.clear()

@@ -15,58 +15,38 @@ def index(request):
     obj = Index.objects.get()
 
     qs_con = ConiferProduct.is_visible_objects.values_list('id', flat=True)
-    lst = list(qs_con)
-    con = []
     try:
-        lst = random.sample(lst, ON_PAGE)
+        lst = random.sample(list(qs_con), ON_PAGE)
         qs_con = ConiferProduct.is_visible_objects.filter(id__in=lst) \
             .prefetch_related('images') \
             .prefetch_related('coniferproductprice_set')
-        con = list(qs_con)
-        random.shuffle(con)
-        con = con[:ON_PAGE]
     except Exception as e:
         logger.error(e)
 
     qs_dec = DecProduct.is_visible_objects.values_list('id', flat=True)
-    lst = list(qs_dec)
-    dec = []
     try:
-        lst = random.sample(lst, ON_PAGE)
+        lst = random.sample(list(qs_dec), ON_PAGE)
         qs_dec = DecProduct.is_visible_objects.filter(id__in=lst) \
             .prefetch_related('images') \
             .prefetch_related('decproductprice_set')
-        dec = list(qs_dec)
-        random.shuffle(dec)
-        dec = dec[:ON_PAGE]
     except Exception as e:
         logger.error(e)
 
     qs_fru = FruitProduct.is_visible_objects.values_list('id', flat=True)
-    lst = list(qs_fru)
-    fru = []
     try:
-        lst = random.sample(lst, ON_PAGE)
+        lst = random.sample(list(qs_fru), ON_PAGE)
         qs_fru = FruitProduct.is_visible_objects.filter(id__in=lst) \
             .prefetch_related('images') \
             .prefetch_related('fruitproductprice_set')
-        fru = list(qs_fru)
-        random.shuffle(fru)
-        fru = fru[:ON_PAGE]
     except Exception as e:
         logger.error(e)
 
     qs_per = PerProduct.is_visible_objects.values_list('id', flat=True)
-    lst = list(qs_per)
-    per = []
     try:
-        lst = random.sample(lst, ON_PAGE)
+        lst = random.sample(list(qs_per), ON_PAGE)
         qs_per = PerProduct.is_visible_objects.filter(id__in=lst) \
             .prefetch_related('images') \
             .prefetch_related('perproductprice_set')
-        per = list(qs_per)
-        random.shuffle(per)
-        per = per[:ON_PAGE]
     except Exception as e:
         logger.error(e)
 
@@ -75,11 +55,11 @@ def index(request):
         'index/index.html',
         {
             'object': obj,
-            'con': con,
-            'dec': dec,
-            'fru': fru,
-            'per': per,
+            'qs_con': qs_con,
+            'qs_dec': qs_dec,
+            'qs_fru': qs_fru,
+            'qs_per': qs_per,
         }
     )
-    
+
     return response
