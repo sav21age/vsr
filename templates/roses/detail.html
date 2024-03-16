@@ -38,11 +38,7 @@
 
       {% if object.flower_size %}
         <p class="detail-property">
-          <span>Размер цветка:</span> {{ object.flower_size }} см{% if object.quantity_on_stem %}
-            , {{ object.quantity_on_stem }} на стебле
-          {% else %}
-            .
-          {% endif %}
+          <span>Размер цветка:</span> {{ object.flower_size }} см{% if object.quantity_on_stem %}, {{ object.quantity_on_stem }} на стебле{% else %}.{% endif %}
         </p>
       {% endif %}
 
@@ -86,11 +82,7 @@
         <p class="detail-property">
           <span>Достоинства:</span>
           {% for advantage in object.advantages.all %}
-            {{ advantage.name }}{% if forloop.last %}
-              .
-            {% else %}
-              ,
-            {% endif %}
+            {{ advantage.name }}{% if forloop.last %}.{% else %},{% endif %}
           {% endfor %}
         </p>
       {% endif %}
