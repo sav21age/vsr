@@ -42,7 +42,7 @@ class DecProduct(PlantProductAbstract):
         help_text='Можно вводить цифры, от, до, "-". Например: 5, 5-10, от 5, до 5.', )
 
     inflorescence = models.CharField(
-        'соцветие', max_length=250, blank=True,)
+        'соцветия', max_length=250, blank=True,)
 
     inflorescence_size = models.CharField(
         'размер соцветия, см', max_length=7, blank=True,
