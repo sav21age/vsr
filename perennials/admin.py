@@ -10,7 +10,7 @@ from common.filters import (
 from common.helpers import get_price_properties
 from images.admin import ImageInline
 from perennials.forms import PerProductAdminForm, PerProductBatchCopyAdminForm, PerSpeciesAdminForm
-from perennials.models import PerProduct, PerProductPrice, PerSpecies
+from perennials.models import PerProduct, PerProductFlowering, PerProductPrice, PerSpecies
 from plants.admin import PlantSpeciesAbstractAdmin
 from plants.models import PlantPriceContainer
 
@@ -53,6 +53,10 @@ class PerProductPriceInline(ProductPriceInline):
 
 # --
 
+admin.site.register(PerProductFlowering)
+
+# --
+
 
 def batch_copy(modeladmin, request, queryset):
     if 'do_action' in request.POST:
@@ -82,7 +86,9 @@ def batch_copy(modeladmin, request, queryset):
                             recipient.leaves = donor.leaves
 
                         if clean['flowering_chk']:
-                            recipient.flowering = donor.flowering
+                            recipient.flowering.clear()
+                            for attr in donor.flowering.all():
+                                recipient.flowering.add(attr)
 
                         if clean['flowering_duration_chk']:
                             recipient.flowering_duration = donor.flowering_duration

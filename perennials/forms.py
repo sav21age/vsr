@@ -1,6 +1,6 @@
 from django import forms
 from common.forms import ProductAdminForm
-from perennials.models import PerProduct, PerSpecies
+from perennials.models import PerProductFlowering, PerProduct, PerSpecies
 from plants.forms import PlantPlantingAdminForm, PlantWinterZoneAdminForm, ShelterWinterAdminForm
 from plants.models import PlantGenus
 
@@ -66,17 +66,25 @@ class PerSpeciesAdminForm(forms.ModelForm):
 
 
 class PerProductAdminForm(PlantPlantingAdminForm, PlantWinterZoneAdminForm, 
-                          ShelterWinterAdminForm,  ProductAdminForm):
+                          ShelterWinterAdminForm, ProductAdminForm):
     
-    CHOICES_FLOWERING = (
-        (None, '---'),
-        ('обильное', 'обильное'),
-        ('повторное', 'повторное'),
-        ('продолжительное', 'продолжительное'),
-    )
-    flowering = forms.ChoiceField(
-        widget=forms.Select(attrs={'style': 'width: 150px;'}),
-        choices=CHOICES_FLOWERING, 
+    # CHOICES_FLOWERING = (
+    #     (None, '---'),
+    #     ('обильное', 'обильное'),
+    #     ('повторное', 'повторное'),
+    #     ('продолжительное', 'продолжительное'),
+    # )
+    # flowering = forms.ChoiceField(
+    #     widget=forms.Select(attrs={'style': 'width: 150px;'}),
+    #     choices=CHOICES_FLOWERING, 
+    #     required=False,
+    #     label='Цветение',
+    # )
+    flowering = forms.ModelMultipleChoiceField(
+        queryset=PerProductFlowering.objects.all(),
+        widget=forms.CheckboxSelectMultiple(
+            # attrs={'class': 'inline'}
+        ),
         required=False,
         label='Цветение',
     )

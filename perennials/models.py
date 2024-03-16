@@ -18,6 +18,17 @@ class PerSpecies(PlantSpeciesAbstract):
 # --
 
 
+class PerProductFlowering(models.Model):
+    name = models.CharField('название', max_length=50)
+
+    def __str__(self):
+        return f"{self.name}"
+
+    class Meta:
+        verbose_name = 'цветение'
+        verbose_name_plural = 'цветение'
+
+
 class PerProduct(PlantProductAbstract):
     species = models.ForeignKey(
         PerSpecies, verbose_name='вид', on_delete=models.CASCADE,
@@ -27,8 +38,11 @@ class PerProduct(PlantProductAbstract):
 
     leaves = models.CharField('листва', max_length=250, blank=True, )
     
-    flowering = models.CharField('цветение', max_length=250, blank=True, )
-    
+    # flowering = models.CharField('цветение', max_length=250, blank=True, )
+    flowering = models.ManyToManyField(
+        PerProductFlowering, verbose_name='цветение', related_name='+',
+        blank=True,)
+
     flowering_duration = models.CharField(
         'продолжительность цветения, день', max_length=7, blank=True,
         validators=(SizeValidator,),

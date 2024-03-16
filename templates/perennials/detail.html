@@ -56,9 +56,12 @@
         </p>
       {% endif %}
 
-      {% if object.flowering %}
+      {% if object.flowering.all %}
         <p class="detail-property">
-          <span>Цветение:</span> {{ object.flowering }}
+          <span>Цветение:</span>
+          {% for flowering in object.flowering.all %}
+            {{ flowering.name }}{% if forloop.last %}.{% else %},{% endif %}
+          {% endfor %}
         </p>
       {% endif %}
 
