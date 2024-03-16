@@ -14,7 +14,7 @@
       </div>
       <div class="row">
         <div class="col-md-12">
-        {{ object.about_us|markdownify }}
+        {{ object.description|markdownify }}
         </div>
       </div>
 
@@ -44,7 +44,91 @@
     </div>
   </section>
 
+  {% if object.con_visible %}
   <section class="main con d-none d-sm-block">
+    <div class="container-fluid px-3 px-md-5">
+      <div class="title">
+        <h2>{{ object.con_name }}</h2>
+        <h6>{{ object.con_short_description }}</h6>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          {% with object_list=con %}
+            {% include 'index/cards.html' %}
+          {% endwith %}
+        </div>
+        <div class="col-lg-6">
+          {{ object.con_description|markdownify }}
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+  
+  {% if object.dec_visible %}
+  <section class="main dec d-none d-sm-block">
+    <div class="container-fluid px-3 px-md-5">
+      <div class="title">
+        <h2>{{ object.dec_name }}</h2>
+        <h6>{{ object.dec_short_description }}</h6>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          {{ object.dec_description|markdownify }}
+        </div>
+        <div class="col-lg-6">
+          {% with object_list=dec %}
+            {% include 'index/cards.html' %}
+          {% endwith %}
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+  
+  {% if object.per_visible %}
+  <section class="main per d-none d-sm-block">
+    <div class="container-fluid px-3 px-md-5">
+      <div class="title">
+        <h2>{{ object.per_name }}</h2>
+        <h6>{{ object.per_short_description }}</h6>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          {% with object_list=per %}
+            {% include 'index/cards.html' %}
+          {% endwith %}
+        </div>
+        <div class="col-lg-6">
+          {{ object.per_description|markdownify }}
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  {% if object.fru_visible %}
+  <section class="main fru d-none d-sm-block">
+    <div class="container-fluid px-3 px-md-5">
+      <div class="title">
+        <h2>{{ object.fru_name }}</h2>
+        <h6>{{ object.fru_short_description }}</h6>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          {{ object.fru_description|markdownify }}
+        </div>
+        <div class="col-lg-6">
+          {% with object_list=fru %}
+            {% include 'index/cards.html' %}
+          {% endwith %}
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  {% comment %} <section class="main con d-none d-sm-block">
     <div class="container-fluid px-3 px-md-5">
       <div class="title">
         <h2>Хвойные растения</h2>
@@ -69,9 +153,9 @@
         </div>
       </div>
     </div>
-  </section>
+  </section> {% endcomment %}
 
-  <section class="main d-none d-sm-block">
+  {% comment %} <section class="main d-none d-sm-block">
     <div class="container-fluid px-3 px-md-5">
       <div class="title">
         <h2>Лиственные растения</h2>
@@ -90,23 +174,9 @@
         </div>
       </div>
     </div>
-  </section>
-
-  {% comment %} <section class="main">
-    <div class="section-title">
-      <h2>Плодовые растения</h2>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        {% with object_list = fru %}
-          {% include 'index/cards.html' %}
-        {% endwith %}
-      </div>
-      <div class="col-md-6"></div>
-    </div>
   </section> {% endcomment %}
 
-  <section class="main per d-none d-sm-block">
+  {% comment %} <section class="main per d-none d-sm-block">
     <div class="container-fluid px-3 px-md-5">
       <div class="title">
         <h2>Многолетние растения</h2>
@@ -125,5 +195,5 @@
         </div>
       </div>
     </div>
-  </section>
+  </section> {% endcomment %}
 {% endblock %}

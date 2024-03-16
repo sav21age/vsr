@@ -42,19 +42,19 @@ def index(request):
     except Exception as e:
         logger.error(e)
 
-    # qs_fru = FruitProduct.is_visible_objects.values_list('id', flat=True)
-    # lst = list(qs_fru)
-    # fru = []
-    # try:
-    #     lst = random.sample(lst, ON_PAGE)
-    #     qs_fru = FruitProduct.is_visible_objects.filter(id__in=lst) \
-    #         .prefetch_related('images') \
-    #         .prefetch_related('fruitproductprice_set')
-    #     fru = list(qs_fru)
-    #     random.shuffle(fru)
-    #     fru = fru[:4]
-    # except Exception as e:
-    #     logger.error(e)
+    qs_fru = FruitProduct.is_visible_objects.values_list('id', flat=True)
+    lst = list(qs_fru)
+    fru = []
+    try:
+        lst = random.sample(lst, ON_PAGE)
+        qs_fru = FruitProduct.is_visible_objects.filter(id__in=lst) \
+            .prefetch_related('images') \
+            .prefetch_related('fruitproductprice_set')
+        fru = list(qs_fru)
+        random.shuffle(fru)
+        fru = fru[:ON_PAGE]
+    except Exception as e:
+        logger.error(e)
 
     qs_per = PerProduct.is_visible_objects.values_list('id', flat=True)
     lst = list(qs_per)
@@ -66,7 +66,7 @@ def index(request):
             .prefetch_related('perproductprice_set')
         per = list(qs_per)
         random.shuffle(per)
-        per = per[:3]
+        per = per[:ON_PAGE]
     except Exception as e:
         logger.error(e)
 
@@ -77,7 +77,7 @@ def index(request):
             'object': obj,
             'con': con,
             'dec': dec,
-            # 'fru': fru,
+            'fru': fru,
             'per': per,
         }
     )

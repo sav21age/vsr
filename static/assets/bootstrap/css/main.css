@@ -570,14 +570,10 @@ main p {
 }
 
 .fru {
-  background-color: rgba(251, 242, 247, 0.05);
+  background-color: rgba(127, 39, 85, 0.05);
 }
 
 .ter {
-  background-color: rgba(85, 127, 39, 0.15);
-}
-
-.ter-light {
   background-color: rgba(85, 127, 39, 0.1);
 }
 
