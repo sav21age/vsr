@@ -21,3 +21,9 @@
     object-fit: cover;
     object-position: center;
 }
+#carouselMain .carousel-caption{
+    color: #000;
+}
+#carouselMain .carousel-indicators [data-bs-target] {
+    background-color: $primary;
+}

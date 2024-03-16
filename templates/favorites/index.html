@@ -2,7 +2,7 @@
 
 {% get_favorites as in_favorites %}
 {% if in_favorites != None %}
-<button class="btn social" id="favorites" title="Добавить в избранное"
+<button class="btn social p-0 me-2" id="favorites" title="Добавить в избранное"
 {% if user.is_authenticated %}
     data-ct-id="{{object|toctid}}" data-id="{{ object.id }}"
 {% else %}

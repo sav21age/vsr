@@ -85,7 +85,7 @@
 }
 
 .bg-eclipse {
-  background-color: rgba(85, 127, 39, 0.75);
+  background-color: rgba(238, 242, 233, 0.9);
 }
 
 i.fas, i.far, i.fab {
@@ -306,7 +306,7 @@ i.shake {
           animation-iteration-count: 3;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 768px) {
   .navbar .nav-item .dropdown-menu {
     display: block;
     margin-top: 0;
@@ -529,6 +529,14 @@ main p {
   }
 }
 
+#carouselMain .carousel-caption {
+  color: #000;
+}
+
+#carouselMain .carousel-indicators [data-bs-target] {
+  background-color: #66651F;
+}
+
 .section:not(#hero) {
   padding: 20px 0 20px;
 }
@@ -550,23 +558,27 @@ main p {
 }
 
 .con {
-  background-color: rgba(39, 127, 81, 0.04);
+  background-color: rgba(39, 127, 81, 0.05);
 }
 
 .dec {
-  background-color: rgba(39, 41, 127, 0.04);
+  background-color: rgba(39, 41, 127, 0.05);
 }
 
 .per {
-  background-color: rgba(127, 125, 39, 0.04);
+  background-color: rgba(127, 125, 39, 0.05);
 }
 
 .fru {
-  background-color: rgba(251, 242, 247, 0.07);
+  background-color: rgba(251, 242, 247, 0.05);
 }
 
 .ter {
-  background-color: rgba(85, 127, 39, 0.04);
+  background-color: rgba(85, 127, 39, 0.15);
+}
+
+.ter-light {
+  background-color: rgba(85, 127, 39, 0.1);
 }
 
 section .title {

@@ -21,13 +21,11 @@
 {% endblock %}
 
 {% block content %}
-<div class="container px-1">
-  <div class="row">
-    <div class="col-12">
+<div class="container-fluid px-3 px-md-5">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 catalog">
         {% for obj in object_list %}
         <div class="col">
-          <div class="carousel-inner card rounded-0 border-0 h-100 mx-2">
+          <div class="carousel-inner card rounded-0 border-0 h-100">
             <a class="item active" href="{{obj.url}}">
               <img class="card-img rounded-0 img-fluid" src="{{obj.image_path|thumbnail_url:'list'}}" alt="{{obj.image_title}}" title="{{obj.image_title}}">
               <div class="carousel-caption text-center p-4">
@@ -38,7 +36,5 @@
         </div>
         {% endfor %}
       </div>
-    </div>
-  </div>
 </div>
 {% endblock %}
