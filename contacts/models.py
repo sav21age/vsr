@@ -1,6 +1,10 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
+from django.db.models.signals import post_save
+from django.core.cache.utils import make_template_fragment_key
+from django.dispatch import receiver
+from django.core.cache import caches
 from common.models import PageAbstract
 from solo.models import SingletonModel
 from django.core.validators import MinLengthValidator
@@ -38,3 +42,14 @@ class Contacts(PageAbstract, SingletonModel):
 
     def get_absolute_url(self):
         return reverse('contacts')
+
+
+@receiver(post_save, sender=Contacts)
+def invalidate_cache(instance, **kwargs):
+    if kwargs.get('raw'):  # add for test, pass fixtures
+        return
+
+    key = make_template_fragment_key(
+        f"{instance._meta.model_name}_detail"
+    )
+    caches['default'].delete(key)

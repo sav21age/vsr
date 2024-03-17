@@ -1,5 +1,5 @@
 {% extends "main.html" %} 
-{% load static django_bootstrap_breadcrumbs tel %} 
+{% load static django_bootstrap_breadcrumbs tel cache %} 
 
 {% block head %}
   {% include 'head.html' %}
@@ -17,7 +17,8 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
+{% cache cache_timeout contacts_detail %}
+<div class="container-fluid px-3 px-md-5">
   <div class="row">
     
     {% comment %} <div class="col-md-6">
@@ -107,5 +108,5 @@
     </div>
   </div>
 </div>
-
+{% endcache %}
 {% endblock %}

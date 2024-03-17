@@ -44,6 +44,6 @@ def invalidate_cache(instance, **kwargs):
         return
 
     key = make_template_fragment_key(
-        f"{instance._meta.model_name}_detail", [instance.id]
+        f"{instance._meta.model_name}_detail"
     )
     caches['default'].delete(key)
