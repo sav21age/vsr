@@ -1,77 +1,57 @@
-.listview-image-container{
-    overflow: hidden;
-    position: relative;
-    // border: 1px solid #c6c6c6;
-    // padding: 0;
-}
-
-.listview-image-wrapper::before {
-  content: "";
-  background: rgba(21, 21, 21, 0.6);
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  transition: all ease-in-out 0.3s;
-  z-index: 1;
-  opacity: 0;
-}
-
-.listview-image-wrapper:hover::before {
-  opacity: 1;
-}
-
-.listview-image-wrapper img {
-  transition: all ease-in-out 0.3s;
-}
-
-.listview-image-wrapper:hover img {
-  transform: scale(1.2);
-}
-
-.listview-image-container .content {
-  text-align: center;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  bottom: 100%;
-  left: 0;
-  // -webkit-transition: all 500ms ease;
-  // -moz-transition: all 500ms ease;
-  // -o-transition: all 500ms ease;
-  transition: all 500ms ease;
-  pointer-events: none;
-}
-
-.listview-image-container:hover .content {
-  bottom: 0;
-}
-
-.listview-image-container .content .description {
-  position: relative;
-  top: 40%;
-  color: white;
-  padding: 0 20px;
-  z-index: 2;
-}
-
-// .listview-image-container .listview-image-content {
-//     text-align: center;
-//     position: absolute;
-//     width: 100%;
-//     height: 100%;
-//     bottom: 100%;
-//     left: 0;
-//     -webkit-transition: all 500ms ease;
-//     -moz-transition: all 500ms ease;
-//     -o-transition: all 500ms ease;
-//     transition: all 500ms ease;
+// .listview-image-container{
+//     overflow: hidden;
+//     position: relative;
+//     // border: 1px solid #c6c6c6;
+//     // padding: 0;
 // }
 
-// .listview-image-container .listview-image-content .description {
+// .listview-image-wrapper::before {
+//   content: "";
+//   background: rgba(21, 21, 21, 0.6);
+//   position: absolute;
+//   left: 0;
+//   right: 0;
+//   top: 0;
+//   bottom: 0;
+//   transition: all ease-in-out 0.3s;
+//   z-index: 1;
+//   opacity: 0;
+// }
+
+// .listview-image-wrapper:hover::before {
+//   opacity: 1;
+// }
+
+// .listview-image-wrapper img {
+//   transition: all ease-in-out 0.3s;
+// }
+
+// .listview-image-wrapper:hover img {
+//   transform: scale(1.2);
+// }
+
+// .listview-image-container .content {
+//   text-align: center;
+//   position: absolute;
+//   width: 100%;
+//   height: 100%;
+//   bottom: 100%;
+//   left: 0;
+//   // -webkit-transition: all 500ms ease;
+//   // -moz-transition: all 500ms ease;
+//   // -o-transition: all 500ms ease;
+//   transition: all 500ms ease;
+//   pointer-events: none;
+// }
+
+// .listview-image-container:hover .content {
+//   bottom: 0;
+// }
+
+// .listview-image-container .content .description {
 //   position: relative;
+//   top: 40%;
+//   color: white;
 //   padding: 0 20px;
-//   top: 25%;
-//   font-size: 14px;
+//   z-index: 2;
 // }
