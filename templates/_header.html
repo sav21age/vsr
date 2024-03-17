@@ -1,112 +1,133 @@
-{% load static %}
+{% load static cartquantity %}
 
     <!-- Topbar Start -->
-    <div class="container-fluid p-0 bg-light">
-      <div class="row py-2 gx-0">
-        <div class="col-lg-7 d-none d-lg-flex px-2 text-start">
-          <div class="h-100 d-inline-flex align-items-center me-4">
-            <small class="fa fa-map-marker-alt me-2"></small>
-            <small>Лен. обл., Гатчинский район, д. Борницы</small>
+  <section class="ter">
+    <div class="container-fluid mt-2 px-3 px-md-5">
+      <div class="row">
+      {% comment %} <div class="row pt-2 pb-0 pt-md-2 pb-md-2 gx-0"> {% endcomment %}
+        <div class="col-8 col-md-8 d-flex text-start">
+          <div class="h-100 d-none d-lg-flex align-items-center me-4">
+            <i class="fas fa-map-marker-alt me-2"></i>
+            <small>Гатчинский район, д. Борницы</small>
           </div>
-          <div class="h-100 d-inline-flex align-items-center">
-            <small class="far fa-clock me-2"></small>
+          <div class="h-100 d-none d-md-flex align-items-center">
+            <i class="far fa-clock me-2"></i>
             <small>Пн-Сб: 09:00 - 18:00, Вс: <span class="text-danger fw-bold">выходной</span></small>
           </div>
+
+          {% comment %} <div class="d-md-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3"> {% endcomment %}
+          <div class="h-100 d-block d-md-none">
+              <form action="{% url 'search' %}" method="GET">
+              <div class="input-group">
+                  {% comment %} <input type="text" class="form-control" id="inputMobileSearch" placeholder="поиск...">
+                  <div class="input-group-text">
+                      <i class="fa fa-fw fa-search"></i>
+                  </div> {% endcomment %}
+                  {{ search_form.q }}
+                  <button type="submit" class="input-group-text bg-primary text-light">
+                      <i class="fa fa-fw fa-search text-white"></i>
+                  </button>
+              </div>
+            </form>
+          </div>
+
         </div>
-        <div class="col-lg-5 px-2 text-end">
-          {% comment %} <div class="h-100 d-inline-flex align-items-center py-3 me-4"> {% endcomment %}
+        <div class="col-4 col-md-4 mt-2 text-end">
+
           <div class="h-100 d-inline-flex align-items-center">
             
-            {% comment %} <a class="me-1" href="#">
-                <i class="fas fa-shopping-cart"></i>
-                <span class="badge rounded-pill text-bg-light">2</span>
-            </a> {% endcomment %}
-
-            <a class="nav-icon d-none d-lg-inline me-4" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
-                {% comment %} <i class="fa fa-fw fa-search text-dark mr-2"></i> {% endcomment %}
+            <a class="nav-icon d-none d-md-inline me-4 border-bottom-0" href="#" title="Поиск" data-bs-toggle="modal" data-bs-target="#modalSearch">
                 <i class="fas fa-search"></i>
             </a>
 
-            <a class="nav-icon position-relative text-decoration-none me-4" href="#">
+            <a class="nav-icon position-relative text-decoration-none border-bottom-0 me-4" href="{% url 'carts:index' %}" id="cartProductQuantity" title="Корзина">
                 <i class="fas fa-shopping-cart mr-1"></i>
-                <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill text-bg-danger text-light">7</span>
+                <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-tertiary text-light">{% get_cart_quantity %}</span>
             </a>
             
-            <a href="#" class="btn btn-sm btn-primary" role="button">
-              <i class="fas fa-sign-in-alt"></i><span class="ms-1">Войти</span>
-            </a>
-            {% comment %} <a class="me-1" href=""><i class="fas fa-sign-in-alt"></i> Вход</a> {% endcomment %}
+            {% comment %} <a href="{% url 'account_login' %}?next={{ request.get_full_path }}" class="btn btn-sm btn-primary" role="button">
+              <i class="fas fa-sign-in-alt text-white"></i><span class="ms-2">Войти</span>
+            </a> {% endcomment %}
+
+            {% if user.is_authenticated %}
+                <a class="nav-link dropdown-toggle" href="#"  title="Пользователь" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user-circle main-user fa-lg"></i></a>
+                <ul class="dropdown-menu">
+                    <li>
+                      <a class="dropdown-item" href="{% url 'profiles:index' %}">
+                        <i class="far fa-user fa-fw"></i>
+                          Профиль
+                        </a>
+                    </li>
+                    {% comment %} <li>
+                      <a class="dropdown-item" href="" >
+                        <i class="fas fa-shopping-cart fa-fw"></i>
+                          Корзина
+                        </a>
+                    </li> {% endcomment %}
+                    <li>
+                      <a class="dropdown-item" href="{% url 'profiles:order_list' %}">
+                        <i class="fas fa-box-open fa-fw"></i>
+                          Мои заказы</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="{% url 'profiles:favorites' %}">
+                        <i class="fas fa-heart fa-fw"></i>
+                          Избранное</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="{% url 'account_logout' %}">
+                        <i class="fas fa-sign-out-alt fa-fw"></i>
+                      Выйти</a>
+                    </li>
+                </ul>
+
+
+                {% comment %} <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      {{ user.profile.getusername }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                      {% comment %} <span class="dropdown-item">{% include 'avatar.html' %}</span> {% endcomment %}
+                          {% comment %} <a class="dropdown-item" href="{% url 'profiles:index' %}"><i class="fa fa-fw fa-cog" aria-hidden="true"></i> Settings</a>
+                          <a class="dropdown-item" href="{% url 'profiles:wishlists_list' %}"><i class="fa fa-heart fa-fw" aria-hidden="true"></i> Wish list</a>
+                          <a class="dropdown-item" href="{% url 'profiles:reviews_list' %}"><i class="fa fa-comments fa-fw" aria-hidden="true"></i> My reviews</a>
+                          <a class="dropdown-item" href="{% url 'account_logout' %}"><i class="fa fa-fw fa-sign-out" aria-hidden="true"></i> Log out</a>
+                    </div>
+                </li> {% endcomment %}
+            {% else %}
+              <a href="{% url 'account_login' %}?next={{ request.get_full_path }}" style="--bs-btn-padding-y: .125rem; --bs-btn-padding-x: .5rem;" title="Войти" class="btn btn-sm btn-primary" role="button">
+                <i class="fas fa-sign-in-alt text-white"></i><span class="ms-2">Войти</span>
+              </a>
+            {% endif %}
 
           </div>
         </div>
       </div>
     </div>
     <!-- Topbar End -->
+  </section>
+    
 
-    <!-- Navbar Start -->
-{% comment %} <header class="bg-light"> {% endcomment %}
-<header>
-  <div class="container-fluid py-4">
-    <nav class="navbar navbar-light">
-        <a href="/" class="navbar-brand p-0">
-          <img src="{% static 'images/logo.svg' %}" alt="Питомник Вириде" width="240">
-        </a>
-        {% comment %} <form class="col-12 col-lg-4 mb-3 mb-lg-0 me-lg-3" role="search"> {% endcomment %}
-        <form class="col-12 col-md-6 col-lg-4" role="search">
-          <input type="search" class="form-control" placeholder="Поиск..." aria-label="Поиск">
-        </form>
-    </nav>
-  </div>
-</header>
-    <!-- Navbar End -->
-<nav class="navbar navbar-expand-md navbar-dark bg-primary" itemscope itemtype="http://schema.org/SiteNavigationElement">
-  <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-label="Меню">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarCollapse">
-    <div class="navbar-nav">
-      <a href="" class="nav-item nav-link" itemprop="url">Новости</a>
-      
-      <div class="nav-item dropdown">
-        <button class="nav-link btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Каталог</button>
-        <div class="dropdown-menu rounded-0 rounded-bottom m-0">
-          <a href="{% url 'conifers:list' %}" class="dropdown-item" itemprop="url">Хвойные растения</a>
-          <a href="" class="dropdown-item" itemprop="url">Плодовые растения</a>
-          <a href="" class="dropdown-item" itemprop="url">Лиственные растения</a>
-          <a href="" class="dropdown-item" itemprop="url">Многолетники</a>
-          <a href="" class="dropdown-item" itemprop="url">Мульча, грунты</a>
-          <a href="" class="dropdown-item" itemprop="url">Для сада</a>
-          <a href="" class="dropdown-item" itemprop="url">Книги</a>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade bg-white" id="modalSearch" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            {% comment %} <div class="w-100 pt-1 mb-5 text-right">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" data-bs-dismiss="modal" aria-label="Close">
+                  <i class="fas fa-times fa-lg"></i>
+                </button>
+            </div> {% endcomment %}
+            <form action="{% url 'search' %}" method="GET" class="modal-content modal-body border-0 p-0">
+                <div class="input-group mb-2">
+                    {% comment %} <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Search ..."> {% endcomment %}
+                    {{ search_form.q }}
+                    <button type="submit" class="input-group-text bg-primary text-light">
+                        <i class="fa fa-fw fa-search text-white"></i>
+                    </button>
+                </div>
+            </form>
         </div>
-      </div>
-
-      {% comment %}
-      <div class="nav-item dropdown">
-        <button class="nav-link btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Крыльцо</button>
-        <div class="dropdown-menu rounded-0 rounded-bottom m-0">
-          {% for val in menu|dict:'porch' %}
-          <a href="{% url 'porch:detail' val.slug %}" class="dropdown-item" itemprop="url">{{val.menu_name}}</a>
-          {%endfor%}
-        </div>
-      </div>
-
-      <a href="{% url 'terrace' %}" class="nav-item nav-link" itemprop="url">Терраса</a>
-
-      <a href="{% url 'decorative-bridge' %}" class="nav-item nav-link" itemprop="url">Мостик</a>
-
-      <div class="nav-item dropdown">
-        <button class="nav-link btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Ограждения</button>
-        <div class="dropdown-menu rounded-0 rounded-bottom m-0">
-          {% for val in menu|dict:'railings' %}
-          <a href="{% url 'railings:detail' val.slug %}" class="dropdown-item" itemprop="url">{{val.menu_name}}</a>
-          {%endfor%}
-        </div>
-      </div> {% endcomment %}
-
-      {% comment %} <a href="{% url 'contacts' %}" class="nav-item nav-link" itemprop="url">Контакты</a> {% endcomment %}
-      {% comment %} <a href="" class="nav-item nav-link" itemprop="url">Каталог</a> {% endcomment %}
-      <a href="" class="nav-item nav-link" itemprop="url">Контакты</a>
-
     </div>
-  </div> 
-</nav>

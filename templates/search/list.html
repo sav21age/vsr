@@ -1,0 +1,75 @@
+{% extends "main.html" %}
+{% load thumbnail static django_bootstrap_breadcrumbs %}
+
+{% block head %}
+<title>Поиск</title>
+<meta property="og:title" content="Поиск">
+<meta name="description" content="Поиск">
+<meta property="og:description" content="Поиск">
+<meta property="og:type" content="website">
+{% comment %} <meta property="og:image" content="{{host}}{% static 'images/logo.png' %}"> {% endcomment %}
+{% comment %} <meta property="og:url" content="{{host}}{% url 't-r_list' %}"> {% endcomment %}
+{% endblock %} 
+
+{% block name %}
+Поиск
+{% endblock %}
+
+{% block breadcrumb %}
+{% breadcrumb_for '/' %}<i class="fas fa-home"></i>{% endbreadcrumb_for %}
+{% breadcrumb_for 'search' %}Поиск{% endbreadcrumb_for %}
+{% render_breadcrumbs 'breadcrumb.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-3 px-md-5">
+    <div class="row mb-4">
+        <div class="col-12 col-md-6">
+            <form action="{% url 'search' %}" method="GET">
+                <div class="input-group">
+                    {{ search_form.q }}
+                    <button type="submit" class="input-group-text bg-primary text-light">
+                        <i class="fa fa-fw fa-search text-white"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% if object_list %}
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+        {% for object in object_list %}
+            <div class="col">
+                <div class="card rounded-0 border-0 h-100 mx-2">
+                    {% if object.get_image %}
+                        <a href="{{ object.get_absolute_url }}"><img class="card-img rounded-0 img-fluid" src="{{ object.get_image.path|thumbnail_url:'list' }}" alt="{{object.get_image.title}}" title="{{object.get_image.title}}"></a>
+                    {% else %}
+                        <a href="{{ object.get_absolute_url }}">
+                            {% include 'common/no_image_v.html' %}
+                        </a>
+                    {% endif %}
+
+                    <div class="card-body px-1">
+                        <p class="card-price">
+                        {% if object.get_min_price %}
+                            от {{ object.get_min_price }} руб.
+                        {% else %}
+                            нет в наличии
+                        {%endif%}
+                        </p>
+                        <p class="card-text"><a href="{{ object.get_absolute_url }}">{{ object.name }}</a></p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+        {% else %}
+        <div class="row">
+            <div class="col-12">
+                <p>По вашему запросу "<span class="fw-bold">{{q}}</span>" ничего не найдено.</p>
+            </div>
+        </div>
+        {% endif %}
+</div>
+{% include 'pagination.html' %}
+{% endblock %}
