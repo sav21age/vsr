@@ -45,7 +45,7 @@ class CustomLoginForm(LoginForm):
         for field in self.fields:
             if field == 'remember':
                 self.fields[field].widget.attrs.update({
-                    'style': 'accent-color: #2d7656; width: 15px; height: 15px;',
+                    'style': 'accent-color: #557F27; width: 15px; height: 15px;',
                     'checked': True,
                 })
             else:
