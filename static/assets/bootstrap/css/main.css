@@ -1,8 +1,4 @@
 @charset "UTF-8";
-.form-check-input {
-  --bs-border-color: #66651F;
-}
-
 .footer {
   font-size: 15px;
   background: url(../../../images/background/footer-bg-last.png);
@@ -115,6 +111,10 @@ a {
   border: 0 !important;
   -webkit-box-shadow: none !important;
           box-shadow: none !important;
+}
+
+.form-check-input {
+  --bs-border-color: #66651F;
 }
 
 ul.pagination {

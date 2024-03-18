@@ -1,6 +1,19 @@
-{% extends 'orders/index.html' %}
+{% extends 'main.html' %}
+
+{% block head %}
+  <title>Ваш заказ успешно оформлен</title>
+{% endblock %}
+
+{% block name %}
+  Ваш заказ успешно оформлен
+{% endblock %}
 
 {% block content %}
-<h3>Ваш заказ успешно оформлен</h3>
-{% include 'orders/attention.html' %}
+<div class="container-fluid px-3 px-md-5 mb-3">
+    <div class="row">
+        <div class="col-12">
+            {% include 'orders/attention.html' %}
+        </div>
+    </div>
+</div>
 {% endblock %}

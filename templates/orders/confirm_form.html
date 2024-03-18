@@ -1,10 +1,20 @@
-{% extends 'orders/index.html' %}
+{% extends 'main.html' %}
+
+{% block head %}
+  <title>Подтвердите Ваш заказ</title>
+{% endblock %}
+
+{% block name %}
+  Подтвердите Ваш заказ
+{% endblock %}
 
 {% block content %}
+<div class="container-fluid px-3 px-md-5 mb-3">
   <div class="row">
-    <div class="col-12 col-lg-6">
-      <h2>Подтвердите заказ</h2>
+    <div class="col-12">
       <p>На адрес электронной почты {{email}} отправлен код подтверждения. Если письмо не пришло, проверьте папку «Спам».</p>
+    </div>
+    <div class="col-12 col-lg-6">
       {% if form.errors %}
         {% if form.non_field_errors %}
           {% for error in form.non_field_errors %}
@@ -32,8 +42,9 @@
             {% endif %}
           </div>
         {% endfor %}
-        <button class="btn btn-primary col-lg-3">Отправить</button>
+        <button class="btn btn-primary col-lg-3">Подтвердить заказ</button>
       </form>
     </div>
   </div>
+</div>
 {% endblock %}

@@ -4,16 +4,16 @@
   <ul class="list-group">
     <li class="list-group-item border-0">
       <div class="row">
-        <div class="col col-lg-4 d-flex align-items-center">
+        <div class="col-12 col-md d-flex align-items-center">
           <h6>Наименование</h6>
         </div>
-        <div class="col-1 d-flex align-items-center justify-content-center">
-          <h6>Количество</h6>
+        <div class="col-6 col-sm-4 col-md col-lg-2 d-flex align-items-center">
+          <h6>Кол-во</h6>
         </div>
-        <div class="col d-flex align-items-center justify-content-center">
+        <div class="col-6 col-sm-4 col-md col-lg-2 d-flex align-items-center">
           <h6>Цена</h6>
         </div>
-        <div class="col d-flex align-items-center justify-content-center">
+        <div class="col-12 col-sm-4 col-md col-lg-2 d-flex align-items-center">
           <h6>Сумма</h6>
         </div>
       </div>
@@ -25,32 +25,23 @@
     <ul class="list-group">
       <li class="list-group-item border-0">
         <div class="row">
-          <div class="col col-lg-4 d-flex align-items-center">{{ cart_item.product }}</div>
-          <div class="col-1 d-flex align-items-center justify-content-center">
-            {{ cart_item.quantity }}
-          </div>
-          <div class="col d-flex align-items-center justify-content-center">&times; {{ cart_item.price }} руб.</div>
-          <div class="col d-flex align-items-center justify-content-center">= {{ cart_item.total_price }} руб.</div>
+          <div class="col-12 col-md d-flex align-items-center">{{ cart_item.product }}</div>
+          <div class="col-6 col-sm-4 col-md col-lg-2 d-flex align-items-center">{{ cart_item.quantity }}</div>
+          <div class="col-6 col-sm-4 col-md col-lg-2 d-flex align-items-center">&times; {{ cart_item.price }} руб.</div>
+          <div class="col-12 col-sm-4 col-md col-lg-2 d-flex align-items-center">= {{ cart_item.total_price }} руб.</div>
         </div>
       </li>
     </ul>
   {% endfor %}
 </div>
 <div class="card border-0 mb-4">
-  <div class="card-footer border-0">
-    <ul class="list-group">
-      <li class="list-group-item border-0 text-bg-light">
-        <div class="row">
-          <div class="col col-lg-4 d-flex align-items-center"></div>
-          <div class="col"></div>
-          <div class="col d-flex align-items-center justify-content-center">
-            <h6>Итого:</h6>
-          </div>
-          <div class="col d-flex align-items-center justify-content-center">
-            <h5 class="float-left"><strong>{{ cart.total_price }} руб.</strong></h5>
-          </div>
+  <ul class="list-group">
+    <li class="list-group-item border-0 text-bg-light">
+      <div class="row py-3">
+        <div class="col">
+          <h5>Итого: <strong>{{ cart.total_price }} руб.</strong></h5>
         </div>
-      </li>
-    </ul>
-  </div>
+      </div>
+    </li>
+  </ul>
 </div>

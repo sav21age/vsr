@@ -75,6 +75,7 @@ class CreateOrderAnonymUserForm(forms.ModelForm):
 class ConfirmOrderAnonymUserForm(forms.Form):
     confirm_code = forms.CharField(
         label='Введите код',
+        required=True,
     )
 
     def __init__(self, *args, **kwargs):

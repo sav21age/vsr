@@ -5,19 +5,19 @@
     <ul class="list-group">
       <li class="list-group-item border-0">
         <div class="row">
-          <div class="col col-lg-4 d-flex align-items-center">
+          <div class="col-12 col-md-1"></div>
+          <div class="col-12 col-md">
             <h6>Наименование</h6>
           </div>
-          <div class="col">
-            <h6>Количество</h6>
+          <div class="col-6 col-sm-4 col-md col-lg-2">
+            <h6>Кол-во</h6>
           </div>
-          <div class="col d-flex align-items-center justify-content-center">
+          <div class="col-6 col-sm-4 col-md col-lg-2">
             <h6>Цена</h6>
           </div>
-          <div class="col d-flex align-items-center justify-content-center">
+          <div class="col-12 col-sm-4 col-md col-lg-2">
             <h6>Сумма</h6>
           </div>
-          <div class="col col-lg-1 d-flex align-items-center justify-content-end"></div>
         </div>
       </li>
     </ul>
@@ -27,51 +27,44 @@
       <ul class="list-group">
         <li class="list-group-item border-0">
           <div class="row">
-            <div class="col col-lg-4 d-flex align-items-center">{{ cart_item.product }}</div>
-            <div class="col">
-              <div class="input-group">
-                <button type="button" class="btn decrement" data-ci-id="{{ cart_item.id }}" data-value="-" value="{% url 'carts:update' %}">
+            <div class="col-12 col-md-1 d-flex align-items-center">
+              <button type="button" class="btn px-1 remove" data-ci-id="{{ cart_item.id }}" value="{% url 'carts:remove' %}">
+                {% csrf_token %}
+                <i class="far fa-trash-alt"></i>
+              </button>
+            </div>
+            <div class="col-12 col-md d-flex align-items-center py-1 py-md-0">{{ cart_item.product }}</div>
+            <div class="col-6 col-sm-4 col-md col-lg-2 d-flex align-items-center py-1 py-md-0">
+              <div class="input-group flex-nowrap">
+                <button type="button" class="btn ps-1 pe-3 decrement" data-ci-id="{{ cart_item.id }}" data-value="-" value="{% url 'carts:update' %}">
                   {% csrf_token %}
                   <i class="fas fa-minus"></i>
                 </button>
-                <input type="text" value="{{ cart_item.quantity }}" name="quantity" style="flex: 0 1 50px;" class="form-control text-center number mx-2" />
-                <button type="button" class="btn increment" data-ci-id="{{ cart_item.id }}" data-value="+" value="{% url 'carts:update' %}">
+                {% comment %} <input type="text" class="form-control text-center number px-2" name="quantity" style="flex: 0 1 40px; min-width: 40px;" value="{{ cart_item.quantity }}"> {% endcomment %}
+                <input type="text" class="form-control text-center number px-2" name="quantity" style="flex: 0 0 40px;" value="{{ cart_item.quantity }}">
+                <button type="button" class="btn ps-3 pe-0 increment" data-ci-id="{{ cart_item.id }}" data-value="+" value="{% url 'carts:update' %}">
                   {% csrf_token %}
                   <i class="fas fa-plus"></i>
                 </button>
               </div>
             </div>
-            <div class="col d-flex align-items-center justify-content-center">&times; {{ cart_item.price }} руб.</div>
-            <div class="col d-flex align-items-center justify-content-center">= {{ cart_item.total_price }} руб.</div>
-            <div class="col col-lg-1 d-flex align-items-center justify-content-end">
-              <button type="button" class="btn remove" data-ci-id="{{ cart_item.id }}" value="{% url 'carts:remove' %}">
-                {% csrf_token %}
-                <i class="far fa-trash-alt"></i>
-              </button>
-            </div>
+            <div class="col-6 col-sm-4 col-md col-lg-2 d-flex align-items-center py-1 py-md-0">&times; {{ cart_item.price }} руб.</div>
+            <div class="col-12 col-sm-4 col-md col-lg-2 d-flex align-items-center py-1 py-md-0">= {{ cart_item.total_price }} руб.</div>
           </div>
         </li>
       </ul>
     {% endfor %}
   </div>
   <div class="card border-0 mb-4">
-    <div class="card-footer border-0">
       <ul class="list-group">
         <li class="list-group-item border-0 text-bg-light">
-          <div class="row">
-            <div class="col col-lg-4 d-flex align-items-center"></div>
-            <div class="col"></div>
-            <div class="col d-flex align-items-center justify-content-center">
-              <h6>Итого:</h6>
+          <div class="row py-3">
+            <div class="col">
+              <h5>Итого: <strong>{{ cart.total_price }} руб.</strong></h5>
             </div>
-            <div class="col d-flex align-items-center justify-content-center">
-              <h5 class="float-left"><strong>{{ cart.total_price }} руб.</strong></h5>
-            </div>
-            <div class="col col-lg-1 d-flex align-items-center justify-content-end"></div>
           </div>
         </li>
       </ul>
-    </div>
   </div>
 
   {% if user.is_authenticated %}
@@ -81,7 +74,7 @@
       <a href="{% url 'account_login' %}" class="btn btn-primary me-3">Войти и оформить заказ</a>
     {% else %}
       <a href="{% url 'account_login' %}" class="btn btn-primary me-3">Войти и оформить заказ</a>
-      <a href="{% url 'orders:create' %}" class="btn btn-secondary">Оформить заказ без регистрации</a>
+      <a href="{% url 'orders:create' %}" class="btn">Оформить заказ без регистрации</a>
     {% endif %}
   {% endif %}
 {% else %}

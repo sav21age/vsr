@@ -1,16 +1,15 @@
 {% extends 'orders/email/base_message.html' %}
 {% autoescape off %}
 {% block content %}
-
-<p><strong>Заказ № {{ order.number }} от {{ order.created_at|date:'DATE_FORMAT' }}</strong> на сайте <a href="https://viride.spb.ru">ООО «Вириде»</a></p>
-<p><strong>Статус заказа</strong>: {{order.status|lower}}</p>
-<p><strong>Оплата</strong>: наличными при получении</p>
+<p>Заказ № {{ order.number }} от {{ order.created_at|date:'DATE_FORMAT' }} на сайте <a href="https://viride.spb.ru">ООО «Вириде»</a></p>
+<p>Статус заказа: {{order.status|lower}}</p>
+<p>Оплата: наличными при получении</p>
 <br>
 <table width="100%" cellspacing="0" cellpadding="5" border="0" rules="rows">
     <thead>
     <tr>
         <th align="left">Наименование</th>
-        <th align="left">Количество</th>
+        <th align="center">Количество</th>
         <th align="left">Цена</th>
         <th align="left">Сумма</th>
     </tr>
@@ -19,19 +18,14 @@
     {% for order_item in order_items %}
         <tr>
         <td>{{ order_item.product }}</td>
-        <td>{{ order_item.quantity }}</td>
+        <td align="center">{{ order_item.quantity }}</td>
         <td>{{ order_item.price }} руб.</td>
         <td>{{ order_item.total_price }} руб.</td>
         </tr>
     {% endfor %}
     <tr bgcolor="#F8F9FA">
-        <td></td>
-        <td></td>
-        <td>
-        <p>Итого:</p>
-        </td>
-        <td>
-        <p>{{ order.total_price }} руб.</p>
+        <td colspan="4">
+            <p><strong>Итого: {{ order.total_price }} руб.</strong></p>
         </td>
     </tr>
     </tbody>

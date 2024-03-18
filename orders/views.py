@@ -29,7 +29,7 @@ def send_order_email(order):
     order_items = OrderItem.objects.filter(order=order)
 
     context_subject = {}
-    context_subject['order_number'] = order.id
+    context_subject['order_number'] = order.number
 
     context_body = {}
     context_body['order'] = order

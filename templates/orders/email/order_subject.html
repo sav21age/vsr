@@ -1,1 +1,3 @@
-{% extends 'orders/email/base_subject.html' %}
+{% autoescape off %}
+Заказ № {{order_number}} на сайте viride.spb.ru
+{% endautoescape %}
