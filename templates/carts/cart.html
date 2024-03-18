@@ -74,7 +74,7 @@
       <a href="{% url 'account_login' %}" class="btn btn-primary me-3">Войти и оформить заказ</a>
     {% else %}
       <a href="{% url 'account_login' %}" class="btn btn-primary me-3">Войти и оформить заказ</a>
-      <a href="{% url 'orders:create' %}" class="btn">Оформить заказ без регистрации</a>
+      <a href="{% url 'orders:create' %}" class="btn btn-tertiary">Оформить заказ без регистрации</a>
     {% endif %}
   {% endif %}
 {% else %}

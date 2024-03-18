@@ -1,4 +1,8 @@
 @charset "UTF-8";
+:root {
+  --tertiary: #557F27;
+}
+
 .footer {
   font-size: 15px;
   background: url(../../../images/background/footer-bg-last.png);
@@ -545,6 +549,19 @@ section .title h1, section .title .h1, section .title h2, section .title .h2, se
 .icon-sm {
   width: 2rem;
   height: 2rem;
+}
+
+.btn-tertiary {
+  --bs-btn-color: var(--bs-white) !important;
+  --bs-btn-bg: var(--tertiary) !important;
+  --bs-btn-border-color: var(--tertiary) !important;
+  --bs-btn-hover-color: var(--bs-white);
+  --bs-btn-hover-bg: #4d7223;
+  --bs-btn-hover-border-color: #4d7223;
+  --bs-btn-focus-shadow-rgb: var(--tertiary);
+  --bs-btn-active-color: var(--bs-white);
+  --bs-btn-active-bg: #44661f;
+  --bs-btn-active-border-color: #44661f;
 }
 
 :root,

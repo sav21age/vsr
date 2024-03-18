@@ -1,3 +1,7 @@
+:root {
+  --tertiary: #557F27;
+}
+
 // :root {
 // //   --default: #364d59;
 //   --primary: #2d7656;
@@ -10,7 +14,9 @@
 // $primary: #7F7D27;
 $primary: #66651F;
 $secondary: #000000;
+
 $tertiary: #557F27;
+// $tertiary: var(--tertiary);
 
 $danger: #7F2755;
 // $danger: #ff4136;
