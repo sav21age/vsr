@@ -14,6 +14,7 @@ from common.mail import send_html_email
 from orders.models import Order, OrderItem, OrderStatus
 from orders.forms import ConfirmOrderAnonymUserForm, CreateOrderAnonymUserForm, CreateOrderAuthUserForm
 from common.helpers import get_price_properties
+from common.loggers import logger
 
 
 def create(request):
@@ -130,7 +131,10 @@ class CreateOrderAuthUserView(FormView):
                             quantity=cart_item.quantity,
                         )
 
-                    send_order_email(order)
+                    try:
+                        send_order_email(order)
+                    except Exception as e:
+                        logger.error(e)
 
                     cart.delete()
                     cart_items.delete()
@@ -282,8 +286,11 @@ class ConfirmOrderAnonymView(FormView):
             order.confirmed_by_email = True
             order.save()
 
-            send_order_email(order)
-
+            try:
+                send_order_email(order)
+            except Exception as e:
+                logger.error(e)
+                
             request.session.pop('cart_id')
             request.session.pop('order_id')
             request.session.pop('confirm_code_sent')
