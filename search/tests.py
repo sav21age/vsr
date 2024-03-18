@@ -37,7 +37,7 @@ class SearchPageTest(TestCase):
         response = self.client.get('/search/')
         self.assertEqual(response.status_code, 200)
 
-        response = self.client.get('/search/q=')
+        response = self.client.get('/search/?q=')
         self.assertEqual(response.status_code, 200)
 
         response = self.client.get('/search/?q=роза')
