@@ -61,7 +61,7 @@ def profile_update(request):
 
     return render(
         request,
-        'profiles/update.html',
+        'profiles/update_form.html',
         context,
     )
 

@@ -5,6 +5,7 @@ from orders.models import Order
 
 
 class CreateOrderAuthUserForm(forms.ModelForm):
+    required_css_class = 'required'
     # email_on_change_status = forms.BooleanField(required=False)
 
     def __init__(self, *args, **kwargs):
@@ -47,6 +48,7 @@ class CreateOrderAuthUserForm(forms.ModelForm):
 
 
 class CreateOrderAnonymUserForm(forms.ModelForm):
+    required_css_class = 'required'
     captcha = ReCaptchaField(label='')
 
     def __init__(self, *args, **kwargs):
@@ -73,6 +75,7 @@ class CreateOrderAnonymUserForm(forms.ModelForm):
 
 
 class ConfirmOrderAnonymUserForm(forms.Form):
+    required_css_class = 'required'
     confirm_code = forms.CharField(
         label='Введите код',
         required=True,

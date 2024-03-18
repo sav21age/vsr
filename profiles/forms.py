@@ -4,6 +4,8 @@ from common.validators import LetterValidator, PhoneNumberValidator
 
 
 class ProfileUpdateForm(forms.Form):
+    required_css_class = 'required'
+    
     def __init__(self, *args, **kwargs):
         #     self.extra_data = kwargs.pop('extra_data', None)
         super().__init__(*args, **kwargs)

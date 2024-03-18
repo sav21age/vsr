@@ -35,8 +35,9 @@
     <div class="col-12 col-md-10 col-lg-7">
         <form method="POST">{% csrf_token %}
         {% for field in form %}
-            <div class="mb-3 {% if field.errors %}has-error{% endif %}">
-                <label for="{{ field.id_for_label }}" class="{% if field.field.required %}required{% endif %}">{{ field.label }}</label>
+            <div class="mb-3{% if field.errors %} error{% endif %}">
+                {% comment %} <label for="{{ field.id_for_label }}" class="{% if field.field.required %}required{% endif %}">{{ field.label }}</label> {% endcomment %}
+                {{ field.label_tag }}
                 {{ field }}
                 {% if field.errors %}
                     <span class="text-danger">{{ field.errors.as_text }}</span>
