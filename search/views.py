@@ -61,9 +61,9 @@ class SearchView(PaginationMixin, ListView):
                     .prefetch_related('roseproductprice_set')
             )
 
-            final_set = list(chain(*query_sets))
+            return list(chain(*query_sets))
 
-        return final_set
+        return []
     
     def get_context_data(self, **kwargs):
         context = super(SearchView, self).get_context_data(**kwargs)
