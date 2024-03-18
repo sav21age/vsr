@@ -2,8 +2,11 @@
 {% load markdownify cache %}
 
 {% block head %}
-  {% include 'head.html' %}
-  {% comment %} <meta property="og:url" content="{{ host }}{% url 't-r_list' %}"> {% endcomment %}
+<title>{{ object.head_title }}</title>
+<meta property="og:title" content="{{ object.head_title }}">
+<meta name="description" content="{{ object.meta_description }}">
+<meta property="og:description" content="{{ object.meta_description }}">
+<meta property="og:type" content="website">
 {% endblock %}
 
 {% block content %}

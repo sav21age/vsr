@@ -2,6 +2,7 @@ from django.contrib import admin
 from common.admin import PageAbstractAdmin
 from contacts.models import Contacts
 from solo.admin import SingletonModelAdmin
+from common.helpers import codemirror_widget
 
 
 @admin.register(Contacts)
@@ -31,5 +32,6 @@ class ContactsAdmin(PageAbstractAdmin, SingletonModelAdmin):
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
-        form.base_fields['map'].widget.attrs['rows'] = 7
+        # form.base_fields['map'].widget.attrs['rows'] = 7
+        form.base_fields['map'].widget = codemirror_widget
         return form
