@@ -5,7 +5,7 @@
       <div class="col">
         <div class="card rounded-0 border-0 h-100">
           {% if object.get_image %}
-            <a href="{{ object.get_absolute_url }}"><img class="card-img rounded-0 img-fluid" src="{{ object.get_image.path|thumbnail_url:'list' }}" alt="{{ object.get_image.title }}" title="{{ object.get_image.title }}" /></a>
+            <a href="{{ object.get_absolute_url }}"><img class="card-img rounded-0 img-fluid" src="{{ object.get_image.path|thumbnail_url:'list' }}" alt="{{ object.get_image.title }}" title="{{ object.get_image.title }}"></a>
           {% else %}
             <a href="{{ object.get_absolute_url }}">{% include 'common/no_image_v.html' %}</a>
           {% endif %}
