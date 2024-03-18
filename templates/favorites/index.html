@@ -1,6 +1,13 @@
 {% load favorites %}
 
 {% get_favorites as in_favorites %}
+{% if in_favorites != None and user.is_authenticated %}
+<button class="btn social p-0 me-2" id="favorites" title="Добавить в избранное" data-ct-id="{{object|toctid}}" data-id="{{ object.id }}">
+    <i class="{% if in_favorites %}fas{% else %}far{% endif %} fa-heart fa-lg fa-fw" aria-hidden="true"></i>
+</button>
+{% endif%}
+
+{% comment %} {% get_favorites as in_favorites %}
 {% if in_favorites != None %}
 <button class="btn social p-0 me-2" id="favorites" title="Добавить в избранное"
 {% if user.is_authenticated %}
@@ -11,4 +18,4 @@
 >
 <i class="{% if in_favorites %}fas{% else %}far{% endif %} fa-heart fa-lg fa-fw" aria-hidden="true"></i>
 </button>
-{% endif%}
+{% endif%} {% endcomment %}
