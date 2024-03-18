@@ -1,5 +1,4 @@
 from itertools import chain
-from django.shortcuts import render
 from django.views.generic import ListView
 from conifers.models import ConiferProduct
 from deciduous.models import DecProduct
