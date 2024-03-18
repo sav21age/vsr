@@ -1,18 +1,10 @@
-// body {
-//   font-family: "Roboto", "Open Sans", sans-serif;
-//   font-size: 16px;
-//   line-height: 1.75;
-//   color: #222;
-//   font-display: swap;
-// }
-
 .bg-primary{
   background-color: $primary;
 }
+
 .bg-tertiary{
   background-color: $tertiary;
 }
-
 
 .bg-secondary-light{
   background-color: $secondary_light;
@@ -56,4 +48,8 @@ a {
 .form-check-input{
     // --bs-border-color: rgba(134, 119, 111, 0.75);
     --bs-border-color: #66651F;
+}
+
+label.required{
+  font-weight: 600;
 }

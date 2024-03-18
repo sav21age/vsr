@@ -114,10 +114,6 @@
         </p>
       {% endif %}
 
-      {% comment %} {% with price_set = object.decproductprice_set.all %}
-        {% include 'common/detailview/prices.html' %}
-      {% endwith %} {% endcomment %}
-
       {% with object_set_all=object.decproductprice_set.all %}
         {% include 'common/detailview/add_to_cart.html' %}
       {% endwith %}

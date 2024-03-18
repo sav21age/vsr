@@ -121,6 +121,10 @@ a {
   --bs-border-color: #66651F;
 }
 
+label.required {
+  font-weight: 600;
+}
+
 ul.pagination {
   margin-top: 20px;
   margin-bottom: 20px;
