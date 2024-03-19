@@ -4,7 +4,7 @@ from django.db import transaction
 from django.contrib.admin.helpers import ACTION_CHECKBOX_NAME
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from common.admin import ProductAbstractAdmin, ProductPriceAbstractAdmin, ProductPriceInline
+from common.admin import ProductAbstractAdmin, ProductPriceAbstractAdmin, ProductPriceInline, make_hidden, make_visible
 from common.filters import ProductPriceContainerAdminFilter
 from common.helpers import get_price_properties
 from images.admin import ImageInline
@@ -112,7 +112,7 @@ class RoseProductAdmin(ProductAbstractAdmin):
     form = RoseProductAdminForm
     show_facets = admin.ShowFacets.ALWAYS
     list_filter = ('species', )
-    actions = (batch_copy, )
+    actions = (batch_copy, make_visible, make_hidden,)
     inlines = [RoseProductPriceInline, ImageInline, ]
     filter_horizontal = ('advantages', )
     fieldsets = (

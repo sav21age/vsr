@@ -4,6 +4,16 @@ from common.helpers import formfield_overrides
 from images.admin import GetImageAdminMixin
 
 
+def make_visible(modeladmin, request, queryset):
+    queryset.update(is_visible=True)
+make_visible.short_description = 'Показывать'
+
+
+def make_hidden(modeladmin, request, queryset):
+    queryset.update(is_visible=False)
+make_hidden.short_description = 'Скрыть'
+
+
 # class ProductPriceInline(SortableInlineAdminMixin, admin.StackedInline):
 class ProductPriceInline(admin.StackedInline):
     extra = 0
@@ -56,5 +66,4 @@ class ProductPriceAbstractAdmin(admin.ModelAdmin):
     list_per_page = 30
 
     def has_add_permission(self, request, obj=None):
-        return False
-
+        return False    

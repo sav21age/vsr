@@ -4,7 +4,7 @@ from django.db import transaction
 from django.contrib.admin.helpers import ACTION_CHECKBOX_NAME
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from common.admin import ProductAbstractAdmin, ProductPriceAbstractAdmin, ProductPriceInline
+from common.admin import ProductAbstractAdmin, ProductPriceAbstractAdmin, ProductPriceInline, make_hidden, make_visible
 from common.filters import (
     ProductGenusAdminFilter, ProductPriceContainerAdminFilter, ProductPriceGenusAdminFilter, SpeciesGenusAdminFilter)
 from common.helpers import get_price_properties
@@ -145,10 +145,14 @@ class ConiferProductAdmin(ProductAbstractAdmin):
         return super().get_queryset(request) \
             .prefetch_related('images') \
             .prefetch_related('coniferproductprice_set')
+    
+    # def get_actions(self, request):
+    #     actions = super().get_actions(request)
+    #     return actions
 
     form = ConiferProductAdminForm
     list_filter = (ConiferProductGenusAdminFilter, )
-    actions = (batch_copy,)
+    actions = (batch_copy, make_visible, make_hidden,)
     inlines = [ConiferProductPriceInline, ImageInline, ]
     filter_horizontal = ('advantages', )
     fieldsets = (

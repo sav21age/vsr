@@ -1,5 +1,5 @@
 from django.contrib import admin
-from common.admin import ProductAbstractAdmin, ProductPriceAbstractAdmin, ProductPriceInline
+from common.admin import ProductAbstractAdmin, ProductPriceAbstractAdmin, ProductPriceInline, make_hidden, make_visible
 from images.admin import GetImageAdminMixin, ImageInline
 from other.forms import OtherProductAdminForm
 from other.models import OtherProduct, OtherProductCategory, OtherProductPrice
@@ -18,6 +18,7 @@ class OtherProductAdmin(ProductAbstractAdmin, GetImageAdminMixin):
     list_display = ('name', 'category', 'get_image', 'is_visible')
     list_filter = ('category', )
     form = OtherProductAdminForm
+    actions = (make_visible, make_hidden,)
     inlines = [OtherProductPriceInline, ImageInline, ]
     fieldsets = (
         ('', {

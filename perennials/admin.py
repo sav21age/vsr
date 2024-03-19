@@ -4,7 +4,7 @@ from django.db import transaction
 from django.contrib.admin.helpers import ACTION_CHECKBOX_NAME
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from common.admin import ProductAbstractAdmin, ProductPriceAbstractAdmin, ProductPriceInline
+from common.admin import ProductAbstractAdmin, ProductPriceAbstractAdmin, ProductPriceInline, make_hidden, make_visible
 from common.filters import (
     ProductGenusAdminFilter, ProductPriceContainerAdminFilter, ProductPriceGenusAdminFilter, SpeciesGenusAdminFilter)
 from common.helpers import get_price_properties
@@ -151,7 +151,7 @@ class PerProductAdmin(ProductAbstractAdmin):
 
     form = PerProductAdminForm
     list_filter = (PerProductGenusAdminFilter, )
-    actions = (batch_copy,)
+    actions = (batch_copy, make_visible, make_hidden,)
     inlines = [PerProductPriceInline, ImageInline, ]
     filter_horizontal = ('advantages', )
     fieldsets = (
