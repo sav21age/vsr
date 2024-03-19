@@ -115,10 +115,17 @@ class PerProductPrice(ProductPriceAbstract):
     container = models.ForeignKey(
         PlantPriceContainer, verbose_name='контейнер', blank=True, null=True, on_delete=models.CASCADE)
 
+    planting_year = models.CharField(
+        'год посадки', max_length=4, blank=True,)
+
     def __str__(self):
         s = ''
 
         if self.container:
             s = f"{self.container}"
+
+        if self.planting_year:
+            s = f"{self.planting_year}" if len(
+                s) == 0 else f"{s} {self.planting_year}"
 
         return f"{self.price}" if len(s) == 0 else f"{s} ={self.price} руб."

@@ -32,8 +32,8 @@ def get_price_params_popover(obj):
     if hasattr(obj, 'rs') and obj.rs:
         s = f"{s}<div><strong>{obj.rs}</strong> - {obj.rs.description}</div>"
 
-    # if obj.quality:
-    #     s = f"{s}<div><strong>{obj.quality}</strong> - {obj.quality.description}</div>"
+    if hasattr(obj, 'planting_year') and obj.planting_year:
+        s = f"{s}<div><strong>{obj.planting_year} г.</strong> - Год посадки.</div>"
 
     if hasattr(obj, 'extra') and obj.extra:
         field = obj._meta.get_field('extra')

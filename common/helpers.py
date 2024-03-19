@@ -57,8 +57,8 @@ def get_price_properties(obj):
     if hasattr(obj, 'rs') and obj.rs:
         s = f"{s}{obj.rs} "
 
-    # if obj.quality:
-    #     s = f"{s}{obj.quality} "
+    if hasattr(obj, 'planting_year') and obj.planting_year:
+        s = f"{s}- {obj.planting_year} г. "
 
     if hasattr(obj, 'extra') and obj.extra:
         s = f"{s}{obj._meta.get_field('extra').verbose_name} "

@@ -48,7 +48,7 @@ class PerProductPriceInline(ProductPriceInline):
             .select_related('container')
 
     model = PerProductPrice
-    fields = ('container', 'price', )
+    fields = ('container', 'planting_year', 'price', )
 
 
 # --
@@ -214,7 +214,7 @@ class PerProductPriceAdmin(ProductPriceAbstractAdmin):
 
     list_filter = (PerProductPriceGenusAdminFilter,
                    PerProductPriceContainerAdminFilter,)
-    fields = ('product', 'container', 'price', )
+    fields = ('product', 'container', 'planting_year', 'price', )
     list_display = ('get_product', 'price', )
 
     def get_product(self, obj=None):
