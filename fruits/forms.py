@@ -22,6 +22,9 @@ class FruitProductBatchCopyAdminForm(forms.Form):
     flowering_chk = forms.BooleanField(
         required=False, initial=True, label='Цветение')
 
+    self_fertility_chk = forms.BooleanField(
+        required=False, initial=True, label='Самоплодность')
+
     rootstock_chk = forms.BooleanField(
         required=False, initial=True, label='Подвой')
 
@@ -89,6 +92,19 @@ class FruitProductAdminForm(ProductAdminForm):
         choices=CHOICES_FLOWERING, 
         required=False,
         label='Цветение',
+    )
+
+    CHOICES_SELF_FERTILITY = (
+        (None, '---'),
+        ('самоплодна', 'самоплодна'),
+        ('частично самоплодна', 'частично самоплодна'),
+        ('самобесплодна', 'самобесплодна'),
+    )
+    self_fertility = forms.ChoiceField(
+        widget=forms.Select(attrs={'style': 'width: 150px;'}),
+        choices=CHOICES_SELF_FERTILITY,
+        required=False,
+        label='Самоплодность',
     )
     
     CHOICES_FRUIT_RIPENING = (

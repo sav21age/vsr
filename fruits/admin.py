@@ -89,6 +89,9 @@ def batch_copy(modeladmin, request, queryset):
                         if clean['flowering_chk']:
                             recipient.flowering = donor.flowering
 
+                        if clean['self_fertility_chk']:
+                            recipient.self_fertility = donor.self_fertility
+
                         if clean['rootstock_chk']:
                             recipient.rootstock = donor.rootstock
 
@@ -171,7 +174,7 @@ class FruitProductAdmin(ProductAbstractAdmin):
             'fields': ('height', 'width', )
         }),
         ('', {
-            'fields': ('flowering', 'rootstock', )
+            'fields': ('flowering', 'self_fertility', 'rootstock', )
         }),
         ('Плоды', {
             'classes': ('collapse',),

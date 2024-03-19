@@ -44,6 +44,12 @@
         </p>
       {% endif %}
 
+      {% if object.self_fertility %}
+        <p class="detail-property">
+          <span>Самоплодность:</span> {{ object.self_fertility }}
+        </p>
+      {% endif %}
+
       {% if object.rootstock %}
         <p class="detail-property">
           <span>Подвой:</span> {{ object.rootstock }}

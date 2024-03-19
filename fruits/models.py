@@ -44,6 +44,9 @@ class FruitProduct(PlantProductAbstract):
 
     flowering = models.CharField('цветение', max_length=7, blank=True, )
 
+    self_fertility = models.CharField(
+        'самоплодность', max_length=20, blank=True, )
+
     rootstock = models.CharField('подвой', max_length=15, blank=True, )
 
     fruit_ripening = models.CharField(
