@@ -1,5 +1,6 @@
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
+from common.loggers import logger
 
 
 # def send_html_email(template, context, subject, from_email, to_email):
@@ -20,4 +21,8 @@ def send_html_email(subject_template, subject_context, body_template, body_conte
     body = render_to_string(body_template, body_context)
     message = EmailMessage(subject, body, from_email, [to_email])
     message.content_subtype = 'html'
-    message.send()
+
+    try:
+        message.send()
+    except Exception as e:
+        logger.error(e)
