@@ -188,17 +188,17 @@ ul.pagination {
 
 .navbar .navbar-nav .nav-link {
   margin-left: 20px;
-  padding: 25px 0;
   font-size: 16px;
   text-transform: uppercase;
   outline: none;
 }
 
-.navbar .navbar-nav .nav-link {
-  padding-top: 15px;
-  padding-bottom: 15px;
+@media (min-width: 768px) {
+  .navbar .navbar-nav .nav-link {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
 }
-
 .navbar .dropdown-menu {
   --bs-dropdown-min-width: 320px!important;
   font-size: 14px !important;
