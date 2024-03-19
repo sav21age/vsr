@@ -86,4 +86,4 @@ jobs:
             docker-compose up -d
             
             docker exec -i app python manage.py migrate
-            # docker exec -i app python manage.py clearcache
+            docker exec -i app python manage.py clearcache
