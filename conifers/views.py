@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView
-from common.mixins import PlantGenusFilterMixin, PerPageMixin, PlantSpeciesFilterMixin, RecommendedDetailMixin
+from common.mixins import PlantGenusFilterMixin, PerPageMixin, PlantSpeciesFilterMixin
 from conifers.models import ConiferProduct, ConiferSpecies
 from pure_pagination.mixins import PaginationMixin
 
@@ -16,11 +16,24 @@ class ConiferProductList(PaginationMixin, PerPageMixin, PlantSpeciesFilterMixin,
     species_model = ConiferSpecies
 
 
-class ConiferProductDetail(RecommendedDetailMixin, DetailView):
+class ConiferProductDetail(DetailView):
     model = ConiferProduct
     template_name = 'conifers/detail.html'
     queryset = ConiferProduct.is_visible_objects.all() \
         .prefetch_related('images') \
         .prefetch_related('advantages') \
         .prefetch_related('coniferproductprice_set') \
-        .prefetch_related('coniferproductprice_set__container')
+        .prefetch_related('coniferproductprice_set__container') \
+        .prefetch_related('coniferproductprice_set__rs')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        obj = context['object']
+        context['recommended'] = self.model.is_visible_objects \
+            .filter(species=obj.species) \
+            .prefetch_related('images') \
+            .prefetch_related('coniferproductprice_set') \
+            .exclude(id=obj.id)\
+            .distinct()[:4]
+
+        return context

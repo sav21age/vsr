@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView
-from common.mixins import PerPageMixin, RecommendedDetailMixin
+from common.mixins import PerPageMixin
 from pure_pagination.mixins import PaginationMixin
 from roses.mixins import RoseSpeciesFilterMixin
 from roses.models import RoseProduct, RoseSpecies
@@ -15,7 +15,7 @@ class RoseProductList(PaginationMixin, PerPageMixin, RoseSpeciesFilterMixin, Lis
     species_model = RoseSpecies
 
 
-class RoseProductDetail(RecommendedDetailMixin, DetailView):
+class RoseProductDetail(DetailView):
     model = RoseProduct
     template_name = 'roses/detail.html'
     queryset = RoseProduct.is_visible_objects.all() \
@@ -24,4 +24,14 @@ class RoseProductDetail(RecommendedDetailMixin, DetailView):
         .prefetch_related('roseproductprice_set') \
         .prefetch_related('roseproductprice_set__container')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        obj = context['object']
+        context['recommended'] = self.model.is_visible_objects \
+            .filter(species=obj.species) \
+            .prefetch_related('images') \
+            .prefetch_related('roseproductprice_set') \
+            .exclude(id=obj.id)\
+            .distinct()[:4]
 
+        return context

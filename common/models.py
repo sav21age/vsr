@@ -42,10 +42,11 @@ class ProductAbstract(PageAbstract):
     @property
     def get_image(self):
         try:
-            return self.images.order_by('order_number').first()
-        except self.DoesNotExist as e:
+            # return self.images.order_by('order_number').first()
+            return self.images.first()
+        except self.DoesNotExist:
             return ''
-        except IndexError as e:
+        except IndexError:
             return ''
 
     def __str__(self):
