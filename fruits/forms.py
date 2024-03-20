@@ -71,7 +71,7 @@ class FruitProductAdminForm(ProductAdminForm):
     CHOICES_FLOWERING = (
         (None, '---'),
         ('мелкие', 'мелкие'),
-        ('среднии', 'среднии'),
+        ('средние', 'средние'),
         ('крупные', 'крупные'),
     )
     fruit_dimension = forms.ChoiceField(
