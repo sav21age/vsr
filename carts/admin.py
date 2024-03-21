@@ -1,7 +1,6 @@
 from django.contrib import admin
 from carts.models import Cart, CartItem
-from django.contrib.contenttypes.admin import GenericStackedInline
-from common.helpers import get_price_properties
+
 
 class CartItemInline(admin.StackedInline):
     model = CartItem

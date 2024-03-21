@@ -38,11 +38,11 @@ class OtherProduct(ProductAbstract):
     def get_min_price(self):
         try:
             return self.otherproductprice_set.first().price
-        except self.DoesNotExist as e:
+        except self.DoesNotExist:
             return ''
-        except AttributeError as e:
+        except AttributeError:
             return ''
-        except IndexError as e:
+        except IndexError:
             return ''
 
     class Meta:
@@ -67,9 +67,10 @@ class OtherProductPrice(ProductPriceAbstract):
         'параметры', max_length=150,)
 
     def __str__(self):
-        s = ''
+        # s = ''
 
-        if self.property:
-            s = f"{self.property}"
-
+        # if self.property:
+        #     s = f"{self.property}"
+        
+        s = self.get_complex_name
         return f"{self.price}" if len(s) == 0 else f"{s} ={self.price} руб."

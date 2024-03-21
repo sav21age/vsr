@@ -156,50 +156,20 @@ class FruitProductPrice(ProductPriceAbstract):
     age = models.ForeignKey(
         FruitProductPriceAge, verbose_name='возраст', blank=True, null=True, on_delete=models.CASCADE)
 
-    # CHOICES = (
-    #     ('1-летка','1-летка'),
-    #     ('2-летка','2-летка'),
-    #     ('3-летка','3-летка'),
-    #     ('4-летка','4-летка'),
-    #     ('5-летка','5-летка'),
-    #     ('6-летка','6-летка'),
-    #     ('7-летка','7-летка'),
-    #     ('8-летка','8-летка'),
-    #     ('9-летка','9-летка'),
-    # )
-    # age = models.CharField('возраст', max_length=7, choices=CHOICES,
-    #                              blank=True, default='',)
-
-    # shtamb = models.CharField(
-    #     'штамб', max_length=7, blank=True, validators=(SizeValidator,),
-    #     help_text='Ветвление на стволе начинается c указанной высоты.')
-
-    # extra = models.BooleanField(
-    #     'экстра', default=False, help_text='Ухоженные растения.')
-
     def __str__(self):
-        s = ''
+        # s = ''
 
-        if self.container:
-            s = f"{self.container}"
+        # if self.container:
+        #     s = f"{self.container}"
 
-        if self.height:
-            s = f"{self.height}" if len(s) == 0 else f"{s} {self.height}"
+        # if self.height:
+        #     s = f"{self.height}" if len(s) == 0 else f"{s} {self.height}"
 
-        if self.width:
-            s = f"{self.width}" if len(s) == 0 else f"{s} {self.width}"
+        # if self.width:
+        #     s = f"{self.width}" if len(s) == 0 else f"{s} {self.width}"
 
-        if self.rs:
-            s = f"{self.rs}" if len(s) == 0 else f"{s} {self.rs}"
+        # if self.rs:
+        #     s = f"{self.rs}" if len(s) == 0 else f"{s} {self.rs}"
 
-        # if self.shtamb:
-        #     field = self._meta.get_field('shtamb')
-        #     s = f"{field.verbose_name} {self.shtamb}" if len(
-        #         s) == 0 else f"{s} {field.verbose_name} {self.shtamb}"
-
-        # if self.extra:
-        #     field = self._meta.get_field('extra')
-        #     s = f"{field.verbose_name}" if len(
-        #         s) == 0 else f"{s} {field.verbose_name}"
-
+        s = self.get_complex_name
         return f"{self.price}" if len(s) == 0 else f"{s} ={self.price} руб."

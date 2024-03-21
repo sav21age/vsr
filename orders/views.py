@@ -13,7 +13,6 @@ from carts.models import Cart, CartItem
 from common.mail import send_html_email
 from orders.models import Order, OrderItem, OrderStatus
 from orders.forms import ConfirmOrderAnonymUserForm, CreateOrderAnonymUserForm, CreateOrderAuthUserForm
-from common.helpers import get_price_properties
 
 
 def create(request):
@@ -119,7 +118,8 @@ class CreateOrderAuthUserView(FormView):
                     order.save()
 
                     for cart_item in cart_items:
-                        product_name = f"{cart_item.content_object.product} {get_price_properties(cart_item.content_object)}"
+                        # product_name = f"{cart_item.content_object.product} {get_price_properties(cart_item.content_object)}"
+                        product_name = f"{cart_item.content_object.product} {cart_item.content_object.get_complex_name}"
 
                         OrderItem.objects.create(
                             order=order,
@@ -195,7 +195,8 @@ class CreateOrderAnonymUserView(FormView):
                     self.request.session['order_id'] = order.id
 
                     for cart_item in cart_items:
-                        product_name = f"{cart_item.content_object.product} {get_price_properties(cart_item.content_object)}"
+                        # product_name = f"{cart_item.content_object.product} {get_price_properties(cart_item.content_object)}"
+                        product_name = f"{cart_item.content_object.product} {cart_item.content_object.get_complex_name}"
 
                         OrderItem.objects.create(
                             order=order,

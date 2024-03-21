@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.core.validators import MaxLengthValidator
-from common.helpers import get_price_properties
 
 
 class OrderStatus(models.Model):
@@ -105,7 +104,8 @@ class OrderItem(models.Model):
 
     @property
     def product(self):
-        return f"{self.content_object.product} {get_price_properties(self.content_object)}"
+        # return f"{self.content_object.product} {get_price_properties(self.content_object)}"
+        return f"{self.content_object.product} {self.content_object.get_complex_name}"
     product.fget.short_description = 'Товар'
 
     def __str__(self):

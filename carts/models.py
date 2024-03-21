@@ -2,7 +2,6 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.contrib.auth.models import User
-from common.helpers import get_price_properties
 
 
 # class CartManager(models.Manager):
@@ -75,7 +74,8 @@ class CartItem(models.Model):
 
     @property
     def product(self):
-        return f"{self.content_object.product} {get_price_properties(self.content_object)}"
+        # return f"{self.content_object.product} {get_price_properties(self.content_object)}"
+        return f"{self.content_object.product} {self.content_object.get_complex_name}"
     product.fget.short_description = 'Товар'
 
     def __str__(self):

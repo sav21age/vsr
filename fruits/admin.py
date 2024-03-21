@@ -8,7 +8,6 @@ from django.contrib.admin import SimpleListFilter
 from common.admin import ProductAbstractAdmin, ProductPriceAbstractAdmin, ProductPriceInline, make_hidden, make_visible
 from common.filters import (
     ProductGenusAdminFilter, ProductPriceContainerAdminFilter, ProductPriceGenusAdminFilter, SpeciesGenusAdminFilter)
-from common.helpers import get_price_properties
 from fruits.forms import FruitProductAdminForm, FruitProductBatchCopyAdminForm, FruitSpeciesAdminForm
 from fruits.models import FruitProduct, FruitProductPrice, FruitProductPriceAge, FruitSpecies
 from images.admin import ImageInline
@@ -245,6 +244,7 @@ class FruitProductPriceAdmin(ProductPriceAbstractAdmin):
 
     def get_product(self, obj=None):
         if obj:
-            return f"{obj.product} {get_price_properties(obj)}"
+            # return f"{obj.product} {get_price_properties(obj)}"
+            return f"{obj.product} {obj.get_complex_name}"
         return ''
     get_product.short_description = 'растение'

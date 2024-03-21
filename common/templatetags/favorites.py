@@ -1,13 +1,13 @@
 from django import template
 from django.contrib.contenttypes.models import ContentType
-from favorites.models import Favorites
 
 
 register = template.Library()
 
+
 @register.simple_tag(takes_context=True)
 def get_favorites(context):
-    
+
     if not context.get('object'):
         return None
 
@@ -26,13 +26,6 @@ def get_favorites(context):
     return in_favorites
 
 
-@register.filter
-def toclassname(obj):
-    return obj.__class__.__name__
-
-
-@register.filter
-def toctid(obj):
-    ct = ContentType.objects.get_for_model(obj)
-    return ct.id
-
+# @register.filter
+# def toclassname(obj):
+#     return obj.__class__.__name__

@@ -7,7 +7,6 @@ from django.http import HttpResponseRedirect
 from common.admin import ProductAbstractAdmin, ProductPriceAbstractAdmin, ProductPriceInline, make_hidden, make_visible
 from common.filters import (
     ProductGenusAdminFilter, ProductPriceContainerAdminFilter, ProductPriceGenusAdminFilter, SpeciesGenusAdminFilter)
-from common.helpers import get_price_properties
 from conifers.forms import ConiferProductBatchCopyAdminForm, ConiferSpeciesAdminForm, ConiferProductAdminForm
 from conifers.models import (
     ConiferSpecies, ConiferProduct, ConiferProductPrice)
@@ -228,6 +227,7 @@ class ConiferProductPriceAdmin(ProductPriceAbstractAdmin):
 
     def get_product(self, obj=None):
         if obj:
-            return f"{obj.product} {get_price_properties(obj)}"
+            # return f"{obj.product} {get_price_properties(obj)}"
+            return f"{obj.product} {obj.get_complex_name}"
         return ''
     get_product.short_description = 'растение'

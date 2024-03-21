@@ -1,11 +1,11 @@
-# from datetime import datetime
-from urllib.parse import urljoin
-from django.conf import settings
-# from django.core.files.storage import FileSystemStorage
-import os
 from django.forms import NumberInput, TextInput, Textarea
 from django.db import models
 from codemirror import CodeMirrorTextarea
+# import os
+# from urllib.parse import urljoin
+# from datetime import datetime
+# from django.core.files.storage import FileSystemStorage
+# from django.conf import settings
 # from easy_thumbnails.fields import ThumbnailerImageField
 # from images.widgets import ImageAdminWidget
 
@@ -32,44 +32,44 @@ formfield_overrides = {
 }
 
 
-def get_price_properties(obj):
+# def get_price_properties(obj):
 
-    s = ''
-    if hasattr(obj, 'container') and obj.container:
-        s = f"{obj.container} "
+#     s = ''
+#     if hasattr(obj, 'container') and obj.container:
+#         s = f"{obj.container} "
 
-    if (hasattr(obj, 'height') and obj.height) and (hasattr(obj, 'width') and obj.width):
-        s = f"{s}{obj.height}x{obj.width} "
-    else:
-        if hasattr(obj, 'height') and obj.height:
-            s = f"{s}{obj.height} "
+#     if (hasattr(obj, 'height') and obj.height) and (hasattr(obj, 'width') and obj.width):
+#         s = f"{s}{obj.height}x{obj.width} "
+#     else:
+#         if hasattr(obj, 'height') and obj.height:
+#             s = f"{s}{obj.height} "
 
-        if hasattr(obj, 'width') and obj.width:
-            s = f"{s}{obj.width} "
+#         if hasattr(obj, 'width') and obj.width:
+#             s = f"{s}{obj.width} "
 
-    if hasattr(obj, 'trunk_diameter') and obj.trunk_diameter:
-        s = f"{s}{obj.trunk_diameter} "
+#     if hasattr(obj, 'trunk_diameter') and obj.trunk_diameter:
+#         s = f"{s}{obj.trunk_diameter} "
 
-    if hasattr(obj, 'shtamb') and obj.shtamb:
-        # s = f"{s}{obj._meta.get_field('shtamb').verbose_name} {obj.shtamb} "
-        s = f"{s} штамб {obj.shtamb} "
+#     if hasattr(obj, 'shtamb') and obj.shtamb:
+#         # s = f"{s}{obj._meta.get_field('shtamb').verbose_name} {obj.shtamb} "
+#         s = f"{s} штамб {obj.shtamb} "
 
-    if hasattr(obj, 'rs') and obj.rs:
-        s = f"{s}{obj.rs} "
+#     if hasattr(obj, 'rs') and obj.rs:
+#         s = f"{s}{obj.rs} "
 
-    if hasattr(obj, 'planting_year') and obj.planting_year:
-        s = f"{s}- {obj.planting_year} г. "
+#     if hasattr(obj, 'planting_year') and obj.planting_year:
+#         s = f"{s}- {obj.planting_year} г. "
 
-    if hasattr(obj, 'age') and obj.age:
-        s = f"{s}{obj.age} "
+#     if hasattr(obj, 'age') and obj.age:
+#         s = f"{s}{obj.age} "
 
-    if hasattr(obj, 'extra') and obj.extra:
-        s = f"{s}{obj._meta.get_field('extra').verbose_name} "
+#     if hasattr(obj, 'extra') and obj.extra:
+#         s = f"{s}{obj._meta.get_field('extra').verbose_name} "
 
-    if hasattr(obj, 'property') and obj.property:
-        s = f"{s}{obj.property}"
+#     if hasattr(obj, 'property') and obj.property:
+#         s = f"{s}{obj.property}"
 
-    return s.strip()
+#     return s.strip()
 
 
 def get_ip(request):

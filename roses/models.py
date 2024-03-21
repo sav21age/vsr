@@ -100,9 +100,10 @@ class RoseProductPrice(ProductPriceAbstract):
         PlantPriceContainer, verbose_name='контейнер', blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        s = ''
+        # s = ''
 
-        if self.container:
-            s = f"{self.container}"
-
+        # if self.container:
+        #     s = f"{self.container}"
+        
+        s = self.get_complex_name
         return f"{self.price}" if len(s) == 0 else f"{s} ={self.price} руб."

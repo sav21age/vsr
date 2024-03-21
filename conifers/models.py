@@ -129,42 +129,31 @@ class ConiferProductPrice(ProductPriceAbstract):
 
     cart_item = fields.GenericRelation(CartItem)
 
-    # tt = models.ForeignKey(
-    #     PlantPriceTrunkDiameter, verbose_name='диаметр ствола', blank=True, null=True, on_delete=models.CASCADE)
-
-    # width = models.ForeignKey(
-    #     PlantPriceWidth, verbose_name='ширина', blank=True, null=True, on_delete=models.CASCADE)
-
     def __str__(self):
-        s = ''
+        # s = ''
 
-        if self.container:
-            s = f"{self.container}"
+        # if self.container:
+        #     s = f"{self.container}"
 
-        if self.height:
-            s = f"{self.height}" if len(s) == 0 else f"{s} {self.height}"
+        # if self.height:
+        #     s = f"{self.height}" if len(s) == 0 else f"{s} {self.height}"
 
-        if self.width:
-            s = f"{self.width}" if len(s) == 0 else f"{s} {self.width}"
+        # if self.width:
+        #     s = f"{self.width}" if len(s) == 0 else f"{s} {self.width}"
 
-        if self.rs:
-            s = f"{self.rs}" if len(s) == 0 else f"{s} {self.rs}"
+        # if self.rs:
+        #     s = f"{self.rs}" if len(s) == 0 else f"{s} {self.rs}"
 
-        if self.shtamb:
-            field = self._meta.get_field('shtamb')
-            s = f"{field.verbose_name} {self.shtamb}" if len(
-                s) == 0 else f"{s} {field.verbose_name} {self.shtamb}"
+        # if self.shtamb:
+        #     field = self._meta.get_field('shtamb')
+        #     s = f"{field.verbose_name} {self.shtamb}" if len(
+        #         s) == 0 else f"{s} {field.verbose_name} {self.shtamb}"
 
-        if self.extra:
-            field = self._meta.get_field('extra')
-            s = f"{field.verbose_name}" if len(
-                s) == 0 else f"{s} {field.verbose_name}"
+        # if self.extra:
+        #     field = self._meta.get_field('extra')
+        #     s = f"{field.verbose_name}" if len(
+        #         s) == 0 else f"{s} {field.verbose_name}"
 
+        s = self.get_complex_name
         return f"{self.price}" if len(s) == 0 else f"{s} ={self.price} руб."
 
-
-# class ConiferProductHeight(PlantHeightAbstract):
-#     pass
-
-# class ConiferProductWidth(PlantWidthAbstract):
-#     pass

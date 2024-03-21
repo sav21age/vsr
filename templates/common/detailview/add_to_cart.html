@@ -1,4 +1,4 @@
-{% load getprice ctid %}
+{% load ctid %}
 {% if object_set_all %}
     <table class="table table-responsive table-price mt-3">
     <thead>
@@ -13,12 +13,14 @@
         <td>
             <div class="form-check">
             <input class="form-check-input" type="radio" name="productPrice" value="{{obj.id}}"
-            data-ct-id="{{ obj|toctid }}" data-id="{{obj.id}}" 
+            data-ct-id="{{ obj|get_ct_id }}" data-id="{{obj.id}}" 
             id="productPrice{{obj.id}}"{% if forloop.first %} checked{% endif %}>
             <label class="form-check-label" for="productPrice{{obj.id}}">
-                {% get_price_params obj %}
+                {% comment %} {% get_price_params obj %} {% endcomment %}
+                {{ obj.get_complex_name }}
                 {% if not obj.property %}
-                <i class="far fa-question-circle fa-xs info" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="{% get_price_params_popover obj %}"></i>
+                {% comment %} <i class="far fa-question-circle fa-xs info" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="{% get_price_params_popover obj %}"></i> {% endcomment %}
+                <i class="far fa-question-circle fa-xs info" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="{{ obj.get_complex_popover }}"></i>
                 {% endif %}
             </label>
             </div>

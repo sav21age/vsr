@@ -59,6 +59,91 @@ class ProductAbstract(PageAbstract):
 class ProductPriceAbstract(models.Model):
     price = models.DecimalField('цена, руб', max_digits=9, decimal_places=2)
 
+    @property
+    def get_complex_name(self):
+        try:
+            s = ''
+            if hasattr(self, 'container') and self.container:
+                s = f"{self.container} "
+
+            if (hasattr(self, 'height') and self.height) and (hasattr(self, 'width') and self.width):
+                s = f"{s}{self.height}x{self.width} "
+            else:
+                if hasattr(self, 'height') and self.height:
+                    s = f"{s}{self.height} "
+
+                if hasattr(self, 'width') and self.width:
+                    s = f"{s}{self.width} "
+
+            if hasattr(self, 'trunk_diameter') and self.trunk_diameter:
+                s = f"{s}{self.trunk_diameter} "
+
+            if hasattr(self, 'shtamb') and self.shtamb:
+                # s = f"{s}{self._meta.get_field('shtamb').verbose_name} {self.shtamb} "
+                s = f"{s} штамб {self.shtamb} "
+
+            if hasattr(self, 'rs') and self.rs:
+                s = f"{s}{self.rs} "
+
+            if hasattr(self, 'planting_year') and self.planting_year:
+                s = f"{s}- {self.planting_year} г. "
+
+            if hasattr(self, 'age') and self.age:
+                s = f"{s}{self.age} "
+
+            if hasattr(self, 'extra') and self.extra:
+                s = f"{s}{self._meta.get_field('extra').verbose_name} "
+
+            if hasattr(self, 'property') and self.property:
+                s = f"{s}{self.property} "
+
+            return s.strip()
+
+        except self.DoesNotExist:
+            return ''
+        except IndexError:
+            return ''
+
+    @property
+    def get_complex_popover(self):
+        try:
+            s = ''
+            if hasattr(self, 'container') and self.container:
+                s = f"<div><strong>{self.container}</strong> - {self.container.description}</div>"
+
+            if hasattr(self, 'height') and self.height:
+                s = f"{s}<div><strong>{self.height}</strong> - Высота, см.</div>"
+
+            if hasattr(self, 'width') and self.width:
+                s = f"{s}<div><strong>{self.width}</strong> - Ширина, см.</div>"
+
+            if hasattr(self, 'trunk_diameter') and self.trunk_diameter:
+                s = f"{s}<div><strong>{self.trunk_diameter}</strong> - Диаметр ствола, см.</div>"
+
+            if hasattr(self, 'shtamb') and self.shtamb:
+                field = self._meta.get_field('shtamb')
+                s = f"{s}<div><strong>штамб {self.shtamb}</strong> - {field.help_text}</div>"
+
+            if hasattr(self, 'rs') and self.rs:
+                s = f"{s}<div><strong>{self.rs}</strong> - {self.rs.description}</div>"
+
+            if hasattr(self, 'planting_year') and self.planting_year:
+                s = f"{s}<div><strong>{self.planting_year} г.</strong> - Год посадки.</div>"
+
+            if hasattr(self, 'age') and self.age:
+                s = f"{s}<div><strong>{self.age}</strong> - Возраст.</div>"
+
+            if hasattr(self, 'extra') and self.extra:
+                field = self._meta.get_field('extra')
+                s = f"{s}<div><strong>{field.verbose_name}</strong> - {field.help_text}</div>"
+
+            return s.strip()
+        
+        except self.DoesNotExist:
+            return ''
+        except IndexError:
+            return ''
+
     class Meta:
         abstract = True
         ordering = ('price',)
