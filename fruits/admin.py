@@ -232,7 +232,8 @@ class FruitProductPriceAdmin(ProductPriceAbstractAdmin):
         return super().get_queryset(request) \
             .select_related('product') \
             .select_related('container') \
-            .select_related('rs')
+            .select_related('rs') \
+            .select_related('age')
 
     list_filter = (FruitProductPriceGenusAdminFilter,
                    FruitProductPriceAgeAdminFilter,
