@@ -22,10 +22,13 @@ class FruitProductDetail(DetailView):
     queryset = FruitProduct.is_visible_objects.all() \
         .prefetch_related('images') \
         .prefetch_related('advantages') \
-        .prefetch_related('fruitproductprice_set') \
-        .prefetch_related('fruitproductprice_set__container') \
-        .prefetch_related('fruitproductprice_set__rs') \
-        .prefetch_related('fruitproductprice_set__age')
+        .prefetch_related(
+            'fruitproductprice_set',
+            'fruitproductprice_set__container',
+            'fruitproductprice_set__rs',
+            'fruitproductprice_set__age',
+            'fruitproductprice_set__rootstock'
+        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

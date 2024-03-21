@@ -1,5 +1,6 @@
 {% load static %}
 
+{% spaceless %}
 {% if cart_items %}
   <div class="card border-0 border-bottom">
     <ul class="list-group">
@@ -80,3 +81,4 @@
 {% else %}
   Ваша корзина пуста.
 {% endif %}
+{% endspaceless %}

@@ -86,10 +86,13 @@ class ProductPriceAbstract(models.Model):
                 s = f"{s}{self.rs} "
 
             if hasattr(self, 'planting_year') and self.planting_year:
-                s = f"{s}- {self.planting_year} г. "
+                s = f"{s}{self.planting_year} г. "
 
             if hasattr(self, 'age') and self.age:
                 s = f"{s}{self.age} "
+
+            if hasattr(self, 'rootstock') and self.rootstock:
+                s = f"{s}{self.rootstock} "
 
             if hasattr(self, 'extra') and self.extra:
                 s = f"{s}{self._meta.get_field('extra').verbose_name} "
@@ -132,6 +135,9 @@ class ProductPriceAbstract(models.Model):
 
             if hasattr(self, 'age') and self.age:
                 s = f"{s}<div><strong>{self.age}</strong> - Возраст.</div>"
+
+            if hasattr(self, 'rootstock') and self.rootstock:
+                s = f"{s}<div><strong>{self.rootstock}</strong> - Подвой.</div>"
 
             if hasattr(self, 'extra') and self.extra:
                 field = self._meta.get_field('extra')

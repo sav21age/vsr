@@ -44,7 +44,7 @@ class IndexView(View):
         if cart:
             cart_items = CartItem.objects.filter(cart=cart) \
                 .prefetch_related('content_object')
-        
+
         context['cart'] = cart
         context['cart_items'] = cart_items
 

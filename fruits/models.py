@@ -47,8 +47,6 @@ class FruitProduct(PlantProductAbstract):
     self_fertility = models.CharField(
         'самоплодность', max_length=20, blank=True, )
 
-    rootstock = models.CharField('подвой', max_length=15, blank=True, )
-
     fruit_ripening = models.CharField(
         'время созревания плодов', max_length=250, blank=True, )
 
@@ -110,6 +108,7 @@ class FruitProduct(PlantProductAbstract):
 
 # --
 
+
 class FruitProductPriceAge(models.Model):
     CHOICES = (
         (1, '1-летка'),
@@ -137,6 +136,23 @@ class FruitProductPriceAge(models.Model):
         verbose_name_plural = 'возраст растений'
 
 
+class FruitProductPriceRootstock(models.Model):
+    CHOICES = (
+        (1, 'полукарлик'),
+        (2, 'семенной'),
+    )
+    rootstock = models.PositiveSmallIntegerField('подвой', default=1, unique=True,
+                                           choices=CHOICES,)
+
+    def __str__(self):
+        return f"{dict(self.CHOICES)[self.rootstock]}"
+
+    class Meta:
+        ordering = ('rootstock',)
+        verbose_name = 'подвой растения'
+        verbose_name_plural = 'подвой растений'
+
+
 class FruitProductPrice(ProductPriceAbstract):
     product = models.ForeignKey(
         FruitProduct, verbose_name='растение', on_delete=models.CASCADE)
@@ -152,6 +168,9 @@ class FruitProductPrice(ProductPriceAbstract):
 
     rs = models.ForeignKey(
         PlantPriceRootSystem, verbose_name='корневая система', blank=True, null=True, on_delete=models.CASCADE)
+
+    rootstock = models.ForeignKey(
+        FruitProductPriceRootstock, verbose_name='подвой', blank=True, null=True, on_delete=models.CASCADE)
 
     age = models.ForeignKey(
         FruitProductPriceAge, verbose_name='возраст', blank=True, null=True, on_delete=models.CASCADE)

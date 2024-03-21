@@ -50,11 +50,11 @@
         </p>
       {% endif %}
 
-      {% if object.rootstock %}
+      {% comment %} {% if object.rootstock %}
         <p class="detail-property">
           <span>Подвой:</span> {{ object.rootstock }}
         </p>
-      {% endif %}
+      {% endif %} {% endcomment %}
 
       {% if object.fruit_ripening %}
         <p class="detail-property">

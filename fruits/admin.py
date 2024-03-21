@@ -9,7 +9,7 @@ from common.admin import ProductAbstractAdmin, ProductPriceAbstractAdmin, Produc
 from common.filters import (
     ProductGenusAdminFilter, ProductPriceContainerAdminFilter, ProductPriceGenusAdminFilter, SpeciesGenusAdminFilter)
 from fruits.forms import FruitProductAdminForm, FruitProductBatchCopyAdminForm, FruitSpeciesAdminForm
-from fruits.models import FruitProduct, FruitProductPrice, FruitProductPriceAge, FruitSpecies
+from fruits.models import FruitProduct, FruitProductPrice, FruitProductPriceAge, FruitProductPriceRootstock, FruitSpecies
 from images.admin import ImageInline
 from plants.admin import PlantSpeciesAbstractAdmin
 from plants.models import PlantPriceContainer
@@ -49,13 +49,14 @@ class FruitProductPriceInline(ProductPriceInline):
 
     model = FruitProductPrice
     fields = ('container', 'height', 'width',
-              'rs', 'age', 'price', )
+              'rs', 'age', 'rootstock', 'price', )
 
 
 # --
 
 
 admin.site.register(FruitProductPriceAge)
+admin.site.register(FruitProductPriceRootstock)
 
 
 # --
@@ -91,8 +92,8 @@ def batch_copy(modeladmin, request, queryset):
                         if clean['self_fertility_chk']:
                             recipient.self_fertility = donor.self_fertility
 
-                        if clean['rootstock_chk']:
-                            recipient.rootstock = donor.rootstock
+                        # if clean['rootstock_chk']:
+                        #     recipient.rootstock = donor.rootstock
 
                         if clean['fruit_ripening_chk']:
                             recipient.fruit_ripening = donor.fruit_ripening
@@ -173,7 +174,7 @@ class FruitProductAdmin(ProductAbstractAdmin):
             'fields': ('height', 'width', )
         }),
         ('', {
-            'fields': ('flowering', 'self_fertility', 'rootstock', )
+            'fields': ('flowering', 'self_fertility', )
         }),
         ('Плоды', {
             'classes': ('collapse',),
@@ -233,13 +234,14 @@ class FruitProductPriceAdmin(ProductPriceAbstractAdmin):
             .select_related('product') \
             .select_related('container') \
             .select_related('rs') \
-            .select_related('age')
+            .select_related('age') \
+            .select_related('rootstock')
 
     list_filter = (FruitProductPriceGenusAdminFilter,
                    FruitProductPriceAgeAdminFilter,
                    FruitProductPriceContainerAdminFilter, )
     fields = ('product', 'container', 'height', 'width',
-              'rs', 'age', 'price', )
+              'rs', 'age', 'rootstock', 'price', )
     list_display = ('get_product', 'price', )
     # show_facets = admin.ShowFacets.ALLOW
 

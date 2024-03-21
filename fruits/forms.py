@@ -1,6 +1,6 @@
 from django import forms
 from common.forms import ProductAdminForm
-from fruits.models import FruitProduct, FruitSpecies
+from fruits.models import FruitProduct, FruitProductPrice, FruitSpecies
 from plants.models import PlantGenus
 
 
@@ -25,8 +25,8 @@ class FruitProductBatchCopyAdminForm(forms.Form):
     self_fertility_chk = forms.BooleanField(
         required=False, initial=True, label='Самоплодность')
 
-    rootstock_chk = forms.BooleanField(
-        required=False, initial=True, label='Подвой')
+    # rootstock_chk = forms.BooleanField(
+    #     required=False, initial=True, label='Подвой')
 
     fruit_ripening_chk = forms.BooleanField(
         required=False, initial=True, label='Время созревания плодов')
@@ -123,6 +123,12 @@ class FruitProductAdminForm(ProductAdminForm):
         label='Время созревания плодов',
     )
 
+    class Meta(ProductAdminForm.Meta):
+        model = FruitProduct
+        exclude = []
+
+
+class FruitProductPriceAdminForm(forms.ModelForm):
     CHOICES_ROOTSTOCK = (
         (None, '---'),
         ('карликовый', 'карликовый'),
@@ -135,6 +141,6 @@ class FruitProductAdminForm(ProductAdminForm):
         label='Подвой',
     )
 
-    class Meta(ProductAdminForm.Meta):
-        model = FruitProduct
+    class Meta:
+        model = FruitProductPrice
         exclude = []
