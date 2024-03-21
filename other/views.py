@@ -8,7 +8,9 @@ class CategoryFilterMixin():
     def get_queryset(self):
         qs = super().get_queryset()
         qs = qs.filter(category__name=self.category) \
-            .prefetch_related('images')
+            .select_related('category') \
+            .prefetch_related('images') \
+            .prefetch_related('otherproductprice_set')
         return qs
 
 
