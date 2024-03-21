@@ -29,6 +29,7 @@ class SearchView(PaginationMixin, ListView):
             
             query_sets.append(
                 DecProduct.objects.search(query=q) \
+                    .filter(is_visible=True)
                     .select_related('species') \
                     .prefetch_related('images') \
                     .prefetch_related('decproductprice_set')
@@ -36,6 +37,7 @@ class SearchView(PaginationMixin, ListView):
 
             query_sets.append(
                 FruitProduct.objects.search(query=q) \
+                    .filter(is_visible=True)
                     .select_related('species') \
                     .prefetch_related('images') \
                     .prefetch_related('fruitproductprice_set')
@@ -43,6 +45,7 @@ class SearchView(PaginationMixin, ListView):
 
             query_sets.append(
                 PerProduct.objects.search(query=q) \
+                    .filter(is_visible=True)
                     .select_related('species') \
                     .prefetch_related('images') \
                     .prefetch_related('perproductprice_set')
@@ -50,12 +53,14 @@ class SearchView(PaginationMixin, ListView):
 
             query_sets.append(
                 OtherProduct.objects.search(query=q) \
+                    .filter(is_visible=True)
                     .prefetch_related('images') \
                     .prefetch_related('otherproductprice_set')
             )
             
             query_sets.append(
                 RoseProduct.objects.search(query=q) \
+                    .filter(is_visible=True)
                     .prefetch_related('images') \
                     .prefetch_related('roseproductprice_set')
             )
