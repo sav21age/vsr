@@ -63,8 +63,8 @@ class OtherProductPrice(ProductPriceAbstract):
     product = models.ForeignKey(
         OtherProduct, verbose_name='товар', on_delete=models.CASCADE)
 
-    property = models.CharField(
-        'параметры', max_length=150,)
+    name = models.CharField(
+        'название', max_length=150,)
 
     def __str__(self):
         # s = ''

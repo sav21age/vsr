@@ -1,7 +1,5 @@
-from urllib.parse import urlencode
 from django.test import TestCase, Client
 from django.urls import reverse
-from conifers.models import ConiferProduct
 from other.models import OtherProduct
 
 

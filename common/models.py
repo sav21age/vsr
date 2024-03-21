@@ -94,8 +94,8 @@ class ProductPriceAbstract(models.Model):
             if hasattr(self, 'extra') and self.extra:
                 s = f"{s}{self._meta.get_field('extra').verbose_name} "
 
-            if hasattr(self, 'property') and self.property:
-                s = f"{s}{self.property} "
+            if hasattr(self, 'name') and self.name:
+                s = f"{s}{self.name} "
 
             return s.strip()
 
