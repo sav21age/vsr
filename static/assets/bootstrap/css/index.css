@@ -1,8 +1,0 @@
-#carouselExampleIndicators .carousel img {
-  height: 450px;
-  width: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-  -o-object-position: center;
-     object-position: center;
-}
