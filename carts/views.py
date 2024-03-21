@@ -42,7 +42,8 @@ class IndexView(View):
                     pass
 
         if cart:
-            cart_items = CartItem.objects.filter(cart=cart)
+            cart_items = CartItem.objects.filter(cart=cart) \
+                .prefetch_related('content_object')
         
         context['cart'] = cart
         context['cart_items'] = cart_items
@@ -172,7 +173,8 @@ def cart_update(request):
     
     cart_item.save()
 
-    cart_items = CartItem.objects.filter(cart=cart).prefetch_related('content_object')
+    cart_items = CartItem.objects.filter(cart=cart) \
+        .prefetch_related('content_object')
 
     template = render_to_string(
         "carts/cart.html", {

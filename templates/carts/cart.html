@@ -36,13 +36,13 @@
             <div class="col-12 col-md d-flex align-items-center py-1 py-md-0">{{ cart_item.product }}</div>
             <div class="col-6 col-sm-4 col-md col-lg-2 d-flex align-items-center py-1 py-md-0">
               <div class="input-group flex-nowrap">
-                <button type="button" class="btn ps-1 pe-3 decrement" data-ci-id="{{ cart_item.id }}" data-value="-" value="{% url 'carts:update' %}">
+                <button type="button" class="btn ps-1 pe-3 border-0 decrement" data-ci-id="{{ cart_item.id }}" data-value="-" value="{% url 'carts:update' %}">
                   {% csrf_token %}
                   <i class="fas fa-minus"></i>
                 </button>
                 {% comment %} <input type="text" class="form-control text-center number px-2" name="quantity" style="flex: 0 1 40px; min-width: 40px;" value="{{ cart_item.quantity }}"> {% endcomment %}
                 <input type="text" class="form-control text-center number px-2" name="quantity" style="flex: 0 0 40px;" value="{{ cart_item.quantity }}">
-                <button type="button" class="btn ps-3 pe-0 increment" data-ci-id="{{ cart_item.id }}" data-value="+" value="{% url 'carts:update' %}">
+                <button type="button" class="btn ps-3 pe-1 border-0 increment" data-ci-id="{{ cart_item.id }}" data-value="+" value="{% url 'carts:update' %}">
                   {% csrf_token %}
                   <i class="fas fa-plus"></i>
                 </button>
