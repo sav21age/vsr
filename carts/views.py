@@ -6,7 +6,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import View
 from django.template.loader import render_to_string
 from carts.models import Cart, CartItem
-from common.helpers import get_ip
 
 
 class IndexView(View):
@@ -53,6 +52,15 @@ class IndexView(View):
             template_name=self.template_name,
             context=context
         )
+
+
+def get_ip(request):
+    x_forwarded_for = request.META.get("HTTP_X_FORWARDED_FOR")
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(",")[0]
+    else:
+        ip = request.META.get("REMOTE_ADDR")
+    return f"{ip}"
 
 
 def cart_add(request):
