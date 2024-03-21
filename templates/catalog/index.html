@@ -10,19 +10,19 @@
   {% comment %} <meta property="og:url" content="{{ host }}{% url 't-r_list' %}"> {% endcomment %}
 {% endblock %}
 
-{% comment %} {% block breadcrumb %}
+{% block breadcrumb %}
   {% breadcrumb_for '/' %}<i class="fas fa-home"></i>{% endbreadcrumb_for %}
   {% breadcrumb_for 'catalog' %}Каталог{% endbreadcrumb_for %}
   {% render_breadcrumbs 'breadcrumb.html' %}
-{% endblock %} {% endcomment %}
+{% endblock %}
 
 {% block name %}
   Каталог
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid px-3 px-md-5">
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 catalog">
+{% comment %} <div class="container-fluid px-3 px-md-5">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-md-4 g-4 catalog">
         {% for obj in object_list %}
         <div class="col">
           <div class="carousel-inner card rounded-0 border-0 h-100">
@@ -36,5 +36,28 @@
         </div>
         {% endfor %}
       </div>
-</div>
+</div> {% endcomment %}
+
+<div class="container-fluid px-3 px-md-5 mb-3">
+{% if object_list %}
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 gx-4 gy-3 catalog">
+    {% for object in object_list %}
+        <div class="col">
+            <div class="card rounded-0 border-0 h-100">
+                <a href="{{ object.url }}"><img class="card-img rounded-0 img-fluid" src="{{ object.image_path|thumbnail_url:'list' }}" alt="{{object.image_title}}" title="{{object.image_title}}"></a>
+                <div class="card-body px-1 pt-2">
+                    <p class="card-text text-center"><a href="{{ object.url }}">{{ object.name }}</a></p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+{% else %}
+    <div class="row">
+        <div class="col-12">
+            {% include 'common/empty.html' %}
+        </div>
+    </div>  
+{% endif %}
+  </div>
 {% endblock %}

@@ -6,11 +6,11 @@
   {% comment %} <meta property="og:url" content="{{host}}{% url 't-r_list' %}"> {% endcomment %}
 {% endblock %} 
 
-{% comment %} {% block breadcrumb %}
+{% block breadcrumb %}
 {% breadcrumb_for '/' %}<i class="fas fa-home"></i>{% endbreadcrumb_for %}
 {% breadcrumb_for 'contacts' %}{{ object.name }}{% endbreadcrumb_for %}
 {% render_breadcrumbs 'breadcrumb.html' %}
-{% endblock %} {% endcomment %}
+{% endblock %}
 
 {% block name %}
 {{ object.name }}
