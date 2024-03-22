@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ошибка 404</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
+    <style>
+      body {
+        background: url(../../static/images/background/bg404.jpg);
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+      }
+      .bg {
+        {% comment %} background-color: rgba(0,0,0, 0.5); {% endcomment %}
+        background-color: rgba(255,255,255, 0.75);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="d-flex align-items-center justify-content-center vh-100">
+      <div class="mx-3 px-3 pb-2 bg">
+        <h1 class="display-1 fw-bold">404</h1>
+        {% comment %} <p class="lead">Запрашиваемая страница не существует.</p> {% endcomment %}
+        <p>Возможно, эта страница была удалена, переименована, или временно недоступна.</p>
+        <p>Попробуйте следующее:</p>
+        <ul>
+          <li>Проверьте правильность адреса страницы в строке адреса.</li>
+          <li>
+            Перейдите на <a href="/">главную страницу</a> и используйте навигацию, чтобы найти ссылки на нужные Вам данные.
+          </li>
+          <li>
+            Нажмите кнопку <a href="javascript:history.back()">назад</a>, чтобы использовать другую ссылку.
+          </li>
+        </ul>
+        {% comment %} <a href="/" class="btn btn-secondary">Перейти на главную страницу.</a> {% endcomment %}
+      </div>
+    </div>
+  </body>
+</html>
