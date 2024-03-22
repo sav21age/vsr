@@ -97,7 +97,7 @@ class RoseProductPrice(ProductPriceAbstract):
         RoseProduct, verbose_name='роза', on_delete=models.CASCADE)
 
     container = models.ForeignKey(
-        PlantPriceContainer, verbose_name='контейнер', blank=True, null=True, on_delete=models.CASCADE)
+        PlantPriceContainer, verbose_name='контейнер', on_delete=models.CASCADE)
 
     def __str__(self):
         # s = ''
