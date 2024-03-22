@@ -123,10 +123,10 @@ class ProductPriceAbstract(models.Model):
                 s = f"<div><strong>{self.container}</strong> - {self.container.description}</div>"
 
             if hasattr(self, 'height') and self.height:
-                s = f"{s}<div><strong>{self.height}</strong> - Высота, см.</div>"
+                s = f"{s}<div><strong>{self.height}</strong> - Высота растения, см.</div>"
 
             if hasattr(self, 'width') and self.width:
-                s = f"{s}<div><strong>{self.width}</strong> - Ширина, см.</div>"
+                s = f"{s}<div><strong>{self.width}</strong> - Ширина растения, см.</div>"
 
             if hasattr(self, 'trunk_diameter') and self.trunk_diameter:
                 s = f"{s}<div><strong>{self.trunk_diameter}</strong> - Диаметр ствола, см.</div>"
@@ -142,7 +142,7 @@ class ProductPriceAbstract(models.Model):
                 s = f"{s}<div><strong>{self.planting_year} г.</strong> - Год посадки.</div>"
 
             if hasattr(self, 'age') and self.age:
-                s = f"{s}<div><strong>{self.age}</strong> - Возраст.</div>"
+                s = f"{s}<div><strong>{self.age}</strong> - Возраст растения.</div>"
 
             if hasattr(self, 'rootstock') and self.rootstock:
                 s = f"{s}<div><strong>{self.rootstock}</strong> - Подвой.</div>"

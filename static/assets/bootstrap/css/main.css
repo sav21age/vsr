@@ -5,12 +5,12 @@
 
 .footer {
   font-size: 15px;
-  background: url(../../../images/background/footer-bg-grass1.png);
+  background: url(../../../images/background/footer-bg-grass.png);
   background-position: bottom;
   background-repeat: repeat-x;
 }
 .footer .copyright {
-  padding: 0 0 60px;
+  padding: 0 0 50px;
 }
 .footer i {
   width: 19px;
