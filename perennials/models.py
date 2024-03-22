@@ -2,6 +2,8 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.postgres.indexes import GinIndex
 from django.contrib.postgres.search import SearchVectorField
+from django.core.exceptions import ValidationError
+from common.errors import MSG_ONE_REQUIRED
 from common.models import ProductPriceAbstract
 from common.validators import FloweringPeriodValidator, SizeValidator
 from plants.models import (
@@ -130,3 +132,10 @@ class PerProductPrice(ProductPriceAbstract):
         
         s = self.get_complex_name
         return f"{self.price}" if len(s) == 0 else f"{s} ={self.price} руб."
+
+    def clean(self):
+        if not self.container and not self.planting_year:
+            raise ValidationError(
+                {'container': MSG_ONE_REQUIRED, 'planting_year': MSG_ONE_REQUIRED}, code='required')
+
+        super().clean()
