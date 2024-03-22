@@ -1,9 +1,11 @@
 from django.db import models
 from common.managers import IsVisibleManager
 from django.contrib.contenttypes import fields
+from django.core.exceptions import ValidationError
+from common.errors import MSG_ONE_REQUIRED
+from common.managers import SearchManager
 from favorites.models import Favorites
 from images.models import Image
-from common.managers import SearchManager
 
 
 class PageAbstract(models.Model):
@@ -19,12 +21,12 @@ class PageAbstract(models.Model):
     is_visible = models.BooleanField('показывать?', default=1, db_index=True)
 
     objects = models.Manager()
-    
+
     is_visible_objects = IsVisibleManager()
 
     def __str__(self):
         return str(self.name)
-    
+
     class Meta:
         abstract = True
 
@@ -33,7 +35,7 @@ class ProductAbstract(PageAbstract):
     # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     short_description = models.CharField('короткое описание', max_length=250)
     description = models.TextField('описание', blank=True)
-    
+
     images = fields.GenericRelation(Image)
     favorites = fields.GenericRelation(Favorites)
 
@@ -58,6 +60,12 @@ class ProductAbstract(PageAbstract):
 
 class ProductPriceAbstract(models.Model):
     price = models.DecimalField('цена, руб', max_digits=9, decimal_places=2)
+
+    class Meta:
+        abstract = True
+        ordering = ('price',)
+        verbose_name = 'цена'
+        verbose_name_plural = 'цены'
 
     @property
     def get_complex_name(self):
@@ -144,14 +152,15 @@ class ProductPriceAbstract(models.Model):
                 s = f"{s}<div><strong>{field.verbose_name}</strong> - {field.help_text}</div>"
 
             return s.strip()
-        
+
         except self.DoesNotExist:
             return ''
         except IndexError:
             return ''
 
-    class Meta:
-        abstract = True
-        ordering = ('price',)
-        verbose_name = 'цена'
-        verbose_name_plural = 'цены'
+    def validate_one_of_required(self, field_list):
+        msg = {}
+        msg.update({value: MSG_ONE_REQUIRED for value in field_list})
+
+        if all(not getattr(self, name) for name in field_list):
+            raise ValidationError(msg, code='required')

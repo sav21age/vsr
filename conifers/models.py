@@ -3,8 +3,6 @@ from django.urls import reverse
 from django.contrib.postgres.indexes import GinIndex
 from django.contrib.postgres.search import SearchVectorField
 from django.contrib.contenttypes import fields
-from django.core.exceptions import ValidationError
-from common.errors import MSG_ONE_REQUIRED
 from common.models import ProductPriceAbstract
 from common.validators import SizeUnitValidator, SizeValidator
 from carts.models import CartItem
@@ -161,10 +159,5 @@ class ConiferProductPrice(ProductPriceAbstract):
 
     def clean(self):
         field_list = ('container', 'height', 'width', 'rs', 'shtamb', 'extra',)
-        
-        msg = {}
-        msg.update({value: MSG_ONE_REQUIRED for value in field_list})
-
-        if all(not getattr(self, name) for name in field_list):
-            raise ValidationError(msg, code='required')
+        super().validate_one_of_required(field_list)
         super().clean()
