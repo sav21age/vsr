@@ -1,9 +1,0 @@
-<div class="species-filter mt-4">
-{% for link in links %}
-    {% if link.active %}
-        <span class="badge active">{{link.name}}</span>
-    {% else %}
-        <span class="mx-1"><a href="{{link.url}}">{{link.name}}</a></span>
-    {%endif%}
-{% endfor %}
-</div>

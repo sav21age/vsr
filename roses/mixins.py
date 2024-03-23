@@ -54,7 +54,7 @@ class RoseSpeciesFilterMixin():
             context['species_current'] = self.request.GET.get('species', None)
 
             context['species_filter'] = RoseSpeciesFilterMixinTemplate.as_view(
-                template_name='common/plant_species_filter.html',
+                template_name='common/listview/species_filter.html',
                 parent_context=context)(self.request)
 
         return context

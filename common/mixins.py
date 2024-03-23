@@ -37,7 +37,7 @@ class PerPageMixin():
         context['per_page_current'] = self.per_page_default
 
         context['per_page'] = PerPageMixinTemplate.as_view(
-            template_name='common/per_page.html',
+            template_name='common/listview/per_page.html',
             parent_context=context)(self.request)
         return context
 
@@ -86,7 +86,7 @@ class PlantGenusFilterMixin():
         context['genus_current'] = self.genus_id
         
         context['genus_filter'] = PlantGenusFilterMixinTemplate.as_view(
-            template_name='common/plant_genus_filter.html',
+            template_name='common/listview/genus_filter.html',
             parent_context=context)(self.request)
         
         return context
@@ -128,7 +128,7 @@ class PlantSpeciesFilterMixin():
             context['species_current'] = self.species_id
 
             context['species_filter'] = PlantSpeciesFilterMixinTemplate.as_view(
-                template_name='common/plant_species_filter.html',
+                template_name='common/listview/species_filter.html',
                 parent_context=context)(self.request)
 
         return context
