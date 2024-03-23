@@ -1,9 +1,10 @@
 User-Agent: *
-Disallow: /admin
-Disallow: /cart
-Disallow: /search
-Disallow: /accounts
-Disallow: /privacy-policy
+Disallow: /admin/
+Disallow: /cart/
+Disallow: /search/
+Disallow: /accounts/
+Disallow: /privacy-policy/
+Disallow: /*per_page=*
 
 Host: https://viride.spb.ru
 Sitemap: https://viride.spb.ru/sitemap.xml
