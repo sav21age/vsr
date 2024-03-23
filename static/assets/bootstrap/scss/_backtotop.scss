@@ -1,0 +1,36 @@
+.back-to-top {
+  position: fixed;
+  visibility: hidden;
+  opacity: 0;
+  right: 10px;
+  bottom: 10px;
+  z-index: 1001;
+  // background: var(--primary);
+  background-color: $tertiary;
+  width: 40px;
+  height: 40px;
+  // border-radius: 50%;
+  transition: all 0.4s;
+  text-decoration: none;
+  border: none;
+}
+
+.back-to-top i {
+  font-size: 20px;
+  // color: #151515;
+  color: #fff;
+  line-height: 0;
+}
+
+// .back-to-top:hover {
+//   background: #151515;
+// }
+
+// .back-to-top:hover i {
+//   color: #ffc451;
+// }
+
+.back-to-top.active {
+  visibility: visible;
+  opacity: 1;
+}
