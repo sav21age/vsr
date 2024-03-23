@@ -51,7 +51,8 @@ RECAPTCHA_PUBLIC_KEY = os.environ.get("SITE_KEY")
 RECAPTCHA_PRIVATE_KEY = os.environ.get("SECRET_KEY")
 
 
-# CACHE_BACKEND = "django.core.cache.backends.dummy.DummyCache"
+# CACHE_BACKEND = 'django.core.cache.backends.dummy.DummyCache'
+# CACHE_BACKEND = 'django.core.cache.backends.memcached.PyMemcacheCache'
 CACHE_BACKEND = 'django.core.cache.backends.locmem.LocMemCache'
 CACHE_LOCATION_DIR = os.path.join(BASE_DIR, 'cache')
 
@@ -60,9 +61,11 @@ CACHES = {
     'default': {
         'BACKEND': CACHE_BACKEND,
         'TIMEOUT': CACHE_TIMEOUT,
+        # 'LOCATION': os.environ.get("CACHE_LOCATION"),
     },
     'axes': {
         'BACKEND': CACHE_BACKEND,
+        # 'LOCATION': os.environ.get("CACHE_LOCATION"),
     },
     # 'select2': {
     #     'BACKEND': CACHE_BACKEND,
