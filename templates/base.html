@@ -22,7 +22,11 @@
   <meta name="theme-color" content="#ffffff">
 
   {% block head %}{% endblock %}
-  
+
+  <meta http-equiv="x-dns-prefetch-control" content="on">
+  <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+  <link rel="preconnect" href="//cdnjs.cloudflare.com">
+
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
   {% comment %} <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> {% endcomment %}
@@ -44,8 +48,9 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="fas fa-chevron-up"></i></a>
 
   {% include 'footer.html' %}
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js" integrity="sha512-X/YkDZyjTf4wyc2Vy16YGCPHwAY8rZJY+POgokZjQB2mhIRFJCckEGc6YyX9eNsPfn0PzThEuNs+uaomE5CO6A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  {% comment %} <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> {% endcomment %}
   {% compress js %}
   {% comment %} <script src="{% static 'assets/vendor/popper/popper.min.js' %}"></script> {% endcomment %}
   {% comment %} <script src="{% static 'assets/bootstrap/js/bundle.js' %}"></script> {% endcomment %}
