@@ -2,7 +2,8 @@
 {% autoescape off %}
 {% block content %}
 <h3>Здравствуйте{% if full_name %}, {{full_name}}{% endif %}!</h3>
-<p>На сайте <a href="https://viride.spb.ru">ООО «Вириде»</a> Вам необходимо подтвердить заказ.</p>
-<p>Код подтверждения: {{code}}</p>
+{% include 'orders/email/order_content.html' %}
+<br>
+{% include 'orders/attention.html' %}
 {% endblock content %}
 {% endautoescape %}

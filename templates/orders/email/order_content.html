@@ -1,6 +1,3 @@
-{% extends 'orders/email/base_message.html' %}
-{% autoescape off %}
-{% block content %}
 <p>Заказ № {{ order.number }} от {{ order.created_at|date:'DATE_FORMAT' }} на сайте <a href="https://viride.spb.ru">ООО «Вириде»</a></p>
 <p>Статус заказа: {{order.status|lower}}</p>
 <p>Оплата: наличными при получении</p>
@@ -30,7 +27,3 @@
     </tr>
     </tbody>
 </table>
-<br>
-{% include 'orders/attention.html' %}
-{% endblock content %}
-{% endautoescape %}

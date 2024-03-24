@@ -1,0 +1,6 @@
+{% extends 'orders/email/base_message.html' %}
+{% autoescape off %}
+{% block content %}
+{% include 'orders/email/order_content.html' %}
+{% endblock content %}
+{% endautoescape %}

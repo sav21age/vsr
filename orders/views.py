@@ -22,8 +22,8 @@ def create(request):
 
 
 def send_order_email(order):
-    template_subject = 'orders/email/order_subject.html'
-    template_body = 'orders/email/order.html'
+    template_subject = 'orders/email/order_user_subject.html'
+    template_body = 'orders/email/order_user.html'
 
     order_items = OrderItem.objects.filter(order=order)
 
@@ -42,6 +42,18 @@ def send_order_email(order):
         context_body,
         settings.EMAIL_HOST_USER,
         order.customer_email
+    )
+
+    template_subject = 'orders/email/order_manager_subject.html'
+    template_body = 'orders/email/order_manager.html'
+
+    send_html_email(
+        template_subject,
+        context_subject,
+        template_body,
+        context_body,
+        settings.EMAIL_HOST_USER,
+        settings.EMAIL_HOST_USER
     )
 
 

@@ -68,7 +68,7 @@ jobs:
             export DB_HOST="${{ secrets.DB_HOST }}"
             export DB_PORT="${{ secrets.DB_PORT }}"
             export DEBUG="${{ 0 }}"
-            export CACHE_TIMEOUT=${{ 3600 }}
+            export CACHE_TIMEOUT=${{ 1800 }}
             export DJANGO_ALLOWED_HOSTS="${{ secrets.DJANGO_ALLOWED_HOSTS }}"
 
             # login Docker Hub
