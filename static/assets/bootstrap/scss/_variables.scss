@@ -32,15 +32,16 @@ $danger: #7F2755;
 // #7F2755
 
 // $ter: rgba(85, 127, 39, 1);
-$ter: rgba(85, 127, 39, 0.07);
+$ter_opacity: rgba(85, 127, 39, 0.07);
+$ter: #F3F6F0;
 // $per: rgba(127, 125, 39, 1);
-$per: rgba(127, 125, 39, 0.05);
+$per_opacity: rgba(127, 125, 39, 0.05);
 // $con: rgba(39, 127, 81, 1);
-$con: rgba(39, 127, 81, 0.05);
+$con_opacity: rgba(39, 127, 81, 0.05);
 // $dec: rgba(39,41,127, 1);
-$dec: rgba(39,41,127, 0.04);
+$dec_opacity: rgba(39,41,127, 0.04);
 // $fru: rgba(127, 39, 85, 1);
-$fru: rgba(127, 39, 85, 0.05);
+$fru_opacity: rgba(127, 39, 85, 0.05);
 
 // $secondary: #86776f;
 // $secondary: #5d534d;

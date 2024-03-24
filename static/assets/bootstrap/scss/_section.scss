@@ -18,24 +18,28 @@ section.main {
     // }
 }
 
-.con {
-    background-color: $con;
+.bg-con-opacity {
+    background-color: $con_opacity;
 }
 
-.dec {
-    background-color: $dec;
+.bg-dec-opacity {
+    background-color: $dec_opacity;
 }
 
-.per {
-    background-color: $per;
+.bg-per-opacity {
+    background-color: $per_opacity;
 }
 
-.fru {
-    background-color: $fru;
+.bg-fru-opacity {
+    background-color: $fru_opacity;
 }
 
-.ter {
-    background-color: $ter;
+.bg-ter-opacity {
+    background-color: $ter_opacity;
+}
+
+.bg-ter {
+    background-color: $ter !important;
 }
 
 section{

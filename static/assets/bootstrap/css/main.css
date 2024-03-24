@@ -410,24 +410,28 @@ main p {
   }
 }
 
-.con {
+.bg-con-opacity {
   background-color: rgba(39, 127, 81, 0.05);
 }
 
-.dec {
+.bg-dec-opacity {
   background-color: rgba(39, 41, 127, 0.04);
 }
 
-.per {
+.bg-per-opacity {
   background-color: rgba(127, 125, 39, 0.05);
 }
 
-.fru {
+.bg-fru-opacity {
   background-color: rgba(127, 39, 85, 0.05);
 }
 
-.ter {
+.bg-ter-opacity {
   background-color: rgba(85, 127, 39, 0.07);
+}
+
+.bg-ter {
+  background-color: #F3F6F0 !important;
 }
 
 section .title {
