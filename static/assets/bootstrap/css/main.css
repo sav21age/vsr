@@ -113,8 +113,6 @@ a {
 
 .navbar-toggler:focus {
   border: 0 !important;
-  -webkit-box-shadow: none !important;
-          box-shadow: none !important;
 }
 
 .form-check-input {
@@ -125,12 +123,15 @@ label.required {
   font-weight: 600;
 }
 
+*:focus {
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+}
+
 ul.pagination {
   margin-top: 20px;
   margin-bottom: 20px;
   --bs-pagination-border-radius: 0;
-  -webkit-box-shadow: none !important;
-          box-shadow: none !important;
 }
 
 .pagination-light.pagination {

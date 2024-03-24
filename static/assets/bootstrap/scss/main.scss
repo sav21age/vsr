@@ -26,6 +26,9 @@
 @import "../bootstrap/scss/mixins";
 @import "../bootstrap/scss/utilities";
 
+// $utilities: map-remove($utilities, "focus-ring");
+// @import "../bootstrap/scss/utilities/api";
+
 @import "_buttons";
 
 // Layout & components

@@ -43,7 +43,7 @@ a {
 
 .navbar-toggler:focus {
   border: 0 !important;
-  box-shadow: none !important;
+  // box-shadow: none !important;
 }
 
 .form-check-input{
@@ -53,4 +53,8 @@ a {
 
 label.required{
   font-weight: 600;
+}
+
+*:focus {
+  box-shadow: none !important;
 }
