@@ -154,13 +154,25 @@ class PlantSpeciesFilterMixinTemplate(TemplateView):
         context['links'] = [{
             'url': UrlQuerystring.delete_param(url, 'species'),
             'name': 'все',
+            'title': 'все',
             'active': True if cur is None else False,
         }]
 
         for value in self.parent_context['species_allowed']:
+            genus_name = self.parent_context['genus_name']
+            species_title = value.name
+            species_name = value.name
+
+            if species_name.startswith(genus_name) and species_name != genus_name:
+                species_name = species_name.replace(genus_name, '').strip()
+            else:
+                if len(species_name) > 0:
+                    species_name = species_name[0].lower() + species_name[1:]
+            
             context['links'].append({
                 'url': UrlQuerystring.get_url(url, 'species', value.id),
-                'name': value.name.replace(self.parent_context['genus_name'], '').strip(),
+                'name': species_name,
+                'title': species_title,
                 'active': True if str(value.id) == cur else False,
             })
 
