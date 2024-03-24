@@ -1,9 +1,9 @@
 <div class="col-12 species-filter mt-3">
   {% for link in links %}
     {% if link.active %}
-      <span class="me-3 badge active">{{ link.name }}</span>{% if not forloop.last %}<span class="me-3">&middot;</span>{% endif %}
+      <span class="me-2 badge active">{{ link.name }}</span>{% if not forloop.last %}<span class="me-2 color-tertiary-opacity"> &middot; </span>{% endif %}
     {% else %}
-      <a class="me-3" href="{{ link.url }}" title="{{ link.title }}">{{ link.name }}</a>{% if not forloop.last %}<span class="me-3">&middot;</span>{% endif %}
+      <a class="me-2" href="{{ link.url }}" title="{{ link.title }}">{{ link.name }}</a>{% if not forloop.last %}<span class="me-2 color-tertiary-opacity"> &middot; </span> {% endif %}
     {% endif %}
   {% endfor %}
 </div>

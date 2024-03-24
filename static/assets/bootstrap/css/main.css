@@ -80,6 +80,10 @@
   background-color: #557F27;
 }
 
+.color-tertiary-opacity {
+  color: rgba(85, 127, 39, 0.5);
+}
+
 .bg-secondary-light {
   background-color: #86776f;
 }
