@@ -55,8 +55,11 @@
 </section>
 <!-- Topbar End -->
 <!-- Modal -->
-<div class="modal fade bg-ter" style="background-color: #F3F6F0;" id="modalSearch" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade bg-ter" id="modalSearch" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-md" role="document">
+    <div class="pt-1 mb-2">
+      <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times fa-lg"></i></button>
+    </div>
     <form action="{% url 'search' %}" method="GET" class="modal-content modal-body bg-ter border-0 p-0">
       <div class="input-group mb-2">
         {{ search_form.q }}
