@@ -70,6 +70,8 @@ class ProfileFavorites(LoginRequiredMixin, PaginationMixin, ListView):
     model = Favorites
     template_name = 'profiles/favorites.html'
     paginate_by = 8
+    queryset = Favorites.objects.all() \
+        .prefetch_related('content_object__images')
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -95,7 +97,11 @@ class ProfileFavorites(LoginRequiredMixin, PaginationMixin, ListView):
 class ProfileOrderList(LoginRequiredMixin, PaginationMixin, ListView):
     model = Order
     template_name = 'profiles/order_list.html'
-    paginate_by = 24
+    paginate_by = 12
+    queryset = Order.objects.all() \
+        .select_related('status') \
+        .prefetch_related('order_items') \
+        .prefetch_related('order_items__content_object')
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -106,6 +112,10 @@ class ProfileOrderList(LoginRequiredMixin, PaginationMixin, ListView):
 class ProfileOrderDetail(LoginRequiredMixin, DetailView):
     model = Order
     template_name = 'profiles/order_detail.html'
+    queryset = Order.objects.all() \
+        .select_related('status') \
+        .prefetch_related('order_items') \
+        .prefetch_related('order_items__content_object')
 
     def get_queryset(self):
         qs = super().get_queryset()

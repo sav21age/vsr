@@ -17,16 +17,17 @@
 
 {% block profile_content %}
   <div class="row">
-    <div class="col-12 col-md-10 col-lg-12">
+    <div class="col-12">
       {% if object_list %}
+      <div class="table-responsive">
         <table class="table table-striped">
           <thead>
             <tr>
               <th scope="col">Номер заказа</th>
               <th scope="col">Дата</th>
               <th scope="col">Цена</th>
-              <th scope="col">Количество</th>
-              <th scope="col">Статус заказа</th>
+              <th scope="col" class="d-none d-sm-table-cell">Кол-во</th>
+              <th scope="col" class="d-none d-sm-table-cell">Статус заказа</th>
             </tr>
           </thead>
           <tbody>
@@ -35,14 +36,15 @@
                 <td>
                   № <a href="{% url 'profiles:order_detail' order.id %}">{{ order.number }}</a>
                 </td>
-                <td>{{ order.created_at|date:"DATE_FORMAT" }}</td>
+                <td><span class="d-none d-md-inline">{{ order.created_at|date }}</span> <span class="d-inline d-md-none">{{ order.created_at|date:"d b Y" }}&nbsp;г.</span></td>
                 <td>{{ order.total_price }} руб.</td>
-                <td>{{ order.total_quantity }}</td>
-                <td>{{ order.status }}</td>
+                <td class="d-none d-sm-table-cell">{{ order.total_quantity }}</td>
+                <td class="d-none d-sm-table-cell">{{ order.status }}</td>
               </tr>
             {% endfor %}
           </tbody>
         </table>
+      </div>
       {% else %}
         <div class="row">
           <div class="col-12">
