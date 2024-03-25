@@ -1,7 +1,7 @@
 import random
 from django.http import HttpResponse
 from django.urls import reverse
-from django.views.generic import FormView
+from django.views.generic import FormView, TemplateView
 from django.db import transaction
 from django.forms import ValidationError
 from django.shortcuts import redirect
@@ -14,6 +14,7 @@ from common.mail import send_html_email
 from common.loggers import logger
 from orders.models import Order, OrderItem, OrderStatus
 from orders.forms import ConfirmOrderAnonymUserForm, CreateOrderAnonymUserForm, CreateOrderAuthUserForm
+from urllib.parse import urlsplit, urlunsplit
 
 
 def send_order_email(order):
@@ -28,7 +29,8 @@ def send_order_email(order):
     context_body = {}
     context_body['order'] = order
     context_body['order_items'] = order_items
-    context_body['full_name'] = f"{order.customer_first_name} {order.customer_last_name}".strip()
+    context_body['full_name'] = f"{order.customer_first_name} {order.customer_last_name}".strip(
+    )
 
     send_html_email(
         template_subject,
@@ -88,7 +90,7 @@ class CreateOrderAuthUserView(FormView):
             raise Http404
 
         return super().get(*args, **kwargs)
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['cart'] = self.cart
@@ -99,7 +101,7 @@ class CreateOrderAuthUserView(FormView):
         try:
             with transaction.atomic():
                 user = self.request.user
-                
+
                 try:
                     cart = Cart.objects.get(user=user)
                 except:
@@ -297,20 +299,6 @@ class ConfirmOrderAnonymView(FormView):
 
         return super().get(request, *args, **kwargs)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        order_id = self.request.session.get('order_id', None)
-        try:
-            order = Order.objects.get(id=order_id)
-        except Exception as e:
-            logger.error(e)
-            raise Http404
-
-        context['email'] = order.customer_email
-
-        return context
-
     def post(self, request, *args, **kwargs):
         form = self.get_form()
 
@@ -327,7 +315,7 @@ class ConfirmOrderAnonymView(FormView):
             order.save()
 
             send_order_email(order)
-                
+
             request.session.pop('cart_id')
             request.session.pop('order_id')
             request.session.pop('confirm_code_sent')
@@ -335,5 +323,37 @@ class ConfirmOrderAnonymView(FormView):
 
         return self.form_invalid(form, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        order_id = self.request.session.get('order_id', None)
+        try:
+            order = Order.objects.get(id=order_id)
+        except Exception as e:
+            logger.error(e)
+            raise Http404
+
+        context['email'] = order.customer_email
+
+        return context
+
     def get_success_url(self):
         return reverse('orders:success')
+
+
+# class SuccessOrderTemplateView(TemplateView):
+#     template_name = 'orders/success.html'
+
+#     def get(self, request, *args, **kwargs):
+#         referer = request.META.get('HTTP_REFERER', None)
+
+#         if not referer:
+#             raise Http404
+
+#         url = urlsplit(referer)
+#         referer = urlunsplit(url._replace(scheme="")._replace(netloc=""))
+
+#         if referer not in [reverse('orders:create'), reverse('orders:confirm')]:
+#             raise Http404
+
+#         return super().get(request, *args, **kwargs)
