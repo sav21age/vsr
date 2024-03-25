@@ -82,3 +82,39 @@ CACHES = {
         'TIMEOUT': 86400 if CACHE_TIMEOUT > 0 else 0,
     },
 }
+
+DJANGO_DB_LOGGER_ADMIN_LIST_PER_PAGE = 30
+DJANGO_DB_LOGGER_ENABLE_FORMATTER = True
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'db_log': {
+            'level': 'DEBUG',
+            'class': 'django_db_logger.db_log_handler.DatabaseLogHandler'
+        },
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+    },
+    'loggers': {
+        'django.security.DisallowedHost': {
+            'handlers': [],
+            'propagate': False,
+        },
+        'db': {
+            'handlers': ['db_log', 'console', 'mail_admins'],
+            'level': 'DEBUG'
+        },
+        'django.request': {  # logging 500 errors to database
+            'handlers': ['db_log', 'console', 'mail_admins'],
+            'level': 'INFO',
+            'propagate': False,
+        }
+    }
+}

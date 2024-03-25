@@ -248,47 +248,6 @@ THUMBNAIL_ALIASES = {
 }
 
 
-DJANGO_DB_LOGGER_ADMIN_LIST_PER_PAGE = 50
-DJANGO_DB_LOGGER_ENABLE_FORMATTER = True
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
-        },
-        'simple': {
-            'format': '%(levelname)s %(asctime)s %(message)s'
-        },
-    },
-    'handlers': {
-        'db_log': {
-            'level': 'DEBUG',
-            'class': 'django_db_logger.db_log_handler.DatabaseLogHandler'
-        },
-        'mail_admins': {
-            'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler'
-        },
-    },
-    'loggers': {
-        'django.security.DisallowedHost': {
-            'handlers': [],
-            'propagate': False,
-        },
-        'db': {
-            'handlers': ['db_log', 'mail_admins'],
-            'level': 'DEBUG'
-        },
-        'django.request': {  # logging 500 errors to database
-            'handlers': ['db_log', 'mail_admins'],
-            # 'level': 'INFO',
-            'level': 'ERROR',
-            'propagate': False,
-        }
-    }
-}
-
 SESSION_COOKIE_AGE = 15778463
 SESSION_SAVE_EVERY_REQUEST = True
 
