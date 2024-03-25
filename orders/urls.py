@@ -5,7 +5,7 @@ from orders.views import ConfirmOrderAnonymView, create
 
 urlpatterns = [
     path('', create, name='create'),
-    path('create/confirm/', ConfirmOrderAnonymView.as_view(), name='confirm'),
+    path('confirm/', ConfirmOrderAnonymView.as_view(), name='confirm'),
     path('success/', TemplateView.as_view(
         template_name="orders/success.html"), name='success'),
 ]

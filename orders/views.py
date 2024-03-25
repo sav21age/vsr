@@ -11,14 +11,9 @@ from django.conf import settings
 from django.http import Http404
 from carts.models import Cart, CartItem
 from common.mail import send_html_email
+from common.loggers import logger
 from orders.models import Order, OrderItem, OrderStatus
 from orders.forms import ConfirmOrderAnonymUserForm, CreateOrderAnonymUserForm, CreateOrderAuthUserForm
-
-
-def create(request):
-    if request.user.is_authenticated:
-        return CreateOrderAuthUserView.as_view()(request)
-    return CreateOrderAnonymUserView.as_view()(request)
 
 
 def send_order_email(order):
@@ -57,6 +52,12 @@ def send_order_email(order):
     )
 
 
+def create(request):
+    if request.user.is_authenticated:
+        return CreateOrderAuthUserView.as_view()(request)
+    return CreateOrderAnonymUserView.as_view()(request)
+
+
 @method_decorator(login_required, name='dispatch')
 class CreateOrderAuthUserView(FormView):
     model = Order
@@ -68,17 +69,30 @@ class CreateOrderAuthUserView(FormView):
         kwargs.update({'user': self.request.user})
         return kwargs
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        user = self.request.user
-
+    def get(self, *args, **kwargs):
         try:
-            context['cart'] = Cart.objects.get(user=user)
-        except:
+            self.cart = Cart.objects.get(user=self.request.user)
+            self.cart_items = CartItem.objects.filter(cart=self.cart)
+        except Cart.DoesNotExist as e:
+            logger.error(e)
+            return redirect(reverse('carts:index'))
+        except CartItem.DoesNotExist as e:
+            logger.error(e)
+            return redirect(reverse('carts:index'))
+        except Exception as e:
+            logger.error(e)
             return HttpResponse(status=500)
 
-        context['cart_items'] = CartItem.objects.filter(cart=context['cart'])
+        if not self.cart_items.exists():
+            # return HttpResponse(status=404)
+            raise Http404
 
+        return super().get(*args, **kwargs)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cart'] = self.cart
+        context['cart_items'] = self.cart_items
         return context
 
     def form_valid(self, form):
@@ -161,17 +175,31 @@ class CreateOrderAnonymUserView(FormView):
     template_name = 'orders/create_form.html'
     form_class = CreateOrderAnonymUserForm
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+    def get(self, *args, **kwargs):
         cart_id = self.request.session.get('cart_id', None)
-
         try:
-            context['cart'] = Cart.objects.get(id=cart_id)
-        except:
+            self.cart = Cart.objects.get(id=cart_id)
+            self.cart_items = CartItem.objects.filter(cart=self.cart)
+        except Cart.DoesNotExist as e:
+            logger.error(e)
+            return redirect(reverse('carts:index'))
+        except CartItem.DoesNotExist as e:
+            logger.error(e)
+            return redirect(reverse('carts:index'))
+        except Exception as e:
+            logger.error(e)
             return HttpResponse(status=500)
 
-        context['cart_items'] = CartItem.objects.filter(cart=context['cart'])
+        if not self.cart_items.exists():
+            # return HttpResponse(status=404)
+            raise Http404
 
+        return super().get(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cart'] = self.cart
+        context['cart_items'] = self.cart_items
         return context
 
     def form_valid(self, form):
@@ -243,7 +271,8 @@ class ConfirmOrderAnonymView(FormView):
 
         try:
             order = Order.objects.get(id=order_id)
-        except:
+        except Exception as e:
+            logger.error(e)
             raise Http404
 
         if not confirm_code_sent:
@@ -274,7 +303,8 @@ class ConfirmOrderAnonymView(FormView):
         order_id = self.request.session.get('order_id', None)
         try:
             order = Order.objects.get(id=order_id)
-        except:
+        except Exception as e:
+            logger.error(e)
             raise Http404
 
         context['email'] = order.customer_email
@@ -288,7 +318,8 @@ class ConfirmOrderAnonymView(FormView):
 
         try:
             order = Order.objects.get(id=order_id)
-        except:
+        except Exception as e:
+            logger.error(e)
             raise Http404
 
         if form.is_valid() and form.cleaned_data['confirm_code'] == order.confirm_code:

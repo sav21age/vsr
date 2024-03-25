@@ -1,7 +1,7 @@
 User-Agent: *
 Disallow: /admin/
 Disallow: /cart/
-Disallow: /orders/
+Disallow: /order/
 Disallow: /search/
 Disallow: /accounts/
 Disallow: /privacy-policy/

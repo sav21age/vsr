@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.core.cache.utils import make_template_fragment_key
 from django.dispatch import receiver
+from django.urls import reverse
 from django.core.cache import caches
 from common.models import PageAbstract
 
@@ -33,6 +34,9 @@ class Index(PageAbstract):
         'короткое описание', max_length=250, blank=True)
     fru_description = models.TextField('описание', blank=True)
 
+    def get_absolute_url(self):
+        return reverse('index')
+    
     class Meta:
         verbose_name = 'главная страница'
         verbose_name_plural = 'главная страница'

@@ -1,13 +1,12 @@
 from django.contrib.sitemaps import Sitemap
-from contacts.models import Contacts
+from index.models import Index
 
 
-class ContactsSitemap(Sitemap):
-    priority = 0.5
+class IndexSitemap(Sitemap):
+    priority = 1
     
     def items(self):
-        # return ['contacts']
-        return Contacts.objects.all()
+        return Index.objects.all()
     
     def lastmod(self, obj):
         return obj.updated_at

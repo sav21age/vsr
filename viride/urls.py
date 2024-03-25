@@ -14,6 +14,7 @@ from contacts.views import contacts
 from deciduous.sitemap import DecProductSitemap
 from favorites.views import favorites
 from fruits.sitemap import FruitProductSitemap
+from index.sitemap import IndexSitemap
 from index.views import index
 from other.views import (
     BookProductDetail, BookProductList, RelatedProductDetail, RelatedProductList)
@@ -28,12 +29,13 @@ admin.site.site_header = admin.site.site_title = 'Питомник растен�
 #--
 
 sitemaps = {
+    'index': IndexSitemap,
+    'contacts': ContactsSitemap,
     'roses': RoseProductSitemap,
     'conifers': ConiferProductSitemap,
     'decs': DecProductSitemap,
     'fruits': FruitProductSitemap,
     'pers': PerProductSitemap,
-    'contacts': ContactsSitemap,
 }
 
 # --
@@ -84,7 +86,7 @@ urlpatterns = [
     path('favorites/', favorites, name='favorites'),
 
     path('cart/', include(('carts.urls', 'carts'), namespace='carts')),
-    path('orders/', include(('orders.urls', 'orders'), namespace='orders')),
+    path('order/', include(('orders.urls', 'orders'), namespace='orders')),
 
     path('privacy-policy/', TemplateView.as_view(
         template_name="privacy-policy/index.html"), name="p-p_template"),
