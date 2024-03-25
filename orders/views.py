@@ -1,7 +1,8 @@
 import random
+# from urllib.parse import urlsplit, urlunsplit
 from django.http import HttpResponse
 from django.urls import reverse
-from django.views.generic import FormView, TemplateView
+from django.views.generic import FormView
 from django.db import transaction
 from django.forms import ValidationError
 from django.shortcuts import redirect
@@ -14,7 +15,6 @@ from common.mail import send_html_email
 from common.loggers import logger
 from orders.models import Order, OrderItem, OrderStatus
 from orders.forms import ConfirmOrderAnonymUserForm, CreateOrderAnonymUserForm, CreateOrderAuthUserForm
-from urllib.parse import urlsplit, urlunsplit
 
 
 def send_order_email(order):
@@ -104,7 +104,8 @@ class CreateOrderAuthUserView(FormView):
 
                 try:
                     cart = Cart.objects.get(user=user)
-                except:
+                except Exception as e:
+                    logger.error(e)
                     return HttpResponse(status=500)
 
                 cart_items = CartItem.objects.filter(cart=cart)
@@ -211,7 +212,8 @@ class CreateOrderAnonymUserView(FormView):
 
                 try:
                     cart = Cart.objects.get(id=cart_id)
-                except:
+                except Exception as e:
+                    logger.error(e)
                     return HttpResponse(status=500)
 
                 cart_items = CartItem.objects.filter(cart=cart)
@@ -275,7 +277,7 @@ class ConfirmOrderAnonymView(FormView):
             order = Order.objects.get(id=order_id)
         except Exception as e:
             logger.error(e)
-            raise Http404
+            raise Http404 from e
 
         if not confirm_code_sent:
             template_subject = 'orders/email/enter_confirm_code_subject.html'
@@ -308,7 +310,7 @@ class ConfirmOrderAnonymView(FormView):
             order = Order.objects.get(id=order_id)
         except Exception as e:
             logger.error(e)
-            raise Http404
+            raise Http404 from e
 
         if form.is_valid() and form.cleaned_data['confirm_code'] == order.confirm_code:
             order.confirmed_by_email = True
@@ -331,7 +333,7 @@ class ConfirmOrderAnonymView(FormView):
             order = Order.objects.get(id=order_id)
         except Exception as e:
             logger.error(e)
-            raise Http404
+            raise Http404 from e
 
         context['email'] = order.customer_email
 

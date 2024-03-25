@@ -6,6 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import View
 from django.template.loader import render_to_string
 from carts.models import Cart, CartItem
+from common.loggers import logger
 
 
 class IndexView(View):
@@ -124,7 +125,6 @@ def cart_add(request):
             cart=cart, content_type=content_type, object_id=object_id,)
         cart_item.quantity += 1
         cart_item.save()
-
     except ObjectDoesNotExist:
         CartItem.objects.create(
             cart=cart, content_type=content_type, object_id=object_id, )
@@ -159,7 +159,8 @@ def cart_update(request):
             cart = Cart.objects.get(user=request.user)
         else:
             cart = Cart.objects.get(id=cart_id)
-    except Cart.DoesNotExist:
+    except Exception as e:
+        logger.error(e)
         return HttpResponse(status=500)
 
     cart_item = CartItem.objects.get(
@@ -183,7 +184,6 @@ def cart_update(request):
         },
         request=request
     )
-
 
     response = {
         # 'total_quantity': cart.total_quantity,
@@ -215,7 +215,8 @@ def cart_remove(request):
             cart = Cart.objects.get(user=request.user)
         else:
             cart = Cart.objects.get(id=cart_id)
-    except Cart.DoesNotExist:
+    except Exception as e:
+        logger.error(e)
         return HttpResponse(status=500)
 
     cart_item = CartItem.objects.get(cart=cart, id=cart_item_id)
