@@ -1,5 +1,4 @@
 import os
-from viride.settings import BASE_DIR
 
 def str2bool(s):
     if s in ('1', 'True'):
@@ -53,30 +52,33 @@ RECAPTCHA_PRIVATE_KEY = os.environ.get("SECRET_KEY")
 
 # CACHE_BACKEND = 'django.core.cache.backends.dummy.DummyCache'
 # CACHE_BACKEND = 'django.core.cache.backends.memcached.PyMemcacheCache'
-CACHE_BACKEND = 'django.core.cache.backends.locmem.LocMemCache'
-CACHE_LOCATION_DIR = os.path.join(BASE_DIR, 'cache')
+# CACHE_BACKEND = 'django.core.cache.backends.locmem.LocMemCache'
 
 CACHE_TIMEOUT = os.environ.get("CACHE_TIMEOUT")
+CACHE_LOCATION = os.environ.get("CACHE_LOCATION")
+
 CACHES = {
     'default': {
-        'BACKEND': CACHE_BACKEND,
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'default',
         'TIMEOUT': CACHE_TIMEOUT,
-        # 'LOCATION': os.environ.get("CACHE_LOCATION"),
+        'OPTIONS': {
+            'MAX_ENTRIES': 3000,
+        }
     },
     'axes': {
-        'BACKEND': CACHE_BACKEND,
-        # 'LOCATION': os.environ.get("CACHE_LOCATION"),
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'axes',
+        'TIMEOUT': CACHE_TIMEOUT,
     },
-    # 'select2': {
-    #     'BACKEND': CACHE_BACKEND,
-    # },
     'file_resubmit': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
         'LOCATION': '/tmp/file_resubmit/',
+        'TIMEOUT': 3600,
     },
     'sitemap': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': os.path.join(CACHE_LOCATION_DIR, 'sitemap'),
+        'LOCATION': '/tmp/sitemap/',
+        'TIMEOUT': 86400 if CACHE_TIMEOUT > 0 else 0,
     },
-
 }
