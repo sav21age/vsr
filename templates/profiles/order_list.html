@@ -36,7 +36,7 @@
                 <td>
                   № <a href="{% url 'profiles:order_detail' order.id %}">{{ order.number }}</a>
                 </td>
-                <td><span class="d-none d-md-inline">{{ order.created_at|date }}</span> <span class="d-inline d-md-none">{{ order.created_at|date:"d b Y" }}&nbsp;г.</span></td>
+                <td><span class="d-none d-md-inline">{{ order.created_at|date }}</span> <span class="d-inline d-md-none text-lowercase">{{ order.created_at|date:"d N Y" }}&nbsp;г.</span></td>
                 <td>{{ order.total_price }} руб.</td>
                 <td class="d-none d-sm-table-cell">{{ order.total_quantity }}</td>
                 <td class="d-none d-sm-table-cell">{{ order.status }}</td>
