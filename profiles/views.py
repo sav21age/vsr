@@ -68,7 +68,7 @@ def profile_update(request):
 
 class ProfileFavorites(LoginRequiredMixin, PaginationMixin, ListView):
     model = Favorites
-    template_name = 'profiles/favorites.html'
+    template_name = 'profiles/favorites_list.html'
     paginate_by = 8
 
     def get_queryset(self):
