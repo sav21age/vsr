@@ -70,13 +70,12 @@ class ProfileFavorites(LoginRequiredMixin, PaginationMixin, ListView):
     model = Favorites
     template_name = 'profiles/favorites.html'
     paginate_by = 8
-    queryset = Favorites.objects.all() \
-        .prefetch_related('content_object__images')
 
     def get_queryset(self):
         qs = super().get_queryset()
         qs = qs.filter(user=self.request.user) \
-            .prefetch_related('content_object')
+            .prefetch_related('content_object') \
+            .prefetch_related('content_object__images')
 
         return qs
 
