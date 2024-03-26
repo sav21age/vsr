@@ -125,6 +125,6 @@ class ProfileOrderDetail(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
 
         pk = self.kwargs.get(self.pk_url_kwarg)
-        context['object_list'] = OrderItem.objects.filter(order_id=pk)
+        context['order_items'] = OrderItem.objects.filter(order_id=pk)
 
         return context

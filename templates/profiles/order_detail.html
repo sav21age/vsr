@@ -12,14 +12,14 @@
   <title>Заказ № {{ order.number }}</title>
 {% endblock %}
 
-{% block name %}
+{% comment %} {% block name %}
   Заказ № {{ order.number }}
-{% endblock %}
+{% endblock %} {% endcomment %}
 
 {% block profile_content %}
   <div class="row">
     <div class="col-12">
-      {% if object_list %}
+      {% comment %} {% if object_list %}
         <h2>Заказ № {{ order.number }} от {{ order.created_at|date:'DATE_FORMAT' }}</h2>
         <p>Статус заказа: {{order.status|lower}}</p>
         <div class="table-responsive">
@@ -55,7 +55,12 @@
             {% include 'common/empty.html' %}
           </div>
         </div>
-      {% endif %}
+      {% endif %} {% endcomment %}
+        <h2>Заказ № {{ order.number }} от {{ order.created_at|date:'DATE_FORMAT' }}</h2>
+        <p>Статус заказа: <em>{{order.status|lower}}</em></p>
+        {% with cart_items=order_items cart=order %}
+        {% include 'orders/cart.html' %}
+        {% endwith %}
     </div>
   </div>
 {% endblock %}
