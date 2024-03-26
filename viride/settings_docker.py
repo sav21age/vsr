@@ -59,16 +59,18 @@ CACHE_LOCATION = os.environ.get("CACHE_LOCATION")
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'default',
+        'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
+        # 'LOCATION': 'default',
+        'LOCATION': CACHE_LOCATION,
         'TIMEOUT': CACHE_TIMEOUT,
         'OPTIONS': {
             'MAX_ENTRIES': 3000,
         }
     },
     'axes': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'axes',
+        'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
+        # 'LOCATION': 'axes',
+        'LOCATION': CACHE_LOCATION,
         'TIMEOUT': CACHE_TIMEOUT,
     },
     'file_resubmit': {
