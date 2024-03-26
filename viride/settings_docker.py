@@ -63,9 +63,9 @@ CACHES = {
         # 'LOCATION': 'default',
         'LOCATION': CACHE_LOCATION,
         'TIMEOUT': CACHE_TIMEOUT,
-        'OPTIONS': {
-            'MAX_ENTRIES': 3000,
-        }
+        # 'OPTIONS': {
+        #     'MAX_ENTRIES': 3000,
+        # }
     },
     'axes': {
         'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
