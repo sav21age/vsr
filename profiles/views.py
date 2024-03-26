@@ -97,28 +97,28 @@ class ProfileOrderList(LoginRequiredMixin, PaginationMixin, ListView):
     model = Order
     template_name = 'profiles/order_list.html'
     paginate_by = 12
-    queryset = Order.objects.all() \
-        .select_related('status') \
-        .prefetch_related('order_items') \
-        .prefetch_related('order_items__content_object')
 
     def get_queryset(self):
         qs = super().get_queryset()
-        qs = qs.filter(user=self.request.user)
+        qs = qs.filter(user=self.request.user) \
+            .select_related('status') \
+            .prefetch_related('order_items') \
+            .prefetch_related('order_items__content_object')
+
         return qs
 
 
 class ProfileOrderDetail(LoginRequiredMixin, DetailView):
     model = Order
     template_name = 'profiles/order_detail.html'
-    queryset = Order.objects.all() \
-        .select_related('status') \
-        .prefetch_related('order_items') \
-        .prefetch_related('order_items__content_object')
 
     def get_queryset(self):
         qs = super().get_queryset()
-        qs = qs.filter(user=self.request.user)
+        qs = qs.filter(user=self.request.user) \
+            .select_related('status') \
+            .prefetch_related('order_items') \
+            .prefetch_related('order_items__content_object')
+
         return qs
 
     def get_context_data(self, **kwargs):
