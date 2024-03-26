@@ -79,7 +79,7 @@ CACHES = {
     'sitemap': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
         'LOCATION': '/tmp/sitemap/',
-        'TIMEOUT': 86400 if CACHE_TIMEOUT > 0 else 0,
+        'TIMEOUT': 86400 if int(CACHE_TIMEOUT) > 0 else 0,
     },
 }
 
