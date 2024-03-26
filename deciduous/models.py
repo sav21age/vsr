@@ -120,6 +120,9 @@ class DecProductPrice(ProductPriceAbstract):
     extra = models.BooleanField(
         'экстра', default=False, help_text='Ухоженные растения.')
 
+    bush = models.BooleanField(
+        'куст', default=False, help_text='Кустовая, многоствольная форма.')
+
     def __str__(self):
         # s = ''
 
