@@ -27,5 +27,3 @@ settings_local.py
 webpack*
 
 common/management/commands/grab/*
-
-!log/django.log
