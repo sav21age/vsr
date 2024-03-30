@@ -109,7 +109,6 @@ LOGGING = {
             'level': 'INFO',
             "class": "logging.FileHandler",
             'filename': os.path.join(BASE_DIR, 'log', 'django.log'),
-            'formatter': 'verbose',
         },
     },
     'loggers': {
