@@ -96,7 +96,7 @@ LOGGING = {
             'class': 'django_db_logger.db_log_handler.DatabaseLogHandler'
         },
         'console': {
-            'level': 'INFO',
+            'level': 'WARNING',
             'class': 'logging.StreamHandler',
         },
         'mail_admins': {
@@ -120,7 +120,7 @@ LOGGING = {
         },
         'django.request': {  # logging 500 errors to database
             'handlers': ['db_log', 'console', 'mail_admins',],
-            'level': 'INFO',
+            'level': 'WARNING',
             'propagate': False,
         },
     }
