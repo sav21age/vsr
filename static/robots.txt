@@ -7,5 +7,22 @@ Disallow: /accounts/
 Disallow: /privacy-policy/
 Disallow: /*per_page=*
 
+Disallow: /about-us
+Disallow: /buyers
+Disallow: /services
+Disallow: /blog
+Disallow: /contact-us
+Disallow: /catalog/plodovye
+Disallow: /catalog/rozy
+Disallow: /catalog/phlox
+Disallow: /catalog/peonies
+Disallow: /catalog/h-sta
+Disallow: /catalog/sireni
+Disallow: /catalog/gortenziya
+Disallow: /catalog/lilejniki-i-lilii
+Disallow: /catalog/mulch-soils
+Disallow: /catalog/zlaki
+Disallow: /components/
+
 Host: https://viride.spb.ru
 Sitemap: https://viride.spb.ru/sitemap.xml
