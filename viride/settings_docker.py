@@ -1,5 +1,7 @@
 import os
 
+from viride.settings import BASE_DIR
+
 def str2bool(s):
     if s in ('1', 'True'):
         return True
@@ -103,6 +105,12 @@ LOGGING = {
             'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler'
         },
+        'logfile': {
+            'level': 'INFO',
+            "class": "logging.FileHandler",
+            'filename': os.path.join(BASE_DIR, 'log', 'django.log'),
+            'formatter': 'verbose',
+        },
     },
     'loggers': {
         'django.security.DisallowedHost': {
@@ -114,9 +122,9 @@ LOGGING = {
             'level': 'DEBUG'
         },
         'django.request': {  # logging 500 errors to database
-            'handlers': ['db_log', 'console', 'mail_admins'],
+            'handlers': ['db_log', 'console', 'mail_admins', 'logfile',],
             'level': 'INFO',
             'propagate': False,
-        }
+        },
     }
 }
