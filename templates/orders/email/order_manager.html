@@ -1,6 +1,40 @@
 {% extends 'orders/email/base_message.html' %}
 {% autoescape off %}
 {% block content %}
-{% include 'orders/email/order_content.html' %}
+<p>Заказ № {{ order.number }} от {{ order.created_at|date:'DATE_FORMAT' }} на сайте <a href="https://viride.spb.ru">ООО «Вириде»</a></p>
+<p>Заказчик:</p>
+<ul>
+    <li>{{full_name}}</li>
+    <li>Адрес электронной почты: <a href="mailto:{{order.customer_email}}">{{order.customer_email}}</a></li>
+    <li>Телефон: {{order.customer_phone_number}}</li>
+</ul>
+<p>Статус заказа: <em>{{order.status|lower}}</em></p>
+<br>
+<table width="100%" cellspacing="0" cellpadding="5" border="0" rules="rows">
+    <thead>
+    <tr>
+        <th align="left">Наименование</th>
+        <th align="center">Количество</th>
+        <th align="left">Цена</th>
+        <th align="left">Сумма</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for order_item in order_items %}
+        <tr>
+        <td>{{ order_item.product }}</td>
+        <td align="center">{{ order_item.quantity }}</td>
+        <td>{{ order_item.price }}</td>
+        <td>{{ order_item.total_price }}</td>
+        </tr>
+    {% endfor %}
+    <tr bgcolor="#F8F9FA">
+        <td colspan="4">
+            <p><strong>Итого: {{ order.total_price }}</strong></p>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<p><em>Цены указаны в рублях.</em></p>
 {% endblock content %}
 {% endautoescape %}
