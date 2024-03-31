@@ -102,7 +102,7 @@
         <p class="detail-property">
           <span>Достоинства:</span>
           {% for advantage in object.advantages.all %}
-            {{ advantage.name }}{% if forloop.last %}.{% else %},{% endif %}
+            {{ advantage.name }}{% if not forloop.last %}, {% endif %}
           {% endfor %}
         </p>
       {% endif %}

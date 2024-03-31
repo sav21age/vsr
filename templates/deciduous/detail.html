@@ -50,7 +50,7 @@
 
       {% if object.flowering %}
         <p class="detail-property">
-          <span>Цветение:</span> {{ object.flowering }}.
+          <span>Цветение:</span> {{ object.flowering }}
         </p>
       {% endif %}
 
@@ -62,13 +62,13 @@
 
       {% if object.flowering_period %}
         <p class="detail-property">
-          <span>Период цветения:</span> {{ object.flowering_period }}.
+          <span>Период цветения:</span> {{ object.flowering_period }}
         </p>
       {% endif %}
 
       {% if object.inflorescence %}
         <p class="detail-property">
-          <span>Cоцветия:</span> {{ object.inflorescence }}.
+          <span>Cоцветия:</span> {{ object.inflorescence }}
         </p>
       {% endif %}
 
@@ -82,7 +82,7 @@
         <p class="detail-property">
           <span>Место посадки:</span>
           {% for planting in object.planting.all %}
-            {{ planting.name }}{% if forloop.last %}.{% else %},{% endif %}
+            {{ planting.name }}{% if not forloop.last %}, {% endif %}
           {% endfor %}
         </p>
       {% endif %}
@@ -103,7 +103,7 @@
         <p class="detail-property">
           <span>Достоинства:</span>
           {% for advantage in object.advantages.all %}
-            {{ advantage.name }}{% if forloop.last %}.{% else %},{% endif %}
+            {{ advantage.name }}{% if not forloop.last %}, {% endif %}
           {% endfor %}
         </p>
       {% endif %}

@@ -65,13 +65,13 @@
             {% if object.planting.all %}
                 <p class="detail-property"><span>Место посадки:</span>
                 {% for planting in object.planting.all %}
-                    {{planting.name}}{% if forloop.last %}.{% else %}, {% endif%}
+                    {{planting.name}}{% if not forloop.last %}, {% endif%}
                 {% endfor %}
                 </p>
             {% endif %}
 
             {% if object.shelter_winter %}
-                <p class="detail-property"><span>Укрытие на зиму:</span> {{object.shelter_winter}}.</p>
+                <p class="detail-property"><span>Укрытие на зиму:</span> {{object.shelter_winter}}</p>
             {% endif %}
 
             {% if object.winter_zone %}
@@ -81,7 +81,7 @@
             {% if object.advantages.all %}
             <p class="detail-property"><span>Достоинства:</span>
             {% for advantage in object.advantages.all %}
-                {{advantage.name}}{% if forloop.last %}.{% else %}, {% endif%}
+                {{advantage.name}}{% if not forloop.last %}, {% endif%}
             {% endfor %}
             </p>
             {% endif %}
