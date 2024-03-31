@@ -37,7 +37,7 @@ class OtherProduct(ProductAbstract):
     @property
     def get_min_price(self):
         try:
-            return self.otherproductprice_set.first().price
+            return self.prices.first().price
         except self.DoesNotExist:
             return ''
         except AttributeError:
@@ -61,7 +61,7 @@ class OtherProduct(ProductAbstract):
 
 class OtherProductPrice(ProductPriceAbstract):
     product = models.ForeignKey(
-        OtherProduct, verbose_name='товар', on_delete=models.CASCADE)
+        OtherProduct, verbose_name='товар', related_name='prices', on_delete=models.CASCADE)
 
     name = models.CharField(
         'название', max_length=150,)

@@ -66,7 +66,7 @@ class DecProduct(PlantProductAbstract):
     @property
     def get_min_price(self):
         try:
-            return self.decproductprice_set.first().price
+            return self.prices.first().price
         except self.DoesNotExist as e:
             return ''
         except AttributeError as e:
@@ -96,7 +96,7 @@ class DecProduct(PlantProductAbstract):
 
 class DecProductPrice(ProductPriceAbstract):
     product = models.ForeignKey(
-        DecProduct, verbose_name='растение', on_delete=models.CASCADE)
+        DecProduct, verbose_name='растение', related_name='prices', on_delete=models.CASCADE)
 
     container = models.ForeignKey(
         PlantPriceContainer, verbose_name='контейнер', blank=True, null=True, on_delete=models.CASCADE)

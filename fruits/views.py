@@ -11,7 +11,7 @@ class FruitProductList(PaginationMixin, PerPageMixin, PlantSpeciesFilterMixin,
     queryset = FruitProduct.is_visible_objects.all()\
         .select_related('species') \
         .prefetch_related('images') \
-        .prefetch_related('fruitproductprice_set')
+        .prefetch_related('prices')
     division_name = 'FRU'
     species_model = FruitSpecies
 
@@ -23,11 +23,11 @@ class FruitProductDetail(DetailView):
         .prefetch_related('images') \
         .prefetch_related('advantages') \
         .prefetch_related(
-            'fruitproductprice_set',
-            'fruitproductprice_set__container',
-            'fruitproductprice_set__rs',
-            'fruitproductprice_set__age',
-            'fruitproductprice_set__rootstock'
+            'prices',
+            'prices__container',
+            'prices__rs',
+            'prices__age',
+            'prices__rootstock'
         )
 
     def get_context_data(self, **kwargs):
@@ -36,7 +36,7 @@ class FruitProductDetail(DetailView):
         context['recommended'] = self.model.is_visible_objects \
             .filter(species=obj.species) \
             .prefetch_related('images') \
-            .prefetch_related('fruitproductprice_set') \
+            .prefetch_related('prices') \
             .exclude(id=obj.id)\
             .distinct()[:4]
 

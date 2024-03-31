@@ -25,6 +25,7 @@ class RoseSpecies(models.Model):
 
 # --
 
+
 class RoseProduct(PlantProductAbstract):
     species = models.ForeignKey(
         RoseSpecies, verbose_name='вид', on_delete=models.CASCADE,
@@ -56,7 +57,6 @@ class RoseProduct(PlantProductAbstract):
     winter_zone = models.CharField(
         'зона зимостойкости в градусах', max_length=15, blank=True,)
 
-
     search_vector = SearchVectorField(null=True)
 
     upload_to_dir = 'roses'
@@ -64,7 +64,8 @@ class RoseProduct(PlantProductAbstract):
     @property
     def get_min_price(self):
         try:
-            return self.roseproductprice_set.first().price
+            # return self.roseproductprice_set.first().price
+            return self.prices.first().price
         except self.DoesNotExist as e:
             return ''
         except AttributeError as e:
@@ -94,7 +95,7 @@ class RoseProduct(PlantProductAbstract):
 
 class RoseProductPrice(ProductPriceAbstract):
     product = models.ForeignKey(
-        RoseProduct, verbose_name='роза', on_delete=models.CASCADE)
+        RoseProduct, verbose_name='роза', related_name='prices', on_delete=models.CASCADE)
 
     container = models.ForeignKey(
         PlantPriceContainer, verbose_name='контейнер', on_delete=models.CASCADE)

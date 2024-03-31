@@ -24,7 +24,7 @@ class SearchView(PaginationMixin, ListView):
                     .filter(is_visible=True) \
                     .select_related('species') \
                     .prefetch_related('images') \
-                    .prefetch_related('coniferproductprice_set')
+                    .prefetch_related('prices')
             )
             
             query_sets.append(
@@ -32,7 +32,7 @@ class SearchView(PaginationMixin, ListView):
                     .filter(is_visible=True)
                     .select_related('species') \
                     .prefetch_related('images') \
-                    .prefetch_related('decproductprice_set')
+                    .prefetch_related('prices')
             )
 
             query_sets.append(
@@ -40,7 +40,7 @@ class SearchView(PaginationMixin, ListView):
                     .filter(is_visible=True)
                     .select_related('species') \
                     .prefetch_related('images') \
-                    .prefetch_related('fruitproductprice_set')
+                    .prefetch_related('prices')
             )
 
             query_sets.append(
@@ -48,21 +48,21 @@ class SearchView(PaginationMixin, ListView):
                     .filter(is_visible=True)
                     .select_related('species') \
                     .prefetch_related('images') \
-                    .prefetch_related('perproductprice_set')
+                    .prefetch_related('prices')
             )
 
             query_sets.append(
                 OtherProduct.objects.search(query=q) \
                     .filter(is_visible=True)
                     .prefetch_related('images') \
-                    .prefetch_related('otherproductprice_set')
+                    .prefetch_related('prices')
             )
             
             query_sets.append(
                 RoseProduct.objects.search(query=q) \
                     .filter(is_visible=True)
                     .prefetch_related('images') \
-                    .prefetch_related('roseproductprice_set')
+                    .prefetch_related('prices')
             )
 
             return list(chain(*query_sets))

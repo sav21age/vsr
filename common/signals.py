@@ -1,14 +1,16 @@
 from django.db.models.signals import post_save, post_delete
+from django.contrib.contenttypes.models import ContentType
 # from django.core.cache import cache
 from django.core.cache.utils import make_template_fragment_key
 from django.core.cache import caches
 from django.contrib.postgres.search import SearchVector
-from conifers.models import ConiferProduct
-from deciduous.models import DecProduct
-from fruits.models import FruitProduct
-from other.models import OtherProduct
-from perennials.models import PerProduct
-from roses.models import RoseProduct
+from carts.models import CartItem
+from conifers.models import ConiferProduct, ConiferProductPrice
+from deciduous.models import DecProduct, DecProductPrice
+from fruits.models import FruitProduct, FruitProductPrice
+from other.models import OtherProduct, OtherProductPrice
+from perennials.models import PerProduct, PerProductPrice
+from roses.models import RoseProduct, RoseProductPrice
 
 
 def receiver_multiple(signal, senders, **kwargs):
@@ -32,9 +34,14 @@ def receiver_multiple(signal, senders, **kwargs):
     return decorator
 
 
-senders = [ConiferProduct, DecProduct, FruitProduct, PerProduct, OtherProduct, RoseProduct]
+sender_pages = [ConiferProduct, DecProduct, FruitProduct, PerProduct, 
+                OtherProduct, RoseProduct,]
 
-@receiver_multiple([post_save,], senders=senders)
+sender_prices = [ConiferProductPrice, DecProductPrice, FruitProductPrice, 
+                 PerProductPrice, OtherProductPrice, RoseProductPrice,]
+
+
+@receiver_multiple([post_save,], senders=sender_pages)
 def update_search_vector(sender, instance, created, update_fields, **kwargs):
     if kwargs.get('raw'): #add for test, pass fixtures
         return
@@ -42,15 +49,40 @@ def update_search_vector(sender, instance, created, update_fields, **kwargs):
     qs.update(search_vector=SearchVector('name', config='russian'))
 
 
-# senders = []
-# @receiver_multiple([post_save, post_delete], senders)
-# def cache_invalidate(instance, **kwargs):
-#     if kwargs.get('raw'):  # add for test, pass fixtures
-#         return
+@receiver_multiple([post_save,], senders=sender_pages)
+def remove_hidden_page_cart_items(sender, instance, **kwargs):
+    if kwargs.get('raw'): #add for test, pass fixtures
+        return
+
+    if instance.is_visible is False:
+        for obj in instance.prices.all():
+            content_type = ContentType.objects.get_for_model(obj)
+            CartItem.objects.filter(
+                content_type_id=content_type.id, object_id=obj.id).delete()
 
 
+@receiver_multiple([post_delete,], senders=sender_pages)
+def remove_deleted_page_cart_items(sender, instance, **kwargs):
+    if kwargs.get('raw'): #add for test, pass fixtures
+        return
 
-@receiver_multiple([post_save,], senders=senders)
+    for obj in instance.prices.all():
+        content_type = ContentType.objects.get_for_model(obj)
+        CartItem.objects.filter(
+            content_type_id=content_type.id, object_id=obj.id).delete()
+
+
+@receiver_multiple([post_delete,], senders=sender_prices)
+def remove_deleted_price_cart_items(sender, instance, **kwargs):
+    if kwargs.get('raw'): #add for test, pass fixtures
+        return
+    obj = instance
+    content_type = ContentType.objects.get_for_model(obj)
+    CartItem.objects.filter(
+        content_type_id=content_type.id, object_id=obj.id).delete()
+
+
+@receiver_multiple([post_save,], senders=sender_pages)
 def invalidate_cache(instance, **kwargs):
     if kwargs.get('raw'):  # add for test, pass fixtures
         return

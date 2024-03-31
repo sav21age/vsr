@@ -150,7 +150,7 @@ class FruitProductAdmin(ProductAbstractAdmin):
     def get_queryset(self, request):
         return super().get_queryset(request) \
             .prefetch_related('images') \
-            .prefetch_related('fruitproductprice_set')
+            .prefetch_related('prices')
 
     form = FruitProductAdminForm
     list_filter = (FruitProductGenusAdminFilter, )

@@ -75,7 +75,7 @@
 
             <p>Особенности: {{object.features}}</p>
             
-            {% for price in object.coniferproductprice_set.all %}
+            {% for price in object.prices.all %}
                 {{ price.container }}
                 {{ price.height }}
                 {{ price.rs }}

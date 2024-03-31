@@ -11,7 +11,7 @@ class DecProductList(PaginationMixin, PerPageMixin, PlantSpeciesFilterMixin,
     queryset = DecProduct.is_visible_objects.all()\
         .select_related('species') \
         .prefetch_related('images') \
-        .prefetch_related('decproductprice_set')
+        .prefetch_related('prices')
     division_name = 'DEC'
     species_model = DecSpecies
 
@@ -23,9 +23,9 @@ class DecProductDetail(DetailView):
         .prefetch_related('images') \
         .prefetch_related('planting') \
         .prefetch_related('advantages') \
-        .prefetch_related('decproductprice_set') \
-        .prefetch_related('decproductprice_set__container') \
-        .prefetch_related('decproductprice_set__rs')
+        .prefetch_related('prices') \
+        .prefetch_related('prices__container') \
+        .prefetch_related('prices__rs')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -33,7 +33,7 @@ class DecProductDetail(DetailView):
         context['recommended'] = self.model.is_visible_objects \
             .filter(species=obj.species) \
             .prefetch_related('images') \
-            .prefetch_related('decproductprice_set') \
+            .prefetch_related('prices') \
             .exclude(id=obj.id)\
             .distinct()[:4]
 

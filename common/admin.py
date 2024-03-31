@@ -1,5 +1,7 @@
 from django.contrib import admin
+from django.contrib.contenttypes.models import ContentType
 from adminsortable2.admin import SortableAdminBase
+from carts.models import CartItem
 from common.helpers import formfield_overrides
 from images.admin import GetImageAdminMixin
 
@@ -10,7 +12,9 @@ make_visible.short_description = 'Показывать'
 
 
 def make_hidden(modeladmin, request, queryset):
-    queryset.update(is_visible=False)
+    for obj in queryset:
+        obj.is_visible = False
+        obj.save()
 make_hidden.short_description = 'Скрыть'
 
 

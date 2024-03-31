@@ -90,7 +90,7 @@
             <p class="detail-property"><span>Особенности:</span> {{object.features}}</p>
             {%endif%}
 
-            {% with object_set_all=object.coniferproductprice_set.all %}
+            {% with object_set_all=object.prices.all %}
                 {% include 'common/detailview/add_to_cart.html' %}
             {% endwith %}
     	</div>

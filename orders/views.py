@@ -87,7 +87,8 @@ class CreateOrderAuthUserView(FormView):
 
         if not self.cart_items.exists():
             # return HttpResponse(status=404)
-            raise Http404
+            # raise Http404
+            return redirect(reverse('carts:index'))
 
         return super().get(*args, **kwargs)
 
@@ -194,7 +195,8 @@ class CreateOrderAnonymUserView(FormView):
 
         if not self.cart_items.exists():
             # return HttpResponse(status=404)
-            raise Http404
+            # raise Http404
+            return redirect(reverse('carts:index'))
 
         return super().get(*args, **kwargs)
 

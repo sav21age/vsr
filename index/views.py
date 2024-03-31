@@ -19,7 +19,7 @@ def index(request):
         lst = random.sample(list(qs_con), ON_PAGE)
         qs_con = ConiferProduct.is_visible_objects.filter(id__in=lst) \
             .prefetch_related('images') \
-            .prefetch_related('coniferproductprice_set')
+            .prefetch_related('prices')
     except Exception as e:
         logger.error(e)
 
@@ -28,7 +28,7 @@ def index(request):
         lst = random.sample(list(qs_dec), ON_PAGE)
         qs_dec = DecProduct.is_visible_objects.filter(id__in=lst) \
             .prefetch_related('images') \
-            .prefetch_related('decproductprice_set')
+            .prefetch_related('prices')
     except Exception as e:
         logger.error(e)
 
@@ -37,7 +37,7 @@ def index(request):
         lst = random.sample(list(qs_fru), ON_PAGE)
         qs_fru = FruitProduct.is_visible_objects.filter(id__in=lst) \
             .prefetch_related('images') \
-            .prefetch_related('fruitproductprice_set')
+            .prefetch_related('prices')
     except Exception as e:
         logger.error(e)
 
@@ -46,7 +46,7 @@ def index(request):
         lst = random.sample(list(qs_per), ON_PAGE)
         qs_per = PerProduct.is_visible_objects.filter(id__in=lst) \
             .prefetch_related('images') \
-            .prefetch_related('perproductprice_set')
+            .prefetch_related('prices')
     except Exception as e:
         logger.error(e)
 

@@ -30,14 +30,11 @@ class Cart(models.Model):
 
     @property
     def total_price(self):
-        total_price = sum(item.total_price for item in self.cart_items.all())
-        return total_price
+        return sum(item.total_price for item in self.cart_items.all())
 
     @property
     def total_quantity(self):
-        total_quantity = sum(
-            item.total_quantity for item in self.cart_items.all())
-        return total_quantity
+        return sum(item.total_quantity for item in self.cart_items.all())
 
     class Meta:
         ordering = ('updated_at',)
@@ -59,8 +56,7 @@ class CartItem(models.Model):
 
     @property
     def total_price(self):
-        total_price = self.content_object.price * self.quantity
-        return total_price
+        return self.content_object.price * self.quantity
     total_price.fget.short_description = 'Сумма, руб.'
 
     @property
@@ -74,7 +70,6 @@ class CartItem(models.Model):
 
     @property
     def product(self):
-        # return f"{self.content_object.product} {get_price_properties(self.content_object)}"
         return f"{self.content_object.product} {self.content_object.get_complex_name}"
     product.fget.short_description = 'Товар'
 

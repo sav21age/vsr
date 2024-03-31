@@ -10,7 +10,7 @@ class CategoryFilterMixin():
         qs = qs.filter(category__name=self.category) \
             .select_related('category') \
             .prefetch_related('images') \
-            .prefetch_related('otherproductprice_set')
+            .prefetch_related('prices')
         return qs
 
 

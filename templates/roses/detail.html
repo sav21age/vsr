@@ -93,7 +93,7 @@
         </p>
       {% endif %}
 
-      {% with object_set_all=object.roseproductprice_set.all %}
+      {% with object_set_all=object.prices.all %}
         {% include 'common/detailview/add_to_cart.html' %}
       {% endwith %}
     </div>

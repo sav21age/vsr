@@ -11,7 +11,7 @@ class RoseProductList(PaginationMixin, PerPageMixin, RoseSpeciesFilterMixin, Lis
     queryset = RoseProduct.is_visible_objects.all()\
         .select_related('species') \
         .prefetch_related('images') \
-        .prefetch_related('roseproductprice_set')
+        .prefetch_related('prices')
     species_model = RoseSpecies
 
 
@@ -21,8 +21,8 @@ class RoseProductDetail(DetailView):
     queryset = RoseProduct.is_visible_objects.all() \
         .prefetch_related('images') \
         .prefetch_related('advantages') \
-        .prefetch_related('roseproductprice_set') \
-        .prefetch_related('roseproductprice_set__container')
+        .prefetch_related('prices') \
+        .prefetch_related('prices__container')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -30,7 +30,7 @@ class RoseProductDetail(DetailView):
         context['recommended'] = self.model.is_visible_objects \
             .filter(species=obj.species) \
             .prefetch_related('images') \
-            .prefetch_related('roseproductprice_set') \
+            .prefetch_related('prices') \
             .exclude(id=obj.id)\
             .distinct()[:4]
 

@@ -144,7 +144,7 @@ class DecProductAdmin(ProductAbstractAdmin):
     def get_queryset(self, request):
         return super().get_queryset(request) \
             .prefetch_related('images') \
-            .prefetch_related('decproductprice_set')
+            .prefetch_related('prices')
 
     form = DecProductAdminForm
     list_filter = (DecProductGenusAdminFilter, )

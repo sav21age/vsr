@@ -18,7 +18,7 @@ class OtherProductAdmin(ProductAbstractAdmin, GetImageAdminMixin):
     def get_queryset(self, request):
         return super().get_queryset(request) \
             .prefetch_related('images') \
-            .prefetch_related('otherproductprice_set')
+            .prefetch_related('prices')
 
     list_display = ('name', 'category', 'get_image', 'is_visible')
     list_filter = ('category', )

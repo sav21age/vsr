@@ -143,7 +143,7 @@ class ConiferProductAdmin(ProductAbstractAdmin):
     def get_queryset(self, request):
         return super().get_queryset(request) \
             .prefetch_related('images') \
-            .prefetch_related('coniferproductprice_set')
+            .prefetch_related('prices')
     
     # def get_actions(self, request):
     #     actions = super().get_actions(request)

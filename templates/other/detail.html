@@ -33,7 +33,7 @@
     <div class="col-12 col-md-8">
       <p>{{ object.short_description }}</p>
 
-      {% with object_set_all=object.otherproductprice_set.all %}
+      {% with object_set_all=object.prices.all %}
         {% include 'common/detailview/add_to_cart.html' %}
       {% endwith %}
 

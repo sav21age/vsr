@@ -11,7 +11,7 @@ class PerProductList(PaginationMixin, PerPageMixin, PlantSpeciesFilterMixin,
     queryset = PerProduct.is_visible_objects.all()\
         .select_related('species') \
         .prefetch_related('images') \
-        .prefetch_related('perproductprice_set')
+        .prefetch_related('prices')
     division_name = 'PER'
     species_model = PerSpecies
 
@@ -24,8 +24,8 @@ class PerProductDetail(DetailView):
         .prefetch_related('flowering') \
         .prefetch_related('planting') \
         .prefetch_related('advantages') \
-        .prefetch_related('perproductprice_set') \
-        .prefetch_related('perproductprice_set__container')
+        .prefetch_related('prices') \
+        .prefetch_related('prices__container')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -33,7 +33,7 @@ class PerProductDetail(DetailView):
         context['recommended'] = self.model.is_visible_objects \
             .filter(species=obj.species) \
             .prefetch_related('images') \
-            .prefetch_related('perproductprice_set') \
+            .prefetch_related('prices') \
             .exclude(id=obj.id)\
             .distinct()[:4]
 
