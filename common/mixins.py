@@ -3,7 +3,7 @@ from plants.models import PlantGenus
 from django.http import Http404
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from django.db.models import QuerySet 
+# from django.db.models import QuerySet 
 
 
 class LoginRequiredMixin():

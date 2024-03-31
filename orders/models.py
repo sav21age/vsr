@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.contrib.contenttypes.models import ContentType
 from django.core.validators import MaxLengthValidator
+# from django.contrib.contenttypes.fields import GenericForeignKey
+# from django.contrib.contenttypes.models import ContentType
 
 
 class OrderStatus(models.Model):
@@ -75,9 +75,9 @@ class OrderItem(models.Model):
     order = models.ForeignKey(
         Order, on_delete=models.CASCADE, related_name='order_items', verbose_name='заказ')
 
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey('content_type', 'object_id',)
+    # content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    # object_id = models.PositiveIntegerField()
+    # content_object = GenericForeignKey('content_type', 'object_id',)
 
     name = models.CharField(max_length=150, verbose_name='название')
 
@@ -109,8 +109,8 @@ class OrderItem(models.Model):
         return f"{self.name} - заказ № {self.order.number}"
 
     class Meta:
-        indexes = [
-            models.Index(fields=["content_type", "object_id"]),
-        ]
+        # indexes = [
+        #     models.Index(fields=["content_type", "object_id"]),
+        # ]
         verbose_name = 'заказанный товар'
         verbose_name_plural = 'заказанные товары'

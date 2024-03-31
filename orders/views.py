@@ -147,13 +147,12 @@ class CreateOrderAuthUserView(FormView):
                     order.save()
 
                     for cart_item in cart_items:
-                        # product_name = f"{cart_item.content_object.product} {get_price_properties(cart_item.content_object)}"
                         product_name = f"{cart_item.content_object.product} {cart_item.content_object.get_complex_name}"
 
                         OrderItem.objects.create(
                             order=order,
-                            content_type=cart_item.content_type,
-                            object_id=cart_item.object_id,
+                            # content_type=cart_item.content_type,
+                            # object_id=cart_item.object_id,
                             name=product_name,
                             price=cart_item.content_object.price,
                             quantity=cart_item.quantity,
@@ -239,13 +238,12 @@ class CreateOrderAnonymUserView(FormView):
                     self.request.session['order_id'] = order.id
 
                     for cart_item in cart_items:
-                        # product_name = f"{cart_item.content_object.product} {get_price_properties(cart_item.content_object)}"
                         product_name = f"{cart_item.content_object.product} {cart_item.content_object.get_complex_name}"
 
                         OrderItem.objects.create(
                             order=order,
-                            content_type=cart_item.content_type,
-                            object_id=cart_item.object_id,
+                            # content_type=cart_item.content_type,
+                            # object_id=cart_item.object_id,
                             name=product_name,
                             price=cart_item.content_object.price,
                             quantity=cart_item.quantity,

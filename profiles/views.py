@@ -102,8 +102,8 @@ class ProfileOrderList(LoginRequiredMixin, PaginationMixin, ListView):
         qs = super().get_queryset()
         qs = qs.filter(user=self.request.user) \
             .select_related('status') \
-            .prefetch_related('order_items') \
-            .prefetch_related('order_items__content_object')
+            .prefetch_related('order_items')
+            # .prefetch_related('order_items__content_object')
 
         return qs
 
@@ -116,8 +116,8 @@ class ProfileOrderDetail(LoginRequiredMixin, DetailView):
         qs = super().get_queryset()
         qs = qs.filter(user=self.request.user) \
             .select_related('status') \
-            .prefetch_related('order_items') \
-            .prefetch_related('order_items__content_object')
+            .prefetch_related('order_items')
+            # .prefetch_related('order_items__content_object')
 
         return qs
 

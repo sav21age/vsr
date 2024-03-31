@@ -22,7 +22,7 @@
     <tbody>
     {% for order_item in order_items %}
         <tr>
-        <td>{{ order_item.product }}</td>
+        <td>{{ order_item.name }}</td>
         <td align="center">{{ order_item.quantity }}</td>
         <td>{{ order_item.price }}</td>
         <td>{{ order_item.total_price }}</td>
