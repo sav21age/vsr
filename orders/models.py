@@ -64,6 +64,7 @@ class Order(models.Model):
         return sum(item.total_quantity for item in self.order_items.all())
 
     class Meta:
+        ordering = ('-created_at',)
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
 
