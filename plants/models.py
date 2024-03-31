@@ -100,7 +100,18 @@ class PlantProductAbstract(ProductAbstract):
         'ширина взрослого растения', max_length=10, blank=True,
         validators=(SizeUnitValidator,),
         help_text='Можно вводить цифры, от, до, м, см, "-"  и ",". Например: 0,5 м, 0,5-1 м, от 0,5 м, до 0,5 м', )
-
+    
+    @property
+    def get_min_price(self):
+        try:
+            return self.prices.first().price
+        except self.DoesNotExist:
+            return ''
+        except AttributeError:
+            return ''
+        except IndexError:
+            return ''
+        
     class Meta:
         abstract = True
 

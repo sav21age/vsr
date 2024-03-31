@@ -77,17 +77,6 @@ class PerProduct(PlantProductAbstract):
 
     upload_to_dir = 'perennials'
 
-    @property
-    def get_min_price(self):
-        try:
-            return self.prices.first().price
-        except self.DoesNotExist:
-            return ''
-        except AttributeError:
-            return ''
-        except IndexError:
-            return ''
-
     def get_absolute_url(self):
         return reverse('pers:detail', kwargs={"slug": self.slug})
 

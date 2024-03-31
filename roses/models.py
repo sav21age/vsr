@@ -61,18 +61,6 @@ class RoseProduct(PlantProductAbstract):
 
     upload_to_dir = 'roses'
 
-    @property
-    def get_min_price(self):
-        try:
-            # return self.roseproductprice_set.first().price
-            return self.prices.first().price
-        except self.DoesNotExist as e:
-            return ''
-        except AttributeError as e:
-            return ''
-        except IndexError as e:
-            return ''
-
     def get_absolute_url(self):
         return reverse('roses:detail', kwargs={"slug": self.slug})
 
