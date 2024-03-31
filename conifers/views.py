@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView
-from common.mixins import PlantGenusFilterMixin, PerPageMixin, PlantSpeciesFilterMixin
+from common.mixins import PlantGenusFilterMixin, PerPageMixin, PlantSpeciesFilterMixin, RecommendedDetailMixin
 from conifers.models import ConiferProduct, ConiferSpecies
 from pure_pagination.mixins import PaginationMixin
 
@@ -16,7 +16,7 @@ class ConiferProductList(PaginationMixin, PerPageMixin, PlantSpeciesFilterMixin,
     species_model = ConiferSpecies
 
 
-class ConiferProductDetail(DetailView):
+class ConiferProductDetail(RecommendedDetailMixin, DetailView):
     model = ConiferProduct
     template_name = 'conifers/detail.html'
     queryset = ConiferProduct.is_visible_objects.all() \
@@ -26,14 +26,3 @@ class ConiferProductDetail(DetailView):
         .prefetch_related('prices__container') \
         .prefetch_related('prices__rs')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        obj = context['object']
-        context['recommended'] = self.model.is_visible_objects \
-            .filter(species=obj.species) \
-            .prefetch_related('images') \
-            .prefetch_related('prices') \
-            .exclude(id=obj.id)\
-            .distinct()[:4]
-
-        return context

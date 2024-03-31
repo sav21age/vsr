@@ -42,18 +42,19 @@ class PerPageMixin():
         return context
 
 
-# class RecommendedDetailMixin():
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
+class RecommendedDetailMixin():
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
-#         obj = context['object']
-#         context['recommended'] = self.model.is_visible_objects \
-#             .filter(species=obj.species) \
-#             .prefetch_related('images') \
-#             .exclude(id=obj.id)\
-#             .distinct()[:4]
+        obj = context['object']
+        context['recommended'] = self.model.is_visible_objects \
+            .filter(species=obj.species) \
+            .prefetch_related('images') \
+            .prefetch_related('prices') \
+            .exclude(id=obj.id)\
+            .distinct()[:4]
 
-#         return context
+        return context
 
 
 class PlantGenusFilterMixin():
