@@ -52,14 +52,16 @@ class Order(models.Model):
 
     @property
     def total_price(self):
-        total_price = sum(item.total_price for item in self.order_items.all())
-        return total_price
+        # total_price = sum(item.total_price for item in self.order_items.all())
+        # return total_price
+        return sum(item.total_price for item in self.order_items.all())
 
     @property
     def total_quantity(self):
-        total_quantity = sum(
-            item.total_quantity for item in self.order_items.all())
-        return total_quantity
+        # total_quantity = sum(
+        #     item.total_quantity for item in self.order_items.all())
+        # return total_quantity
+        return sum(item.total_quantity for item in self.order_items.all())
 
     class Meta:
         verbose_name = 'Заказ'
@@ -89,23 +91,18 @@ class OrderItem(models.Model):
 
     @property
     def total_price(self):
-        total_price = self.content_object.price * self.quantity
-        return total_price
+        # return self.content_object.price * self.quantity
+        return self.price * self.quantity
     total_price.fget.short_description = 'Сумма, руб.'
 
     @property
     def total_quantity(self):
         return self.quantity
 
-    # @property
-    # def price(self):
-    #     return self.content_object.price
-    # price.fget.short_description = 'Цена, руб.'
-
     @property
     def product(self):
-        # return f"{self.content_object.product} {get_price_properties(self.content_object)}"
-        return f"{self.content_object.product} {self.content_object.get_complex_name}"
+        # return f"{self.content_object.product} {self.content_object.get_complex_name}"
+        return self.name
     product.fget.short_description = 'Товар'
 
     def __str__(self):
