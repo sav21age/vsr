@@ -92,22 +92,17 @@ LOGGING = {
     'disable_existing_loggers': False,
     'handlers': {
         'db_log': {
-            'level': 'DEBUG',
+            'level': 'ERROR',
             'class': 'django_db_logger.db_log_handler.DatabaseLogHandler'
         },
         'console': {
-            'level': 'WARNING',
+            'level': 'ERROR',
             'class': 'logging.StreamHandler',
         },
         'mail_admins': {
             'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler'
         },
-        # 'logfile': {
-        #     'level': 'INFO',
-        #     "class": "logging.FileHandler",
-        #     'filename': os.path.join(BASE_DIR, 'log', 'django.log'),
-        # },
     },
     'loggers': {
         'django.security.DisallowedHost': {
@@ -116,7 +111,7 @@ LOGGING = {
         },
         'db': {
             'handlers': ['db_log', 'console', 'mail_admins'],
-            'level': 'DEBUG'
+            'level': 'WARNING'
         },
         'django.request': {  # logging 500 errors to database
             'handlers': ['db_log', 'console', 'mail_admins',],

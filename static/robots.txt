@@ -7,11 +7,13 @@ Disallow: /accounts/
 Disallow: /privacy-policy/
 Disallow: /*per_page=*
 
+Disallow: /index.php
 Disallow: /about-us
 Disallow: /buyers
 Disallow: /services
 Disallow: /blog
 Disallow: /contact-us
+Disallow: /checkout
 Disallow: /catalog/plodovye
 Disallow: /catalog/rozy
 Disallow: /catalog/phlox
