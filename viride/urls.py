@@ -7,6 +7,7 @@ from django.contrib.auth import views as auth_views
 from django.views.defaults import page_not_found
 from django.contrib.sitemaps.views import sitemap
 from django.views.decorators.cache import cache_page
+from catalog.sitemap import CatalogSitemap
 from catalog.views import CatalogItemList
 from conifers.sitemap import ConiferProductSitemap
 from contacts.sitemap import ContactsSitemap
@@ -16,12 +17,14 @@ from favorites.views import favorites
 from fruits.sitemap import FruitProductSitemap
 from index.sitemap import IndexSitemap
 from index.views import index
+from other.sitemap import OtherProductSitemap
 from other.views import (
     BookProductDetail, BookProductList, RelatedProductDetail, RelatedProductList)
 from perennials.sitemap import PerProductSitemap
 from profiles.allauth.views import PersistLogoutView, RedirectedPasswordChangeView
 from roses.sitemap import RoseProductSitemap
 from search.views import SearchView
+
 
 admin.site.site_header = admin.site.site_title = 'Питомник растений «Вириде»'
 
@@ -30,12 +33,14 @@ admin.site.site_header = admin.site.site_title = 'Питомник растен�
 
 sitemaps = {
     'index': IndexSitemap,
+    'catalog': CatalogSitemap,
     'contacts': ContactsSitemap,
     'roses': RoseProductSitemap,
     'conifers': ConiferProductSitemap,
     'decs': DecProductSitemap,
     'fruits': FruitProductSitemap,
     'pers': PerProductSitemap,
+    'other': OtherProductSitemap,
 }
 
 # --

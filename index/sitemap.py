@@ -6,7 +6,7 @@ class IndexSitemap(Sitemap):
     priority = 1
     
     def items(self):
-        return Index.objects.all()
+        return Index.objects.all().order_by('id')
     
     def lastmod(self, obj):
         return obj.updated_at

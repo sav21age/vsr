@@ -24,6 +24,7 @@ Disallow: /catalog/gortenziya
 Disallow: /catalog/lilejniki-i-lilii
 Disallow: /catalog/mulch-soils
 Disallow: /catalog/zlaki
+Disallow: /catalog/product/
 Disallow: /components/
 
 Host: https://viride.spb.ru
