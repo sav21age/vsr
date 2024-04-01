@@ -103,8 +103,8 @@ def batch_copy(modeladmin, request, queryset):
                             for attr in donor.planting.all():
                                 recipient.planting.add(attr)
 
-                        if clean['shelter_winter_chk']:
-                            recipient.shelter_winter = donor.shelter_winter
+                        if clean['shelter_chk']:
+                            recipient.shelter = donor.shelter
 
                         if clean['winter_zone_chk']:
                             recipient.winter_zone = donor.winter_zone
@@ -175,7 +175,7 @@ class ConiferProductAdmin(ProductAbstractAdmin):
             'fields': ('height10', 'width10', 'height1', 'width1', )
         }),
         ('', {
-            'fields': ('planting', 'shelter_winter', 'winter_zone', )
+            'fields': ('planting', 'shelter', 'winter_zone', )
         }),
         ('', {
             'fields': ('advantages', 'features', 'description', )

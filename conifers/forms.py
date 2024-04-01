@@ -39,8 +39,8 @@ class ConiferProductBatchCopyAdminForm(forms.Form):
     planting_chk = forms.BooleanField(
         required=False, initial=True, label='Место посадки')
 
-    shelter_winter_chk = forms.BooleanField(
-        required=False, initial=True, label='Укрытие на зиму')
+    shelter_chk = forms.BooleanField(
+        required=False, initial=True, label='Укрытие')
 
     winter_zone_chk = forms.BooleanField(
         required=False, initial=True, label='Зона зимостойкости')
