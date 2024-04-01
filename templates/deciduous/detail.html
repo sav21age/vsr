@@ -115,7 +115,7 @@
       {% endif %}
 
       {% with object_set_all=object.prices.all %}
-        {% include 'common/detailview/add_to_cart.html' %}
+        {% include 'common/detailview/add_to_cart/prices.html' %}
       {% endwith %}
 
       {% comment %} <div class="row mt-4">
@@ -131,4 +131,5 @@
 </div>
 {% include 'common/detailview/recommended.html' %}
 {% endcache %}
+{% include 'common/detailview/add_to_cart/csrf_token.html' %}
 {% endblock %}

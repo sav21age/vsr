@@ -34,7 +34,7 @@
       <p>{{ object.short_description }}</p>
 
       {% with object_set_all=object.prices.all %}
-        {% include 'common/detailview/add_to_cart.html' %}
+        {% include 'common/detailview/add_to_cart/prices.html' %}
       {% endwith %}
 
       {% comment %} <div class="row mt-4">
@@ -49,4 +49,5 @@
   </div>
 </div>
 {% endcache %}
+{% include 'common/detailview/add_to_cart/csrf_token.html' %}
 {% endblock %}
