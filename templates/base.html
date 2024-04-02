@@ -1,7 +1,7 @@
 {% load static compress %}
 {% spaceless %}
 <!DOCTYPE html>
-<html lang="ru" class="h-100">
+<html lang="ru" class="h-100" itemscope itemtype="http://schema.org/WebPage">
 <head>
   <meta charset="utf-8">
   {% if debug == True %}
@@ -13,7 +13,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="shortcut icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="apple-touch-icon" sizes="120x120" href="{% static 'apple-touch-icon.png' %}">
   <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon-32x32.png' %}">
   <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon-16x16.png' %}">
@@ -87,7 +87,7 @@
       } else { f(); }
     })(document, window, "yandex_metrika_callbacks");
   </script>
-  <noscript><div><img src="https://mc.yandex.ru/watch/39925955" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <noscript><div><img src="https://mc.yandex.ru/watch/39925955" style="position:absolute; left:-9999px;" alt=""></div></noscript>
   <!-- /Yandex.Metrika counter -->
 </body>
 </html>
