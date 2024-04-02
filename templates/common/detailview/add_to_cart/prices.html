@@ -25,18 +25,13 @@
             </label>
             </div>
         </td>
-        <td class="text-end">
-        {{ obj.price }} руб.
-        </td>
+        <td class="text-end">{{ obj.price }} руб.</td>
     </tr>
     {% endfor %}
     </tbody>
 </table>
 <button type="button" class="btn btn-primary" id="addToCart" value="{% url 'carts:add' %}">Добавить в корзину</button>
-
-<div class="row mt-4">
-    {% include 'common/detailview/delivery.html' %}
-</div>
+{% include 'common/detailview/delivery.html' %}
 {% else %}
-<button type="button" class="btn btn-dark mt-3" disabled>Нет в наличии</button>
+    <button type="button" class="btn btn-dark mt-3" disabled>Нет в наличии</button>
 {% endif %}

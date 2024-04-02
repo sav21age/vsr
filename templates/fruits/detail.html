@@ -26,76 +26,48 @@
       {% include 'common/detailview/images_gallery.html' %}
     </div>
     <div class="col-12 col-md-8">
-      {% comment %} {% include 'common/detailview/plant_properties.html' %} {% endcomment %}
-
       <p>{{ object.short_description }}</p>
 
       {% if object.scientific_name %}
-        <p class="detail-property">
-          <span>Научное название:</span> {{ object.scientific_name }}
-        </p>
+        <p class="detail-property"><span>Научное название:</span> {{ object.scientific_name }}</p>
       {% endif %}
 
       {% include 'common/detailview/adult_plant_size.html' %}
 
       {% if object.flowering %}
-        <p class="detail-property">
-          <span>Цветение:</span> {{ object.flowering }}
-        </p>
+        <p class="detail-property"><span>Цветение:</span> {{ object.flowering }}</p>
       {% endif %}
 
       {% if object.self_fertility %}
-        <p class="detail-property">
-          <span>Самоплодность:</span> {{ object.self_fertility }}
-        </p>
+        <p class="detail-property"><span>Самоплодность:</span> {{ object.self_fertility }}</p>
       {% endif %}
 
-      {% comment %} {% if object.rootstock %}
-        <p class="detail-property">
-          <span>Подвой:</span> {{ object.rootstock }}
-        </p>
-      {% endif %} {% endcomment %}
-
       {% if object.fruit_ripening %}
-        <p class="detail-property">
-          <span>Время созревания плодов:</span> {{ object.fruit_ripening }}
-        </p>
+        <p class="detail-property"><span>Время созревания плодов:</span> {{ object.fruit_ripening }}</p>
       {% endif %}
 
       {% if object.fruit_dimension %}
-        <p class="detail-property">
-          <span>Величина плодов:</span> {{ object.fruit_dimension }}
-        </p>
+        <p class="detail-property"><span>Величина плодов:</span> {{ object.fruit_dimension }}</p>
       {% endif %}
 
       {% if object.fruit_size %}
-        <p class="detail-property">
-          <span>Размер плодов:</span> {{ object.fruit_size }} см.
-        </p>
+        <p class="detail-property"><span>Размер плодов:</span> {{ object.fruit_size }} см.</p>
       {% endif %}
 
       {% if object.fruit_weight %}
-        <p class="detail-property">
-          <span>Вес плодов:</span> {{ object.fruit_weight }} гр.
-        </p>
+        <p class="detail-property"><span>Вес плодов:</span> {{ object.fruit_weight }} гр.</p>
       {% endif %}
 
       {% if object.fruit_taste %}
-        <p class="detail-property">
-          <span>Вкус плодов:</span> {{ object.fruit_taste }}
-        </p>
+        <p class="detail-property"><span>Вкус плодов:</span> {{ object.fruit_taste }}</p>
       {% endif %}
 
       {% if object.fruit_keeping_quality %}
-        <p class="detail-property">
-          <span>Лежкость плодов:</span> {{ object.fruit_keeping_quality }}
-        </p>
+        <p class="detail-property"><span>Лежкость плодов:</span> {{ object.fruit_keeping_quality }}</p>
       {% endif %}
 
       {% if object.beginning_fruiting %}
-        <p class="detail-property">
-          <span>Начало плодоношения на год:</span> {{ object.beginning_fruiting }}
-        </p>
+        <p class="detail-property"><span>Начало плодоношения на год:</span> {{ object.beginning_fruiting }}</p>
       {% endif %}
 
       {% if object.advantages.all %}
@@ -108,18 +80,13 @@
       {% endif %}
 
       {% if object.features %}
-        <p class="detail-property">
-          <span>Особенности:</span> {{ object.features }}
-        </p>
+        <p class="detail-property"><span>Особенности:</span> {{ object.features }}</p>
       {% endif %}
 
       {% with object_set_all=object.prices.all %}
         {% include 'common/detailview/add_to_cart/prices.html' %}
       {% endwith %}
 
-      {% comment %} <div class="row mt-4">
-        {% include 'common/detailview/delivery.html' %}
-      </div> {% endcomment %}
     </div>
     <div class="row">
       <div class="col-12">

@@ -39,25 +39,25 @@
             <p>{{object.short_description}}</p>
 
             {% if object.scientific_name %}
-            <p class="detail-property"><span>Научное название:</span> {{object.scientific_name}}</p>
+                <p class="detail-property"><span>Научное название:</span> {{object.scientific_name}}</p>
             {% endif %}
             
             {% if object.needles %}
-            <p class="detail-property"><span>Хвоя:</span> {{object.needles}}</p>
+                <p class="detail-property"><span>Хвоя:</span> {{object.needles}}</p>
             {% endif %}
             
             {% include 'common/detailview/adult_plant_size.html' %}
 
             {% if object.height10 or object.width10 %}
                 <p class="detail-property"><span>Размеры растения в 10 лет:</span> 
-                    {% if object.height10 %}высота {{object.height10}}{% if object.width10 %},{%else%}.{% endif %}{% endif %}
+                    {% if object.height10 %}высота {{object.height10}}{% if object.width10 %}.,{%else%}.{% endif %}{% endif %}
                     {% if object.width10 %}ширина {{object.width10}}.{% endif %}
                 </p>
             {% endif %}
 
             {% if object.height1 or object.width1 %}
                 <p class="detail-property"><span>Годовой прирост:</span> 
-                    {% if object.height1 %}высота {{object.height1}}{% if object.width1 %},{%else%}.{% endif %}{% endif %}
+                    {% if object.height1 %}высота {{object.height1}}{% if object.width1 %}.,{%else%}.{% endif %}{% endif %}
                     {% if object.width1 %}ширина {{object.width1}}.{% endif %}
                 </p>
             {% endif %}
@@ -79,22 +79,21 @@
             {% endif %}
 
             {% if object.advantages.all %}
-            <p class="detail-property"><span>Достоинства:</span>
-            {% for advantage in object.advantages.all %}
-                {{advantage.name}}{% if not forloop.last %}, {% endif%}
-            {% endfor %}
-            </p>
+                <p class="detail-property"><span>Достоинства:</span>
+                {% for advantage in object.advantages.all %}
+                    {{advantage.name}}{% if not forloop.last %}, {% endif%}
+                {% endfor %}
+                </p>
             {% endif %}
 
             {% if object.features%}
-            <p class="detail-property"><span>Особенности:</span> {{object.features}}</p>
+                <p class="detail-property"><span>Особенности:</span> {{object.features}}</p>
             {%endif%}
 
             {% with object_set_all=object.prices.all %}
                 {% include 'common/detailview/add_to_cart/prices.html' %}
             {% endwith %}
     	</div>
-
         <div class="row">
             <div class="col-12">
                 <p>{{object.description|safe}}</p>

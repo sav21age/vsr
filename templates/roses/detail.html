@@ -38,44 +38,32 @@
 
       {% if object.flower_size %}
         <p class="detail-property">
-          <span>Размер цветка:</span> {{ object.flower_size }} см{% if object.quantity_on_stem %}, {{ object.quantity_on_stem }} на стебле{% else %}.{% endif %}
+          <span>Размер цветка:</span> {{ object.flower_size }} см.{% if object.quantity_on_stem %}, {{ object.quantity_on_stem }} на стебле{% else %}.{% endif %}
         </p>
       {% endif %}
 
       {% if object.flowering %}
-        <p class="detail-property">
-          <span>Цветение:</span> {{ object.flowering }}
-        </p>
+        <p class="detail-property"><span>Цветение:</span> {{ object.flowering }}</p>
       {% endif %}
 
       {% if object.flavor %}
-        <p class="detail-property">
-          <span>Аромат:</span> {{ object.flavor }}
-        </p>
+        <p class="detail-property"><span>Аромат:</span> {{ object.flavor }}</p>
       {% endif %}
 
       {% if object.resistance_fungus %}
-        <p class="detail-property">
-          <span>Устойчивость к грибковым инфекциям:</span> {{ object.resistance_fungus }}
-        </p>
+        <p class="detail-property"><span>Устойчивость к грибковым инфекциям:</span> {{ object.resistance_fungus }}</p>
       {% endif %}
 
       {% if object.resistance_rain %}
-        <p class="detail-property">
-          <span>Устойчивость к дождю:</span> {{ object.resistance_rain }}
-        </p>
+        <p class="detail-property"><span>Устойчивость к дождю:</span> {{ object.resistance_rain }}</p>
       {% endif %}
 
       {% if object.shelter_winter %}
-        <p class="detail-property">
-          <span>Укрытие на зиму:</span> {{ object.shelter_winter }}
-        </p>
+        <p class="detail-property"><span>Укрытие на зиму:</span> {{ object.shelter_winter }}</p>
       {% endif %}
 
       {% if object.winter_zone %}
-        <p class="detail-property">
-          <span>Зона зимостойкости в градусах:</span> {{ object.winter_zone }}
-        </p>
+        <p class="detail-property"><span>Зона зимостойкости в градусах:</span> {{ object.winter_zone }}</p>
       {% endif %}
 
       {% if object.advantages.all %}
@@ -88,14 +76,13 @@
       {% endif %}
 
       {% if object.features %}
-        <p class="detail-property">
-          <span>Особенности:</span> {{ object.features }}
-        </p>
+        <p class="detail-property"><span>Особенности:</span> {{ object.features }}</p>
       {% endif %}
 
       {% with object_set_all=object.prices.all %}
         {% include 'common/detailview/add_to_cart/prices.html' %}
       {% endwith %}
+      
     </div>
     <div class="row">
       <div class="col-12">

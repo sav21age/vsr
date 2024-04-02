@@ -5,7 +5,8 @@ Disallow: /order/
 Disallow: /search/
 Disallow: /accounts/
 Disallow: /privacy-policy/
-Disallow: /*per_page=*
+Disallow: /*?per_page=
+Disallow: /*&per_page=
 
 Disallow: /index.php
 Disallow: /about-us
@@ -25,6 +26,8 @@ Disallow: /catalog/lilejniki-i-lilii
 Disallow: /catalog/mulch-soils
 Disallow: /catalog/zlaki
 Disallow: /catalog/product/
+Disallow: /*?start=
+Disallow: /*&start=
 Disallow: /components/
 
 Host: https://viride.spb.ru

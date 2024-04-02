@@ -1,6 +1,6 @@
 {% if object.height or object.width %}
 <p class="detail-property"><span>Размеры взрослого растения:</span> 
-    {% if object.height %}высота {{object.height}}{% if object.width %},{%else%}.{% endif %}{% endif %}
+    {% if object.height %}высота {{object.height}}{% if object.width %}.,{%else%}.{% endif %}{% endif %}
     {% if object.width %}ширина {{object.width}}.{% endif %}
 </p>
 {%endif%}

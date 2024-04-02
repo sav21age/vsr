@@ -18,22 +18,7 @@
                         </a>
                     {% endif %}
                     <div class="card-body px-1">
-                        <p class="card-price">
-                        {% if object.get_min_price %}
-                            от {{ object.get_min_price }} руб.
-                        {% else %}
-                            нет в наличии
-                        {%endif%}
-
-                        {% comment %} {% with min_price=object.get_min_price %}
-                        {% if min_price %}
-                            от {{ min_price }} руб.
-                        {% else %}
-                            нет в наличии
-                        {%endif%}
-                        {%endwith%} {% endcomment %}
-
-                        </p>
+                        <p class="card-price">{% if object.get_min_price %}от {{ object.get_min_price }} руб.{% else %}нет в наличии{% endif %}</p>
                         <p class="card-text"><a href="{{ object.get_absolute_url }}">{{ object.name }}</a></p>
                     </div>
                 </div>
