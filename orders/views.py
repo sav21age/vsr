@@ -1,4 +1,4 @@
-import random
+# import random
 # from urllib.parse import urlsplit, urlunsplit
 from django.http import HttpResponse
 from django.urls import reverse
@@ -9,12 +9,11 @@ from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
-from django.http import Http404
 from carts.models import Cart, CartItem
 from common.mail import send_html_email
 from common.loggers import logger
 from orders.models import Order, OrderItem, OrderStatus
-from orders.forms import ConfirmOrderAnonymUserForm, CreateOrderAnonymUserForm, CreateOrderAuthUserForm
+from orders.forms import CreateOrderAnonymUserForm, CreateOrderAuthUserForm
 
 
 def send_order_email(order):
@@ -230,14 +229,14 @@ class CreateOrderAnonymUserView(FormView):
                         ip=cart.ip,
                         user_agent=cart.user_agent,
                         status=OrderStatus.objects.get(id=1),
-                        confirm_code=random.randint(1000, 9999),
-                        confirmed_by_email=False,
+                        # confirm_code=random.randint(1000, 9999),
+                        # confirmed_by_email=False,
                     )
 
                     order.number = str(order.id).rjust(8, '0')
                     order.save()
 
-                    self.request.session['order_id'] = order.id
+                    # self.request.session['order_id'] = order.id
 
                     for cart_item in cart_items:
                         product_name = f"{cart_item.content_object.product} {cart_item.content_object.get_complex_name}"
@@ -250,6 +249,10 @@ class CreateOrderAnonymUserView(FormView):
                             price=cart_item.content_object.price,
                             quantity=cart_item.quantity,
                         )
+                    
+                    send_order_email(order)
+                    
+                    self.request.session.pop('cart_id')
 
                     cart.delete()
                     cart_items.delete()
@@ -260,87 +263,87 @@ class CreateOrderAnonymUserView(FormView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('orders:confirm')
-
-
-class ConfirmOrderAnonymView(FormView):
-    template_name = 'orders/confirm_form.html'
-    form_class = ConfirmOrderAnonymUserForm
-
-    def get(self, request, *args, **kwargs):
-
-        order_id = self.request.session.get('order_id', None)
-        confirm_code_sent = self.request.session.get(
-            'confirm_code_sent', False)
-
-        try:
-            order = Order.objects.get(id=order_id)
-        except Exception as e:
-            logger.error(e)
-            raise Http404 from e
-
-        if not confirm_code_sent:
-            template_subject = 'orders/email/enter_confirm_code_subject.html'
-            template_body = 'orders/email/enter_confirm_code.html'
-
-            context_subject = {}
-            context_subject['order_number'] = order.number
-
-            context_body = {}
-            context_body['code'] = order.confirm_code
-
-            send_html_email(
-                template_subject,
-                context_subject,
-                template_body,
-                context_body,
-                settings.EMAIL_HOST_USER,
-                order.customer_email
-            )
-            self.request.session['confirm_code_sent'] = True
-
-        return super().get(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        form = self.get_form()
-
-        order_id = self.request.session.get('order_id', None)
-
-        try:
-            order = Order.objects.get(id=order_id)
-        except Exception as e:
-            logger.error(e)
-            raise Http404 from e
-
-        if form.is_valid() and form.cleaned_data['confirm_code'] == order.confirm_code:
-            order.confirmed_by_email = True
-            order.save()
-
-            send_order_email(order)
-
-            request.session.pop('cart_id')
-            request.session.pop('order_id')
-            request.session.pop('confirm_code_sent')
-            return self.form_valid(form)
-
-        return self.form_invalid(form, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        order_id = self.request.session.get('order_id', None)
-        try:
-            order = Order.objects.get(id=order_id)
-        except Exception as e:
-            logger.error(e)
-            raise Http404 from e
-
-        context['email'] = order.customer_email
-
-        return context
-
-    def get_success_url(self):
         return reverse('orders:success')
+
+
+# class ConfirmOrderAnonymView(FormView):
+#     template_name = 'orders/confirm_form.html'
+#     form_class = ConfirmOrderAnonymUserForm
+
+#     def get(self, request, *args, **kwargs):
+
+#         order_id = self.request.session.get('order_id', None)
+#         confirm_code_sent = self.request.session.get(
+#             'confirm_code_sent', False)
+
+#         try:
+#             order = Order.objects.get(id=order_id)
+#         except Exception as e:
+#             logger.error(e)
+#             raise Http404 from e
+
+#         if not confirm_code_sent:
+#             template_subject = 'orders/email/enter_confirm_code_subject.html'
+#             template_body = 'orders/email/enter_confirm_code.html'
+
+#             context_subject = {}
+#             context_subject['order_number'] = order.number
+
+#             context_body = {}
+#             context_body['code'] = order.confirm_code
+
+#             send_html_email(
+#                 template_subject,
+#                 context_subject,
+#                 template_body,
+#                 context_body,
+#                 settings.EMAIL_HOST_USER,
+#                 order.customer_email
+#             )
+#             self.request.session['confirm_code_sent'] = True
+
+#         return super().get(request, *args, **kwargs)
+
+#     def post(self, request, *args, **kwargs):
+#         form = self.get_form()
+
+#         order_id = self.request.session.get('order_id', None)
+
+#         try:
+#             order = Order.objects.get(id=order_id)
+#         except Exception as e:
+#             logger.error(e)
+#             raise Http404 from e
+
+#         if form.is_valid() and form.cleaned_data['confirm_code'] == order.confirm_code:
+#             order.confirmed_by_email = True
+#             order.save()
+
+#             send_order_email(order)
+
+#             request.session.pop('cart_id')
+#             request.session.pop('order_id')
+#             request.session.pop('confirm_code_sent')
+#             return self.form_valid(form)
+
+#         return self.form_invalid(form, **kwargs)
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+
+#         order_id = self.request.session.get('order_id', None)
+#         try:
+#             order = Order.objects.get(id=order_id)
+#         except Exception as e:
+#             logger.error(e)
+#             raise Http404 from e
+
+#         context['email'] = order.customer_email
+
+#         return context
+
+#     def get_success_url(self):
+#         return reverse('orders:success')
 
 
 # class SuccessOrderTemplateView(TemplateView):

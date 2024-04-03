@@ -6,7 +6,7 @@ from carts.models import Cart, CartItem
 from conifers.models import ConiferProductPrice
 import orders
 from orders.models import Order
-from orders.views import ConfirmOrderAnonymView, CreateOrderAnonymUserView, CreateOrderAuthUserView
+from orders.views import CreateOrderAnonymUserView, CreateOrderAuthUserView
 from viride.tests import AnonymUserTestCase, AuthUserTestCase
 from unittest.mock import patch
 
@@ -140,32 +140,33 @@ class CreateOrderAnonymUserTest(OrderTestMixin, CartAnonymUserTestCase):
         # request.session.save()
         response = CreateOrderAnonymUserView.as_view()(request)
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, reverse('orders:confirm'))
-
-        order = Order.objects.filter(customer_email='test@test.com').last()
-
-        session = self.client.session
-        session['order_id'] = order.id
-        session.save()
-
-        response = self.client.get(
-            reverse(f"{APP}:confirm"))
-        self.assertEqual(response.status_code, 200)
-
-        # --
-
-        form_data = {
-            'confirm_code': order.confirm_code,
-        }
-        request = self.factory.post(
-            reverse(f"{APP}:confirm"), data=form_data)
-
-        request.session = {
-            'cart_id': self.cart.id,
-            'order_id': order.id,
-            'confirm_code_sent': False,
-        }
-
-        response = ConfirmOrderAnonymView.as_view()(request)
-        self.assertEqual(response.status_code, 302)
+        # self.assertEqual(response.url, reverse('orders:confirm'))
         self.assertEqual(response.url, reverse('orders:success'))
+
+        # order = Order.objects.filter(customer_email='test@test.com').last()
+
+        # session = self.client.session
+        # session['order_id'] = order.id
+        # session.save()
+
+        # response = self.client.get(
+        #     reverse(f"{APP}:confirm"))
+        # self.assertEqual(response.status_code, 200)
+
+        # # --
+
+        # form_data = {
+        #     'confirm_code': order.confirm_code,
+        # }
+        # request = self.factory.post(
+        #     reverse(f"{APP}:confirm"), data=form_data)
+
+        # request.session = {
+        #     'cart_id': self.cart.id,
+        #     'order_id': order.id,
+        #     'confirm_code_sent': False,
+        # }
+
+        # response = ConfirmOrderAnonymView.as_view()(request)
+        # self.assertEqual(response.status_code, 302)
+        # self.assertEqual(response.url, reverse('orders:success'))

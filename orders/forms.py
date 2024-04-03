@@ -42,8 +42,9 @@ class CreateOrderAuthUserForm(forms.ModelForm):
 
     class Meta:
         model = Order
-        exclude = ['user', 'number', 'status_change_email', 'confirm_code', 'confirmed_by_email',
-                   'ip', 'user_agent', 'status', ]
+        exclude = ['user', 'number', 'status_change_email', 'ip', 'user_agent', 'status', ]
+        # exclude = ['user', 'number', 'status_change_email', 'confirm_code', 'confirmed_by_email',
+        #            'ip', 'user_agent', 'status', ]
 
 
 class CreateOrderAnonymUserForm(forms.ModelForm):
@@ -69,18 +70,19 @@ class CreateOrderAnonymUserForm(forms.ModelForm):
 
     class Meta:
         model = Order
-        exclude = ['user', 'number', 'status_change_email', 'confirm_code', 'confirmed_by_email',
-                   'ip', 'user_agent', 'status', ]
+        exclude = ['user', 'number', 'status_change_email', 'ip', 'user_agent', 'status', ]
+        # exclude = ['user', 'number', 'status_change_email', 'confirm_code', 'confirmed_by_email',
+        #            'ip', 'user_agent', 'status', ]
 
 
-class ConfirmOrderAnonymUserForm(forms.Form):
-    required_css_class = 'required'
-    confirm_code = forms.CharField(
-        label='Введите код',
-        required=True,
-    )
+# class ConfirmOrderAnonymUserForm(forms.Form):
+#     required_css_class = 'required'
+#     confirm_code = forms.CharField(
+#         label='Введите код',
+#         required=True,
+#     )
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['confirm_code'].widget.attrs['class'] = 'form-control'
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         self.fields['confirm_code'].widget.attrs['class'] = 'form-control'
 

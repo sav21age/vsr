@@ -7,6 +7,8 @@
     <li>{{full_name}}</li>
     <li>Адрес электронной почты: <a href="mailto:{{order.customer_email}}">{{order.customer_email}}</a></li>
     <li>Телефон: {{order.customer_phone_number}}</li>
+    <li>Зарегистрированный пользователь: {% if order.user %}да{% else %}нет{% endif %}
+    </li>
 </ul>
 <p>Статус заказа: <em>{{order.status|lower}}</em></p>
 <br>

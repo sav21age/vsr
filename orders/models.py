@@ -18,28 +18,23 @@ class OrderStatus(models.Model):
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_DEFAULT,
-                             blank=True, null=True, verbose_name='Пользователь', default=None)
+        blank=True, null=True, verbose_name='Пользователь', default=None)
 
     number = models.CharField(max_length=8, verbose_name='номер заказа')
 
     created_at = models.DateTimeField('дата создания', auto_now_add=True)
 
-    customer_first_name = models.CharField(
-        'имя', max_length=50, )
-    customer_last_name = models.CharField(
-        'фамилия', max_length=50, blank=True, )
-    customer_email = models.EmailField(
-        'адрес электронной почты', max_length=70, )
-    customer_phone_number = models.CharField(
-        max_length=20, verbose_name='номер телефона', )
+    customer_first_name = models.CharField('имя', max_length=50, )
+    customer_last_name = models.CharField('фамилия', max_length=50, blank=True, )
+    customer_email = models.EmailField('адрес электронной почты', max_length=70, )
+    customer_phone_number = models.CharField(max_length=20, verbose_name='номер телефона', )
     customer_comment = models.TextField(
-        'комментарий к заказу', blank=True,
-        validators=[MaxLengthValidator(1000)], )
+        'комментарий к заказу', blank=True, validators=[MaxLengthValidator(1000)], )
 
-    confirm_code = models.CharField(
-        'код подтверждения заказа', max_length=4, default='-')
-    confirmed_by_email = models.BooleanField(
-        verbose_name='заказ подтвержден по электронной почте', blank=True, null=True, default=None)
+    # confirm_code = models.CharField(
+    #     'код подтверждения заказа', max_length=4, default='-')
+    # confirmed_by_email = models.BooleanField(
+    #     verbose_name='заказ подтвержден по электронной почте', blank=True, null=True, default=None)
 
     ip = models.CharField(
         'IP адрес', max_length=39, blank=True, )
@@ -52,15 +47,10 @@ class Order(models.Model):
 
     @property
     def total_price(self):
-        # total_price = sum(item.total_price for item in self.order_items.all())
-        # return total_price
         return sum(item.total_price for item in self.order_items.all())
 
     @property
     def total_quantity(self):
-        # total_quantity = sum(
-        #     item.total_quantity for item in self.order_items.all())
-        # return total_quantity
         return sum(item.total_quantity for item in self.order_items.all())
 
     class Meta:
