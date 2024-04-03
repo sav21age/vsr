@@ -28,6 +28,8 @@ Disallow: /catalog/zlaki
 Disallow: /catalog/product/
 Disallow: /*?start=
 Disallow: /*&start=
+Disallow: /*?limitstart=
+Disallow: /*&limitstart=
 Disallow: /components/
 
 Host: https://viride.spb.ru
