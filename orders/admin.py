@@ -7,7 +7,7 @@ from orders.models import Order, OrderItem, OrderStatus
 admin.site.register(OrderStatus)
 
 
-class OrderItemInline(admin.StackedInline):
+class OrderItemInline(admin.TabularInline):
     model = OrderItem
     extra = 0
     # show_change_link = True
@@ -25,7 +25,7 @@ class OrderAdmin(admin.ModelAdmin):
     search_fields = ('number', 'user__username', 'user__email',
                      'user__first_name', 'user__last_name',)
     search_help_text = 'Поиск по пользователю'
-    list_display = ('number', 'status', 'get_user', 'created_at', 'get_total_price',)
+    list_display = ('number', 'status', 'get_user', 'confirmed_by_email', 'created_at', 'get_total_price',)
     readonly_fields = ('number', 'user', 'customer_first_name', 'customer_last_name', 'customer_email', 'customer_phone_number', 'customer_comment', 'created_at', 'get_total_price',
                        'confirm_code', 'confirmed_by_email', 
                        'ip', 'user_agent',)

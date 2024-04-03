@@ -1,11 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
+from django.urls import reverse
+from django.utils.safestring import mark_safe
 from carts.models import Cart
 from orders.models import Order
 from profiles.models import Profile
-from django.urls import reverse
-from django.utils.safestring import mark_safe
 
 
 class ProfileInline(admin.StackedInline):
