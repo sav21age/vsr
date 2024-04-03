@@ -6,6 +6,7 @@ def main(request):
       'debug': settings.DEBUG,
       'cache_timeout': settings.CACHE_TIMEOUT,
       'rel_canonical': request.build_absolute_uri(request.path),
+      # 'rel_canonical': request.get_full_path(request),
       'host': '{0}://{1}'.format(request.is_secure() and 'https' or 'http', request.get_host()),
       'search_form': SearchForm(request.GET),
     }

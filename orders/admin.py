@@ -1,7 +1,10 @@
 from django.contrib import admin
 from django.conf import settings
 from common.mail import send_html_email
-from orders.models import Order, OrderItem
+from orders.models import Order, OrderItem, OrderStatus
+
+
+admin.site.register(OrderStatus)
 
 
 class OrderItemInline(admin.StackedInline):
