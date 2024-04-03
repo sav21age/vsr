@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.conf import settings
+from django.utils.safestring import mark_safe
 from common.mail import send_html_email
 from orders.models import Order, OrderItem, OrderStatus
 
@@ -25,12 +26,22 @@ class OrderAdmin(admin.ModelAdmin):
     search_fields = ('number', 'user__username', 'user__email',
                      'user__first_name', 'user__last_name',)
     search_help_text = 'Поиск по пользователю'
-    list_display = ('number', 'status', 'get_user', 'confirmed_by_email', 'created_at', 'get_total_price',)
+    list_display = ('number', 'status', 'get_user', 'get_confirmed_by_email', 'created_at', 'get_total_price',)
     readonly_fields = ('number', 'user', 'customer_first_name', 'customer_last_name', 'customer_email', 'customer_phone_number', 'customer_comment', 'created_at', 'get_total_price',
                        'confirm_code', 'confirmed_by_email', 
                        'ip', 'user_agent',)
     
     list_filter = ('status',)
+
+    @mark_safe
+    def get_confirmed_by_email(self, obj):
+        if obj.confirmed_by_email is None:
+            return 'не требуется'
+        if obj.confirmed_by_email:
+            return '<span style="color: green;">да</span>'
+        return '<span style="color: red;">нет</span>'
+    get_confirmed_by_email.short_description = 'Подтвержден по эл. почте'
+    # get_confirmed_by_email.boolean = True
 
     def get_fieldsets(self, request, obj=None):
         # fieldsets = super().get_fieldsets(request, obj)
