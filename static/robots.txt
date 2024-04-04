@@ -26,6 +26,7 @@ Disallow: /catalog/lilejniki-i-lilii
 Disallow: /catalog/mulch-soils
 Disallow: /catalog/zlaki
 Disallow: /catalog/product/
+Disallow: /catalog/category/
 Disallow: /*?start=
 Disallow: /*&start=
 Disallow: /*?limitstart=
