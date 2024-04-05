@@ -177,11 +177,13 @@ class CreateOrderAnonymUserView(FormView):
     template_name = 'orders/create_form.html'
     form_class = CreateOrderAnonymUserForm
 
-    def get(self, *args, **kwargs):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
         cart_id = self.request.session.get('cart_id', None)
         try:
-            self.cart = Cart.objects.get(id=cart_id)
-            self.cart_items = CartItem.objects.filter(cart=self.cart)
+            cart = Cart.objects.get(id=cart_id)
+            cart_items = CartItem.objects.filter(cart=cart)
         except Cart.DoesNotExist as e:
             logger.error(e)
             return redirect(reverse('carts:index'))
@@ -192,17 +194,12 @@ class CreateOrderAnonymUserView(FormView):
             logger.error(e)
             return HttpResponse(status=500)
 
-        if not self.cart_items.exists():
-            # return HttpResponse(status=404)
-            # raise Http404
+        if not cart_items.exists():
             return redirect(reverse('carts:index'))
 
-        return super().get(*args, **kwargs)
+        context['cart'] = cart
+        context['cart_items'] = cart_items
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['cart'] = self.cart
-        context['cart_items'] = self.cart_items
         return context
 
     def form_valid(self, form):
