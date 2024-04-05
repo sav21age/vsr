@@ -9,6 +9,8 @@ from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from django.http import Http404
+from django.views.decorators.cache import never_cache
 from carts.models import Cart, CartItem
 from common.mail import send_html_email
 from common.loggers import logger
@@ -59,6 +61,7 @@ def create(request):
     return CreateOrderAnonymUserView.as_view()(request)
 
 
+@method_decorator(never_cache, name='dispatch')
 @method_decorator(login_required, name='dispatch')
 class CreateOrderAuthUserView(FormView):
     model = Order
@@ -72,8 +75,8 @@ class CreateOrderAuthUserView(FormView):
 
     def get(self, *args, **kwargs):
         try:
-            self.cart = Cart.objects.get(user=self.request.user)
-            self.cart_items = CartItem.objects.filter(cart=self.cart)
+            cart = Cart.objects.get(user=self.request.user)
+            cart_items = CartItem.objects.filter(cart=cart)
         except Cart.DoesNotExist as e:
             logger.error(e)
             return redirect(reverse('carts:index'))
@@ -84,7 +87,7 @@ class CreateOrderAuthUserView(FormView):
             logger.error(e)
             return HttpResponse(status=500)
 
-        if not self.cart_items.exists():
+        if not cart_items.exists():
             # return HttpResponse(status=404)
             # raise Http404
             return redirect(reverse('carts:index'))
@@ -93,8 +96,17 @@ class CreateOrderAuthUserView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['cart'] = self.cart
-        context['cart_items'] = self.cart_items
+        
+        try:
+            cart = Cart.objects.get(user=self.request.user)
+            cart_items = CartItem.objects.filter(cart=cart)
+        except Exception as e:
+            logger.error(e)
+            raise Http404 from e
+
+        context['cart'] = cart
+        context['cart_items'] = cart_items
+        
         return context
 
     def form_valid(self, form):
@@ -172,15 +184,15 @@ class CreateOrderAuthUserView(FormView):
         return reverse('orders:success')
 
 
+@method_decorator(never_cache, name='dispatch')
 class CreateOrderAnonymUserView(FormView):
     model = Order
     template_name = 'orders/create_form.html'
     form_class = CreateOrderAnonymUserForm
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
+    def get(self, *args, **kwargs):
         cart_id = self.request.session.get('cart_id', None)
+
         try:
             cart = Cart.objects.get(id=cart_id)
             cart_items = CartItem.objects.filter(cart=cart)
@@ -196,6 +208,19 @@ class CreateOrderAnonymUserView(FormView):
 
         if not cart_items.exists():
             return redirect(reverse('carts:index'))
+
+        return super().get(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        cart_id = self.request.session.get('cart_id', None)
+        try:
+            cart = Cart.objects.get(id=cart_id)
+            cart_items = CartItem.objects.filter(cart=cart)
+        except Exception as e:
+            logger.error(e)
+            raise Http404 from e
 
         context['cart'] = cart
         context['cart_items'] = cart_items

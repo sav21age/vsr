@@ -4,11 +4,14 @@ from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import View
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
 from django.template.loader import render_to_string
 from carts.models import Cart, CartItem
 from common.loggers import logger
 
 
+@method_decorator(never_cache, name='dispatch')
 class IndexView(View):
     template_name = 'carts/index.html'
 
