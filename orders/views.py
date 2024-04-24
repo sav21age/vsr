@@ -24,14 +24,17 @@ def send_order_email(order):
 
     order_items = OrderItem.objects.filter(order=order)
 
+
+    full_name = f"{order.customer_first_name} {order.customer_last_name}".strip()
+
     context_subject = {}
     context_subject['order_number'] = order.number
+    context_subject['full_name'] = full_name
 
     context_body = {}
     context_body['order'] = order
     context_body['order_items'] = order_items
-    context_body['full_name'] = f"{order.customer_first_name} {order.customer_last_name}".strip(
-    )
+    context_body['full_name'] = full_name
 
     send_html_email(
         template_subject,
