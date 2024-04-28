@@ -34,8 +34,8 @@ class OrderAdmin(admin.ModelAdmin):
 
     list_display = ('number', 'status', 'customer_email',
                     'customer_first_name', 'get_created_at', 'get_total_price',)
-    
     list_filter = ('status',)
+    list_per_page = 30
 
     fieldsets = (
         ('Заказ', {
