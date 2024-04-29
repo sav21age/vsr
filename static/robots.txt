@@ -33,7 +33,6 @@ Disallow: /*?limitstart=
 Disallow: /*&limitstart=
 Disallow: /components/
 
-User-agent: Yandex
 Clean-param: limitstart
 
 Host: https://viride.spb.ru
