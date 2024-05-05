@@ -1,6 +1,7 @@
 from urllib.parse import urlencode
 from django.test import TestCase, Client
 from django.urls import reverse
+from conifers.forms import ConiferProductPriceFilterForm
 from conifers.models import ConiferProduct
 
 
@@ -33,56 +34,44 @@ class ConiferProductTest(TestCase):
         response = self.client.get(reverse(f"{APP}:list"))
         self.assertEqual(response.status_code, 200)
 
-    def test_listview_filters(self):
-        """ Test ListView with filters"""
-        url = reverse(f"{APP}:list")
+    def test_listview_filter_form(self):
+        """ Test ListView filter form """
 
-        genus = species = 1
+        form_data = {
+            'genus': [1,],
+            'height_from': 70,
+            'extra': 'on',
+        }
 
-        kwargs = {'genus': genus, }
-        response = self.client.get(f"{url}?{urlencode(kwargs)}")
+        form = ConiferProductPriceFilterForm(data=form_data)
+        # print(form.errors)
+        self.assertTrue(form.is_valid())
+
+        response = self.client.get(
+            reverse(f"{APP}:list"), data=form_data, follow=True
+        )
+
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(form['genus'].value(), [1])
+        self.assertEqual(form['height_from'].value(), 70)
+        self.assertEqual(form['extra'].value(), True)
+        
+    def test_listview_filter_form_xhr(self):
+        """ Test ListView filter form XMLHttpRequest """
 
-        kwargs = {'genus': 'genus', }
-        response = self.client.get(f"{url}?{urlencode(kwargs)}")
-        self.assertEqual(response.status_code, 404)
+        json_data = {
+            'genus': [1,],
+            'height_from': 70,
+            'extra': 'on',
+        }
 
-        kwargs = {'genus': '⅓', }
-        response = self.client.get(f"{url}?{urlencode(kwargs)}")
-        self.assertEqual(response.status_code, 404)
-
-        kwargs = {'genus': 1000,}
-        response = self.client.get(f"{url}?{urlencode(kwargs)}")
-        self.assertEqual(response.status_code, 404)
-
-        kwargs = {'genus': genus, 'per_page': 1000}
-        response = self.client.get(f"{url}?{urlencode(kwargs)}")
+        response = self.client.post(
+            reverse(f"{APP}:filter_form"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 200)
+        
+        json_response = '{"genus": [1, 12], "height_from": {"min": 70, "max": 240}, "width_from": {"min": null, "max": null}, "container": [3], "rs": [1], "shtamb": null, "extra": []}'
+        self.assertEqual(response.content.decode('utf-8'), json_response)
 
-        kwargs = {'genus': genus, 'per_page': 1000, 'page': 1000}
-        response = self.client.get(f"{url}?{urlencode(kwargs)}")
-        self.assertEqual(response.status_code, 404)
-
-        kwargs = {'genus': genus, 'species': species}
-        response = self.client.get(f"{url}?{urlencode(kwargs)}")
-        self.assertEqual(response.status_code, 200)
-
-        kwargs = {'genus': genus, 'species': '⅓'}
-        response = self.client.get(f"{url}?{urlencode(kwargs)}")
-        self.assertEqual(response.status_code, 404)
-
-        kwargs = {'genus': '⅓', 'species': '3'}
-        response = self.client.get(f"{url}?{urlencode(kwargs)}")
-        self.assertEqual(response.status_code, 404)
-
-        kwargs = {'genus': genus, 'species': species,
-                  'per_page': 1000, 'page': 1000}
-        response = self.client.get(f"{url}?{urlencode(kwargs)}")
-        self.assertEqual(response.status_code, 404)
-
-        kwargs = {'genus': genus, 'species': 2}
-        response = self.client.get(f"{url}?{urlencode(kwargs)}")
-        self.assertEqual(response.status_code, 404)
 
     def test_listview_per_page(self):
         """ Test ListView with per_page """
@@ -107,3 +96,54 @@ class ConiferProductTest(TestCase):
             kwargs = {'page': value}
             response = self.client.get('{0}?{1}'.format(reverse(f"{APP}:list"), urlencode(kwargs)))
             self.assertEqual(response.status_code, 404)
+
+    # def test_listview(self):
+    #     """ Test ListView """
+    #     url = reverse(f"{APP}:list")
+
+    #     genus = species = 1
+
+    #     kwargs = {'genus': genus, }
+    #     response = self.client.get(f"{url}?{urlencode(kwargs)}")
+    #     self.assertEqual(response.status_code, 200)
+
+    #     kwargs = {'genus': 'genus', }
+    #     response = self.client.get(f"{url}?{urlencode(kwargs)}")
+    #     self.assertEqual(response.status_code, 404)
+
+    #     kwargs = {'genus': '⅓', }
+    #     response = self.client.get(f"{url}?{urlencode(kwargs)}")
+    #     self.assertEqual(response.status_code, 404)
+
+    #     kwargs = {'genus': 1000,}
+    #     response = self.client.get(f"{url}?{urlencode(kwargs)}")
+    #     self.assertEqual(response.status_code, 404)
+
+    #     kwargs = {'genus': genus, 'per_page': 1000}
+    #     response = self.client.get(f"{url}?{urlencode(kwargs)}")
+    #     self.assertEqual(response.status_code, 200)
+
+    #     kwargs = {'genus': genus, 'per_page': 1000, 'page': 1000}
+    #     response = self.client.get(f"{url}?{urlencode(kwargs)}")
+    #     self.assertEqual(response.status_code, 404)
+
+    #     kwargs = {'genus': genus, 'species': species}
+    #     response = self.client.get(f"{url}?{urlencode(kwargs)}")
+    #     self.assertEqual(response.status_code, 200)
+
+    #     kwargs = {'genus': genus, 'species': '⅓'}
+    #     response = self.client.get(f"{url}?{urlencode(kwargs)}")
+    #     self.assertEqual(response.status_code, 404)
+
+    #     kwargs = {'genus': '⅓', 'species': '3'}
+    #     response = self.client.get(f"{url}?{urlencode(kwargs)}")
+    #     self.assertEqual(response.status_code, 404)
+
+    #     kwargs = {'genus': genus, 'species': species,
+    #               'per_page': 1000, 'page': 1000}
+    #     response = self.client.get(f"{url}?{urlencode(kwargs)}")
+    #     self.assertEqual(response.status_code, 404)
+
+    #     kwargs = {'genus': genus, 'species': 2}
+    #     response = self.client.get(f"{url}?{urlencode(kwargs)}")
+    #     self.assertEqual(response.status_code, 404)

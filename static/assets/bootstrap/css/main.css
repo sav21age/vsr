@@ -334,6 +334,61 @@ p.detail-property span {
   font-size: 24px;
 }
 
+#coniferFilterForm label {
+  margin-bottom: 0;
+}
+
+#coniferFilterForm {
+  position: relative;
+}
+
+#coniferFilterForm #div_id_shtamb {
+  margin-bottom: 0 !important;
+}
+
+#coniferFilterForm input::-webkit-input-placeholder {
+  opacity: 0.5 !important;
+}
+
+#coniferFilterForm input::-moz-placeholder {
+  opacity: 0.5 !important;
+}
+
+#coniferFilterForm input:-ms-input-placeholder {
+  opacity: 0.5 !important;
+}
+
+#coniferFilterForm input::-ms-input-placeholder {
+  opacity: 0.5 !important;
+}
+
+#coniferFilterForm input::placeholder {
+  opacity: 0.5 !important;
+}
+
+.overlay {
+  background-color: rgba(255, 255, 255, 0.5);
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  position: absolute;
+}
+
+.overlay-table {
+  display: table;
+  width: 100%;
+  height: 100%;
+}
+
+.overlay-table-cell {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+
 .catalog .card-text {
   font-size: calc(1rem + 0.5vw);
   font-weight: 400;

@@ -2,10 +2,12 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.postgres.indexes import GinIndex
 from django.contrib.postgres.search import SearchVectorField
-from django.contrib.contenttypes import fields
+from django.core.exceptions import ValidationError
+# from django.contrib.contenttypes import fields
+from common.errors import MSG_REQUIRED_BOTH
 from common.models import ProductPriceAbstract
 from common.validators import SizeUnitValidator, SizeValidator
-from carts.models import CartItem
+# from carts.models import CartItem
 from plants.models import (
     PlantPlanting, PlantPriceContainer, PlantPriceRootSystem, PlantProductAbstract,
     PlantSpeciesAbstract)
@@ -100,23 +102,45 @@ class ConiferProductPrice(ProductPriceAbstract):
     container = models.ForeignKey(
         PlantPriceContainer, verbose_name='контейнер', blank=True, null=True, on_delete=models.CASCADE)
 
-    height = models.CharField(
-        'высота, см', max_length=7, blank=True, validators=(SizeValidator,))
+    # height = models.CharField(
+    #     'высота, см', max_length=7, blank=True, validators=(SizeValidator,))
 
-    width = models.CharField(
-        'ширина, см', max_length=7, blank=True, validators=(SizeValidator,))
+    height_from = models.PositiveSmallIntegerField(
+        'высота от, см', blank=True, null=True, db_index=True)
+    height_to = models.PositiveSmallIntegerField(
+        'высота до, см', blank=True, null=True, db_index=True)
+
+    # width = models.CharField(
+    #     'ширина, см', max_length=7, blank=True, validators=(SizeValidator,))
+
+    width_from = models.PositiveSmallIntegerField(
+        'ширина от, см', blank=True, null=True, db_index=True)
+    width_to = models.PositiveSmallIntegerField(
+        'ширина до, см', blank=True, null=True, db_index=True)
 
     rs = models.ForeignKey(
         PlantPriceRootSystem, verbose_name='корневая система', blank=True, null=True, on_delete=models.CASCADE)
 
     shtamb = models.CharField(
-        'штамб, см', max_length=7, blank=True, validators=(SizeValidator,),
+        'штамб, см', max_length=7, blank=True, db_index=True, validators=(SizeValidator,),
         help_text='Ветвление на стволе начинается c указанной высоты, см.')
 
     extra = models.BooleanField(
-        'экстра', default=False, help_text='Ухоженные растения.')
+        'экстра', default=False, db_index=True, help_text='Ухоженные растения.')
 
-    cart_item = fields.GenericRelation(CartItem)
+    # cart_item = fields.GenericRelation(CartItem)
+    
+    @property
+    def height(self):
+        if self.height_from and self.height_to:
+            return f"{self.height_from}-{self.height_to}"
+        return None
+    
+    @property
+    def width(self):
+        if self.width_from and self.width_to:
+            return f"{self.width_from}-{self.width_to}"
+        return None
 
     def __str__(self):
         # s = ''
@@ -147,6 +171,26 @@ class ConiferProductPrice(ProductPriceAbstract):
         return f"{self.price}" if len(s) == 0 else f"{s} ={self.price} руб."
 
     def clean(self):
+        if self.height_from and not self.height_to:
+            raise ValidationError(
+                {'height_from': MSG_REQUIRED_BOTH, 'height_to': MSG_REQUIRED_BOTH, }, 
+                code='required')
+
+        if not self.height_from and self.height_to:
+            raise ValidationError(
+                {'height_from': MSG_REQUIRED_BOTH, 'height_to': MSG_REQUIRED_BOTH, }, 
+                code='required')
+
+        if self.width_from and not self.width_to:
+            raise ValidationError(
+                {'width_from': MSG_REQUIRED_BOTH, 'width_to': MSG_REQUIRED_BOTH, }, 
+                code='required')
+
+        if not self.width_from and self.width_to:
+            raise ValidationError(
+                {'width_from': MSG_REQUIRED_BOTH, 'width_to': MSG_REQUIRED_BOTH, }, 
+                code='required')
+
         field_list = ('container', 'height', 'width', 'rs', 'shtamb', 'extra',)
         super().validate_one_of_required(field_list)
         super().clean()

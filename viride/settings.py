@@ -57,6 +57,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     # 'allauth.socialaccount',
+    'crispy_forms',
+    'crispy_bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -257,6 +259,10 @@ AXES_COOLOFF_TIME = timedelta(minutes=5)
 AXES_LOCKOUT_TEMPLATE = 'axes/lockout.html'
 # AXES_USERNAME_FORM_FIELD = 'email'
 AXES_ONLY_ADMIN_SITE = True
+
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 
 PAGINATION_SETTINGS = {

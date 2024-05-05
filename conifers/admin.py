@@ -49,7 +49,7 @@ class ConiferProductPriceInline(ProductPriceInline):
             .select_related('container', 'rs')
 
     model = ConiferProductPrice
-    fields = ('container', 'height', 'width',
+    fields = ('container', ('height_from', 'height_to'), ('width_from', 'width_to'),
               'rs', 'shtamb', 'extra', 'price', )
 
 
@@ -221,7 +221,8 @@ class ConiferProductPriceAdmin(ProductPriceAbstractAdmin):
 
     list_filter = (ConiferProductPriceGenusAdminFilter,
                    ConiferProductPriceContainerAdminFilter,)
-    fields = ('product', 'container', 'height', 'width',
+    fields = ('product', 'container',
+              ('height_from', 'height_to'), ('width_from', 'width_to',), 
               'rs', 'shtamb', 'extra', 'price', )
     list_display = ('get_product', 'price', )
 
