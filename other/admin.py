@@ -24,7 +24,7 @@ class OtherProductAdmin(ProductAbstractAdmin, GetImageAdminMixin):
     list_filter = ('category', )
     form = OtherProductAdminForm
     actions = (make_visible, make_hidden,)
-    inlines = [OtherProductPriceInline, ImageInline, ]
+    inlines = [ImageInline, OtherProductPriceInline,]
     fieldsets = (
         ('', {
             'fields': ('is_visible',)

@@ -113,7 +113,7 @@ class RoseProductAdmin(ProductAbstractAdmin):
     show_facets = admin.ShowFacets.ALWAYS
     list_filter = ('species', )
     actions = (batch_copy, make_visible, make_hidden,)
-    inlines = [RoseProductPriceInline, ImageInline, ]
+    inlines = [ImageInline, RoseProductPriceInline, ]
     filter_horizontal = ('advantages', )
     fieldsets = (
         ('', {

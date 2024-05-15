@@ -149,7 +149,7 @@ class DecProductAdmin(ProductAbstractAdmin):
     form = DecProductAdminForm
     list_filter = (DecProductGenusAdminFilter, )
     actions = (batch_copy, make_visible, make_hidden,)
-    inlines = [DecProductPriceInline, ImageInline, ]
+    inlines = [ImageInline,  DecProductPriceInline, ]
     filter_horizontal = ('advantages', )
     fieldsets = (
         ('', {

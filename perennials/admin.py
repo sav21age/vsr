@@ -151,7 +151,7 @@ class PerProductAdmin(ProductAbstractAdmin):
     form = PerProductAdminForm
     list_filter = (PerProductGenusAdminFilter, )
     actions = (batch_copy, make_visible, make_hidden,)
-    inlines = [PerProductPriceInline, ImageInline, ]
+    inlines = [ImageInline, PerProductPriceInline, ]
     filter_horizontal = ('advantages', )
     fieldsets = (
         ('', {

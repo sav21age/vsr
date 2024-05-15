@@ -155,7 +155,7 @@ class FruitProductAdmin(ProductAbstractAdmin):
     form = FruitProductAdminForm
     list_filter = (FruitProductGenusAdminFilter, )
     actions = (batch_copy, make_visible, make_hidden,)
-    inlines = [FruitProductPriceInline, ImageInline, ]
+    inlines = [ImageInline, FruitProductPriceInline, ]
     filter_horizontal = ('advantages', )
     fieldsets = (
         ('', {

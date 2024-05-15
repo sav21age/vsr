@@ -152,7 +152,7 @@ class ConiferProductAdmin(ProductAbstractAdmin):
     form = ConiferProductAdminForm
     list_filter = (ConiferProductGenusAdminFilter, )
     actions = (batch_copy, make_visible, make_hidden,)
-    inlines = [ConiferProductPriceInline, ImageInline, ]
+    inlines = [ImageInline, ConiferProductPriceInline, ]
     filter_horizontal = ('advantages', )
     fieldsets = (
         ('', {
