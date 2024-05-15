@@ -120,10 +120,12 @@ class PlantProductAbstract(ProductAbstract):
 
 
 class PlantPriceContainer(models.Model):
-    name = models.CharField('название', max_length=5, unique=True, )
-    description = models.CharField('описание', max_length=200)
+    name = models.CharField('название', max_length=5, unique=True,)
+    description = models.CharField('описание', max_length=200,
+        help_text='Например: Горшок объемом 10 литров.')
     order_number = models.DecimalField(
-        'порядковый номер', max_digits=5, decimal_places=2, blank=True, null=True)
+        'порядковый номер', max_digits=5, decimal_places=2, blank=True, null=True,
+        help_text='Например: P9-0.9, P15-0.15, C1-1, C10-10 и т.д.')
 
     def __str__(self):
         return f"{self.name}"
