@@ -48,7 +48,7 @@ class FruitProductPriceInline(ProductPriceInline):
             .select_related('container', 'rs', 'age')
 
     model = FruitProductPrice
-    fields = ('container', 'height', 'width',
+    fields = ('container', ('height_from', 'height_to'), ('width_from', 'width_to',),
               'rs', 'age', 'rootstock', 'price', )
 
 
@@ -240,7 +240,8 @@ class FruitProductPriceAdmin(ProductPriceAbstractAdmin):
     list_filter = (FruitProductPriceGenusAdminFilter,
                    FruitProductPriceAgeAdminFilter,
                    FruitProductPriceContainerAdminFilter, )
-    fields = ('product', 'container', 'height', 'width',
+    fields = ('product', 'container', 
+              ('height_from', 'height_to'), ('width_from', 'width_to',),
               'rs', 'age', 'rootstock', 'price', )
     list_display = ('get_product', 'price', )
     # show_facets = admin.ShowFacets.ALLOW

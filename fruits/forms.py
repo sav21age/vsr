@@ -1,7 +1,13 @@
 from django import forms
+from django.urls import reverse
+from django.utils.safestring import mark_safe
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Div, Field, HTML
+from crispy_forms.bootstrap import PrependedText, InlineCheckboxes
+from crispy_bootstrap5.bootstrap5 import Switch
 from common.forms import ProductAdminForm
-from fruits.models import FruitProduct, FruitProductPrice, FruitSpecies
-from plants.models import PlantGenus
+from fruits.models import FruitProduct, FruitProductPrice, FruitProductPriceAge, FruitSpecies
+from plants.models import PlantGenus, PlantPriceContainer, PlantPriceRootSystem
 
 
 class FruitProductBatchCopyAdminForm(forms.Form):
@@ -144,3 +150,99 @@ class FruitProductPriceAdminForm(forms.ModelForm):
     class Meta:
         model = FruitProductPrice
         exclude = []
+
+
+class FruitProductPriceFilterForm(forms.Form):
+    qs = FruitProductPrice.objects.all()
+
+    genus = forms.ModelMultipleChoiceField(
+        widget=forms.CheckboxSelectMultiple(),
+        # widget=forms.RadioSelect(),
+        queryset=PlantGenus.objects.filter(division__name='FRU'),
+        label='',
+        # label='Род растений',
+        required=False
+    )
+
+    container = forms.ModelChoiceField(
+        widget=forms.Select(),
+        queryset=PlantPriceContainer.objects.filter(
+            id__in=qs.values_list('container', flat=True).order_by('container_id').distinct('container')),
+        label='контейнер:',
+        required=False
+    )
+
+    rs = forms.ModelChoiceField(
+        widget=forms.Select(),
+        queryset=PlantPriceRootSystem.objects.filter(
+            id__in=qs.values_list('rs', flat=True).order_by('rs_id').distinct('rs')),
+        label='корневая система:',
+        required=False
+    )
+
+    age = forms.ModelChoiceField(
+        widget=forms.Select(),
+        # queryset=PlantPriceRootSystem.objects.all(),
+        queryset=FruitProductPriceAge.objects.filter(
+            id__in=qs.values_list('age', flat=True).order_by('age_id').distinct('age')),
+        label='возраст:',
+        required=False
+    )
+
+    per_page = forms.IntegerField(
+        required=False,
+    )
+
+    show_filters = forms.CharField(
+        # widget=forms.CheckboxInput(),
+        initial='yes',
+        required=False,
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_id = 'fruitFilterForm'
+        self.helper.form_method = 'GET'
+        self.helper.form_action = reverse('fruits:list')
+
+        self.helper.layout = Layout(
+            # HTML('<div class="overlay"><div class="overlay-table"><div class="overlay-table-cell"><i class="fas fa-sync-alt fa-2x fa-spin"></i></div></div></div>'),
+            HTML('<div class="overlay"><div class="overlay-table"><div class="overlay-table-cell"><i class="fas fa-spinner fa-2x fa-spin"></i></div></div></div>'),
+            Div(
+                # Field('genus', css_class=' col-12 d-inline-flex fix-checkbox-label'),
+                InlineCheckboxes(
+                    'genus', css_class='max-height overflow-y-auto'),
+                css_class='row'
+            ),
+            Div(
+                Div(
+                    PrependedText(
+                        'container', mark_safe('<i class="fas fa-archive"></i>')),
+                    css_class='col-6 col-sm-4 col-md-3 col-lg-2'
+                ),
+                Div(
+                    PrependedText(
+                        'rs', mark_safe('<i class="fas fa-carrot"></i>')),
+                    css_class='col-6 col-sm-4 col-md-3 col-lg-2'
+                ),
+                Div(
+                    PrependedText(
+                        'age', mark_safe('<i class="far fa-calendar"></i>')),
+                    css_class='col-6 col-sm-4 col-md-3 col-lg-2'
+                ),
+                css_class='row'
+            ),
+            Div(
+                Div(
+                    Field('per_page', type="hidden"),
+                    Field('show_filters', type="hidden"),
+                    # Switch('show_filters', type="hidden"),
+                    HTML('<button class="btn btn-tertiary me-4">Фильтровать</button>'),
+                    HTML(
+                        f'<a class="btn btn-danger" href="{reverse("fruits:list")}">Сбросить</a>'),
+                    css_class='col-12'
+                ),
+                css_class='row mb-4'
+            )
+        )

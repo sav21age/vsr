@@ -377,7 +377,6 @@
             xhr.open("POST", '/catalog/perennials/filter-form/', true);
             xhr.setRequestHeader("X-REQUESTED-WITH", "XMLHttpRequest");
             xhr.onreadystatechange = function () {
-
                 if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
                     let res = JSON.parse(xhr.response)
                     if (Object.keys(res).length !== 0) {
@@ -403,12 +402,94 @@
                 }
             };
             xhr.send(new URLSearchParams(serialize(body)));
-            select('.overlay').classList.remove('d-block');
+            // select('.overlay').classList.remove('d-block');
         }
 
         on("click", "input[name=genus]", send, true);
         on("change", "select[name=container]", send);
         on("change", "select[name=planting_year]", send);
+
+        document.addEventListener("DOMContentLoaded", function () {
+            let e = new Event("load");
+            Object.defineProperty(e, 'target', { writable: false, value: { name: "load" } });
+            send(e)
+        });
+    }
+
+    //--
+
+    const fff = select('#fruitFilterForm');
+    if (fff) {
+        const urlSearchParams = new URLSearchParams(window.location.search);
+        const showFilters = urlSearchParams.get('show_filters');
+        if (showFilters == 'yes') {
+            const cfff = select('#collapseFruitFilterForm');
+            bootstrap.Collapse.getOrCreateInstance(cfff).show();
+        }
+
+        const send = function (e) {
+            select('.overlay').classList.add('d-block');
+            const body = {
+                'csrfmiddlewaretoken': csrfToken.value
+            };
+
+            let genus = select("input[name=genus]", true);
+            body['genus'] = []
+            genus.forEach((el) => {
+                if (el.checked) {
+                    body['genus'].push(el.value)
+                }
+            });
+
+            let container = select("select[name=container]");
+            if (container.value) body['container'] = container.value
+
+            let rs = select("select[name=rs]");
+            if (rs.value) body['rs'] = rs.value
+
+            let age = select("select[name=age]");
+            if (age.value) body['age'] = age.value
+
+            xhr.open("POST", '/catalog/fruits/filter-form/', true);
+            xhr.setRequestHeader("X-REQUESTED-WITH", "XMLHttpRequest");
+            xhr.onreadystatechange = function () {
+
+                if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                    let res = JSON.parse(xhr.response)
+                    if (Object.keys(res).length !== 0) {
+
+                        if (res['genus'].length > 0 && e.target.name != 'genus') {
+                            genus.forEach((el) => {
+                                el.disabled = false
+                                if (!res['genus'].includes(Number(el.value))) {
+                                    el.disabled = 'disabled'
+                                }
+                            });
+                        }
+
+                        if (res['container'] && e.target.name != 'container') {
+                            selectField(container, res['container'])
+                        }
+
+                        if (res['rs'] && e.target.name != 'rs') {
+                            selectField(rs, res['rs'])
+                        }
+
+                        if (res['age'] && e.target.name != 'age') {
+                            selectField(age, res['age'])
+                        }
+                    }
+                    select('.overlay').classList.remove('d-block');
+                }
+            };
+            xhr.send(new URLSearchParams(serialize(body)));
+            // select('.overlay').classList.remove('d-block');
+        }
+
+        on("click", "input[name=genus]", send, true);
+        on("change", "select[name=container]", send);
+        on("change", "select[name=rs]", send);
+        on("change", "select[name=age]", send);
 
         document.addEventListener("DOMContentLoaded", function () {
             let e = new Event("load");

@@ -1,6 +1,7 @@
 from urllib.parse import urlencode
 from django.test import TestCase, Client
 from django.urls import reverse
+from deciduous.forms import DecProductPriceFilterForm
 from deciduous.models import DecProduct
 
 
@@ -32,6 +33,45 @@ class DecProductTest(TestCase):
         """ Test ListView """
         response = self.client.get(reverse(f"{APP}:list"))
         self.assertEqual(response.status_code, 200)
+
+    def test_listview_filter_form(self):
+        """ Test ListView filter form """
+
+        form_data = {
+            'genus': [64,],
+            'height_from': 90,
+            'container': 6,
+        }
+
+        form = DecProductPriceFilterForm(data=form_data)
+        # print(form.errors)
+        self.assertTrue(form.is_valid())
+
+        response = self.client.get(
+            reverse(f"{APP}:list"), data=form_data, follow=True
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(form['genus'].value(), [64,])
+        self.assertEqual(form['height_from'].value(), 90)
+        self.assertEqual(form['container'].value(), 6)
+
+    def test_listview_filter_form_xhr(self):
+        """ Test ListView filter form XMLHttpRequest """
+
+        json_data = {
+            'genus': [64,],
+            'height_from': 90,
+            'container': 6,
+        }
+
+        response = self.client.post(
+            reverse(f"{APP}:filter_form"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 200)
+
+        json_response = '{"genus": [2, 27, 35, 39, 63, 64, 66, 69, 72, 77, 80, 23, 85, 90], "height_from": {"min": 125, "max": 150}, "container": [6], "rs": [1], "shtamb": null, "extra": null}'
+        self.assertEqual(response.content.decode('utf-8'), json_response)
+
 
     def test_listview_per_page(self):
         """ Test ListView with per_page """

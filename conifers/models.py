@@ -107,20 +107,20 @@ class ConiferProductPrice(ProductPriceAbstract):
 
     height_from = models.PositiveSmallIntegerField(
         'высота от, см', blank=True, null=True, db_index=True,
-        help_text='от (10) и до (пусто) =10+, от (10) и до (10) =10, от (10) и до (20) =10-20')
+        help_text='от (10) и до (пусто) = 10+')
     height_to = models.PositiveSmallIntegerField(
         'высота до, см', blank=True, null=True, db_index=True,
-        help_text='от (10) и до (пусто) =10+, от (10) и до (10) =10, от (10) и до (20) =10-20')
+        help_text='от (10) и до (10) = 10, от (10) и до (20) = 10-20')
 
     # width = models.CharField(
     #     'ширина, см', max_length=7, blank=True, validators=(SizeValidator,))
 
     width_from = models.PositiveSmallIntegerField(
         'ширина от, см', blank=True, null=True, db_index=True,
-        help_text='от (10) и до (пусто) =10+, от (10) и до (10) =10, от (10) и до (20) =10-20')
+        help_text='от (10) и до (пусто) = 10+')
     width_to = models.PositiveSmallIntegerField(
         'ширина до, см', blank=True, null=True, db_index=True,
-        help_text='от (10) и до (пусто) =10+, от (10) и до (10) =10, от (10) и до (20) =10-20')
+        help_text='от (10) и до (10) = 10, от (10) и до (20) = 10-20')
 
     rs = models.ForeignKey(
         PlantPriceRootSystem, verbose_name='корневая система', blank=True, null=True, on_delete=models.CASCADE)

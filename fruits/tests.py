@@ -1,13 +1,14 @@
 from urllib.parse import urlencode
 from django.test import TestCase, Client
 from django.urls import reverse
+from fruits.forms import FruitProductPriceFilterForm
 from fruits.models import FruitProduct
 
 
 APP = 'fruits'
 
 
-class DecProductTest(TestCase):
+class FruitProductTest(TestCase):
     fixtures = ['fixtures/db.json', ]
 
     def setUp(self):
@@ -32,6 +33,40 @@ class DecProductTest(TestCase):
         """ Test ListView """
         response = self.client.get(reverse(f"{APP}:list"))
         self.assertEqual(response.status_code, 200)
+
+    def test_listview_filter_form(self):
+        """ Test ListView filter form """
+
+        form_data = {
+            'genus': [36,],
+            'container': 11,
+        }
+
+        form = FruitProductPriceFilterForm(data=form_data)
+        self.assertTrue(form.is_valid())
+
+        response = self.client.get(
+            reverse(f"{APP}:list"), data=form_data, follow=True
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(form['genus'].value(), [36])
+        self.assertEqual(form['container'].value(), 11)
+
+    def test_listview_filter_form_xhr(self):
+        """ Test ListView filter form XMLHttpRequest """
+
+        json_data = {
+            'genus': [36,],
+            'container': 11,
+        }
+
+        response = self.client.post(
+            reverse(f"{APP}:filter_form"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 200)
+
+        json_response = '{"genus": [36, 40, 47, 50, 51], "container": [6, 11, 9], "rs": [], "age": [5]}'
+        self.assertEqual(response.content.decode('utf-8'), json_response)
 
     def test_listview_per_page(self):
         """ Test ListView with per_page """

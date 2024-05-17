@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 
@@ -40,5 +41,5 @@ FloweringPeriodValidator = RegexValidator(
 
 
 def YearStringValidator(value):
-    if value and int(value) < 2015:
-        raise ValidationError('Год должен быть больше 2015')
+    if value and (int(value) < 2015 or int(value) > datetime.now().year):
+        raise ValidationError('Год должен быть больше 2015 и меньше текущего')
