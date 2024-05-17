@@ -334,36 +334,40 @@ p.detail-property span {
   font-size: 24px;
 }
 
-#coniferFilterForm label {
+#coniferFilterForm label, #decFilterForm label, #perFilterForm label {
   margin-bottom: 0;
 }
 
-#coniferFilterForm {
+#coniferFilterForm, #decFilterForm, #perFilterForm {
   position: relative;
 }
 
-#coniferFilterForm #div_id_shtamb {
+#coniferFilterForm #div_id_shtamb, #decFilterForm #div_id_shtamb, #perFilterForm #div_id_shtamb {
   margin-bottom: 0 !important;
 }
 
-#coniferFilterForm input::-webkit-input-placeholder {
+#coniferFilterForm input::-webkit-input-placeholder, #decFilterForm input::-webkit-input-placeholder, #perFilterForm input::-webkit-input-placeholder {
   opacity: 0.5 !important;
 }
 
-#coniferFilterForm input::-moz-placeholder {
+#coniferFilterForm input::-moz-placeholder, #decFilterForm input::-moz-placeholder, #perFilterForm input::-moz-placeholder {
   opacity: 0.5 !important;
 }
 
-#coniferFilterForm input:-ms-input-placeholder {
+#coniferFilterForm input:-ms-input-placeholder, #decFilterForm input:-ms-input-placeholder, #perFilterForm input:-ms-input-placeholder {
   opacity: 0.5 !important;
 }
 
-#coniferFilterForm input::-ms-input-placeholder {
+#coniferFilterForm input::-ms-input-placeholder, #decFilterForm input::-ms-input-placeholder, #perFilterForm input::-ms-input-placeholder {
   opacity: 0.5 !important;
 }
 
-#coniferFilterForm input::placeholder {
+#coniferFilterForm input::placeholder, #decFilterForm input::placeholder, #perFilterForm input::placeholder {
   opacity: 0.5 !important;
+}
+
+.max-height {
+  max-height: 150px;
 }
 
 .overlay {

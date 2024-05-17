@@ -1,5 +1,5 @@
 {% extends 'main.html' %}
-{% load thumbnail django_bootstrap_breadcrumbs static %}
+{% load thumbnail django_bootstrap_breadcrumbs crispy_forms_tags static %}
 
 {% block head %}
   <title>Многолетние растения по хорошей цене | Вириде - питомник растений</title>
@@ -22,7 +22,31 @@
 {% endblock %}
 
 {% block content %}
-  {% include 'common/listview/filters.html' %}
+  {% comment %} {% include 'common/listview/filters.html' %} {% endcomment %}
+
+  <div class="container-fluid px-3 px-md-5">
+  <form>
+      <div class="row align-items-end mb-4">
+          {{ per_page }}
+          <div class="col-5 col-sm-4 col-md-3 col-lg-2">
+          <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePerFilterForm" aria-expanded="false" aria-controls="collapsePerFilterForm">
+            <i class="fas fa-sliders-h me-2" style="color:white;"></i> Фильтры
+          </button>
+          </div>
+      </div>
+  </form>
+  </div>
+  
+  <div class="collapse" id="collapsePerFilterForm">
+    <div class="container-fluid px-3 px-md-5">
+      <div class="row">
+        <div class="col-12">
+            {% crispy form %}{% csrf_token %}
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="container-fluid px-3 px-md-5">
     <div class="row">
       <div class="col-12">

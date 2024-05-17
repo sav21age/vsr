@@ -1,6 +1,10 @@
 from django.core.validators import RegexValidator
+from django.core.exceptions import ValidationError
 
 decimal_comma = '\d{1,3}(\,\d{1,3})?'
+
+NumericValidator = RegexValidator(
+    r'^[0-9+]+$', 'Можно вводить цифры')
 
 SizeValidator = RegexValidator(
     r'^[0-9+\-\+\/дот, ]+$', 'Можно вводить цифры, "/", "-" и "+"')
@@ -33,3 +37,8 @@ FloweringPeriodValidator = RegexValidator(
 # regex = r'^\+?1?\d{9,15}$'
 
 # ^\+?\d{1}?[\s]?\(?\d{1,3}?\)?[\s]?\d{1,4}[-\s]?\d{1,4}[-\s]?\d{1,9}$
+
+
+def YearStringValidator(value):
+    if value and int(value) < 2015:
+        raise ValidationError('Год должен быть больше 2015')

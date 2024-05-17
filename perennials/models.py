@@ -1,9 +1,10 @@
 from django.db import models
 from django.urls import reverse
+from django.core.validators import MinValueValidator
 from django.contrib.postgres.indexes import GinIndex
 from django.contrib.postgres.search import SearchVectorField
 from common.models import ProductPriceAbstract
-from common.validators import FloweringPeriodValidator, SizeValidator
+from common.validators import FloweringPeriodValidator, NumericValidator, SizeValidator, YearStringValidator
 from plants.models import (
     PlantPlanting, PlantPriceContainer, PlantProductAbstract, PlantSpeciesAbstract)
 
@@ -105,7 +106,7 @@ class PerProductPrice(ProductPriceAbstract):
         PlantPriceContainer, verbose_name='контейнер', blank=True, null=True, on_delete=models.CASCADE)
 
     planting_year = models.CharField(
-        'год посадки', max_length=4, blank=True,)
+        'год посадки', max_length=4, blank=True, validators=(NumericValidator, YearStringValidator),)
 
     def __str__(self):
         # s = ''

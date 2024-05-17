@@ -106,17 +106,21 @@ class ConiferProductPrice(ProductPriceAbstract):
     #     'высота, см', max_length=7, blank=True, validators=(SizeValidator,))
 
     height_from = models.PositiveSmallIntegerField(
-        'высота от, см', blank=True, null=True, db_index=True)
+        'высота от, см', blank=True, null=True, db_index=True,
+        help_text='от (10) и до (пусто) =10+, от (10) и до (10) =10, от (10) и до (20) =10-20')
     height_to = models.PositiveSmallIntegerField(
-        'высота до, см', blank=True, null=True, db_index=True)
+        'высота до, см', blank=True, null=True, db_index=True,
+        help_text='от (10) и до (пусто) =10+, от (10) и до (10) =10, от (10) и до (20) =10-20')
 
     # width = models.CharField(
     #     'ширина, см', max_length=7, blank=True, validators=(SizeValidator,))
 
     width_from = models.PositiveSmallIntegerField(
-        'ширина от, см', blank=True, null=True, db_index=True)
+        'ширина от, см', blank=True, null=True, db_index=True,
+        help_text='от (10) и до (пусто) =10+, от (10) и до (10) =10, от (10) и до (20) =10-20')
     width_to = models.PositiveSmallIntegerField(
-        'ширина до, см', blank=True, null=True, db_index=True)
+        'ширина до, см', blank=True, null=True, db_index=True,
+        help_text='от (10) и до (пусто) =10+, от (10) и до (10) =10, от (10) и до (20) =10-20')
 
     rs = models.ForeignKey(
         PlantPriceRootSystem, verbose_name='корневая система', blank=True, null=True, on_delete=models.CASCADE)
@@ -132,13 +136,17 @@ class ConiferProductPrice(ProductPriceAbstract):
     
     @property
     def height(self):
-        if self.height_from and self.height_to:
+        if self.height_from and not self.height_to:
+            return f"{self.height_from}+"
+        elif self.height_from and self.height_to:
             return f"{self.height_from}-{self.height_to}"
         return None
     
     @property
     def width(self):
-        if self.width_from and self.width_to:
+        if self.width_from and not self.width_to:
+            return f"{self.width_from}+"
+        elif self.width_from and self.width_to:
             return f"{self.width_from}-{self.width_to}"
         return None
 
@@ -171,20 +179,20 @@ class ConiferProductPrice(ProductPriceAbstract):
         return f"{self.price}" if len(s) == 0 else f"{s} ={self.price} руб."
 
     def clean(self):
-        if self.height_from and not self.height_to:
-            raise ValidationError(
-                {'height_from': MSG_REQUIRED_BOTH, 'height_to': MSG_REQUIRED_BOTH, }, 
-                code='required')
+        # if self.height_from and not self.height_to:
+        #     raise ValidationError(
+        #         {'height_from': MSG_REQUIRED_BOTH, 'height_to': MSG_REQUIRED_BOTH, }, 
+        #         code='required')
 
         if not self.height_from and self.height_to:
             raise ValidationError(
                 {'height_from': MSG_REQUIRED_BOTH, 'height_to': MSG_REQUIRED_BOTH, }, 
                 code='required')
 
-        if self.width_from and not self.width_to:
-            raise ValidationError(
-                {'width_from': MSG_REQUIRED_BOTH, 'width_to': MSG_REQUIRED_BOTH, }, 
-                code='required')
+        # if self.width_from and not self.width_to:
+        #     raise ValidationError(
+        #         {'width_from': MSG_REQUIRED_BOTH, 'width_to': MSG_REQUIRED_BOTH, }, 
+        #         code='required')
 
         if not self.width_from and self.width_to:
             raise ValidationError(

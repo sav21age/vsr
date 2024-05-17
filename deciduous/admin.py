@@ -47,7 +47,7 @@ class DecProductPriceInline(ProductPriceInline):
             .select_related('container', 'rs')
 
     model = DecProductPrice
-    fields = ('container', 'height', 'width', 'trunk_diameter',
+    fields = ('container', ('height_from', 'height_to'), ('width_from', 'width_to'), 'trunk_diameter',
               'rs', 'shtamb', 'extra', 'bush', 'price', )
 
 
@@ -212,7 +212,8 @@ class DecProductPriceAdmin(ProductPriceAbstractAdmin):
 
     list_filter = (DecProductPriceGenusAdminFilter,
                    DecProductPriceContainerAdminFilter,)
-    fields = ('product', 'container', 'height', 'width',
+    fields = ('product', 'container', 
+              ('height_from', 'height_to'), ('width_from', 'width_to'),
               'rs', 'shtamb', 'extra', 'bush', 'price', )
     list_display = ('get_product', 'price', )
 

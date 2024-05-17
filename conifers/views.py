@@ -32,8 +32,7 @@ class ConiferFilterFormMixin(object):
                 qs = qs.filter(species__genus__in=id_list)
 
             if clean['height_from']:
-                qs = qs.filter(
-                    prices__height_from__gte=clean['height_from'])
+                qs = qs.filter(prices__height_from__gte=clean['height_from'])
 
             if clean['width_from']:
                 qs = qs.filter(
@@ -111,8 +110,7 @@ def filter_form(request):
             # .prefetch_related('advantages')
 
         if clean['height_from']:
-            qs = qs.filter(
-                prices__height_from__gte=clean['height_from'])
+            qs = qs.filter(prices__height_from__gte=clean['height_from'])
 
         if clean['width_from']:
             qs = qs.filter(
