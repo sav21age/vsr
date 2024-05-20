@@ -46,7 +46,7 @@ def update_search_vector(sender, instance, created, update_fields, **kwargs):
     if kwargs.get('raw'): #add for test, pass fixtures
         return
     qs = sender.objects.filter(pk=instance.pk)
-    qs.update(search_vector=SearchVector('name', config='russian'))
+    qs.update(search_vector=SearchVector('name', 'name_trans_words', config='russian'))
 
 
 @receiver_multiple([post_save,], senders=sender_pages)

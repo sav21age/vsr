@@ -164,7 +164,7 @@ class PerProductAdmin(ProductAbstractAdmin):
             'fields': ('species', )
         }),
         ('', {
-            'fields': ('name', 'slug', 'scientific_name', 'short_description', 'leaves', )
+            'fields': ('name', 'name_trans_words', 'slug', 'scientific_name', 'short_description', 'leaves', )
         }),
         ('Размеры', {
             'fields': ('height', 'width', )

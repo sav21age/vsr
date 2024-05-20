@@ -33,6 +33,10 @@ class PageAbstract(models.Model):
 
 class ProductAbstract(PageAbstract):
     # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name_trans_words = models.CharField(
+        'перевод слов в названии', max_length=100, blank=True,
+        help_text='Перечисление слов через запятую. Например: если название "Alberta Globe", то: альберта, глоб, глоуб. Скрытое поле, предназначено для поиска.')
+
     short_description = models.CharField('короткое описание', max_length=250)
     description = models.TextField('описание', blank=True)
 

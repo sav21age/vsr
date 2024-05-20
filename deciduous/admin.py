@@ -162,7 +162,7 @@ class DecProductAdmin(ProductAbstractAdmin):
             'fields': ('species', )
         }),
         ('', {
-            'fields': ('name', 'slug', 'scientific_name', 'short_description', 'leaves', 'crown')
+            'fields': ('name', 'name_trans_words', 'slug', 'scientific_name', 'short_description', 'leaves', 'crown')
         }),
         ('Размеры', {
             'fields': ('height', 'width', )

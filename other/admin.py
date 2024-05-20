@@ -36,7 +36,7 @@ class OtherProductAdmin(ProductAbstractAdmin, GetImageAdminMixin):
             'fields': ('category', )
         }),
         ('', {
-            'fields': ('name', 'slug', 'short_description',)
+            'fields': ('name', 'name_trans_words', 'slug', 'short_description',)
         }),
         ('', {
             'fields': ('description',)

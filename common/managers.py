@@ -1,6 +1,6 @@
 from django.db import models
-from django.db.models import Q
-from django.contrib.postgres.search import SearchVector, SearchQuery, TrigramSimilarity
+# from django.db.models import Q
+from django.contrib.postgres.search import SearchQuery, TrigramSimilarity
 
 
 class IsVisibleManager(models.Manager):

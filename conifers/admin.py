@@ -165,7 +165,7 @@ class ConiferProductAdmin(ProductAbstractAdmin):
             'fields': ('species', )
         }),
         ('', {
-            'fields': ('name', 'slug', 'scientific_name', 'short_description', 'needles',)
+            'fields': ('name', 'name_trans_words', 'slug', 'scientific_name', 'short_description', 'needles',)
         }),
         ('Размеры', {
             'fields': ('height', 'width', )

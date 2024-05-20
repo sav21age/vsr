@@ -168,7 +168,7 @@ class FruitProductAdmin(ProductAbstractAdmin):
             'fields': ('species', )
         }),
         ('', {
-            'fields': ('name', 'slug', 'scientific_name', 'short_description',)
+            'fields': ('name', 'name_trans_words', 'slug', 'scientific_name', 'short_description',)
         }),
         ('Размеры', {
             'fields': ('height', 'width', )
