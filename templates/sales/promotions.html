@@ -31,28 +31,30 @@
       {% endfor %}
     </div>
 
-    <div class="table-responsive">
-      <table class="table table-striped promotion-table">
-        <thead>
-          <tr>
-            <th></th>
-            <th>обычная цена</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for item in object.promotionitem_set.all %}
-            <tr>
-              <td>
-                <a href="{{ item.url }}" target="_blank">{{ item.name }}</a>
-              </td>
-              <td>{{ item.price }} руб.</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
+        <div class="table-responsive">
+          <table class="table promotion-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th class="text-end">обычная цена</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in object.promotionitem_set.all %}
+                <tr>
+                  <td>
+                    <a href="{{ item.url }}" target="_blank">{{ item.name }}</a>
+                  </td>
+                  <td class="text-end">{{ item.price }} руб.</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
     {{ object.description|safe }}
   </div>
+
 {% empty %}
   <div class="row">
     <div class="col-12">

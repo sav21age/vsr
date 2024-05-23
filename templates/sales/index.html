@@ -23,19 +23,22 @@
 
 <div class="container-fluid px-3 px-md-5">
   <div class="row">
-    <ul class="nav nav-tabs" id="salesTab">
+    <ul class="nav nav-tabs" id="salesTabs">
       <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="discount-tab" data-bs-target="#discount" aria-controls="discount" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Скидки</button>
+        {% comment %} <button class="nav-link active" id="discount-tab" data-bs-target="#discount" aria-controls="discount" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Скидки</button> {% endcomment %}
+        <a class="nav-link" href="#discount" aria-selected="true">Скидки</a>
       </li>
       <li class="nav-item" role="presentation">
-        <button class="nav-link" id="promotion-tab" data-bs-target="#promotion" aria-controls="promotion" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">Акции</button>
+        {% comment %} <button class="nav-link" id="promotion-tab" data-bs-target="#promotion" aria-controls="promotion" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">Акции</button> {% endcomment %}
+        <a class="nav-link" href="#promotion" aria-selected="true">Акции</a>
       </li>
     </ul>
-    <div class="tab-content" id="salesTabContent">
-      <div class="tab-pane fade show active py-3" id="discount" role="tabpanel" aria-labelledby="discount-tab">
+    <div class="tab-content" id="salesTabsContent">
+      {% comment %} <div class="tab-pane fade show active py-3" id="discount" role="tabpanel" aria-labelledby="discount-tab"> {% endcomment %}
+      <div class="tab-pane py-3" id="discount" role="tabpanel">
         {% include 'sales/discounts.html' %}
       </div>
-      <div class="tab-pane fade py-3" id="promotion" role="tabpanel" aria-labelledby="promotion-tab">
+      <div class="tab-pane py-3" id="promotion" role="tabpanel">
         {% include 'sales/promotions.html' %}
       </div>
     </div>
