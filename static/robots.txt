@@ -31,10 +31,13 @@ Disallow: /*?start=
 Disallow: /*&start=
 Disallow: /*?limitstart=
 Disallow: /*&limitstart=
+Disallow: /*?layout=
+Disallow: /*&layout=
 Disallow: /components/
 
 Clean-param: limitstart
 Clean-param: start
+Clean-param: layout
 
 Host: https://viride.spb.ru
 Sitemap: https://viride.spb.ru/sitemap.xml
