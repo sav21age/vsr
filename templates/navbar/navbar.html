@@ -20,8 +20,8 @@
         </div>
       </div>
 
-      <a href="/sales/" class="nav-item nav-link" itemprop="url">Распродажа</a>
-      <a href="/contacts/" class="nav-item nav-link" itemprop="url">Контакты</a>
+      <a href="{% url 'sale_list' %}" class="nav-item nav-link" itemprop="url">Распродажа</a>
+      <a href="{% url 'contacts' %}" class="nav-item nav-link" itemprop="url">Контакты</a>
       <a href="#" class="nav-item nav-link disabled" itemprop="url">Загрузить прайс</a>
       {% comment %} <a href="#" class="nav-item nav-link disabled" itemprop="url"><i class="far fa-file-excel fa-lg text-primary"></i> Загрузить прайс</a> {% endcomment %}
       {% comment %} <a href="{% get_media_prefix %}documents/price-list-viride.xlsx" class="nav-item nav-link" itemprop="url"><i class="far fa-file-excel fa-lg text-primary"></i> Загрузить прайс</a> {% endcomment %}

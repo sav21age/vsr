@@ -23,8 +23,8 @@ from other.views import (
 from perennials.sitemap import PerProductSitemap
 from profiles.allauth.views import PersistLogoutView, RedirectedPasswordChangeView
 from roses.sitemap import RoseProductSitemap
-from sales.sitemap import SalesSitemap
-from sales.views import sales
+from sales.sitemap import SaleSitemap
+from sales.views import sale
 from search.views import SearchView
 
 
@@ -36,7 +36,7 @@ admin.site.site_header = admin.site.site_title = 'Питомник растен�
 sitemaps = {
     'index': IndexSitemap,
     'catalog': CatalogSitemap,
-    'sales': SalesSitemap,
+    'sale': SaleSitemap,
     'contacts': ContactsSitemap,
     'roses': RoseProductSitemap,
     'conifers': ConiferProductSitemap,
@@ -66,7 +66,7 @@ urlpatterns = [
 
     path('', index, name='index'),
     path('search/', SearchView.as_view(), name='search'),
-    path('sales/', sales, name='sales'),
+    path('sale/', sale, name='sale_list'),
     path('contacts/', contacts, name='contacts'),
 
     path('catalog/', CatalogItemList.as_view(), name="catalog_item_list"),

@@ -2,11 +2,11 @@ from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 
 
-class SalesSitemap(Sitemap):
+class SaleSitemap(Sitemap):
     priority = 1
 
     def items(self):
-        return ['sales',]
+        return ['sale',]
 
     def location(self, obj):
-        return reverse('sales')
+        return reverse('sale_list')

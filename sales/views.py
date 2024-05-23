@@ -3,7 +3,7 @@ from sales.models import Discount, Promotion
 # from itertools import chain
 
 
-def sales(request):
+def sale(request):
     qs_d = Discount.objects.all()
     # qs_d = Discount.objects.none()
     qs_p = Promotion.objects.prefetch_related('images', 'promotionitem_set')
