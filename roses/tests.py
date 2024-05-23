@@ -7,7 +7,7 @@ from roses.models import RoseProduct
 APP = 'roses'
 
 
-class DecProductTest(TestCase):
+class RoseProductTest(TestCase):
     fixtures = ['fixtures/db.json', ]
 
     def setUp(self):

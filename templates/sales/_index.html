@@ -1,0 +1,58 @@
+{% extends 'main.html' %}
+{% load thumbnail django_bootstrap_breadcrumbs %}
+{% block head %}
+  <title>Распродажа | Viride - садово-парковые растения</title>
+  <meta property="og:title" content="Распродажа | Viride - садово-парковые растения">
+  <meta name="description" content="Распродажа">
+  <meta property="og:description" content="Распродажа">
+  <meta property="og:type" content="website">
+{% endblock %}
+
+{% block breadcrumb %}
+  {% breadcrumb_for '/' %}<i class="fas fa-home"></i>{% endbreadcrumb_for %}
+  {% breadcrumb_for 'ыфдуы' %}Распродажа{% endbreadcrumb_for %}
+  {% render_breadcrumbs 'breadcrumb.html' %}
+{% endblock %}
+
+{% block name %}
+  Распродажа
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid px-3 px-md-5 mb-3">
+{% for object in object_list %}
+  <div class="row mb-5">
+    <ul class="nav nav-tabs" id="salesTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="discount-tab" data-bs-target="#discount" aria-controls="discount" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Скидки</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="promotion-tab" data-bs-target="#promotion" aria-controls="promotion" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">Акции</button>
+      </li>
+    </ul>
+    <div class="tab-content" id="salesTabContent">
+      <div class="tab-pane fade show active" id="discount" role="tabpanel" aria-labelledby="discount-tab">gdngfn</div>
+      <div class="tab-pane fade" id="promotion" role="tabpanel" aria-labelledby="promotion-tab">dfgndfdfn</div>
+    </div>
+    <div class="col-12 col-md-3">
+      {% include 'common/detailview/images_gallery.html' %}
+    </div>
+    <div class="col-12 col-md-9">
+      {% if object.type_of == 'discount' %}
+        {% include 'sales/discount.html' %}
+        {% else %}
+        {% include 'sales/promotion.html' %}
+      {% endif %}
+    </div>
+  </div>
+{% empty %}
+    <div class="row">
+        <div class="col-12">
+            {% include 'common/empty.html' %}
+        </div>
+    </div>  
+{% endfor%}
+</div>
+
+{% endblock %}

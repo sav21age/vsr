@@ -1,0 +1,11 @@
+<h2>Акция. {{ object.name}}</h2>
+<p>с {{ object.date_from|date:'DATE_FORMAT' }} по {{ object.date_to|date:'DATE_FORMAT' }}</p>
+<p>Срок проведения акции: 9 дней</p>
+
+<ul>
+{% for o in object.promotionitem_set.all %}
+<li><a href="{{o.url}}">{{ o.name }}</a> - обычная цена: {{ o.price }} руб.</li>
+{% endfor %}
+</ul>
+
+{{ object.description|safe }}

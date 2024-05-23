@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'other',
     'profiles',
     'favorites',
+    'sales',
     'django_ckeditor_5',
     # 'smart_selects',
     'django_db_logger',

@@ -1,0 +1,62 @@
+{% load thumbnail month_genitive %}
+
+{% if qs_p %}
+  <p>
+    <i class="fas fa-exclamation-circle"></i> Уважаемые клиенты! <strong>Обращаем ваше внимание.</strong> Акционные товары оформляются при заказе как обычные, конечная сумма будет пересчитана при подтверждении заказа по телефону.
+  </p>
+{% endif %}
+
+{% for object in qs_p %}
+  <div class="my-3 py-2">
+    <h3>{{ object.name }}</h3>
+    <p class="promotion-date">с <span class="text-danger">{{ object.date_from|date:'d' }}</span> {{ object.date_from|month_genitive }} по <span class="text-danger">{{ object.date_to|date:'d' }}</span> {{ object.date_to|month_genitive }}</p>
+
+    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 gx-4 gy-3">
+      {% for item in object.images.all %}
+        <div class="col">
+          <div class="card rounded-0 border-0 h-100">
+            {% if item.path %}
+              {% comment %} <a href="{{ item.path|thumbnail_url:'detail' }}" class="glightbox" aria-label="Увеличить"><img class="card-img rounded-0 img-fluid" src="{{ item.path|thumbnail_url:'list' }}" alt="{{ item.iamge_title }}" title="{{ item.image_title }}"></a> {% endcomment %}
+              <img class="card-img rounded-0 img-fluid" src="{{ item.path|thumbnail_url:'list' }}" alt="{{ item.iamge_title }}" title="{{ item.image_title }}">
+            {% else %}
+              {% include 'common/no_image_v.html' %}
+            {% endif %}
+            <div class="card-body px-1 py-1">
+              <p class="card-text">
+                <a href="{{ item.url }}">{{ item.name }}</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped promotion-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>обычная цена</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in object.promotionitem_set.all %}
+            <tr>
+              <td>
+                <a href="{{ item.url }}" target="_blank">{{ item.name }}</a>
+              </td>
+              <td>{{ item.price }} руб.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {{ object.description|safe }}
+  </div>
+{% empty %}
+  <div class="row">
+    <div class="col-12">
+      {% include 'common/empty.html' %}
+    </div>
+  </div>
+{% endfor %}

@@ -1,0 +1,33 @@
+{% load thumbnail month_genitive %}
+{% if qs_d %}
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 gx-4 gy-3">
+    {% for object in qs_d %}
+        <div class="col">
+            <div class="card rounded-0 border-0 h-100">
+                {% if object.image_path %}
+                    <a href="{{ object.url }}"><img class="card-img rounded-0 img-fluid" src="{{ object.image_path|thumbnail_url:'list' }}" alt="{{object.iamge_title}}" title="{{object.image_title}}"></a>
+                {% else %}
+                    <a href="{{ object.url }}">
+                        {% include 'common/no_image_v.html' %}
+                    </a>
+                {% endif %}
+                <div class="card-body px-1 py-1">
+                    <p class="card-date">
+                        с <span class="text-danger">{{ object.date_from|date:'d' }}</span> {{ object.date_from|month_genitive }} по <span class="text-danger">{{ object.date_to|date:'d' }}</span> {{ object.date_to|month_genitive }}
+                    </p>
+                    <p class="card-price">
+                        <span class="text-black-50"><s>{{ object.price_old }} руб.</s></span> {{ object.price_new }} руб.
+                    </p>
+                    <p class="card-text"><a href="{{ object.url }}">{{ object.name }}</a></p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+{% else %}
+    <div class="row">
+        <div class="col-12">
+            {% include 'common/empty.html' %}
+        </div>
+    </div>  
+{% endif %}
