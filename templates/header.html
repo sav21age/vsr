@@ -16,14 +16,14 @@
 
         <div class="h-100 d-block d-md-none">
           <form action="{% url 'search' %}" method="GET">
-            <div class="input-group">
+            <div class="input-group input-group-sm">
               {{ search_form.q }}
               <button type="submit" class="input-group-text bg-primary text-light"><i class="fa fa-fw fa-search text-white"></i></button>
             </div>
           </form>
         </div>
       </div>
-      <div class="col-5 col-md-4 mt-2 text-end">
+      <div class="col-5 col-md-4 text-end">
         <div class="h-100 d-inline-flex align-items-center">
           <a class="nav-icon d-none d-md-inline me-4 border-bottom-0" href="#" title="Поиск" data-bs-toggle="modal" data-bs-target="#modalSearch"><i class="fas fa-search"></i></a>
           <a class="nav-icon position-relative text-decoration-none border-bottom-0 me-4" href="{% url 'carts:index' %}" id="cartProductQuantity" title="Корзина">
@@ -47,7 +47,8 @@
               </li>
             </ul>
           {% else %}
-            <a href="{% url 'account_login' %}?next={{ request.get_full_path }}" style="--bs-btn-padding-y: .125rem; --bs-btn-padding-x: .5rem;" title="Войти" class="btn btn-sm btn-primary" role="button"><i class="fas fa-sign-in-alt text-white"></i><span class="ms-2">Войти</span></a>
+            {% comment %} <a href="{% url 'account_login' %}?next={{ request.get_full_path }}" style="--bs-btn-padding-y: .125rem; --bs-btn-padding-x: .5rem;" title="Войти" class="btn btn-sm btn-primary" role="button"><i class="fas fa-sign-in-alt text-white"></i><span class="ms-2">Войти</span></a> {% endcomment %}
+            <a href="{% url 'account_login' %}?next={{ request.get_full_path }}" title="Войти" class="btn btn-sm btn-primary" role="button"><i class="fas fa-sign-in-alt text-white"></i><span class="ms-2">Войти</span></a>
           {% endif %}
         </div>
       </div>
