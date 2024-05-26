@@ -24,7 +24,7 @@
         </div>
       </div>
       <div class="col-5 col-md-4 text-end">
-        <div class="h-100 d-inline-flex align-items-center">
+        <div class="h-100 d-inline-flex align-items-center{% if user.is_authenticated %} mt-1{% endif %}">
           <a class="nav-icon d-none d-md-inline me-4 border-bottom-0" href="#" title="Поиск" data-bs-toggle="modal" data-bs-target="#modalSearch"><i class="fas fa-search"></i></a>
           <a class="nav-icon position-relative text-decoration-none border-bottom-0 me-4" href="{% url 'carts:index' %}" id="cartProductQuantity" title="Корзина">
             <i class="fas fa-shopping-cart mr-1"></i>
