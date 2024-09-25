@@ -2,6 +2,8 @@ from urllib.parse import urlsplit, urlunsplit
 from django.db import models
 from django.contrib.contenttypes import fields
 from easy_thumbnails.fields import ThumbnailerImageField
+from common.errors import MSG_REQUIRED_BOTH
+from common.validators import NumericValidator, PercentValidator
 from images.models import Image
 from images.models import get_image_path
 from django.core.exceptions import ValidationError
@@ -29,8 +31,11 @@ class Discount(models.Model):
     image_title = models.CharField(
         'аттрибут title картинки', max_length=200, blank=True,)
 
-    price_old = models.DecimalField('старая цена, руб', max_digits=9, decimal_places=2)
-    price_new = models.DecimalField('новая цена, руб', max_digits=9, decimal_places=2)
+    price_old = models.DecimalField('старая цена, руб', max_digits=9, decimal_places=2, blank=True, null=True,)
+    price_new = models.DecimalField('новая цена, руб', max_digits=9, decimal_places=2, blank=True, null=True,)
+
+    percent = models.PositiveSmallIntegerField(
+        'скидка в процентах', blank=True, null=True, validators=(NumericValidator, PercentValidator))
 
     images = fields.GenericRelation(Image)
     upload_to_dir = 'discounts'
@@ -42,10 +47,31 @@ class Discount(models.Model):
         url = urlsplit(self.url)
         self.url = urlunsplit(url._replace(scheme="")._replace(netloc=""))
 
-        if self.price_old <= self.price_new:
-            raise ValidationError(
-                {'price_new': 'Новая цена должна быть меньше старой.'},
-                code='required')
+        if self.percent is not None:
+            if self.price_old is not None or self.price_new is not None:
+                raise ValidationError(
+                    {
+                        'price_old': 'Если указана скидка в процентах, то поле должно быть пустым',
+                        'price_new': 'Если указана скидка в процентах, то поле должно быть пустым',
+                    },
+                    code='invalid')
+
+        if self.price_old is None or self.price_new is None:
+            if (not self.price_old and self.price_new) or (self.price_old and not self.price_new):
+                raise ValidationError(
+                    {
+                        'price_old': MSG_REQUIRED_BOTH,
+                        'price_new': MSG_REQUIRED_BOTH, 
+                    },
+                    code='required')
+        
+        if self.price_old is not None and self.price_new is not None:
+            if self.price_old <= self.price_new:
+                raise ValidationError(
+                    {'price_new': 'Новая цена должна быть меньше старой.'},
+                    code='required')
+
+        #--
 
         if self.date_from >= self.date_to:
             raise ValidationError(

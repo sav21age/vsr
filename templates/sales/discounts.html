@@ -16,7 +16,11 @@
                         с <span class="text-danger">{{ object.date_from|date:'d' }}</span> {{ object.date_from|month_genitive }} по <span class="text-danger">{{ object.date_to|date:'d' }}</span> {{ object.date_to|month_genitive }}
                     </p>
                     <p class="card-price">
+                        {% if object.percent %}
+                        Скидка {{ object.percent }}%
+                        {% else %}
                         <span class="text-black-50"><s>{{ object.price_old }} руб.</s></span> {{ object.price_new }} руб.
+                        {% endif %}
                     </p>
                     <p class="card-text"><a href="{{ object.url }}">{{ object.name }}</a></p>
                 </div>

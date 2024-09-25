@@ -43,3 +43,8 @@ FloweringPeriodValidator = RegexValidator(
 def YearStringValidator(value):
     if value and (int(value) < 2015 or int(value) > datetime.now().year):
         raise ValidationError('Год должен быть больше 2015 и меньше текущего')
+
+
+def PercentValidator(value):
+    if value and (int(value) < 1 or int(value) >= 100):
+        raise ValidationError('Проценты должны быть больше 1 и меньше 100')
