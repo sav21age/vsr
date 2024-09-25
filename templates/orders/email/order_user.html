@@ -4,7 +4,7 @@
 <h3>Здравствуйте{% if full_name %}, {{full_name}}{% endif %}!</h3>
 <p>Заказ № {{ order.number }} от {{ order.created_at|date:'DATE_FORMAT' }} на сайте <a href="https://viride.spb.ru">ООО «Вириде»</a></p>
 <p>Статус заказа: <em>{{order.status|lower}}</em></p>
-<p>Оплата: <em>наличными при получении</em></p>
+{% comment %} <p>Оплата: <em>наличными при получении</em></p> {% endcomment %}
 <br>
 <table width="100%" cellspacing="0" cellpadding="5" border="0" rules="rows">
     <thead>
