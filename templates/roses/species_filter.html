@@ -1,0 +1,11 @@
+<div class="col-7 col-md-4 col-lg-3">
+    <label for="plantSpeciesFilter">фильтровать по:</label>
+    <div class="input-group">
+        <div class="input-group-text"><i class="fas fa-filter text-primary"></i></div>
+        <select id="plantSpeciesFilter" class="form-select" aria-label="фильтровать по" onchange="setLocation(this.value)">
+        {% for option in options %}
+        <option value="{{ option.querystring }}"{% if option.selected %} selected{% endif %}>{{ option.name }}</option>
+        {% endfor %}
+        </select>
+    </div>
+</div>

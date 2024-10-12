@@ -2,6 +2,7 @@ from django.http import Http404
 from django.views.generic import TemplateView
 from django.template.loader import render_to_string
 from common.views import UrlQuerystring
+from roses.models import RoseProduct
 
 
 class RoseSpeciesFilterMixinTemplate(TemplateView):
@@ -15,17 +16,17 @@ class RoseSpeciesFilterMixinTemplate(TemplateView):
 
         cur = self.parent_context['species_current']
 
-        context['links'] = [{
-            'url': UrlQuerystring.delete_param(url, 'species'),
-            'name': 'все',
-            'active': True if cur is None else False,
+        context['options'] = [{
+            'querystring': UrlQuerystring.delete_param(url, 'species'),
+            'name': 'Все',
+            'selected': True if cur is None else False,
         }]
 
         for value in self.parent_context['species_allowed']:
-            context['links'].append({
-                'url': UrlQuerystring.get_url(url, 'species', value.id),
-                'name': value.name.replace(self.parent_context['genus_name'], '').strip(),
-                'active': True if str(value.id) == cur else False,
+            context['options'].append({
+                'querystring': UrlQuerystring.get_url(url, 'species', value.id),
+                'name': value.name.replace(self.parent_context['genus_name'], '').strip().capitalize(),
+                'selected': True if str(value.id) == cur else False,
             })
 
         return context
@@ -47,14 +48,22 @@ class RoseSpeciesFilterMixin():
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        qs = self.species_model.objects.all()
+        # qs = self.species_model.objects.all()
+
+        qs = RoseProduct.is_visible_objects \
+            .values_list('species_id', flat=True).distinct()[:]
+        lst = list(qs)
+
         if qs:
             context['genus_name'] = 'Роза'
-            context['species_allowed'] = qs
+            # context['species_allowed'] = qs
+
+            context['species_allowed'] = self.species_model.objects.filter(id__in=lst)
+
             context['species_current'] = self.request.GET.get('species', None)
 
             context['species_filter'] = RoseSpeciesFilterMixinTemplate.as_view(
-                template_name='common/listview/species_filter.html',
+                template_name='roses/species_filter.html',
                 parent_context=context)(self.request)
 
         return context
