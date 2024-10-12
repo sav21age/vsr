@@ -37,7 +37,7 @@ class Cart(models.Model):
         return sum(item.total_quantity for item in self.cart_items.all())
 
     class Meta:
-        ordering = ('updated_at',)
+        ordering = ('-updated_at',)
         verbose_name = 'Корзина'
         verbose_name_plural = 'Корзины'
 
