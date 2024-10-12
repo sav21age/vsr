@@ -43,7 +43,8 @@
                 <div class="col">
                     <div class="card rounded-0 border-0 h-100">
                         {% if object.image_path %}
-                            <a href="{{ object.url }}"><img class="card-img rounded-0 img-fluid" src="{{ object.image_path|thumbnail_url:'list' }}" alt="{{object.image_title}}" title="{{object.image_title}}"></a>
+                            {% comment %} <a href="{{ object.url }}"><img class="card-img rounded-0 img-fluid" src="{{ object.image_path|thumbnail_url:'list' }}" alt="{{object.image_title}}" title="{{object.image_title}}"></a> {% endcomment %}
+                            <a href="{{ object.image_path|thumbnail_url:'detail' }}" class="glightbox" data-glightbox="title:{{ object.name }}; description:Дата съемки: {{ object.date_shooting }};" aria-label="Увеличить"><img src="{{ object.image_path|thumbnail_url:'list' }}" class="card-img rounded-0 img-fluid" title="{{ object.image_title }}" alt="{{ object.image_title }}"></a>
                         {% else %}
                             <a href="{{ object.url }}">
                                 {% include 'common/no_image_v.html' %}
@@ -51,7 +52,7 @@
                         {% endif %}
                         <div class="card-body px-1">
                             <p class="card-text"><a href="{{ object.url }}">{{ object.name }}</a><br>
-                            дата съемки: {{ object.date_shooting }}</p>
+                            Дата съемки: {{ object.date_shooting }}</p>
                         </div>
                     </div>
                 </div>
