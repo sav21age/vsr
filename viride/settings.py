@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'roses',
     'perennials',
     'other',
+    'seedlings',
     'profiles',
     'favorites',
     'sales',

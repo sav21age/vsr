@@ -3,6 +3,8 @@ from django.urls import resolve, reverse
 from django.views.generic import TemplateView
 from django.template.loader import render_to_string
 
+from plants.models import PlantDivision
+
 
 # def cut_page_query(q):
 #     p = re.compile(r'(page=)[^&]*')
@@ -84,6 +86,36 @@ class PerPageMixinTemplate(TemplateView):
                 'name': value,
                 'selected': True if value == self.parent_context['per_page_current'] else False,
             })
+
+        return context
+
+    def render_to_response(self, context, **response_kwargs):
+        return render_to_string(self.template_name, context, request=self.request)
+
+
+class PlantDivisionFilterMixinTemplate(TemplateView):
+    parent_context = None
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        url = self.request.get_full_path()
+
+        cur = self.parent_context['division_current']
+
+        context['options'] = [{
+            'querystring': UrlQuerystring.delete_param(url, 'division'),
+            'name': 'Все',
+            'selected': True if '' == cur else False,
+        }]
+
+        for value in self.parent_context['division_allowed']:
+            context['options'].append({
+                'querystring': UrlQuerystring.get_url(url, 'division', value.id),
+                # 'name': value.name,
+                'name': dict(PlantDivision.CHOICES)[value.name],
+                'selected': True if str(value.id) == cur else False,
+            })
+
 
         return context
 

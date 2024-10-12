@@ -1,0 +1,73 @@
+{% extends 'main.html' %}
+{% load thumbnail django_bootstrap_breadcrumbs static %}
+
+{% block head %}
+  <title>Саженцы | Вириде - питомник растений</title>
+  <meta property="og:title" content="Саженцы | Viride - питомник садово-парковых растений">
+  <meta name="description" content="Саженцы">
+  <meta property="og:description" content="Саженцы">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ host }}{% url 'seedlings:list' %}">
+{% endblock %}
+
+{% block name %}
+  Саженцы
+{% endblock %}
+
+{% block breadcrumb %}
+  {% breadcrumb_for '/' %}<i class="fas fa-home"></i>{% endbreadcrumb_for %}
+  {% breadcrumb_for 'catalog_item_list' %}Каталог{% endbreadcrumb_for %}
+  {% breadcrumb_for 'seedlings:list' %}Саженцы{% endbreadcrumb_for %}
+  {% render_breadcrumbs 'breadcrumb.html' %}
+{% endblock %}
+
+{% block content %}
+  {% comment %} {% include 'common/listview/filters.html' %} {% endcomment %}
+  <div class="container-fluid px-3 px-md-5">
+  <form>
+      <div class="row mb-4">
+          {{ per_page }}
+          {{ division_filter }}
+      </div>
+  </form>
+  </div>
+
+  <div class="container-fluid px-3 px-md-5">
+    <div class="row">
+      <div class="col-12">
+        {% comment %} {% include 'common/listview/cards.html' %} {% endcomment %}
+
+        {% if object_list %}
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 gx-4 gy-3">
+            {% for object in object_list %}
+                <div class="col">
+                    <div class="card rounded-0 border-0 h-100">
+                        {% if object.image_path %}
+                            <a href="{{ object.url }}"><img class="card-img rounded-0 img-fluid" src="{{ object.image_path|thumbnail_url:'list' }}" alt="{{object.image_title}}" title="{{object.image_title}}"></a>
+                        {% else %}
+                            <a href="{{ object.url }}">
+                                {% include 'common/no_image_v.html' %}
+                            </a>
+                        {% endif %}
+                        <div class="card-body px-1">
+                            <p class="card-text"><a href="{{ object.url }}">{{ object.name }}</a><br>
+                            дата съемки: {{ object.date_shooting }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        {% else %}
+            <div class="row">
+                <div class="col-12">
+                    {% include 'common/empty.html' %}
+                </div>
+            </div>  
+        {% endif %}
+
+
+        {% include 'pagination.html' %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

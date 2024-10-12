@@ -79,6 +79,9 @@ urlpatterns = [
     path('catalog/fruits/', include(('fruits.urls', 'fruits'), namespace='fruits')),
     path('catalog/perennials/',
          include(('perennials.urls', 'perennials'), namespace='pers')),
+
+    path('catalog/seedlings/',
+         include(('seedlings.urls', 'seedlings'), namespace='seedlings')),
     
     path('catalog/roses/', include(('roses.urls', 'roses'), namespace='roses')),
 

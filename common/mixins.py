@@ -1,5 +1,5 @@
-from common.views import PlantGenusFilterMixinTemplate, PerPageMixinTemplate, PlantSpeciesFilterMixinTemplate
-from plants.models import PlantGenus
+from common.views import PlantDivisionFilterMixinTemplate, PlantGenusFilterMixinTemplate, PerPageMixinTemplate, PlantSpeciesFilterMixinTemplate
+from plants.models import PlantDivision, PlantGenus
 from django.http import Http404
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -57,6 +57,43 @@ class RecommendedDetailMixin():
         return context
 
 
+class PlantDivisionFilterMixin():
+    division_id = None
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+
+        self.division_id = self.request.GET.get('division', None)
+        if self.division_id and self.division_id.isnumeric():
+            try:
+                qs = qs.filter(division__id=self.division_id)
+            except ValueError as e:
+                raise Http404 from e
+
+            if not qs:
+                raise Http404
+            
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        qs = self.model.is_visible_objects \
+            .values_list('division_id', flat=True).distinct()[:]
+        lst = list(qs)
+
+        if len(lst) < 2:
+            return context
+        
+        context['division_allowed'] = PlantDivision.objects.filter(id__in=lst)
+        context['division_current'] = self.division_id
+        context['division_filter'] = PlantDivisionFilterMixinTemplate.as_view(
+            template_name='common/listview/division_filter.html',
+            parent_context=context)(self.request)
+        
+        return context
+
+
 class PlantGenusFilterMixin():
     genus_id = None
 
@@ -81,9 +118,9 @@ class PlantGenusFilterMixin():
         qs = self.species_model.objects \
             .values_list('genus_id', flat=True).distinct()[:]
         lst = list(qs)
-
         context['genus_allowed'] = PlantGenus.objects.filter(
             division__name=self.division_name).filter(id__in=lst)
+
         context['genus_current'] = self.genus_id
         
         context['genus_filter'] = PlantGenusFilterMixinTemplate.as_view(
