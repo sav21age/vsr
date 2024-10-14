@@ -19,6 +19,10 @@ class CartItemInline(admin.StackedInline):
 
 @admin.register(Cart)
 class CartAdmin(admin.ModelAdmin):
+    def get_queryset(self, request):
+        return super().get_queryset(request) \
+            .prefetch_related('cart_items')
+
     # save_on_top = True
     inlines = (CartItemInline, )
     search_fields = ('user__username', 'user__email', 'user__first_name', 'user__last_name',)
