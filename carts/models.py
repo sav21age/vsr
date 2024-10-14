@@ -26,8 +26,11 @@ class Cart(models.Model):
     def __str__(self):
         if self.user:
             return f"{self.user}"
-        return f"Анонимный пользователь - {self.session_key}"
-
+        
+        # if hasattr(self, 'session_key'):
+        #     return f"Анонимный пользователь - {self.session_key}"
+        return "Анонимный пользователь"
+    
     @property
     def total_price(self):
         return sum(item.total_price for item in self.cart_items.all())
