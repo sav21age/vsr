@@ -199,6 +199,7 @@ class ConiferProductPrice(ProductPriceAbstract):
                 {'width_from': MSG_REQUIRED_BOTH, 'width_to': MSG_REQUIRED_BOTH, }, 
                 code='required')
 
-        field_list = ('container', 'height', 'width', 'rs', 'shtamb', 'extra',)
+        field_list = ('container', 'height_from', 'height_to',
+                      'width_from', 'width_to', 'rs', 'shtamb', 'extra',)
         super().validate_one_of_required(field_list)
         super().clean()
