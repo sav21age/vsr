@@ -56,7 +56,7 @@
         <div class="ms-4">
           <p class="mb-1 fw-bold text-secondary">Телефон</p>
           Розница:  <a class="mb-0" href="tel:{{ object.phone_retail|tel }}">{{ object.phone_retail }}</a><br>
-          Опт: <a class="mb-0" href="tel:{{ object.phone_wholesale|tel }}">{{ object.phone_wholesale }}</a>
+          Опт (только whatsapp): <a class="mb-0" href="https://api.whatsapp.com/send?phone={{ object.phone_wholesale|whatsapp }}" target="_blank" rel="noopener nofollow">{{ object.phone_wholesale|whatsapp }}</a>
         </div>
       </div>
     </div>
