@@ -506,6 +506,10 @@ main p {
   background-color: #F3F6F0 !important;
 }
 
+.bg-notice {
+  background-color: rgba(127, 39, 85, 0.09);
+}
+
 section .title {
   padding: 10px 0 10px;
   position: relative;
