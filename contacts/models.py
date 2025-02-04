@@ -20,16 +20,24 @@ class Contacts(PageAbstract, SingletonModel):
                            validators=[MinLengthValidator(9), ])
 
     address = models.CharField(
-        'адрес', max_length=200, null=True, blank=True)
+        'адрес', max_length=200)
     
-    phone_retail = models.CharField('телефон (розница)', max_length=20, null=True, blank=True)
+    phone_retail = models.CharField('телефон (розница)', max_length=20)
     phone_wholesale = models.CharField(
-        'телефон (опт)', max_length=20, null=True, blank=True)
+        'телефон (опт)', max_length=20)
 
-    email = models.CharField('email', max_length=50, null=True, blank=True)
+    email = models.CharField('email', max_length=50)
 
-    work_schedule = models.CharField(
-        'график работы', max_length=50, null=True, blank=True)
+    # work_schedule = models.CharField(
+    #     'график работы', max_length=50, null=True, blank=True)
+
+    CHOICES = (
+        ('CLOSED', 'Закрыт до весны'),
+        ('NORMAL', 'Пн-Сб: 09:00-19:00, Вс: выходной'),
+        ('SHORT', 'Пн-Сб: 09:00-18:00, Вс: выходной'),
+    )
+    work_schedule = models.CharField('график работы', max_length=50, default='NORMAL', unique=True,
+                                     choices=CHOICES, help_text='Так же изменится и в "шапке" сайта.')
 
     map = models.TextField('карта', null=True, blank=True)
 

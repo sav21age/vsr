@@ -1,4 +1,4 @@
-{% load static cartquantity %}
+{% load static cartquantity work_schedule cache %}
 <!-- Topbar Start -->
 <section class="bg-ter-opacity">
   <div class="container-fluid mt-2 px-3 px-md-5">
@@ -10,7 +10,12 @@
         </div>
         <div class="h-100 d-none d-md-flex align-items-center">
           <i class="far fa-clock me-2"></i>
-          <small>Закрыт до весны</small>
+          {% cache cache_timeout contacts_detail %}
+          {% get_work_schedule as work_schedule %}
+          <small>{% include 'contacts/work_schedule.html' %}</small>
+          {% endcache %}
+
+          {% comment %} <small>Закрыт до весны</small> {% endcomment %}
           {% comment %} <small>Пн-Сб: 09:00 - 18:00, Вс: <span class="text-danger fw-bold">выходной</span></small> {% endcomment %}
           {% comment %} <small>Дата открытия питомника - <span class="text-danger fw-bold">1 мая</span></small> {% endcomment %}
         </div>
