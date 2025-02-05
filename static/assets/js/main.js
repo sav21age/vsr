@@ -135,8 +135,8 @@ let xhr = new XMLHttpRequest();
   // });
 
   on("click", "#advertCloseButton", function (e) {
-    advertId = this.children[0].dataset.advertId
-    setCookie('advert_id', advertId, { secure: true, 'max-age': 86400*365 });
+    // advertId = this.children[0].dataset.advertId
+    setCookie('advert_id', this.dataset.advertId, { secure: true, 'max-age': 86400*365 });
     document.getElementById("advertContainer").remove();
   });
 
