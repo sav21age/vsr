@@ -1,5 +1,5 @@
 {% extends "main.html" %} 
-{% load static django_bootstrap_breadcrumbs tel cache %} 
+{% load static django_bootstrap_breadcrumbs tel cache work_schedule %} 
 
 {% block head %}
   {% include 'head.html' %}
@@ -81,9 +81,10 @@
         <div class="ms-4">
           <p class="mb-1 fw-bold text-secondary">График работы</p>
           {% comment %} {{ object.work_schedule }} {% endcomment %}
-          {% with work_schedule=object.work_schedule %}
+          {% comment %} {% with work_schedule=object.work_schedule %}
             {% include 'contacts/work_schedule.html' %}
-          {% endwith %}
+          {% endwith %} {% endcomment %}
+          {% get_work_schedule %}
         </div>
       </div>
     </div>

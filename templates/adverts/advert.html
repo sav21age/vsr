@@ -1,0 +1,15 @@
+{% if id %}
+<div class="container-fluid px-3 px-md-5 py-3 bg-notice" style="border-style: dashed none dashed none; border-color: rgba(127, 39, 85, 0.1); border-width:1px;" id="advertContainer">
+    <div class="row">
+        <div class="col-11 text-center">
+            <h4>{{ title }}</h4>
+            {% comment %} <p style="text-align: justify;">{{ advert.body }}</p> {% endcomment %}
+            {{ body|safe }}
+        </div>
+        <div class="col-1">
+            {% comment %} <button type="button" class="fa fa-times" aria-label="Close"></button> {% endcomment %}
+            <div id="advertCloseButton" style="cursor: pointer;"><i class="fas fa-times" data-advert-id="{{ id }}" aria-hidden="true"></i></div>
+        </div>
+    </div>
+</div>
+{% endif %}

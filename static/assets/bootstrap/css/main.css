@@ -507,7 +507,7 @@ main p {
 }
 
 .bg-notice {
-  background-color: rgba(127, 39, 85, 0.09);
+  background-color: rgba(127, 39, 85, 0.08);
 }
 
 section .title {
@@ -562,6 +562,13 @@ section .title h1, section .title .h1, section .title h2, section .title .h2, se
 .back-to-top.active {
   visibility: visible;
   opacity: 1;
+}
+
+#advertContainer p {
+  margin-bottom: 0.4rem;
+}
+#advertContainer h4, #advertContainer .h4 {
+  margin-bottom: 0.7rem;
 }
 
 .btn-tertiary {

@@ -2,6 +2,31 @@ function setLocation(url) {
   window.location.href = url;
 }
 
+
+function setCookie(name, value, options = {}) {
+
+  options = {
+    path: '/',
+    ...options
+  };
+
+  if (options.expires instanceof Date) {
+    options.expires = options.expires.toUTCString();
+  }
+
+  let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+
+  for (let optionKey in options) {
+    updatedCookie += "; " + optionKey;
+    let optionValue = options[optionKey];
+    if (optionValue !== true) {
+      updatedCookie += "=" + optionValue;
+    }
+  }
+
+  document.cookie = updatedCookie;
+}
+
 const popoverTriggerList = document.querySelectorAll(
   '[data-bs-toggle="popover"]'
 );
@@ -108,6 +133,12 @@ let xhr = new XMLHttpRequest();
   //   once: true,
   //   mirror: false,
   // });
+
+  on("click", "#advertCloseButton", function (e) {
+    advertId = this.children[0].dataset.advertId
+    setCookie('advert_id', advertId, { secure: true, 'max-age': 86400*365 });
+    document.getElementById("advertContainer").remove();
+  });
 
   on("click", "#favorites", function (e) {
     e.preventDefault();

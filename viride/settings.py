@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'profiles',
     'favorites',
     'sales',
+    'adverts',
     'django_ckeditor_5',
     # 'smart_selects',
     'django_db_logger',
@@ -309,7 +310,7 @@ CKEDITOR_5_CONFIGS = {
         # 'toolbar': ['undo', 'redo', '|', 'heading', '|', 'bold', 'italic', 'link',
         #             'bulletedList', 'numberedList', 'blockQuote', 'imageUpload', ],
         'toolbar': ['undo', 'redo', '|', 'paragraph', '|', 'bold', 'italic', 'link',
-                    'bulletedList', 'numberedList', 'superscript', 'subscript', 'sourceEditing', 'specialCharacters',],
+                    'bulletedList', 'numberedList', 'superscript', 'subscript', 'specialCharacters', 'removeFormat', 'sourceEditing',],
         'language': 'ru',
     },
     'extends': {

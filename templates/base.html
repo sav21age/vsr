@@ -1,4 +1,4 @@
-{% load static compress %}
+{% load static compress adverts %}
 {% spaceless %}
 <!DOCTYPE html>
 <html lang="ru" class="h-100" itemscope itemtype="http://schema.org/WebPage">
@@ -43,7 +43,9 @@
 <body class="d-flex flex-column h-100">
   {% include 'header.html' %}
   {% include 'navbar/navbar.html' %}
-  {% include 'banner.html' %}
+  {% comment %} {% include 'banner.html' %} {% endcomment %}
+  {% comment %} {% include 'adverts/index.html' %} {% endcomment %}
+  {% get_advert %}
   
   {% block main %}{% endblock %}
 
