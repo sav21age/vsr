@@ -4,4 +4,4 @@ from django.apps import AppConfig
 class IndexConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'index'
-    verbose_name = '09. Главная страница'
+    verbose_name = '28. Главная страница'

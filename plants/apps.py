@@ -4,4 +4,4 @@ from django.apps import AppConfig
 class PlantsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'plants'
-    verbose_name = '11. Растения'
+    verbose_name = '34. Растения'

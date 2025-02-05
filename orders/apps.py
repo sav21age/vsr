@@ -4,4 +4,4 @@ from django.apps import AppConfig
 class OrdersConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'orders'
-    verbose_name = '00. Заказы пользователей'
+    verbose_name = '01. Заказы пользователей'
