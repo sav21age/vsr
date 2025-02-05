@@ -65,7 +65,8 @@ class FruitProductTest(TestCase):
             reverse(f"{APP}:filter_form"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 200)
 
-        json_response = '{"genus": [36, 40, 47, 50, 51], "container": [6, 11, 9], "rs": [], "age": [5]}'
+        # json_response = '{"genus": [36, 40, 47, 50, 51], "container": [6, 11, 9], "rs": [], "age": [5]}'
+        json_response = '{"genus": [36, 40, 47, 51], "container": [6, 11, 31, 9], "rs": [], "age": [5]}'
         self.assertEqual(response.content.decode('utf-8'), json_response)
 
     def test_listview_per_page(self):

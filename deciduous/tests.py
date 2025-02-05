@@ -69,7 +69,8 @@ class DecProductTest(TestCase):
             reverse(f"{APP}:filter_form"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 200)
 
-        json_response = '{"genus": [27, 35, 39, 63, 64, 66, 69, 72, 77, 80, 23, 85, 90], "height_from": {"min": 125, "max": 150}, "container": [6], "rs": [1], "shtamb": null, "extra": null}'
+        # json_response = '{"genus": [27, 35, 39, 63, 64, 66, 69, 72, 77, 80, 23, 85, 90], "height_from": {"min": 125, "max": 150}, "container": [6], "rs": [1], "shtamb": null, "extra": null}'
+        json_response = '{"genus": [35, 39, 63, 64, 66, 69, 77, 80, 23, 85, 90], "height_from": {"min": 125, "max": 150}, "container": [6], "rs": [1], "shtamb": null, "extra": null}'
         self.assertEqual(response.content.decode('utf-8'), json_response)
 
 

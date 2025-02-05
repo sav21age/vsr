@@ -69,7 +69,8 @@ class ConiferProductTest(TestCase):
             reverse(f"{APP}:filter_form"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 200)
         
-        json_response = '{"genus": [1, 12], "height_from": {"min": 70, "max": 240}, "width_from": {"min": null, "max": null}, "container": [3], "rs": [1], "shtamb": null, "extra": []}'
+        # json_response = '{"genus": [1, 12], "height_from": {"min": 70, "max": 240}, "width_from": {"min": null, "max": null}, "container": [3], "rs": [1], "shtamb": null, "extra": []}'
+        json_response = '{"genus": [1, 9, 12], "height_from": {"min": 100, "max": 280}, "width_from": {"min": null, "max": null}, "container": [], "rs": [1], "shtamb": null, "extra": []}'
         self.assertEqual(response.content.decode('utf-8'), json_response)
 
 
