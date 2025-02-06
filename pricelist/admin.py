@@ -1,6 +1,6 @@
 from django.contrib import admin
-from pricelist.models import PriceList
 from solo.admin import SingletonModelAdmin
+from pricelist.models import PriceList
 
 
 @admin.register(PriceList)

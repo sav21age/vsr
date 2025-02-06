@@ -1,8 +1,8 @@
 from common.views import PlantDivisionFilterMixinTemplate, PlantGenusFilterMixinTemplate, PerPageMixinTemplate, PlantSpeciesFilterMixinTemplate
-from plants.models import PlantDivision, PlantGenus
 from django.http import Http404
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from plants.models import PlantDivision, PlantGenus
 # from django.db.models import QuerySet 
 
 

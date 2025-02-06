@@ -1,14 +1,12 @@
+from unittest.mock import patch
 from django.urls import reverse
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.sessions.middleware import SessionMiddleware
+# from django.contrib.sessions.middleware import SessionMiddleware
 from django_recaptcha.client import RecaptchaResponse
 from carts.models import Cart, CartItem
 from conifers.models import ConiferProductPrice
-import orders
-from orders.models import Order
 from orders.views import CreateOrderAnonymUserView, CreateOrderAuthUserView
 from viride.tests import AnonymUserTestCase, AuthUserTestCase
-from unittest.mock import patch
 
 
 APP = 'orders'

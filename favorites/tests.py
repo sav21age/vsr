@@ -1,9 +1,6 @@
-import json
-from django.test import TestCase, Client, RequestFactory
 from django.urls import reverse
 from django.contrib.contenttypes.models import ContentType
-from carts.models import Cart, CartItem
-from conifers.models import ConiferProduct, ConiferProductPrice
+from conifers.models import ConiferProduct
 from favorites.models import Favorites
 from viride.tests import AnonymUserTestCase, AuthUserTestCase
 

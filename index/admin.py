@@ -3,7 +3,7 @@ from common.admin import PageAbstractAdmin
 from index.forms import IndexAdminForm
 from index.models import Index
 from solo.admin import SingletonModelAdmin
-from common.helpers import formfield_overrides
+# from common.helpers import formfield_overrides
 
 
 @admin.register(Index)

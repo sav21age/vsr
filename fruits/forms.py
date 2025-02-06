@@ -4,7 +4,7 @@ from django.utils.safestring import mark_safe
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Field, HTML
 from crispy_forms.bootstrap import PrependedText, InlineCheckboxes
-from crispy_bootstrap5.bootstrap5 import Switch
+# from crispy_bootstrap5.bootstrap5 import Switch
 from common.forms import ProductAdminForm
 from fruits.models import FruitProduct, FruitProductPrice, FruitProductPriceAge, FruitSpecies
 from plants.models import PlantGenus, PlantPriceContainer, PlantPriceRootSystem
