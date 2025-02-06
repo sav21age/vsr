@@ -2,7 +2,6 @@ function setLocation(url) {
   window.location.href = url;
 }
 
-
 function setCookie(name, value, options = {}) {
 
   options = {
@@ -25,6 +24,12 @@ function setCookie(name, value, options = {}) {
   }
 
   document.cookie = updatedCookie;
+}
+
+function removeAdvert(advertId) {
+  setCookie('advert_id', advertId, { secure: true, 'max-age': 86400 * 365 });
+  let el = document.getElementById("advert");
+  el.remove();
 }
 
 const popoverTriggerList = document.querySelectorAll(
@@ -134,11 +139,11 @@ let xhr = new XMLHttpRequest();
   //   mirror: false,
   // });
 
-  on("click", "#advertCloseButton", function (e) {
-    // advertId = this.children[0].dataset.advertId
-    setCookie('advert_id', this.dataset.advertId, { secure: true, 'max-age': 86400*365 });
-    document.getElementById("advertContainer").remove();
-  });
+  // on("click", "#advertCloseButton", function (e) {
+  //   // advertId = this.children[0].dataset.advertId
+  //   setCookie('advert_id', this.dataset.advertId, { secure: true, 'max-age': 86400 * 365 });
+  //   document.getElementById("advertContainer").remove();
+  // });
 
   on("click", "#favorites", function (e) {
     e.preventDefault();

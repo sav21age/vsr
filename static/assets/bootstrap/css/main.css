@@ -564,10 +564,10 @@ section .title h1, section .title .h1, section .title h2, section .title .h2, se
   opacity: 1;
 }
 
-#advertContainer p {
+#advert p {
   margin-bottom: 0.4rem;
 }
-#advertContainer h4, #advertContainer .h4 {
+#advert h4, #advert .h4 {
   margin-bottom: 0.7rem;
 }
 

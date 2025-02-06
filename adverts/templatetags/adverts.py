@@ -13,25 +13,20 @@ def get_advert(context):
 
     try:
         obj = Advert.objects.get()
-        dct = {
-            'id': obj.id,
-            'title': obj.title,
-            'body': obj.body
-        }
     except:
-        dct = {
-            'id': None,
-            'title': None,
-            'body': None
+        return {
+            'show': False,
         }
 
+    if advert_id is not None and obj.id is not None:
+        if advert_id == str(obj.id):
+            return {
+                'show': False,
+            }
 
-    if advert_id is not None and dct['id'] is not None:
-        if str(dct['id']) == advert_id:
-            return None
-    
     return {
-        'id': dct['id'],
-        'title': dct['title'],
-        'body': dct['body']
+        'show': True,
+        'id': obj.id,
+        'title': obj.title,
+        'body': obj.body,
     }
