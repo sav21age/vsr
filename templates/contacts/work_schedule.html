@@ -1,6 +1,4 @@
-<small>{% if work_schedule == 'CLOSED' %}
-Закрыт до весны
-{% elif work_schedule == 'SHORT' %}
+<small>{% if work_schedule == 'CLOSED' %}Закрыт до весны{% elif work_schedule == 'SHORT' %}
 Пн-Сб: 09:00-18:00, Вс: <span class="text-danger fw-bold">выходной</span>
 {% else %}
 Пн-Сб: 09:00-19:00, Вс: <span class="text-danger fw-bold">выходной</span>
