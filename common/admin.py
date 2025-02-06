@@ -1,7 +1,7 @@
 from django.contrib import admin
-from django.contrib.contenttypes.models import ContentType
+# from django.contrib.contenttypes.models import ContentType
 from adminsortable2.admin import SortableAdminBase
-from carts.models import CartItem
+# from carts.models import CartItem
 from common.helpers import formfield_overrides
 from images.admin import GetImageAdminMixin
 

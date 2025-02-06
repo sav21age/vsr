@@ -8,9 +8,10 @@ class Advert(models.Model):
     title = models.CharField(
         'заголовок', max_length=120)
     body = models.TextField('текст')
+    created_at = models.DateTimeField('дата создания', auto_now_add=True)
 
     def __str__(self):
-        return self.title
+        return 'Объявление'
 
     class Meta:
         verbose_name = 'объявление'
