@@ -67,7 +67,7 @@ def create(request):
     except:
         pass
 
-    if name == 'NO_UNTIL_APRIL':
+    if name == 'CLOSE_UNTIL_APRIL':
         raise Http404
 
     if request.user.is_authenticated:

@@ -23,7 +23,7 @@ class AcceptingOrdersTest(TestCase):
         """ Test change accepting orders """
         with override_settings(CACHE_TIMEOUT=900):
             obj = AcceptingOrders.objects.get()
-            obj.name = 'YES'
+            obj.name = 'ORDER'
             obj.save()
             
             con = ConiferProduct.is_visible_objects \
@@ -32,14 +32,19 @@ class AcceptingOrdersTest(TestCase):
 
             response = self.client.get(
                 reverse("conifers:detail", kwargs={'slug': con.slug}))
-            
             self.assertEqual(response.status_code, 200)
             self.assertContains(
                 response, '<p class="mb-1 text-secondary delivery">Самовывоз</p>', html=True)
             
-            obj.name = 'NO_UNTIL_APRIL'
+            obj.name = 'PRE_ORDER'
             obj.save()
-            
+            response = self.client.get(
+                reverse("conifers:detail", kwargs={'slug': con.slug}))
+            self.assertContains(
+                response, '<p class="mb-1 text-secondary delivery">Питомник откроется в начале мая</p>', html=True)
+
+            obj.name = 'CLOSE_UNTIL_APRIL'
+            obj.save()
             response = self.client.get(
                 reverse("conifers:detail", kwargs={'slug': con.slug}))
             self.assertContains(

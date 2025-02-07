@@ -70,21 +70,26 @@
 
   {% get_accepting_orders as accepting_orders %}
   
-  {% if accepting_orders == 'NO_UNTIL_APRIL' %}
-  <div class="row mb-4">
-    <div class="col-12">
-      <i class="fas fa-exclamation-triangle fa-lg color-warning"></i> Питомник закрыт до весны. Оформление заказов не доступно, цены не актуальны. Мы начнём принимать предварительные заказы в <u>первых числах апреля</u>.
+  {% if accepting_orders != 'ORDER' %}
+    <div class="row mb-4">
+      <div class="col-12">
+        <i class="fas fa-exclamation-triangle fa-lg color-warning"></i>
+        {% if accepting_orders == 'CLOSE_UNTIL_APRIL' %}
+          Питомник закрыт до весны. Оформление заказов не доступно, <u>цены не актуальны</u>. Мы начнём принимать предварительные заказы в <u>первых числах апреля</u>.
+        {% elif accepting_orders == 'PRE_ORDER' %}
+          Питомник откроется в начале мая. Сейчас мы принимаем предварительные заказы.
+        {% endif %}
+      </div>
     </div>
-  </div>
   {% endif %}
 
   {% if user.is_authenticated %}
-    <a href="{% url 'orders:create' %}" class="btn btn-primary me-3 {% if accepting_orders == 'NO_UNTIL_APRIL' %}disabled{% endif %}">Оформить заказ</a>
+    <a href="{% url 'orders:create' %}" class="btn btn-primary me-3 {% if accepting_orders == 'CLOSE_UNTIL_APRIL' %}disabled{% endif %}">Оформить заказ</a>
   {% else %}
     {% if cart.user %}
       <a href="{% url 'account_login' %}" class="btn btn-primary me-3">Войти и оформить заказ</a>
     {% else %}
-      <a href="{% url 'orders:create' %}" class="btn btn-tertiary {% if accepting_orders == 'NO_UNTIL_APRIL' %}disabled{% endif %}">Оформить заказ без регистрации</a>
+      <a href="{% url 'orders:create' %}" class="btn btn-tertiary {% if accepting_orders == 'CLOSE_UNTIL_APRIL' %}disabled{% endif %}">Оформить заказ без регистрации</a>
     {% endif %}
   {% endif %}
 {% else %}

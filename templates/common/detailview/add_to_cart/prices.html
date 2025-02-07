@@ -32,12 +32,16 @@
 </table>
 
 {% get_accepting_orders as accepting_orders %}
-{% if accepting_orders == 'NO_UNTIL_APRIL' %}
-<button type="button" class="btn btn-primary" id="addToCart" value="{% url 'carts:add' %}" disabled><div>Добавить в корзину</button>
-{% include 'common/detailview/close_until_spring.html' %}
+{% if accepting_orders == 'CLOSE_UNTIL_APRIL' %}
+    <button type="button" class="btn btn-primary" id="addToCart" value="{% url 'carts:add' %}" disabled><div>Добавить в корзину</button>
+    {% include 'common/detailview/accepting_orders/close_until_april.html' %}
 {% else %}
-<button type="button" class="btn btn-primary" id="addToCart" value="{% url 'carts:add' %}">Добавить в корзину</button>
-{% include 'common/detailview/delivery.html' %}
+    <button type="button" class="btn btn-primary" id="addToCart" value="{% url 'carts:add' %}">Добавить в корзину</button>
+    {% if accepting_orders == 'PRE_ORDER' %}
+        {% include 'common/detailview/accepting_orders/pre_order.html' %}
+    {% else %}
+        {% include 'common/detailview/accepting_orders/delivery.html' %}
+    {% endif%}
 {% endif %}
 
 {% else %}

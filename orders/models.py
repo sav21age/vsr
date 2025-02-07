@@ -22,11 +22,12 @@ class OrderStatus(models.Model):
 
 class AcceptingOrders(SingletonModel):
     CHOICES = (
-        ('YES', 'Принимаются'),
-        ('NO_UNTIL_APRIL', 'Прием закрыт до первых чисел апреля'),
+        ('ORDER', 'Принимаются заказы'),
+        ('PRE_ORDER', 'Принимаются предзаказы'),
+        ('CLOSE_UNTIL_APRIL', 'Не принимаются до первых чисел апреля'),
     )
     name = models.CharField(
-        'Прием заказов', max_length=50, default='YES', unique=True, choices=CHOICES,
+        'Режим приема заказов', max_length=50, default='ORDER', unique=True, choices=CHOICES,
     )
 
     def __str__(self):
