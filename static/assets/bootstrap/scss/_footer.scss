@@ -2,9 +2,12 @@
     font-size: 15px;
 
     // background: $bg_footer;
-    // color: #fff;
     // background: url(../../../images/background/footer-bg-last.png);
-    background: url(../../../images/background/footer-bg-grass.png);
+    background: url(../../../images/background/footer-bg-grass.png), linear-gradient(0deg, $ter_opacity 0%, $ter_opacity 50%, #fff 100%);;
+    
+    // background: $ter_opacity;
+    // background: linear-gradient(0deg, $ter_opacity 0%, $ter_opacity 63%, #fff 100%);
+
     background-position: bottom;
     background-repeat: repeat-x;
 

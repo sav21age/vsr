@@ -5,7 +5,8 @@
 
 .footer {
   font-size: 15px;
-  background: url(../../../images/background/footer-bg-grass.png);
+  background: url(../../../images/background/footer-bg-grass.png), -webkit-gradient(linear, left bottom, left top, from(rgba(85, 127, 39, 0.07)), color-stop(50%, rgba(85, 127, 39, 0.07)), to(#fff));
+  background: url(../../../images/background/footer-bg-grass.png), linear-gradient(0deg, rgba(85, 127, 39, 0.07) 0%, rgba(85, 127, 39, 0.07) 50%, #fff 100%);
   background-position: bottom;
   background-repeat: repeat-x;
 }
