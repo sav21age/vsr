@@ -5,9 +5,10 @@ from django.db.models.signals import post_save
 from django.core.cache.utils import make_template_fragment_key
 from django.dispatch import receiver
 from django.core.cache import caches
-from common.models import PageAbstract
-from solo.models import SingletonModel
 from django.core.validators import MinLengthValidator
+from django.utils.safestring import mark_safe
+from solo.models import SingletonModel
+from common.models import PageAbstract
 
 
 class Contacts(PageAbstract, SingletonModel):
@@ -68,7 +69,7 @@ class WorkSchedule(SingletonModel):
         return f"{dict(self.CHOICES)[self.name]}"
 
     class Meta:
-        verbose_name = 'график работы'
+        verbose_name = 'график работы*'
         verbose_name_plural = 'график работы'
 
 

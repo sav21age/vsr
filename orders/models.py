@@ -33,7 +33,7 @@ class AcceptingOrders(SingletonModel):
         return f"{dict(self.CHOICES)[self.name]}"
 
     class Meta:
-        verbose_name = 'прием заказов'
+        verbose_name = 'прием заказов*'
         verbose_name_plural = 'прием заказов'
 
 
