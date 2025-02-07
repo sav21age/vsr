@@ -132,6 +132,10 @@ label.required {
           box-shadow: none !important;
 }
 
+.color-warning {
+  color: #557F27 !important;
+}
+
 ul.pagination {
   margin-top: 20px;
   margin-bottom: 20px;
