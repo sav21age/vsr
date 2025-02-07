@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError
 # from django.contrib.contenttypes import fields
 from common.errors import MSG_REQUIRED_BOTH
 from common.models import ProductPriceAbstract
-from common.validators import SizeUnitValidator, SizeValidator
+from common.validators import SizeUnitValidator, SizeValidator, NumericValidator, YearStringValidator
 # from carts.models import CartItem
 from plants.models import (
     PlantPlanting, PlantPriceContainer, PlantPriceRootSystem, PlantProductAbstract,
@@ -132,6 +132,9 @@ class ConiferProductPrice(ProductPriceAbstract):
     extra = models.BooleanField(
         'экстра', default=False, db_index=True, help_text='Ухоженные растения.')
 
+    planting_year = models.CharField(
+        'год посадки', max_length=4, blank=True, validators=(NumericValidator, YearStringValidator),)
+
     # cart_item = fields.GenericRelation(CartItem)
     
     @property
@@ -200,6 +203,6 @@ class ConiferProductPrice(ProductPriceAbstract):
                 code='required')
 
         field_list = ('container', 'height_from', 'height_to',
-                      'width_from', 'width_to', 'rs', 'shtamb', 'extra',)
+                      'width_from', 'width_to', 'rs', 'shtamb', 'extra', 'planting_year',)
         super().validate_one_of_required(field_list)
         super().clean()

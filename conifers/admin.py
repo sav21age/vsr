@@ -50,7 +50,7 @@ class ConiferProductPriceInline(ProductPriceInline):
 
     model = ConiferProductPrice
     fields = ('container', ('height_from', 'height_to'), ('width_from', 'width_to'),
-              'rs', 'shtamb', 'extra', 'price', )
+              'rs', 'shtamb', 'extra', 'planting_year', 'price', )
 
 
 # --
@@ -223,7 +223,7 @@ class ConiferProductPriceAdmin(ProductPriceAbstractAdmin):
                    ConiferProductPriceContainerAdminFilter,)
     fields = ('product', 'container',
               ('height_from', 'height_to'), ('width_from', 'width_to',), 
-              'rs', 'shtamb', 'extra', 'price', )
+              'rs', 'shtamb', 'extra', 'planting_year', 'price', )
     list_display = ('get_product', 'price', )
 
     def get_product(self, obj=None):
