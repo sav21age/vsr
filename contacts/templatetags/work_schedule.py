@@ -1,5 +1,5 @@
 from django import template
-from contacts.models import Contacts
+from contacts.models import WorkSchedule
 
 register = template.Library()
 
@@ -8,11 +8,11 @@ register = template.Library()
 @register.inclusion_tag("contacts/work_schedule.html")
 def get_work_schedule():
     try:
-        obj = Contacts.objects.get()
-        work_schedule = obj.work_schedule
+        obj = WorkSchedule.objects.get()
+        name = obj.name
     except:
-        work_schedule = None
+        name = None
 
     return {
-        'work_schedule': work_schedule,
+        'name': name,
     }

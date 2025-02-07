@@ -10,7 +10,7 @@
         </div>
         <div class="h-100 d-none d-md-flex align-items-center">
           <i class="far fa-clock me-2"></i>
-          {% cache cache_timeout contacts_header %}
+          {% cache cache_timeout workschedule_header %}
           {% get_work_schedule %}
           {% comment %} {% get_work_schedule as work_schedule %}
           <small>{% include 'contacts/work_schedule.html' %}</small> {% endcomment %}

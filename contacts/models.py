@@ -31,14 +31,6 @@ class Contacts(PageAbstract, SingletonModel):
     # work_schedule = models.CharField(
     #     'график работы', max_length=50, null=True, blank=True)
 
-    CHOICES = (
-        ('CLOSED', 'Закрыт до весны'),
-        ('NORMAL', 'Пн-Сб: 09:00-19:00, Вс: выходной'),
-        ('SHORT', 'Пн-Сб: 09:00-18:00, Вс: выходной'),
-    )
-    work_schedule = models.CharField('график работы', max_length=50, default='NORMAL', unique=True,
-                                     choices=CHOICES, help_text='Так же изменится и в "шапке" сайта.')
-
     map = models.TextField('карта', null=True, blank=True)
 
     def __str__(self):
@@ -53,7 +45,7 @@ class Contacts(PageAbstract, SingletonModel):
 
 
 @receiver(post_save, sender=Contacts)
-def invalidate_cache(instance, **kwargs):
+def invalidate_cache_contacts(instance, **kwargs):
     if kwargs.get('raw'):  # add for test, pass fixtures
         return
 
@@ -62,8 +54,33 @@ def invalidate_cache(instance, **kwargs):
     )
     caches['default'].delete(key)
 
+
+class WorkSchedule(SingletonModel):
+    CHOICES = (
+        ('CLOSED', 'Закрыт до весны'),
+        ('NORMAL', 'Пн-Сб: 09:00-19:00, Вс: выходной'),
+        ('SHORT', 'Пн-Сб: 09:00-18:00, Вс: выходной'),
+    )
+    name = models.CharField('график работы', max_length=50, default='NORMAL', unique=True,
+                                     choices=CHOICES, help_text='Так же изменится и в "шапке" сайта.')
+
+    def __str__(self):
+        return f"{dict(self.CHOICES)[self.name]}"
+
+    class Meta:
+        verbose_name = 'график работы'
+        verbose_name_plural = 'график работы'
+
+
+@receiver(post_save, sender=WorkSchedule)
+def invalidate_cache_work_schedule(instance, **kwargs):
+    if kwargs.get('raw'):  # add for test, pass fixtures
+        return
+
+    key = make_template_fragment_key("contacts_detail")
+    caches['default'].delete(key)
+
     key = make_template_fragment_key(
         f"{instance._meta.model_name}_header"
     )
     caches['default'].delete(key)
-

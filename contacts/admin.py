@@ -1,8 +1,13 @@
 from django.contrib import admin
 from common.admin import PageAbstractAdmin
-from contacts.models import Contacts
+from contacts.models import Contacts, WorkSchedule
 from solo.admin import SingletonModelAdmin
 from common.helpers import codemirror_widget
+
+
+@admin.register(WorkSchedule)
+class WorkScheduleAdmin(SingletonModelAdmin):
+    pass
 
 
 @admin.register(Contacts)
@@ -24,7 +29,6 @@ class ContactsAdmin(PageAbstractAdmin, SingletonModelAdmin):
                         'phone_retail',
                         'phone_wholesale',
                         'email',
-                        'work_schedule',
                         'map',
                     )
                 }),
