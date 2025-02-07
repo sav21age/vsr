@@ -14,7 +14,7 @@ from django.views.decorators.cache import never_cache
 from carts.models import Cart, CartItem
 from common.mail import send_html_email
 from common.loggers import logger
-from orders.models import Order, OrderItem, OrderStatus
+from orders.models import AcceptingOrders, Order, OrderItem, OrderStatus
 from orders.forms import CreateOrderAnonymUserForm, CreateOrderAuthUserForm
 
 
@@ -59,6 +59,17 @@ def send_order_email(order):
 
 
 def create(request):
+    name = None
+    
+    try:
+        obj = AcceptingOrders.objects.get()
+        name = obj.name
+    except:
+        pass
+
+    if name == 'NO_UNTIL_APRIL':
+        raise Http404
+
     if request.user.is_authenticated:
         return CreateOrderAuthUserView.as_view()(request)
     return CreateOrderAnonymUserView.as_view()(request)

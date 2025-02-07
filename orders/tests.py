@@ -2,14 +2,48 @@ from unittest.mock import patch
 from django.urls import reverse
 from django.contrib.contenttypes.models import ContentType
 # from django.contrib.sessions.middleware import SessionMiddleware
+from django.test import TestCase, Client, override_settings
 from django_recaptcha.client import RecaptchaResponse
 from carts.models import Cart, CartItem
-from conifers.models import ConiferProductPrice
+from conifers.models import ConiferProduct, ConiferProductPrice
+from orders.models import AcceptingOrders
 from orders.views import CreateOrderAnonymUserView, CreateOrderAuthUserView
 from viride.tests import AnonymUserTestCase, AuthUserTestCase
 
-
 APP = 'orders'
+
+
+class AcceptingOrdersTest(TestCase):
+    fixtures = ['fixtures/db.json', ]
+
+    def setUp(self):
+        self.client = Client()
+
+    def test_change_accepting_orders(self):
+        """ Test change accepting orders """
+        with override_settings(CACHE_TIMEOUT=900):
+            obj = AcceptingOrders.objects.get()
+            obj.name = 'YES'
+            obj.save()
+            
+            con = ConiferProduct.is_visible_objects \
+                .prefetch_related('images') \
+                .all()[:1].get()
+
+            response = self.client.get(
+                reverse("conifers:detail", kwargs={'slug': con.slug}))
+            
+            self.assertEqual(response.status_code, 200)
+            self.assertContains(
+                response, '<p class="mb-1 text-secondary delivery">Самовывоз</p>', html=True)
+            
+            obj.name = 'NO_UNTIL_APRIL'
+            obj.save()
+            
+            response = self.client.get(
+                reverse("conifers:detail", kwargs={'slug': con.slug}))
+            self.assertContains(
+                response, '<p class="mb-1 text-secondary delivery">Питомник закрыт до весны</p>', html=True)
 
 
 class CartAuthUserTestCase(AuthUserTestCase):

@@ -1,6 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxLengthValidator
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.core.cache import cache
+from solo.models import SingletonModel
 # from django.contrib.contenttypes.fields import GenericForeignKey
 # from django.contrib.contenttypes.models import ContentType
 
@@ -14,6 +18,31 @@ class OrderStatus(models.Model):
     class Meta:
         verbose_name = 'Статус заказа'
         verbose_name_plural = 'Статусы заказов'
+
+
+class AcceptingOrders(SingletonModel):
+    CHOICES = (
+        ('YES', 'Принимаются'),
+        ('NO_UNTIL_APRIL', 'Прием закрыт до первых чисел апреля'),
+    )
+    name = models.CharField(
+        'Прием заказов', max_length=50, default='YES', unique=True, choices=CHOICES,
+    )
+
+    def __str__(self):
+        return f"{dict(self.CHOICES)[self.name]}"
+
+    class Meta:
+        verbose_name = 'прием заказов'
+        verbose_name_plural = 'прием заказов'
+
+
+@receiver(post_save, sender=AcceptingOrders)
+def invalidate_cache(instance, **kwargs):
+    if kwargs.get('raw'):  # add for test, pass fixtures
+        return
+
+    cache.clear()
 
 
 class Order(models.Model):

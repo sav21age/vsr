@@ -1,4 +1,4 @@
-{% load ctid %}
+{% load ctid accepting_orders %}
 {% if object_set_all %}
     <table class="table table-responsive table-price mt-3">
     <thead>
@@ -30,8 +30,16 @@
     {% endfor %}
     </tbody>
 </table>
+
+{% get_accepting_orders as accepting_orders %}
+{% if accepting_orders == 'NO_UNTIL_APRIL' %}
+<button type="button" class="btn btn-primary" id="addToCart" value="{% url 'carts:add' %}" disabled><div>Добавить в корзину</button>
+{% include 'common/detailview/close_until_spring.html' %}
+{% else %}
 <button type="button" class="btn btn-primary" id="addToCart" value="{% url 'carts:add' %}">Добавить в корзину</button>
 {% include 'common/detailview/delivery.html' %}
+{% endif %}
+
 {% else %}
     <button type="button" class="btn btn-dark mt-3" disabled>Нет в наличии</button>
 {% endif %}

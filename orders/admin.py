@@ -2,10 +2,16 @@ from django.contrib import admin
 from django.conf import settings
 # from django.utils.safestring import mark_safe
 from common.mail import send_html_email
-from orders.models import Order, OrderItem, OrderStatus
+from orders.models import AcceptingOrders, Order, OrderItem, OrderStatus
+from solo.admin import SingletonModelAdmin
 
 
 admin.site.register(OrderStatus)
+
+
+@admin.register(AcceptingOrders)
+class AcceptingOrdersAdmin(SingletonModelAdmin):
+    pass
 
 
 class OrderItemInline(admin.TabularInline):
