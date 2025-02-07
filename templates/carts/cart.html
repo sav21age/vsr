@@ -70,7 +70,7 @@
 
   {% get_accepting_orders as accepting_orders %}
   
-  {% if accepting_orders != 'ORDER' %}
+  {% if accepting_orders == 'CLOSE_UNTIL_APRIL' or accepting_orders == 'PRE_ORDER' %}
     <div class="row mb-4">
       <div class="col-12">
         <i class="fas fa-exclamation-triangle fa-lg color-warning"></i>
