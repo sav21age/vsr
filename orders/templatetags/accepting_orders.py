@@ -11,4 +11,4 @@ def get_accepting_orders():
         obj = AcceptingOrders.objects.get()
         return obj.name
     except:
-        return 'YES'
+        return 'ORDER'
