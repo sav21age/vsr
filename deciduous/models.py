@@ -5,7 +5,7 @@ from django.contrib.postgres.search import SearchVectorField
 from django.core.exceptions import ValidationError
 from common.errors import MSG_REQUIRED_BOTH
 from common.models import ProductPriceAbstract
-from common.validators import FloweringPeriodValidator, SizeValidator
+from common.validators import FloweringPeriodValidator, NumericValidator, SizeValidator, YearStringValidator
 from plants.models import (
     PlantPlanting, PlantPriceContainer, PlantPriceRootSystem, PlantProductAbstract, PlantSpeciesAbstract)
 
@@ -127,6 +127,9 @@ class DecProductPrice(ProductPriceAbstract):
 
     bush = models.BooleanField(
         'куст', default=False, help_text='Кустовая, многоствольная форма.')
+    
+    planting_year = models.CharField(
+        'год посадки', max_length=4, blank=True, validators=(NumericValidator, YearStringValidator),)
 
     @property
     def height(self):
@@ -184,6 +187,6 @@ class DecProductPrice(ProductPriceAbstract):
                 code='required')
 
         field_list = ('container', 'height_from', 'height_to', 'width_from',
-                      'width_to', 'trunk_diameter', 'rs', 'shtamb', 'extra',)
+                      'width_to', 'trunk_diameter', 'rs', 'shtamb', 'extra', 'planting_year',)
         super().validate_one_of_required(field_list)
         super().clean()
