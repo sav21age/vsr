@@ -14,7 +14,7 @@ class AdvertTest(TestCase):
         """ Test advert """
         response = self.client.get(reverse('index'))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "advertContainer")
+        self.assertContains(response, "advert")
 
         try:
             advert = Advert.objects.get()
@@ -26,12 +26,12 @@ class AdvertTest(TestCase):
 
         self.client.cookies = SimpleCookie({'advert_id': advert.id})
         response = self.client.get(reverse('index'))
-        self.assertNotContains(response, "advertContainer")
+        self.assertNotContains(response, "advert")
 
         self.client.cookies = SimpleCookie(
             {'advert_id': 'aa999a99-1030-489e-a08a-80684123a61e'})
         response = self.client.get(reverse('index'))
-        self.assertContains(response, "advertContainer")
+        self.assertContains(response, "advert")
 
         # self.assertContains(
         #     self.response, '<h1>admin_docs.Person</h1>', html=True)
