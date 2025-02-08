@@ -6,7 +6,6 @@ from django.core.cache.utils import make_template_fragment_key
 from django.dispatch import receiver
 from django.core.cache import caches
 from django.core.validators import MinLengthValidator
-from django.utils.safestring import mark_safe
 from solo.models import SingletonModel
 from common.models import PageAbstract
 
@@ -63,7 +62,7 @@ class WorkSchedule(SingletonModel):
         ('SHORT', 'Пн-Сб: 09:00-18:00, Вс: выходной'),
     )
     name = models.CharField('график работы', max_length=50, default='NORMAL', unique=True,
-                                     choices=CHOICES, help_text='Так же изменится и в "шапке" сайта.')
+                                     choices=CHOICES,)
 
     def __str__(self):
         return f"{dict(self.CHOICES)[self.name]}"
