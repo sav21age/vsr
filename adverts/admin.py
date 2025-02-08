@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-from django_ckeditor_5.widgets import CKEditor5Widget
+# from django_ckeditor_5.widgets import CKEditor5Widget
 # from pytz import timezone
 from adverts.forms import AdvertAdminForm
 from adverts.models import Advert
@@ -33,7 +33,7 @@ class AdvertAdmin(admin.ModelAdmin):
     def has_change_permission(self, request, obj=None):
         if obj is not None:
             delta = datetime.now(timezone.utc) - obj.created_at
-            if delta.days > 1:
+            if delta.days >= 1:
                 return False
         
         return True
@@ -50,3 +50,12 @@ class AdvertAdmin(admin.ModelAdmin):
         #     )
 
         return form
+    
+    def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
+        extra_context = extra_context or {}
+        extra_context['show_save_and_add_another'] = False
+        # extra_context['show_save_and_continue'] = False
+        # extra_context['show_save'] = False
+        # extra_context['show_delete'] = False
+
+        return super().changeform_view(request, object_id, form_url, extra_context)
