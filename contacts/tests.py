@@ -36,7 +36,7 @@ class WorkScheduleTest(TestCase):
             obj.save()
             response = self.client.get(reverse('index'))
             self.assertEqual(response.status_code, 200)
-            self.assertContains(response, 'Закрыт до весны')
+            self.assertContains(response, 'Закрыт до мая')
 
             obj.name = 'NORMAL'
             obj.save()

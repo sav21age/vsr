@@ -48,7 +48,7 @@ class AcceptingOrdersTest(TestCase):
             response = self.client.get(
                 reverse("conifers:detail", kwargs={'slug': con.slug}))
             self.assertContains(
-                response, '<p class="mb-1 text-secondary delivery">Питомник закрыт до весны</p>', html=True)
+                response, '<p class="mb-1 text-secondary delivery">Питомник закрыт до мая</p>', html=True)
 
 
 class CartAuthUserTestCase(AuthUserTestCase):

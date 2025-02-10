@@ -57,7 +57,7 @@ def invalidate_cache_contacts(instance, **kwargs):
 
 class WorkSchedule(SingletonModel):
     CHOICES = (
-        ('CLOSED', 'Закрыт до весны'),
+        ('CLOSED', 'Закрыт до мая'),
         ('NORMAL', 'Пн-Сб: 09:00-19:00, Вс: выходной'),
         ('SHORT', 'Пн-Сб: 09:00-18:00, Вс: выходной'),
     )
