@@ -7,6 +7,8 @@ from adverts.forms import AdvertAdminForm
 from adverts.models import Advert
 from common.helpers import formfield_overrides
 # from django.forms import Textarea
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 
 
 @admin.register(Advert)
@@ -59,3 +61,10 @@ class AdvertAdmin(admin.ModelAdmin):
         # extra_context['show_delete'] = False
 
         return super().changeform_view(request, object_id, form_url, extra_context)
+
+    def changelist_view(self, request, extra_context=None):
+        if self.model.objects.all().count() == 1:
+            # obj = self.model.objects.all()[0]
+            obj = self.model.objects.get()
+            return HttpResponseRedirect(reverse("admin:%s_%s_change" %(self.model._meta.app_label, self.model._meta.model_name), args=(obj.id,)))
+        return super().changelist_view(request=request, extra_context=extra_context)
