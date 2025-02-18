@@ -23,7 +23,7 @@ class RoseProductPriceInline(ProductPriceInline):
             .select_related('container')
 
     model = RoseProductPrice
-    fields = ('container', 'price', )
+    fields = ('container', 'price', 'updated_at', )
 
 
 # --
@@ -170,7 +170,7 @@ class RoseProductPriceAdmin(ProductPriceAbstractAdmin):
 
     list_filter = (RoseProductPriceContainerAdminFilter,)
     fields = ('product', 'container', 'price', )
-    list_display = ('get_product', 'price', )
+    list_display = ('get_product', 'updated_at', 'price', )
     show_facets = admin.ShowFacets.ALLOW
 
     def get_product(self, obj=None):

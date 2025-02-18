@@ -64,6 +64,7 @@ class ProductAbstract(PageAbstract):
 
 class ProductPriceAbstract(models.Model):
     price = models.DecimalField('цена, руб', max_digits=9, decimal_places=2)
+    updated_at = models.DateField('дата обновления', auto_now=True)
 
     class Meta:
         abstract = True

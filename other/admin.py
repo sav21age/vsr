@@ -10,7 +10,7 @@ admin.site.register(OtherProductCategory)
 
 class OtherProductPriceInline(ProductPriceInline):
     model = OtherProductPrice
-    fields = ('name', 'price', )
+    fields = ('name', 'price', 'updated_at', )
 
 
 @admin.register(OtherProduct)
@@ -47,4 +47,4 @@ class OtherProductAdmin(ProductAbstractAdmin, GetImageAdminMixin):
 @admin.register(OtherProductPrice)
 class OtherProductPriceAdmin(ProductPriceAbstractAdmin):
     fields = ('product', 'name', )
-    list_display = ('product', 'name', 'price',)
+    list_display = ('product', 'name', 'updated_at', 'price',)

@@ -22,6 +22,7 @@ make_hidden.short_description = 'Скрыть'
 class ProductPriceInline(admin.StackedInline):
     extra = 0
     show_change_link = True
+    readonly_fields = ('updated_at', )
 
 
 class PageAbstractAdmin(admin.ModelAdmin):
@@ -64,7 +65,7 @@ class ProductPriceAbstractAdmin(admin.ModelAdmin):
     show_facets = admin.ShowFacets.NEVER
     search_fields = ('product__name',)
     search_help_text = 'Поиск по названию'
-    readonly_fields = ('product', )
+    readonly_fields = ('product', 'updated_at',)
     list_editable = ('price', )
     ordering = ('product__name', 'price', )
     list_per_page = 30
