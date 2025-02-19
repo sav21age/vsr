@@ -12,6 +12,7 @@ from deciduous.models import DecProduct, DecProductPrice, DecSpecies
 from images.admin import ImageInline
 from plants.admin import PlantSpeciesAbstractAdmin
 from plants.models import PlantPriceContainer
+from videos.admin import VideoInline
 
 
 class DecSpeciesGenusAdminFilter(SpeciesGenusAdminFilter):
@@ -149,7 +150,7 @@ class DecProductAdmin(ProductAbstractAdmin):
     form = DecProductAdminForm
     list_filter = (DecProductGenusAdminFilter, )
     actions = (batch_copy, make_visible, make_hidden,)
-    inlines = [ImageInline,  DecProductPriceInline, ]
+    inlines = [ImageInline, VideoInline, DecProductPriceInline, ]
     filter_horizontal = ('advantages', )
     fieldsets = (
         ('', {

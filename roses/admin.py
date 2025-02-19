@@ -10,6 +10,7 @@ from images.admin import ImageInline
 from plants.models import PlantPriceContainer
 from roses.forms import RoseProductAdminForm, RoseProductBatchCopyAdminForm, RoseSpeciesAdminForm
 from roses.models import RoseProduct, RoseProductPrice, RoseSpecies
+from videos.admin import VideoInline
 
 
 @admin.register(RoseSpecies)
@@ -113,7 +114,7 @@ class RoseProductAdmin(ProductAbstractAdmin):
     show_facets = admin.ShowFacets.ALWAYS
     list_filter = ('species', )
     actions = (batch_copy, make_visible, make_hidden,)
-    inlines = [ImageInline, RoseProductPriceInline, ]
+    inlines = [ImageInline, VideoInline,  RoseProductPriceInline,]
     filter_horizontal = ('advantages', )
     fieldsets = (
         ('', {

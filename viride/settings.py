@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'pricelist',
     'contacts',
     'images',
+    'videos',
     'conifers',
     'deciduous',
     'fruits',

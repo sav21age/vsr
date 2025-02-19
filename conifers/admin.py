@@ -13,6 +13,7 @@ from conifers.models import (
 from images.admin import ImageInline
 from plants.admin import PlantSpeciesAbstractAdmin
 from plants.models import PlantPriceContainer
+from videos.admin import VideoInline
 
 
 class ConiferSpeciesGenusAdminFilter(SpeciesGenusAdminFilter):
@@ -152,7 +153,7 @@ class ConiferProductAdmin(ProductAbstractAdmin):
     form = ConiferProductAdminForm
     list_filter = (ConiferProductGenusAdminFilter, )
     actions = (batch_copy, make_visible, make_hidden,)
-    inlines = [ImageInline, ConiferProductPriceInline, ]
+    inlines = [ImageInline, VideoInline, ConiferProductPriceInline, ]
     filter_horizontal = ('advantages', )
     fieldsets = (
         ('', {

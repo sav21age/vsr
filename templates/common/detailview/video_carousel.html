@@ -1,0 +1,47 @@
+{% load video %}
+{% with object.videos.count as count %}
+{% if count > 0 %}
+<section class="py-3 bg-con-opacity">
+    <div class="container-fluid px-3 px-md-5 pb-4">
+        <div class="title">
+            <h3>Видео</h3>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+                <div id="videoCarousel" class="carousel slide">
+                    
+                    {% comment %} <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    </div> {% endcomment %}
+
+                    <div class="carousel-inner">
+                        {% for video in object.videos.all %}
+                        <div class="carousel-item{% if forloop.first %} active{% endif %}">
+                            <div class="ratio ratio-16x9 bg-black">
+                                {% comment %} {{ video.code|safe }} {% endcomment %}
+                                {% get_video video.url %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    {% if count > 1 %}
+                        <button class="carousel-control-prev" type="button" data-bs-target="#videoCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Предыдущее</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#videoCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Следующее</span>
+                        </button>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endwith %}

@@ -3,6 +3,7 @@ from common.admin import ProductAbstractAdmin, ProductPriceAbstractAdmin, Produc
 from images.admin import GetImageAdminMixin, ImageInline
 from other.forms import OtherProductAdminForm
 from other.models import OtherProduct, OtherProductCategory, OtherProductPrice
+from videos.admin import VideoInline
 
 
 admin.site.register(OtherProductCategory)
@@ -24,7 +25,7 @@ class OtherProductAdmin(ProductAbstractAdmin, GetImageAdminMixin):
     list_filter = ('category', )
     form = OtherProductAdminForm
     actions = (make_visible, make_hidden,)
-    inlines = [ImageInline, OtherProductPriceInline,]
+    inlines = [ImageInline, VideoInline, OtherProductPriceInline,]
     fieldsets = (
         ('', {
             'fields': ('is_visible',)

@@ -6,6 +6,7 @@ from common.errors import MSG_ONE_REQUIRED
 from common.managers import SearchManager
 from favorites.models import Favorites
 from images.models import Image
+from videos.models import Video
 
 
 class PageAbstract(models.Model):
@@ -41,6 +42,7 @@ class ProductAbstract(PageAbstract):
     description = models.TextField('описание', blank=True)
 
     images = fields.GenericRelation(Image)
+    videos = fields.GenericRelation(Video)
     favorites = fields.GenericRelation(Favorites)
 
     objects = SearchManager()

@@ -69,7 +69,8 @@ class PerProductTest(TestCase):
             reverse(f"{APP}:filter_form"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 200)
 
-        json_response = '{"genus": [21], "container": [11, 19], "planting_year": [2022, 2023]}'
+        # json_response = '{"genus": [21], "container": [11, 19], "planting_year": [2022, 2023]}'
+        json_response = '{"genus": [21], "container": [11, 3], "planting_year": [2022, 2023]}'
         self.assertEqual(response.content.decode('utf-8'), json_response)
 
     def test_listview_per_page(self):

@@ -1,17 +1,21 @@
+from django.db.models import Prefetch
 from django.views.generic import ListView, DetailView
 from django.http import Http404, JsonResponse
 from common.mixins import PerPageMixin, RecommendedDetailMixin
 from fruits.forms import FruitProductPriceFilterForm
 from fruits.models import FruitProduct, FruitProductPriceAge, FruitSpecies
+from images.models import Image
 from plants.models import PlantGenus, PlantPriceContainer, PlantPriceRootSystem
 from pure_pagination.mixins import PaginationMixin
+from videos.models import Video
 
 
 class FruitProductDetail(RecommendedDetailMixin, DetailView):
     model = FruitProduct
     template_name = 'fruits/detail.html'
     queryset = FruitProduct.is_visible_objects.all() \
-        .prefetch_related('images') \
+        .prefetch_related(Prefetch('images', queryset=Image.is_visible_objects.all())) \
+        .prefetch_related(Prefetch('videos', queryset=Video.is_visible_objects.all())) \
         .prefetch_related('advantages') \
         .prefetch_related(
             'prices',
@@ -76,7 +80,7 @@ class FruitProductList(PaginationMixin, PerPageMixin,
     template_name = 'fruits/list.html'
     queryset = FruitProduct.is_visible_objects.all()\
         .select_related('species') \
-        .prefetch_related('images') \
+        .prefetch_related(Prefetch('images', queryset=Image.is_visible_objects.all())) \
         .prefetch_related('prices')
     division_name = 'FRU'
     species_model = FruitSpecies

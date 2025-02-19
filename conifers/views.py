@@ -1,18 +1,21 @@
 from django.views.generic import ListView, DetailView
 from django.http import Http404, JsonResponse
-from django.db.models import Min, Max
+from django.db.models import Min, Max, Prefetch
 from common.mixins import PerPageMixin, RecommendedDetailMixin
 from conifers.forms import ConiferProductPriceFilterForm
 from conifers.models import ConiferProduct, ConiferProductPrice, ConiferSpecies
+from images.models import Image
 from plants.models import PlantGenus, PlantPriceContainer, PlantPriceRootSystem
 from pure_pagination.mixins import PaginationMixin
+from videos.models import Video
 
 
 class ConiferProductDetail(RecommendedDetailMixin, DetailView):
     model = ConiferProduct
     template_name = 'conifers/detail.html'
     queryset = ConiferProduct.is_visible_objects.all() \
-        .prefetch_related('images') \
+        .prefetch_related(Prefetch('images', queryset=Image.is_visible_objects.all())) \
+        .prefetch_related(Prefetch('videos', queryset=Video.is_visible_objects.all())) \
         .prefetch_related('advantages') \
         .prefetch_related('prices') \
         .prefetch_related('prices__container') \
@@ -88,7 +91,7 @@ class ConiferProductList(PaginationMixin,
     template_name = 'conifers/list.html'
     queryset = ConiferProduct.is_visible_objects.all()\
         .select_related('species') \
-        .prefetch_related('images') \
+        .prefetch_related(Prefetch('images', queryset=Image.is_visible_objects.all())) \
         .prefetch_related('prices')
     division_name = 'CON'
     species_model = ConiferSpecies

@@ -18,10 +18,7 @@ class ImageAdminWidget(AdminResubmitImageWidget):
             try:
                 thumbnailer = get_thumbnailer(value)
                 thumb = thumbnailer.get_thumbnail(resize_data).url
-                result = '<div style="margin-right: 20px;"><a href="{i}" target="_blank" rel="noopener noreferrer"><img src="{t}" title="{i}"></a></div>'.format(
-                         i=value.url,
-                         t=thumb
-                )
+                result = f'<div style="margin-right: 20px;"><a href="{value.url}" target="_blank" rel="noopener noreferrer"><img src="{thumb}" title="{value.url}"></a></div>'
                 output.append(result)
             except:
                 pass

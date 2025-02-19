@@ -1,3 +1,4 @@
+import re
 from django.contrib import admin
 # from django.contrib.contenttypes.models import ContentType
 from adminsortable2.admin import SortableAdminBase
@@ -43,6 +44,11 @@ class PageAbstractAdmin(admin.ModelAdmin):
         }),
     )
 
+    def save_model(self, request, obj, form, change):
+        obj.head_title = obj.head_title.strip()
+        obj.head_title = re.sub(r'\s+', ' ', obj.head_title)
+        super().save_model(request, obj, form, change)
+
 
 class GetMinPriceAdminMixin():
     def get_min_price(self, obj):
@@ -59,6 +65,11 @@ class ProductAbstractAdmin(SortableAdminBase, PageAbstractAdmin, GetImageAdminMi
     search_fields = ('name', 'name_trans_words',)
     search_help_text = 'Поиск по названию и переводу слов'
     list_display = ('name', 'get_image', 'is_visible', 'get_min_price',)
+
+    def save_model(self, request, obj, form, change):
+        obj.name = obj.name.strip()
+        obj.name = re.sub(r'\s+', ' ', obj.name)
+        super().save_model(request, obj, form, change)
 
 
 class ProductPriceAbstractAdmin(admin.ModelAdmin):

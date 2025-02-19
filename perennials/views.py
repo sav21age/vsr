@@ -1,19 +1,22 @@
 from django.views.generic import ListView, DetailView
 from django.http import Http404, JsonResponse
 from django.db.models.functions import Cast
-from django.db.models import IntegerField
+from django.db.models import IntegerField, Prefetch
 from common.mixins import PerPageMixin, RecommendedDetailMixin
+from images.models import Image
 from perennials.forms import PerProductPriceFilterForm
 from perennials.models import PerProduct, PerProductPrice, PerSpecies
 from plants.models import PlantGenus, PlantPriceContainer
 from pure_pagination.mixins import PaginationMixin
+from videos.models import Video
 
 
 class PerProductDetail(RecommendedDetailMixin, DetailView):
     model = PerProduct
     template_name = 'perennials/detail.html'
     queryset = PerProduct.is_visible_objects.all() \
-        .prefetch_related('images') \
+        .prefetch_related(Prefetch('images', queryset=Image.is_visible_objects.all())) \
+        .prefetch_related(Prefetch('videos', queryset=Video.is_visible_objects.all())) \
         .prefetch_related('flowering') \
         .prefetch_related('planting') \
         .prefetch_related('advantages') \
@@ -73,7 +76,7 @@ class PerProductList(PaginationMixin, PerPageMixin,
     template_name = 'perennials/list.html'
     queryset = PerProduct.is_visible_objects.all()\
         .select_related('species') \
-        .prefetch_related('images') \
+        .prefetch_related(Prefetch('images', queryset=Image.is_visible_objects.all())) \
         .prefetch_related('prices')
     division_name = 'PER'
     species_model = PerSpecies

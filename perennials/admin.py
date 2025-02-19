@@ -12,6 +12,7 @@ from perennials.forms import PerProductAdminForm, PerProductBatchCopyAdminForm, 
 from perennials.models import PerProduct, PerProductFlowering, PerProductPrice, PerSpecies
 from plants.admin import PlantSpeciesAbstractAdmin
 from plants.models import PlantPriceContainer
+from videos.admin import VideoInline
 
 
 class PerSpeciesGenusAdminFilter(SpeciesGenusAdminFilter):
@@ -151,7 +152,7 @@ class PerProductAdmin(ProductAbstractAdmin):
     form = PerProductAdminForm
     list_filter = (PerProductGenusAdminFilter, )
     actions = (batch_copy, make_visible, make_hidden,)
-    inlines = [ImageInline, PerProductPriceInline, ]
+    inlines = [ImageInline, VideoInline, PerProductPriceInline, ]
     filter_horizontal = ('advantages', )
     fieldsets = (
         ('', {

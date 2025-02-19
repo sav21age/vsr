@@ -13,6 +13,7 @@ from fruits.models import FruitProduct, FruitProductPrice, FruitProductPriceAge,
 from images.admin import ImageInline
 from plants.admin import PlantSpeciesAbstractAdmin
 from plants.models import PlantPriceContainer
+from videos.admin import VideoInline
 
 
 class FruitSpeciesGenusAdminFilter(SpeciesGenusAdminFilter):
@@ -155,7 +156,7 @@ class FruitProductAdmin(ProductAbstractAdmin):
     form = FruitProductAdminForm
     list_filter = (FruitProductGenusAdminFilter, )
     actions = (batch_copy, make_visible, make_hidden,)
-    inlines = [ImageInline, FruitProductPriceInline, ]
+    inlines = [ImageInline, VideoInline, FruitProductPriceInline, ]
     filter_horizontal = ('advantages', )
     fieldsets = (
         ('', {

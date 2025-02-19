@@ -32,6 +32,13 @@ function removeAdvert(advertId) {
   el.remove();
 }
 
+const videoCarousel = document.getElementById('videoCarousel');
+videoCarousel.addEventListener('slide.bs.carousel', event => {
+  iframe = document.querySelector('#videoCarousel .carousel-item.active iframe');
+  const player = VK.VideoPlayer(iframe);
+  player.pause();
+});
+
 const popoverTriggerList = document.querySelectorAll(
   '[data-bs-toggle="popover"]'
 );

@@ -1,18 +1,21 @@
 from django.views.generic import ListView, DetailView
 from django.http import Http404, JsonResponse
-from django.db.models import Min, Max
+from django.db.models import Min, Max, Prefetch
 from common.mixins import PerPageMixin, RecommendedDetailMixin
 from deciduous.forms import DecProductPriceFilterForm
 from deciduous.models import DecProduct, DecProductPrice, DecSpecies
+from images.models import Image
 from plants.models import PlantGenus, PlantPriceContainer, PlantPriceRootSystem
 from pure_pagination.mixins import PaginationMixin
+from videos.models import Video
 
 
 class DecProductDetail(RecommendedDetailMixin, DetailView):
     model = DecProduct
     template_name = 'deciduous/detail.html'
     queryset = DecProduct.is_visible_objects.all() \
-        .prefetch_related('images') \
+        .prefetch_related(Prefetch('images', queryset=Image.is_visible_objects.all())) \
+        .prefetch_related(Prefetch('videos', queryset=Video.is_visible_objects.all())) \
         .prefetch_related('planting') \
         .prefetch_related('advantages') \
         .prefetch_related('prices') \
@@ -84,7 +87,7 @@ class DecProductList(PaginationMixin,
     template_name = 'deciduous/list.html'
     queryset = DecProduct.is_visible_objects.all()\
         .select_related('species') \
-        .prefetch_related('images') \
+        .prefetch_related(Prefetch('images', queryset=Image.is_visible_objects.all())) \
         .prefetch_related('prices')
     division_name = 'DEC'
     species_model = DecSpecies

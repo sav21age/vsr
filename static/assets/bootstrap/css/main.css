@@ -187,6 +187,15 @@ ul.pagination {
   margin-left: 0 !important;
 }
 
+#videoCarousel .carousel-control-next,
+#videoCarousel .carousel-control-prev {
+  height: 50px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
 /*** Navbar ***/
 .main-user {
   font-size: 26px !important;

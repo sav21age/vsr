@@ -1,14 +1,14 @@
 from datetime import datetime, timezone
 from django.contrib import admin
 from django.utils.safestring import mark_safe
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 # from django_ckeditor_5.widgets import CKEditor5Widget
 # from pytz import timezone
 from adverts.forms import AdvertAdminForm
 from adverts.models import Advert
 from common.helpers import formfield_overrides
 # from django.forms import Textarea
-from django.urls import reverse
-from django.http import HttpResponseRedirect
 
 
 @admin.register(Advert)

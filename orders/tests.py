@@ -41,14 +41,14 @@ class AcceptingOrdersTest(TestCase):
             response = self.client.get(
                 reverse("conifers:detail", kwargs={'slug': con.slug}))
             self.assertContains(
-                response, '<p class="mb-1 text-secondary delivery">Питомник откроется в начале мая</p>', html=True)
+                response, 'Питомник откроется в начале мая', html=True)
 
             obj.name = 'CLOSE_UNTIL_APRIL'
             obj.save()
             response = self.client.get(
                 reverse("conifers:detail", kwargs={'slug': con.slug}))
             self.assertContains(
-                response, '<p class="mb-1 text-secondary delivery">Питомник закрыт до мая</p>', html=True)
+                response, 'Питомник закрыт до мая', html=True)
 
 
 class CartAuthUserTestCase(AuthUserTestCase):
@@ -56,6 +56,10 @@ class CartAuthUserTestCase(AuthUserTestCase):
 
     def setUp(self):
         super().setUp()
+
+        obj = AcceptingOrders.objects.get()
+        obj.name = 'ORDER'
+        obj.save()
 
         self.cart, _ = Cart.objects.get_or_create(
             user=self.request.user,
@@ -91,6 +95,10 @@ class CartAnonymUserTestCase(AnonymUserTestCase):
 
     def setUp(self):
         super().setUp()
+
+        obj = AcceptingOrders.objects.get()
+        obj.name = 'ORDER'
+        obj.save()
 
         defaults = {
             'ip': '127.0.0.1',

@@ -20,7 +20,7 @@
 
 {% block content %}
 {% cache cache_timeout perproduct_detail object.id %}
-<div class="container-fluid px-3 px-md-5">
+<div class="container-fluid px-3 px-md-5 pb-2">
   <div class="row">
     <div class="col-12 col-md-4">
       {% include 'common/detailview/images_gallery.html' %}
@@ -105,6 +105,7 @@
     </div>
   </div>
 </div>
+{% include 'common/detailview/video_carousel.html' %}
 {% include 'common/detailview/recommended.html' %}
 {% endcache %}
 {% include 'common/detailview/add_to_cart/csrf_token.html' %}
