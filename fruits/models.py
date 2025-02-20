@@ -57,7 +57,7 @@ class FruitProduct(PlantProductAbstract):
         'вкус плодов', max_length=250, blank=True, )
 
     fruit_dimension = models.CharField(
-        'Величина плодов', max_length=7, blank=True, )
+        'величина плодов', max_length=7, blank=True, )
 
     fruit_size = models.CharField(
         'размер плодов, см', max_length=12, blank=True,
