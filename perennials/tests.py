@@ -56,14 +56,17 @@ class PerProductTest(TestCase):
         self.assertEqual(form['container'].value(), 11)
         self.assertEqual(form['planting_year'].value(), 2022)
 
-    def test_listview_filter_form_xhr(self):
-        """ Test ListView filter form XMLHttpRequest """
+    def test_listview_filter_form_xhr_valid(self):
+        """ Test ListView filter form XMLHttpRequest valid """
 
         json_data = {
             'genus': [21,],
             'container': 11,
             'planting_year': 2022,
         }
+
+        response = self.client.post(reverse(f"{APP}:filter_form"), json_data)
+        self.assertEqual(response.status_code, 404)
 
         response = self.client.post(
             reverse(f"{APP}:filter_form"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
@@ -72,6 +75,21 @@ class PerProductTest(TestCase):
         # json_response = '{"genus": [21], "container": [11, 19], "planting_year": [2022, 2023]}'
         json_response = '{"genus": [21], "container": [11, 3], "planting_year": [2022, 2023]}'
         self.assertEqual(response.content.decode('utf-8'), json_response)
+
+    def test_listview_filter_form_xhr_not_valid(self):
+        """ Test ListView filter form XMLHttpRequest not valid """
+
+        json_data = {
+            'genus': 'test',
+            'container': 'test',
+            'planting_year': 'test',
+        }
+
+        response = self.client.post(
+            reverse(f"{APP}:filter_form"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content.decode('utf-8'), '{}')
 
     def test_listview_per_page(self):
         """ Test ListView with per_page """

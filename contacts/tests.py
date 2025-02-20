@@ -3,6 +3,17 @@ from django.urls import reverse
 from contacts.models import Contacts, WorkSchedule
 
 
+class ContactPageTestNotExists(TestCase):
+    def setUp(self):
+        self.client = Client()
+
+    def test_detail(self):
+        """ Test contacts detail view not exists """
+
+        response = self.client.get(reverse('contacts'))
+        self.assertEqual(response.status_code, 404)
+        
+
 class ContactPageTest(TestCase):
     fixtures = ['fixtures/db.json', ]
 
@@ -20,7 +31,7 @@ class ContactPageTest(TestCase):
         """ Test contacts detail view not exists """
 
         self.assertRaises(Contacts.DoesNotExist, Contacts.objects.get, slug='anything')
-
+        
 
 class WorkScheduleTest(TestCase):
     fixtures = ['fixtures/db.json', ]

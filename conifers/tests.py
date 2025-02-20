@@ -56,14 +56,17 @@ class ConiferProductTest(TestCase):
         self.assertEqual(form['height_from'].value(), 70)
         self.assertEqual(form['extra'].value(), True)
         
-    def test_listview_filter_form_xhr(self):
-        """ Test ListView filter form XMLHttpRequest """
+    def test_listview_filter_form_xhr_valid(self):
+        """ Test ListView filter form XMLHttpRequest valid """
 
         json_data = {
             'genus': [1,],
             'height_from': 70,
             'extra': 'on',
         }
+
+        response = self.client.post(reverse(f"{APP}:filter_form"), json_data)
+        self.assertEqual(response.status_code, 404)
 
         response = self.client.post(
             reverse(f"{APP}:filter_form"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
@@ -72,6 +75,20 @@ class ConiferProductTest(TestCase):
         # json_response = '{"genus": [1, 12], "height_from": {"min": 70, "max": 240}, "width_from": {"min": null, "max": null}, "container": [3], "rs": [1], "shtamb": null, "extra": []}'
         json_response = '{"genus": [1, 9, 12], "height_from": {"min": 100, "max": 280}, "width_from": {"min": null, "max": null}, "container": [], "rs": [1], "shtamb": null, "extra": []}'
         self.assertEqual(response.content.decode('utf-8'), json_response)
+        
+    def test_listview_filter_form_xhr_not_valid(self):
+        """ Test ListView filter form XMLHttpRequest not valid """
+
+        json_data = {
+            'genus': 'test',
+            'height_from': 'test',
+            'extra': 'on',
+        }
+
+        response = self.client.post(
+            reverse(f"{APP}:filter_form"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content.decode('utf-8'), '{}')
 
 
     def test_listview_per_page(self):
