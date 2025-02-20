@@ -12,7 +12,7 @@ from fruits.forms import FruitProductAdminForm, FruitProductBatchCopyAdminForm, 
 from fruits.models import FruitProduct, FruitProductPrice, FruitProductPriceAge, FruitProductPriceRootstock, FruitSpecies
 from images.admin import ImageInline
 from plants.admin import PlantSpeciesAbstractAdmin
-from plants.models import PlantPriceContainer
+from plants.models import PlantPriceContainer, PlantPriceRootSystem
 from videos.admin import VideoInline
 
 
@@ -228,6 +228,27 @@ class FruitProductPriceAgeAdminFilter(SimpleListFilter):
         return queryset
 
 
+class FruitProductPriceRootStockAdminFilter(SimpleListFilter):
+    title = 'Корневая система'
+    parameter_name = 'rs'
+
+    def lookups(self, request, model_admin):
+        qs = FruitProductPrice.objects.exclude(rs_id__isnull=True)\
+            .order_by('rs_id')\
+            .distinct('rs_id')\
+            .values_list('rs_id', flat=True)
+
+        lst = list(qs)
+        qs = PlantPriceRootSystem.objects.filter(id__in=lst)
+        return [(o.id, o) for o in qs]
+
+    def queryset(self, request, queryset):
+        if self.value():
+            return queryset.filter(rs__id__exact=self.value())
+
+        return queryset
+
+
 @admin.register(FruitProductPrice)
 class FruitProductPriceAdmin(ProductPriceAbstractAdmin):
     def get_queryset(self, request):
@@ -240,10 +261,13 @@ class FruitProductPriceAdmin(ProductPriceAbstractAdmin):
 
     list_filter = (FruitProductPriceGenusAdminFilter,
                    FruitProductPriceAgeAdminFilter,
-                   FruitProductPriceContainerAdminFilter, )
+                   FruitProductPriceContainerAdminFilter, 
+                   FruitProductPriceRootStockAdminFilter,)
+    
     fields = ('product', 'container', 
               ('height_from', 'height_to'), ('width_from', 'width_to',),
               'rs', 'age', 'rootstock', 'price', )
+    
     list_display = ('get_product', 'updated_at', 'price', )
     # show_facets = admin.ShowFacets.ALLOW
 
