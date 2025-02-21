@@ -1,14 +1,11 @@
 from django.contrib import admin
-from django.shortcuts import render
-from django.db import transaction
-from django.contrib.admin.helpers import ACTION_CHECKBOX_NAME
-from django.contrib import messages
-from django.http import HttpResponseRedirect
-from common.admin import ProductAbstractAdmin, ProductPriceAbstractAdmin, ProductPriceInline, make_hidden, make_visible
-from common.filters import ProductPriceContainerAdminFilter
+
+from common.admin import (ProductAbstractAdmin, ProductPriceAbstractAdmin,
+                          ProductPriceInline, make_hidden, make_visible)
 from images.admin import ImageInline
-from plants.models import PlantPriceContainer
-from roses.forms import RoseProductAdminForm, RoseProductBatchCopyAdminForm, RoseSpeciesAdminForm
+from roses.actions import roseproduct_batch_copy_admin
+from roses.filters import RoseProductPriceContainerAdminFilter
+from roses.forms import (RoseProductAdminForm, RoseSpeciesAdminForm)
 from roses.models import RoseProduct, RoseProductPrice, RoseSpecies
 from videos.admin import VideoInline
 
@@ -16,6 +13,9 @@ from videos.admin import VideoInline
 @admin.register(RoseSpecies)
 class RoseSpeciesAdmin(admin.ModelAdmin):
     form = RoseSpeciesAdminForm
+
+
+# --
 
 
 class RoseProductPriceInline(ProductPriceInline):
@@ -27,93 +27,18 @@ class RoseProductPriceInline(ProductPriceInline):
     fields = ('container', 'price', 'updated_at', )
 
 
-# --
-
-
-def batch_copy(modeladmin, request, queryset):
-    if 'do_action' in request.POST:
-        form = RoseProductBatchCopyAdminForm(request.POST)
-
-        if form.is_valid():
-            clean = form.cleaned_data
-            donor = form.cleaned_data['object_donor']
-            for recipient in queryset:
-                try:
-                    with transaction.atomic():
-                        if clean['scientific_name_chk']:
-                            recipient.scientific_name = donor.scientific_name
-
-                        if clean['height_chk']:
-                            recipient.height = donor.height
-
-                        if clean['width_chk']:
-                            recipient.width = donor.width
-
-                        if clean['flowering_chk']:
-                            recipient.flowering = donor.flowering
-
-                        if clean['quantity_on_stem_chk']:
-                            recipient.quantity_on_stem = donor.quantity_on_stem
-
-                        if clean['flavor_chk']:
-                            recipient.flavor = donor.flavor
-
-                        if clean['flower_size_chk']:
-                            recipient.flower_size = donor.flower_size
-
-                        if clean['resistance_fungus_chk']:
-                            recipient.resistance_fungus = donor.resistance_fungus
-
-                        if clean['resistance_rain_chk']:
-                            recipient.resistance_rain = donor.resistance_rain
-
-                        if clean['shelter_winter_chk']:
-                            recipient.shelter_winter = donor.shelter_winter
-
-                        if clean['winter_zone_chk']:
-                            recipient.winter_zone = donor.winter_zone
-
-                        if clean['advantages_chk']:
-                            recipient.advantages.clear()
-                            for attr in donor.advantages.all():
-                                recipient.advantages.add(attr)
-                        recipient.save()
-                except:
-                    messages.error(request, 'Произошла ошибка')
-            messages.success(request, 'Своиства успешно скопированы')
-            return HttpResponseRedirect(request.get_full_path())
-        else:
-            form = RoseProductBatchCopyAdminForm(request.POST)
-    else:
-        form = RoseProductBatchCopyAdminForm(initial={
-            '_selected_action': request.POST.getlist(ACTION_CHECKBOX_NAME)})
-
-    return render(
-        request,
-        'admin/batch_copy.html',
-        {
-            'object_recipients': queryset,
-            'action': 'batch_copy',
-            'form': form,
-        }
-    )
-
-
-batch_copy.short_description = 'Пакетное копирование свойств'
-
-
 @admin.register(RoseProduct)
 class RoseProductAdmin(ProductAbstractAdmin):
     def get_queryset(self, request):
         return super().get_queryset(request) \
             .prefetch_related('images') \
             .prefetch_related('prices')
-            # .prefetch_related('roseproductprice_set')
+        # .prefetch_related('roseproductprice_set')
 
     form = RoseProductAdminForm
     show_facets = admin.ShowFacets.ALWAYS
     list_filter = ('species', )
-    actions = (batch_copy, make_visible, make_hidden,)
+    actions = (roseproduct_batch_copy_admin, make_visible, make_hidden,)
     inlines = [ImageInline, VideoInline,  RoseProductPriceInline,]
     filter_horizontal = ('advantages', )
     fieldsets = (
@@ -145,21 +70,6 @@ class RoseProductAdmin(ProductAbstractAdmin):
 
 
 # --
-
-
-class RoseProductPriceContainerAdminFilter(ProductPriceContainerAdminFilter):
-    def lookups(self, request, model_admin):
-        qs = RoseProductPrice.objects.exclude(container_id__isnull=True)\
-            .order_by('container_id')\
-            .distinct('container_id')\
-            .values_list('container_id', flat=True)
-
-        lst = list(qs)
-
-        qs = PlantPriceContainer.objects.filter(id__in=lst)\
-            .order_by('order_number')
-
-        return [(o.id, o.name) for o in qs]
 
 
 @admin.register(RoseProductPrice)
