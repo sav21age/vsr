@@ -171,6 +171,14 @@ class ProductPriceAbstract(models.Model):
             return ''
         except IndexError:
             return ''
+        
+    def clean(self):
+        if self.price <= 0:
+            raise ValidationError(
+                {'price': 'Цена должна быть больше 0.'}
+            )
+
+        super().clean()
 
     def validate_one_of_required(self, field_list):
         msg = {}
