@@ -39,7 +39,7 @@ class RoseSpeciesFilterMixin():
     def get_queryset(self):
         qs = super().get_queryset()
         species = self.request.GET.get('species', None)
-        if species:
+        if species and species.isdigit() and species.isnumeric():
             qs = qs.filter(species__id=species)
             if not qs:
                 raise Http404

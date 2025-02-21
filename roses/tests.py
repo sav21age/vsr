@@ -33,28 +33,58 @@ class RoseProductTest(TestCase):
         response = self.client.get(reverse(f"{APP}:list"))
         self.assertEqual(response.status_code, 200)
 
+        kwargs = {
+            'species': 1, 
+            'per_page': 12, 
+            'page': 2
+        }
+        response = self.client.get('{0}?{1}'.format(
+            reverse(f"{APP}:list"), urlencode(kwargs)))
+        self.assertEqual(response.status_code, 200)
+
+        kwargs.update({'page': 200, })
+        response = self.client.get('{0}?{1}'.format(
+            reverse(f"{APP}:list"), urlencode(kwargs)))
+        self.assertEqual(response.status_code, 404)
+
     def test_listview_per_page(self):
         """ Test ListView with per_page """
-        per_page = [8, 12, 24, 36, 'test', None, '']
+        lst = [8, 12, 24, 36, 'test', None, '']
 
-        for value in per_page:
+        for value in lst:
             kwargs = {'per_page': value}
             response = self.client.get('{0}?{1}'.format(
                 reverse(f"{APP}:list"), urlencode(kwargs)))
             self.assertEqual(response.status_code, 200)
 
+    def test_listview_filter_species(self):
+        """ Test ListView with species """
+        lst = [1, '1.5', '1,5', '1¾', 'test', None, '']
+        for value in lst:
+            kwargs = {'species': value}
+            response = self.client.get('{0}?{1}'.format(
+                reverse(f"{APP}:list"), urlencode(kwargs)))
+            self.assertEqual(response.status_code, 200)
+
+        lst = [100000,]
+        for value in lst:
+            kwargs = {'species': value}
+            response = self.client.get('{0}?{1}'.format(
+                reverse(f"{APP}:list"), urlencode(kwargs)))
+            self.assertEqual(response.status_code, 404)
+
     def test_listview_pagination(self):
         """ Test ListView with pagination """
 
-        page = (1,)
-        for value in page:
+        lst = [1,]
+        for value in lst:
             kwargs = {'page': value}
             response = self.client.get('{0}?{1}'.format(
                 reverse(f"{APP}:list"), urlencode(kwargs)))
             self.assertEqual(response.status_code, 200)
 
-        page = (100000000, 'test')
-        for value in page:
+        lst = [100000000, 'test']
+        for value in lst:
             kwargs = {'page': value}
             response = self.client.get('{0}?{1}'.format(
                 reverse(f"{APP}:list"), urlencode(kwargs)))
