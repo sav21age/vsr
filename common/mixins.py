@@ -64,12 +64,8 @@ class PlantDivisionFilterMixin():
         qs = super().get_queryset()
 
         self.division_id = self.request.GET.get('division', None)
-        if self.division_id and self.division_id.isnumeric():
-            try:
-                qs = qs.filter(division__id=self.division_id)
-            except ValueError as e:
-                raise Http404 from e
-
+        if self.division_id and self.division_id.isnumeric() and self.division_id.isdigit():
+            qs = qs.filter(division__id=self.division_id)
             if not qs:
                 raise Http404
             
@@ -94,79 +90,79 @@ class PlantDivisionFilterMixin():
         return context
 
 
-class PlantGenusFilterMixin():
-    genus_id = None
+# class PlantGenusFilterMixin():
+#     genus_id = None
 
-    def get_queryset(self):
-        qs = super().get_queryset()
+#     def get_queryset(self):
+#         qs = super().get_queryset()
 
-        self.genus_id = self.request.GET.get('genus', None)
-        if self.genus_id and self.genus_id.isnumeric():
-            try:
-                qs = qs.filter(species__genus__id=self.genus_id)
-            except ValueError as e:
-                raise Http404 from e
+#         self.genus_id = self.request.GET.get('genus', None)
+#         if self.genus_id and self.genus_id.isnumeric():
+#             try:
+#                 qs = qs.filter(species__genus__id=self.genus_id)
+#             except ValueError as e:
+#                 raise Http404 from e
 
-            if not qs:
-                raise Http404
+#             if not qs:
+#                 raise Http404
             
-        return qs
+#         return qs
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
         
-        qs = self.species_model.objects \
-            .values_list('genus_id', flat=True).distinct()[:]
-        lst = list(qs)
-        context['genus_allowed'] = PlantGenus.objects.filter(
-            division__name=self.division_name).filter(id__in=lst)
+#         qs = self.species_model.objects \
+#             .values_list('genus_id', flat=True).distinct()[:]
+#         lst = list(qs)
+#         context['genus_allowed'] = PlantGenus.objects.filter(
+#             division__name=self.division_name).filter(id__in=lst)
 
-        context['genus_current'] = self.genus_id
+#         context['genus_current'] = self.genus_id
         
-        context['genus_filter'] = PlantGenusFilterMixinTemplate.as_view(
-            template_name='common/listview/genus_filter.html',
-            parent_context=context)(self.request)
+#         context['genus_filter'] = PlantGenusFilterMixinTemplate.as_view(
+#             template_name='common/listview/genus_filter.html',
+#             parent_context=context)(self.request)
         
-        return context
+#         return context
     
 
-class PlantSpeciesFilterMixin():
-    species_id = None
+# class PlantSpeciesFilterMixin():
+#     species_id = None
 
-    def get_queryset(self):
-        qs = super().get_queryset()
-        self.species_id = self.request.GET.get('species', None)
+#     def get_queryset(self):
+#         qs = super().get_queryset()
+#         self.species_id = self.request.GET.get('species', None)
         
-        if self.species_id and self.species_id.isnumeric():
-            try:
-                qs = qs.filter(species__id=self.species_id)
-            except ValueError:
-                raise Http404
+#         if self.species_id and self.species_id.isnumeric():
+#             try:
+#                 qs = qs.filter(species__id=self.species_id)
+#             except ValueError:
+#                 raise Http404
 
-            if not qs:
-                raise Http404
+#             if not qs:
+#                 raise Http404
 
-        return qs
+#         return qs
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
 
-        genus_id = self.request.GET.get('genus', None)
-        if genus_id and not genus_id.isnumeric():
-            raise Http404
+#         genus_id = self.request.GET.get('genus', None)
+#         if genus_id and not genus_id.isnumeric():
+#             raise Http404
 
-        try:
-            qs = self.species_model.objects.filter(genus_id=genus_id)
-        except ValueError:
-            raise Http404
+#         try:
+#             qs = self.species_model.objects.filter(genus_id=genus_id)
+#         except ValueError:
+#             raise Http404
 
-        if genus_id and qs.count() > 1:
-            context['genus_name'] = PlantGenus.objects.filter(id=genus_id).get().name
-            context['species_allowed'] = qs
-            context['species_current'] = self.species_id
+#         if genus_id and qs.count() > 1:
+#             context['genus_name'] = PlantGenus.objects.filter(id=genus_id).get().name
+#             context['species_allowed'] = qs
+#             context['species_current'] = self.species_id
 
-            context['species_filter'] = PlantSpeciesFilterMixinTemplate.as_view(
-                template_name='common/listview/species_filter.html',
-                parent_context=context)(self.request)
+#             context['species_filter'] = PlantSpeciesFilterMixinTemplate.as_view(
+#                 template_name='common/listview/species_filter.html',
+#                 parent_context=context)(self.request)
 
-        return context
+#         return context
