@@ -17,7 +17,7 @@ class Seedling(models.Model):
 
     url = models.CharField(
         'url-адрес', max_length=250,
-        help_text='Url-адрес страницы с ценами. Например: /catalog/conifers/el-kanadskaya-alberta-globe/')
+        help_text='Url-адрес страницы с ценами. Например: https://viride.spb.ru/catalog/conifers/el-kanadskaya-alberta-globe/')
 
     image_path = ThumbnailerImageField(
         'Путь к картинке',
