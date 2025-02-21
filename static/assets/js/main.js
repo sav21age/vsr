@@ -221,7 +221,6 @@ let xhr = new XMLHttpRequest();
   const shake = function (cart=null) {
     if (typeof cart === 'object' && ('total_quantity' in cart)){
       const cpq = select("#cartProductQuantity > span", false)
-      console.log(cart.total_quantity)
       cpq.innerHTML = cart.total_quantity
     }
  
