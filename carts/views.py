@@ -166,16 +166,21 @@ def cart_update(request):
         logger.error(e)
         return HttpResponse(status=500)
 
-    cart_item = CartItem.objects.get(
-        cart=cart, id=cart_item_id)
+    try:
+        cart_item = CartItem.objects.get(
+            cart=cart, id=cart_item_id)
+        
+        if value == '+':
+            cart_item.quantity += 1
+        else:
+            if cart_item.quantity > 1:
+                cart_item.quantity -= 1
     
-    if value == '+':
-        cart_item.quantity += 1
-    else:
-        if cart_item.quantity > 1:
-            cart_item.quantity -= 1
+        cart_item.save()
+   
+    except:
+        pass
     
-    cart_item.save()
 
     cart_items = CartItem.objects.filter(cart=cart) \
         .prefetch_related('content_object')
@@ -221,9 +226,12 @@ def cart_remove(request):
     except Exception as e:
         logger.error(e)
         return HttpResponse(status=500)
-
-    cart_item = CartItem.objects.get(cart=cart, id=cart_item_id)
-    cart_item.delete()
+    
+    try:
+        cart_item = CartItem.objects.get(cart=cart, id=cart_item_id)
+        cart_item.delete()
+    except:
+        pass
 
     cart_items = CartItem.objects.filter(cart=cart)
 
