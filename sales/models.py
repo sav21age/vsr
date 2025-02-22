@@ -73,7 +73,7 @@ class Discount(models.Model):
 
         #--
 
-        if self.date_from >= self.date_to:
+        if self.date_from and self.date_to and self.date_from >= self.date_to:
             raise ValidationError(
                 {'date_to': 'Дата завершения должна быть больше даты начала.'},
                 code='required')
@@ -102,7 +102,7 @@ class Promotion(models.Model):
         return f"{self.name}"
 
     def clean(self):
-        if self.date_from >= self.date_to:
+        if self.date_from and self.date_to and self.date_from >= self.date_to:
             raise ValidationError(
                 {'date_to': 'Дата завершения должна быть больше даты начала.'},
                 code='required')
