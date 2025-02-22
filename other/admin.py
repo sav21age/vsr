@@ -47,5 +47,5 @@ class OtherProductAdmin(ProductAbstractAdmin, GetImageAdminMixin):
 
 @admin.register(OtherProductPrice)
 class OtherProductPriceAdmin(ProductPriceAbstractAdmin):
-    fields = ('product', 'name', )
+    fields = ('product', 'name', 'price',)
     list_display = ('product', 'name', 'updated_at', 'price',)

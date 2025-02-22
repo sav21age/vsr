@@ -76,10 +76,10 @@ class ProductPriceAbstractAdmin(admin.ModelAdmin):
     show_facets = admin.ShowFacets.NEVER
     search_fields = ('product__name',)
     search_help_text = 'Поиск по названию'
-    readonly_fields = ('product', 'updated_at',)
+    readonly_fields = ('updated_at',)
     list_editable = ('price', )
     ordering = ('product__name', 'price', )
     list_per_page = 30
 
-    def has_add_permission(self, request, obj=None):
-        return False    
+    # def has_add_permission(self, request, obj=None):
+    #     return False    

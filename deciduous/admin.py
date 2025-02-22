@@ -100,7 +100,7 @@ class DecProductPriceAdmin(ProductPriceAbstractAdmin):
                    DecProductPriceContainerAdminFilter,)
     fields = ('product', 'container', 
               ('height_from', 'height_to'), ('width_from', 'width_to'),
-              'rs', 'shtamb', 'extra', 'bush', 'planting_year', 'price',)
+              'trunk_diameter', 'rs', 'shtamb', 'extra', 'bush', 'planting_year', 'price',)
     list_display = ('get_product', 'updated_at', 'price', )
 
     def get_product(self, obj=None):
