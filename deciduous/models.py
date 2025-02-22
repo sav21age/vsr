@@ -187,6 +187,6 @@ class DecProductPrice(ProductPriceAbstract):
                 code='required')
 
         field_list = ('container', 'height_from', 'height_to', 'width_from',
-                      'width_to', 'trunk_diameter', 'rs', 'shtamb', 'extra', 'planting_year',)
+                      'width_to', 'trunk_diameter', 'rs', 'shtamb', 'extra', 'bush', 'planting_year',)
         super().validate_one_of_required(field_list)
         super().clean()
