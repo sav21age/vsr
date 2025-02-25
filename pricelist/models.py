@@ -8,7 +8,7 @@ from solo.models import SingletonModel
 
 def get_filepath(instance, filename):
     suffix = Path(filename).suffix
-    filepath = f"documents/price-list-viride{suffix}"
+    filepath = f"documents/питомник-вириде-прайс-лист{suffix}"
     fullpath = os.path.join(settings.MEDIA_ROOT, filepath)
     if os.path.exists(fullpath):
         os.remove(fullpath)
