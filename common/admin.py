@@ -53,7 +53,7 @@ class PageAbstractAdmin(admin.ModelAdmin):
 class GetMinPriceAdminMixin():
     def get_min_price(self, obj):
         try:
-            if obj.get_min_price:
+            if obj.get_min_price is not None:
                 return f"{obj.get_min_price} руб."
             return 'нет в наличии'
         except:

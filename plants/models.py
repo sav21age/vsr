@@ -104,13 +104,13 @@ class PlantProductAbstract(ProductAbstract):
     @property
     def get_min_price(self):
         try:
+            if self.prices.count() > 1 and self.prices.first().price == 0:
+                return self.prices.filter(price__gt=0).first().price
             return self.prices.first().price
         except self.DoesNotExist:
-            return ''
-        except AttributeError:
-            return ''
-        except IndexError:
-            return ''
+            return None
+        except:
+            return None
         
     class Meta:
         abstract = True

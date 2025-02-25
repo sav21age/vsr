@@ -173,9 +173,9 @@ class ProductPriceAbstract(models.Model):
             return ''
         
     def clean(self):
-        if self.price and not self.price > 0:
+        if self.price and self.price < 0:
             raise ValidationError(
-                {'price': 'Цена должна быть больше 0.'}
+                {'price': 'Цена не может быть отрицательной.'}
             )
 
         super().clean()

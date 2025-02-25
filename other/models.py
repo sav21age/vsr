@@ -39,11 +39,9 @@ class OtherProduct(ProductAbstract):
         try:
             return self.prices.first().price
         except self.DoesNotExist:
-            return ''
-        except AttributeError:
-            return ''
-        except IndexError:
-            return ''
+            return None
+        except:
+            return None
 
     class Meta:
         indexes = [
