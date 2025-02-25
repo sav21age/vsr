@@ -21,6 +21,8 @@ from other.sitemap import OtherProductSitemap
 from other.views import (
     BookProductDetail, BookProductList, RelatedProductDetail, RelatedProductList)
 from perennials.sitemap import PerProductSitemap
+from pricelist.sitemap import PriceListSitemap
+from pricelist.view import price_list
 from profiles.allauth.views import PersistLogoutView, RedirectedPasswordChangeView
 from roses.sitemap import RoseProductSitemap
 from sales.sitemap import SaleSitemap
@@ -44,6 +46,7 @@ sitemaps = {
     'fruits': FruitProductSitemap,
     'pers': PerProductSitemap,
     'other': OtherProductSitemap,
+    # 'pricelist': PriceListSitemap,
 }
 
 # --
@@ -67,6 +70,7 @@ urlpatterns = [
     path('', index, name='index'),
     path('search/', SearchView.as_view(), name='search'),
     path('sale/', sale, name='sale_list'),
+    path('price-list/', price_list, name='price_list_detail'),
     path('contacts/', contacts, name='contacts'),
 
     path('catalog/', CatalogItemList.as_view(), name="catalog_item_list"),

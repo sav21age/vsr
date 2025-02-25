@@ -1,0 +1,47 @@
+@mixin file-extension {
+    font-family: "Font Awesome 5 Free";
+    margin-right: 8px;
+    font-size: 40px;
+}
+
+a[href$='.pdf']:before {
+    @include file-extension;
+    // color: #F40F02;
+    color: #db544a;
+    content: "\f1c1";
+}
+
+a[href$='.zip']:before,
+a[href$='.7z']:before {
+    @include file-extension;
+    color: var(--primary);
+    // color: #FDA12B;
+    content: "\f1c6";
+}
+
+a[href$='.rar']:before {
+    @include file-extension;
+    color: #a4508f;
+    content: "\f1c6";
+}
+
+// a[href$='.doc']:before, a[href$='.docx']:before{
+//   @include file-extension;
+//   color: #1B5EBE;
+//   content: "\f1c2";
+// }
+
+// a[href$='.rtf']:before{
+//   @include file-extension;
+//   color: #83b4dd;
+//   // content: "\f1c3";
+//   // content: "\f15b";
+//   content: "\f15c";
+// }
+
+a[href$='.xls']:before,
+a[href$='.xlsx']:before {
+    @include file-extension;
+    color: #10793F;
+    content: "\f1c3";
+}

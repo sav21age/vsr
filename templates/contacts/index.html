@@ -2,18 +2,21 @@
 {% load static django_bootstrap_breadcrumbs tel cache work_schedule %} 
 
 {% block head %}
-  {% include 'head.html' %}
-  {% comment %} <meta property="og:url" content="{{host}}{% url 't-r_list' %}"> {% endcomment %}
+  <title>Контакты | Viride - садово-парковые растения</title>
+  <meta property="og:title" content="Контакты | Viride - садово-парковые растения">
+  <meta name="description" content="Контакты">
+  <meta property="og:description" content="Контакты">
+  <meta property="og:type" content="website">
 {% endblock %} 
 
 {% block breadcrumb %}
 {% breadcrumb_for '/' %}<i class="fas fa-home"></i>{% endbreadcrumb_for %}
-{% breadcrumb_for 'contacts' %}{{ object.name }}{% endbreadcrumb_for %}
+{% breadcrumb_for 'contacts' %}Контакты{% endbreadcrumb_for %}
 {% render_breadcrumbs 'breadcrumb.html' %}
 {% endblock %}
 
 {% block name %}
-{{ object.name }}
+Контакты
 {% endblock %}
 
 {% block content %}

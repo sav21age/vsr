@@ -585,6 +585,40 @@ section .title h1, section .title .h1, section .title h2, section .title .h2, se
   margin-bottom: 0.7rem;
 }
 
+a[href$=".pdf"]:before {
+  font-family: "Font Awesome 5 Free";
+  margin-right: 8px;
+  font-size: 40px;
+  color: #db544a;
+  content: "\f1c1";
+}
+
+a[href$=".zip"]:before,
+a[href$=".7z"]:before {
+  font-family: "Font Awesome 5 Free";
+  margin-right: 8px;
+  font-size: 40px;
+  color: var(--primary);
+  content: "\f1c6";
+}
+
+a[href$=".rar"]:before {
+  font-family: "Font Awesome 5 Free";
+  margin-right: 8px;
+  font-size: 40px;
+  color: #a4508f;
+  content: "\f1c6";
+}
+
+a[href$=".xls"]:before,
+a[href$=".xlsx"]:before {
+  font-family: "Font Awesome 5 Free";
+  margin-right: 8px;
+  font-size: 40px;
+  color: #10793F;
+  content: "\f1c3";
+}
+
 .btn-tertiary {
   --bs-btn-color: var(--bs-white) !important;
   --bs-btn-bg: var(--tertiary) !important;

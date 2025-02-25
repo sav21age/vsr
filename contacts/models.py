@@ -10,7 +10,7 @@ from solo.models import SingletonModel
 from common.models import PageAbstract
 
 
-class Contacts(PageAbstract, SingletonModel):
+class Contacts(SingletonModel):
     company_name = models.CharField('название компании', max_length=80)
     inn = models.CharField('ИНН', max_length=12, blank=True, 
                            validators=[MinLengthValidator(10), ])
