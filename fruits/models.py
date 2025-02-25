@@ -115,6 +115,11 @@ class FruitProductPriceAge(models.Model):
         (10, '10-летка'),
         (11, '11-летка'),
         (12, '12-летка'),
+        (13, '13-летка'),
+        (14, '14-летка'),
+        (15, '15-летка'),
+        (16, '16-летка'),
+        (17, '17-летка'),
     )
     age = models.PositiveSmallIntegerField('возраст', default=1, unique=True,
                                            choices=CHOICES,)
