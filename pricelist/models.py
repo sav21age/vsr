@@ -59,5 +59,5 @@ class PriceList(SingletonModel):
         return reverse('price_list_detail')
 
     class Meta:
-        verbose_name = 'загрузить прайс-лист'
-        verbose_name_plural = 'загрузить прайс-лист'
+        verbose_name = 'загрузить*'
+        verbose_name_plural = 'загрузить'
