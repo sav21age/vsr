@@ -1,7 +1,7 @@
 @mixin file-extension {
     font-family: "Font Awesome 5 Free";
     margin-right: 8px;
-    font-size: 40px;
+    font-size: 30px;
 }
 
 a[href$='.pdf']:before {
@@ -14,8 +14,8 @@ a[href$='.pdf']:before {
 a[href$='.zip']:before,
 a[href$='.7z']:before {
     @include file-extension;
-    color: var(--primary);
-    // color: #FDA12B;
+    // color: var(--primary);
+    color: #FDA12B;
     content: "\f1c6";
 }
 

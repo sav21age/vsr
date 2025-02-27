@@ -1,5 +1,5 @@
 {% extends "main.html" %} 
-{% load static django_bootstrap_breadcrumbs cache filesize %} 
+{% load static django_bootstrap_breadcrumbs cache filesize filename %} 
 
 {% block head %}
   <title>Прайс-лист | Viride - садово-парковые растения</title>
@@ -23,22 +23,48 @@
 <div class="container-fluid px-3 px-md-5">
   <div class="row">
     <div class="col-12">
+
       {% include 'common/empty.html' %}
 
-      {% comment %} <table class="table table-borderless table-responsive align-middle">
-      <tbody>
+      {% comment %} {% if object.file_path %}
+      <div class="table-responsive">
+        <table class="table table-responsive align-middle">
+          <thead class="table-dark">
           <tr>
-          <td>
-              <a href="{% get_media_prefix %}{{ object.file_path }}" title="{{ object.file_path }}">{{ object.file_path }}</a>
-          </td>
-          <td class="text-center">
-              <small>{{ object.file_size|get_filesize }}</small>
-          </td>
+            <td>
+                Файл
+            </td>
+            <td class="text-center">
+                Размер
+            </td>
           </tr>
-      </tbody>
-      </table> {% endcomment %}
+          </thead>
+        <tbody>
+          <tr>
+            <td>
+                <a class="lh-sm border-bottom-0" href="{% get_media_prefix %}{{ object.file_path }}" title="{{ object.file_path.path|get_filename }}">{{ object.file_path.path|get_filename }}</a>
+            </td>
+            <td class="text-center">
+                <small>{{ object.file_path.size|get_filesize }}</small>
+            </td>
+          </tr>
+          <tr>
+            <td>
+                <a class="lh-sm border-bottom-0" href="{% get_media_prefix %}{{ object.arc_path }}" title="{{ object.arc_path.path|get_filename }}">{{ object.arc_path.path|get_filename }}</a>
+            </td>
+            <td class="text-center">
+                <small>{{ object.arc_path.size|get_filesize }}</small>
+            </td>
+          </tr>
+        </tbody>
+        </table>
+      </div>
+      {% else %}
+        {% include 'common/empty.html' %}
+      {% endif %} {% endcomment %}
 
     </div>
   </div>
 </div>
 {% endblock %}
+2

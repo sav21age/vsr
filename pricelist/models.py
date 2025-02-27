@@ -1,10 +1,12 @@
 import os
 from pathlib import Path
+from zipfile import ZIP_DEFLATED, ZipFile
 
 from django.conf import settings
 from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.urls import reverse
+from django.core.files.base import ContentFile
 from solo.models import SingletonModel
 
 
@@ -23,14 +25,25 @@ class PriceList(SingletonModel):
         upload_to=get_filepath, validators=(FileExtensionValidator(('xlsx', 'xls', 'pdf', )),)
     )
 
-    file_size = models.PositiveBigIntegerField('размер файла, Б', default=0)
+    arc_path = models.FileField(
+        'путь к заархивированному файлу', max_length=150, null=True, blank=True,
+        upload_to=get_filepath,
+    )
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
         try:
-            if self.file_path.path:
-                self.file_size = Path(self.file_path.path).stat().st_size
+            if self.file_path:
+                path = Path(self.file_path.path)
+
+                arc_path = Path.joinpath(path.parent, f"{path.stem}.zip")
+                self.arc_path.save(arc_path, ContentFile(''), save=False)
+
+                with ZipFile(self.arc_path.path, 'w', compression=ZIP_DEFLATED, compresslevel=9) as f:
+                    f.write(self.file_path.path, arcname=path.name)
+            else:
+                self.arc_path.delete()
         except:
             pass
 
