@@ -2,6 +2,8 @@
 .venv
 .vscode
 .docker
+.useful
+.cloc
 __pycache__
 
 node_modules
@@ -9,6 +11,8 @@ cache
 media
 htmlcov
 fixtures
+
+grab
 
 settings_local.py
 
@@ -25,5 +29,3 @@ settings_local.py
 .pylintrc
 
 webpack*
-
-common/management/commands/grab/*

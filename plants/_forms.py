@@ -3,7 +3,7 @@ from django.forms import Textarea
 from common.models import Product
 from plants.models import PlantDivision, PlantGenius, PlantGroup
 from django_select2.forms import ModelSelect2Widget
-from common.helpers import codemirror_widget
+from common.widgets import codemirror_widget
 from codemirror import CodeMirrorTextarea
 
 # # class PageAdminForm(forms.ModelForm):

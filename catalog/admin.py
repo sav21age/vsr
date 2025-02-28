@@ -3,7 +3,7 @@ from django.utils.safestring import mark_safe
 from easy_thumbnails.files import get_thumbnailer
 from catalog.forms import CatalogItemAdminForm
 from catalog.models import CatalogItem
-from common.helpers import formfield_overrides
+from common.widgets import formfield_overrides
 
 
 @admin.register(CatalogItem)

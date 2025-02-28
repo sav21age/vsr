@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect
 # from pytz import timezone
 from adverts.forms import AdvertAdminForm
 from adverts.models import Advert
-from common.helpers import formfield_overrides
+from common.widgets import formfield_overrides
 # from django.forms import Textarea
 
 

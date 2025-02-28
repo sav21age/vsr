@@ -1,4 +1,5 @@
 import random
+from django.http import Http404
 from django.shortcuts import render
 from common.loggers import logger
 from conifers.models import ConiferProduct
@@ -12,7 +13,11 @@ ON_PAGE = 2
 
 
 def index(request):
-    obj = Index.objects.get()
+    try:
+        obj = Index.objects.get()
+    except Exception as e:
+        logger.error(e)
+        raise Http404 from e
 
     qs_con = ConiferProduct.is_visible_objects.values_list('id', flat=True)
     try:
@@ -22,6 +27,7 @@ def index(request):
             .prefetch_related('prices')
     except Exception as e:
         logger.error(e)
+        obj.con_visible = False
 
     qs_dec = DecProduct.is_visible_objects.values_list('id', flat=True)
     try:
@@ -31,6 +37,7 @@ def index(request):
             .prefetch_related('prices')
     except Exception as e:
         logger.error(e)
+        obj.dec_visible = False
 
     qs_fru = FruitProduct.is_visible_objects.values_list('id', flat=True)
     try:
@@ -40,6 +47,7 @@ def index(request):
             .prefetch_related('prices')
     except Exception as e:
         logger.error(e)
+        obj.fru_visible = False
 
     qs_per = PerProduct.is_visible_objects.values_list('id', flat=True)
     try:
@@ -49,6 +57,7 @@ def index(request):
             .prefetch_related('prices')
     except Exception as e:
         logger.error(e)
+        obj.per_visible = False
 
     response = render(
         request,

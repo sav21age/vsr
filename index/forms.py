@@ -1,5 +1,5 @@
 from django import forms
-from common.helpers import codemirror_widget, textarea_widget
+from common.widgets import codemirror_widget, textarea_widget
 
 
 class IndexAdminForm(forms.ModelForm):

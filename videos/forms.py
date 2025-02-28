@@ -1,7 +1,6 @@
 from django import forms
 from videos.models import Video
 from videos.widgets import VideoAdminWidget
-# from common.helpers import textarea_widget
 
 
 class VideoAdminForm(forms.ModelForm):

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from solo.admin import SingletonModelAdmin
 
-from common.helpers import formfield_overrides, codemirror_widget
+from common.widgets import formfield_overrides, codemirror_widget
 from contacts.models import Contacts, WorkSchedule
 
 

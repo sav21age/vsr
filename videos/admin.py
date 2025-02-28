@@ -1,7 +1,7 @@
 from django.contrib.contenttypes.admin import GenericStackedInline
 # from django.utils.safestring import mark_safe
 from adminsortable2.admin import SortableGenericInlineAdminMixin
-from common.helpers import formfield_overrides
+from common.widgets import formfield_overrides
 from videos.forms import VideoAdminForm
 from videos.models import Video
 

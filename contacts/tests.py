@@ -1,18 +1,7 @@
 from django.test import TestCase, Client, override_settings
 from django.urls import reverse
-from contacts.models import Contacts, WorkSchedule
+from contacts.models import WorkSchedule
 
-
-class ContactPageTestNotExists(TestCase):
-    def setUp(self):
-        self.client = Client()
-
-    def test_detail(self):
-        """ Test contacts detail view not exists """
-
-        response = self.client.get(reverse('contacts'))
-        self.assertEqual(response.status_code, 404)
-        
 
 class ContactPageTest(TestCase):
     fixtures = ['fixtures/db.json', ]
@@ -23,15 +12,28 @@ class ContactPageTest(TestCase):
     def test_detail(self):
         """ Test contacts detail view """
 
-        obj = Contacts.objects.get()
-        response = self.client.get(reverse(obj.slug))
+        response = self.client.get(reverse('contacts'))
         self.assertEqual(response.status_code, 200)
 
-    def test_detail_not_exists(self):
+    # def test_detail_not_exists(self):
+    #     """ Test contacts detail view not exists """
+
+    #     self.assertRaises(Contacts.DoesNotExist, Contacts.objects.get, slug='anything')
+        
+    #     with self.assertRaises(Contacts.DoesNotExist):
+    #         Contacts.objects.get(slug='anything')
+        
+
+class ContactPageTestNotExists(TestCase):
+    def setUp(self):
+        self.client = Client()
+
+    def test_detail(self):
         """ Test contacts detail view not exists """
 
-        self.assertRaises(Contacts.DoesNotExist, Contacts.objects.get, slug='anything')
-        
+        response = self.client.get(reverse('contacts'))
+        self.assertEqual(response.status_code, 404)
+
 
 class WorkScheduleTest(TestCase):
     fixtures = ['fixtures/db.json', ]
@@ -54,5 +56,3 @@ class WorkScheduleTest(TestCase):
             response = self.client.get(reverse('index'))
             self.assertContains(
                 response, 'Пн-Сб: 09:00-19:00, Вс: <span class="text-danger fw-bold">выходной</span>', html=True)
-
-

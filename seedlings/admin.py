@@ -1,7 +1,7 @@
 from django.contrib import admin
 from seedlings.forms import SeedlingAdminForm
 from seedlings.models import Seedling
-from common.helpers import formfield_overrides
+from common.widgets import formfield_overrides
 from django.utils.safestring import mark_safe
 from easy_thumbnails.files import get_thumbnailer
 

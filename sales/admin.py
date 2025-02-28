@@ -2,7 +2,7 @@ from django.contrib import admin
 from adminsortable2.admin import SortableAdminBase
 from sales.forms import DiscountAdminForm, PromotionAdminForm
 from sales.models import Discount, Promotion, PromotionItem
-from common.helpers import formfield_overrides
+from common.widgets import formfield_overrides
 from images.admin import ImageInline
 
 

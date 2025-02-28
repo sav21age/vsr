@@ -3,7 +3,7 @@ from django.utils.safestring import mark_safe
 from easy_thumbnails.files import get_thumbnailer
 from images.forms import ImageAdminForm
 from images.models import Image
-from common.helpers import formfield_overrides
+from common.widgets import formfield_overrides
 from adminsortable2.admin import SortableGenericInlineAdminMixin
 # from file_resubmit.admin import AdminResubmitMixin
 

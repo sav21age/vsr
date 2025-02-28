@@ -1,7 +1,6 @@
 from django import forms
 from django_ckeditor_5.widgets import CKEditor5Widget
-# from common.helpers import codemirror_widget, textarea_widget
-from common.helpers import textarea_widget
+from common.widgets import textarea_widget
 
 
 class ProductAdminForm(forms.ModelForm):
