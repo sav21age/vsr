@@ -9,7 +9,10 @@ APP = 'deciduous'
 
 
 class DecProductTest(TestCase):
-    fixtures = ['fixtures/db.json', ]
+    fixtures = [
+        'fixtures/plants.json', 
+        'fixtures/deciduous.json', 
+    ]
 
     def setUp(self):
         self.client = Client()

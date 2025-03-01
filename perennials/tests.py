@@ -9,7 +9,10 @@ APP = 'perennials'
 
 
 class PerProductTest(TestCase):
-    fixtures = ['fixtures/db.json', ]
+    fixtures = [
+        'fixtures/plants.json',
+        'fixtures/perennials.json', 
+    ]
 
     def setUp(self):
         self.client = Client()

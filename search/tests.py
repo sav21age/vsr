@@ -25,7 +25,14 @@ class SearchFormTest(TestCase):
 
 class SearchPageTest(TestCase):
 
-    fixtures = ['fixtures/db.json',]
+    fixtures = [
+        'fixtures/plants.json',
+        'fixtures/conifers.json',
+        'fixtures/deciduous.json',
+        'fixtures/fruits.json',
+        'fixtures/perennials.json',
+        'fixtures/roses.json',
+    ]
 
     def setUp(self):
         self.client = Client()

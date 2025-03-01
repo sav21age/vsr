@@ -5,7 +5,10 @@ from adverts.models import Advert
 
 
 class AdvertTest(TestCase):
-    fixtures = ['fixtures/db.json', ]
+    fixtures = [
+        'fixtures/adverts.json', 
+        'fixtures/index.json', 
+    ]
 
     def setUp(self):
         self.client = Client()

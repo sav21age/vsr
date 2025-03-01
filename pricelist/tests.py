@@ -3,7 +3,7 @@ from django.urls import reverse
 
 
 class PriceDetailTest(TestCase):
-    fixtures = ['fixtures/db.json', ]
+    fixtures = ['fixtures/pricelist.json', ]
 
     def setUp(self):
         self.client = Client()

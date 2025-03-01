@@ -9,7 +9,10 @@ APP = 'fruits'
 
 
 class FruitProductTest(TestCase):
-    fixtures = ['fixtures/db.json', ]
+    fixtures = [
+        'fixtures/plants.json',
+        'fixtures/fruits.json', 
+    ]
 
     def setUp(self):
         self.client = Client()

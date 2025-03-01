@@ -8,7 +8,10 @@ APP = 'roses'
 
 
 class RoseProductTest(TestCase):
-    fixtures = ['fixtures/db.json', ]
+    fixtures = [
+        'fixtures/plants.json',
+        'fixtures/roses.json', 
+    ]
 
     def setUp(self):
         self.client = Client()

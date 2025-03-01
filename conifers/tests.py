@@ -9,7 +9,10 @@ APP = 'conifers'
 
 
 class ConiferProductTest(TestCase):
-    fixtures = ['fixtures/db.json', ]
+    fixtures = [
+        'fixtures/plants.json',
+        'fixtures/conifers.json', 
+    ]
 
     def setUp(self):
         self.client = Client()

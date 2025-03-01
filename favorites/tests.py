@@ -7,9 +7,13 @@ from viride.tests import AnonymUserTestCase, AuthUserTestCase
 
 APP = 'favorites'
 
+fixtures = [
+    'fixtures/plants.json',
+    'fixtures/conifers.json',
+]
 
 class FavoritesAuthUserTest(AuthUserTestCase):
-    fixtures = ['fixtures/db.json', ]
+    fixtures = fixtures
 
     def test_set(self):
         self.obj = ConiferProduct.objects.first()
@@ -88,7 +92,7 @@ class FavoritesAuthUserTest(AuthUserTestCase):
 
 
 class FavoritesAnonymUserTest(AnonymUserTestCase):
-    fixtures = ['fixtures/db.json', ]
+    fixtures = fixtures
 
     def test_set(self):
         self.obj = ConiferProduct.objects.first()

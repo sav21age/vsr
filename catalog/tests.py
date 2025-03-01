@@ -3,7 +3,7 @@ from django.urls import reverse
 
 
 class CatalogTest(TestCase):
-    fixtures = ['fixtures/db.json', ]
+    fixtures = ['fixtures/catalog.json', ]
 
     def setUp(self):
         self.client = Client()

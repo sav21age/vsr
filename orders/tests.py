@@ -12,9 +12,16 @@ from viride.tests import AnonymUserTestCase, AuthUserTestCase
 
 APP = 'orders'
 
+fixtures = [
+    'fixtures/plants.json',
+    'fixtures/conifers.json',
+    'fixtures/contenttypes.json',
+    'fixtures/auth.json',
+    'fixtures/orders.json', 
+]
 
 class AcceptingOrdersTest(TestCase):
-    fixtures = ['fixtures/db.json', ]
+    fixtures = fixtures
 
     def setUp(self):
         self.client = Client()
@@ -52,7 +59,7 @@ class AcceptingOrdersTest(TestCase):
 
 
 class CartAuthUserTestCase(AuthUserTestCase):
-    fixtures = ['fixtures/db.json', ]
+    fixtures = fixtures
 
     def setUp(self):
         super().setUp()
@@ -91,7 +98,7 @@ class CartAuthUserTestCase(AuthUserTestCase):
 
 
 class CartAnonymUserTestCase(AnonymUserTestCase):
-    fixtures = ['fixtures/db.json', ]
+    fixtures = fixtures
 
     def setUp(self):
         super().setUp()
@@ -138,7 +145,7 @@ class OrderTestMixin(object):
 
 
 class CreateOrderAuthUserTest(OrderTestMixin, CartAuthUserTestCase):
-    fixtures = ['fixtures/db.json', ]
+    fixtures = fixtures
 
     def test_form(self):
         """ Test order form """
@@ -160,7 +167,7 @@ class CreateOrderAuthUserTest(OrderTestMixin, CartAuthUserTestCase):
 
 
 class CreateOrderAnonymUserTest(OrderTestMixin, CartAnonymUserTestCase):
-    fixtures = ['fixtures/db.json', ]
+    fixtures = fixtures
 
     @patch("django_recaptcha.fields.ReCaptchaField.validate")
     def test_order_form(self, mocked_submit):

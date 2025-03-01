@@ -3,8 +3,14 @@ from django.urls import reverse
 from contacts.models import WorkSchedule
 
 
+fixtures = [
+    'fixtures/index.json', 
+    'fixtures/contacts.json', 
+]
+
+
 class ContactPageTest(TestCase):
-    fixtures = ['fixtures/db.json', ]
+    fixtures = fixtures
 
     def setUp(self):
         self.client = Client()
@@ -36,7 +42,7 @@ class ContactPageTestNotExists(TestCase):
 
 
 class WorkScheduleTest(TestCase):
-    fixtures = ['fixtures/db.json', ]
+    fixtures = fixtures
 
     def setUp(self):
         self.client = Client()

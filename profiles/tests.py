@@ -10,9 +10,17 @@ from viride.tests import AnonymUserTestCase, AuthUserTestCase
 APP = 'profiles'
 URL_LIST = ['index', 'update', 'order_list', 'favorites',]
 
+fixtures = [
+    'fixtures/plants.json',
+    'fixtures/conifers.json',
+    'fixtures/orders.json',
+    'fixtures/contenttypes.json',
+    'fixtures/auth.json', 
+    'fixtures/profiles.json', 
+]
 
 class ProfileAnonymUserTest(AnonymUserTestCase):
-    fixtures = ['fixtures/db.json', ]
+    fixtures = fixtures
 
     def test_profile(self):
         """ Test profile anonym user """
@@ -23,7 +31,7 @@ class ProfileAnonymUserTest(AnonymUserTestCase):
 
 
 class ProfileAuthUserTest(AuthUserTestCase):
-    fixtures = ['fixtures/db.json', ]
+    fixtures = fixtures
 
     def test_profile(self):
         """ Test profile auth user """
@@ -94,7 +102,7 @@ class ProfileAuthUserTest(AuthUserTestCase):
 
 
 class ProfileFormUserAuthTest(AuthUserTestCase):
-    fixtures = ['fixtures/db.json',]
+    fixtures = fixtures
 
     def test_form(self):
         """ Test profile form """

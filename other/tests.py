@@ -4,7 +4,7 @@ from other.models import OtherProduct
 
 
 class RelatedProductTest(TestCase):
-    fixtures = ['fixtures/db.json', ]
+    fixtures = ['fixtures/other.json', ]
 
     def setUp(self):
         self.client = Client()
@@ -31,7 +31,7 @@ class RelatedProductTest(TestCase):
 
 
 class BookProductTest(TestCase):
-    fixtures = ['fixtures/db.json', ]
+    fixtures = ['fixtures/other.json', ]
 
     def setUp(self):
         self.client = Client()

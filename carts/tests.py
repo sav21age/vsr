@@ -9,9 +9,16 @@ from viride.tests import AnonymUserTestCase, AuthUserTestCase
 
 APP = 'carts'
 
+fixtures = [
+    'fixtures/plants.json',
+    'fixtures/conifers.json',
+    'fixtures/contenttypes.json',
+    'fixtures/auth.json',
+    'fixtures/carts.json', 
+]
 
 class CartAuthUserTestCase(AuthUserTestCase):
-    fixtures = ['fixtures/db.json', ]
+    fixtures = fixtures
 
     def setUp(self):
         super().setUp()
@@ -46,7 +53,7 @@ class CartAuthUserTestCase(AuthUserTestCase):
 
 
 class CartAnonymUserTest(AnonymUserTestCase):
-    fixtures = ['fixtures/db.json', ]
+    fixtures = fixtures
 
     def setUp(self):
         super().setUp()
@@ -218,7 +225,7 @@ class AddCartTestMixin(object):
     
 
 class AddCartAuthUserTest(AddCartTestMixin, AuthUserTestCase):
-    fixtures = ['fixtures/db.json', ]
+    fixtures = fixtures
 
     def setUp(self):
         super().setUp()
@@ -253,7 +260,7 @@ class AddCartAuthUserTest(AddCartTestMixin, AuthUserTestCase):
 
 
 class AddCartAnonymUserTest(AddCartTestMixin, AnonymUserTestCase):
-    fixtures = ['fixtures/db.json', ]
+    fixtures = fixtures
 
     def setUp(self):
         super().setUp()
@@ -405,7 +412,7 @@ class UpdateCartTestMixin(object):
 
 
 class UpdateCartAuthUserTest(UpdateCartTestMixin, AuthUserTestCase):
-    fixtures = ['fixtures/db.json', ]
+    fixtures = fixtures
 
     def setUp(self):
         super().setUp()
@@ -440,7 +447,7 @@ class UpdateCartAuthUserTest(UpdateCartTestMixin, AuthUserTestCase):
 
 
 class UpdateCartAnonymUserTest(UpdateCartTestMixin, AnonymUserTestCase):
-    fixtures = ['fixtures/db.json', ]
+    fixtures = fixtures
 
     def setUp(self):
         super().setUp()
@@ -525,7 +532,7 @@ class RemoveCartTestMixin(object):
 
 
 class RemoveCartAuthUserTest(RemoveCartTestMixin, AuthUserTestCase):
-    fixtures = ['fixtures/db.json', ]
+    fixtures = fixtures
 
     def setUp(self):
         super().setUp()
@@ -560,7 +567,7 @@ class RemoveCartAuthUserTest(RemoveCartTestMixin, AuthUserTestCase):
 
 
 class RemoveCartAnonymUserTest(RemoveCartTestMixin, AnonymUserTestCase):
-    fixtures = ['fixtures/db.json', ]
+    fixtures = fixtures
 
     def setUp(self):
         super().setUp()
