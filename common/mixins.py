@@ -1,8 +1,10 @@
-from common.views import PlantDivisionFilterMixinTemplate, PlantGenusFilterMixinTemplate, PerPageMixinTemplate, PlantSpeciesFilterMixinTemplate
+from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required
-from plants.models import PlantDivision, PlantGenus
+
+from common.views import PerPageMixinTemplate, PlantDivisionFilterMixinTemplate
+from plants.models import PlantDivision
+
 # from django.db.models import QuerySet 
 
 
@@ -22,9 +24,8 @@ class PerPageMixin():
         if per_page:
             try:
                 per_page = int(per_page)
-            except ValueError as e:
+            except ValueError:
                 pass
-                # logger.error(e)
 
             if per_page in self.per_page_allowed:
                 self.per_page_default = per_page

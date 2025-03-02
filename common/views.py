@@ -1,45 +1,7 @@
 from urllib.parse import urlencode, urlparse, urlunparse, parse_qs
-# from django.urls import resolve, reverse
 from django.views.generic import TemplateView
 from django.template.loader import render_to_string
 from plants.models import PlantDivision
-
-
-# def cut_page_query(q):
-#     p = re.compile(r'(page=)[^&]*')
-#     q = p.sub('', q)
-#     # q = re.sub(r'(page=)[^&]*', '', q)
-#     return q.strip('&')
-
-
-# def set_querystring(request, param, value):
-#     q = urllib.parse.urlsplit(request.get_full_path()).query
-
-#     if request.GET.get('page', None):
-#         q = cut_page_query(q)
-
-#     if request.GET.get(param, None):
-#         p = re.compile(r'({}=)[^&]*'.format(param))
-#         q = p.sub(r'\g<1>' + f"{value}", q)
-#     else:
-#         if q:
-#             q += '&'
-#         q += f"{param}={value}"
-#     return q
-
-
-# def cut_param_querystring(request, param):
-#     q = urllib.parse.urlsplit(request.get_full_path()).query
-
-#     if request.GET.get('page', None):
-#         q = cut_page_query(q)
-
-#     if request.GET.get(param, None):
-#         p = re.compile(r'({}=)[^&]*'.format(param))
-#         q = p.sub('', q)
-#         # q = re.sub(r'({}=)[^&]*'.format(param), '', q)
-#         q = q.strip('&')
-#     return q
 
 
 class UrlQuerystring():
@@ -122,92 +84,92 @@ class PlantDivisionFilterMixinTemplate(TemplateView):
         return render_to_string(self.template_name, context, request=self.request)
 
 
-class PlantGenusFilterMixinTemplate(TemplateView):
-    parent_context = None
+# class PlantGenusFilterMixinTemplate(TemplateView):
+#     parent_context = None
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
 
-        # resolved = resolve(self.request.path_info)
-        # print(resolved)
-        # # reversed = reverse("admin:app_list", kwargs={"app_label": "auth"})
-        # # reversed = reverse(
-        # #     f"{resolved.app_names[0]}:{resolved.url_name}", kwargs=resolved.kwargs)
-        # reversed = reverse(
-        #     f"{resolved.app_names[0]}:list", kwargs={})
-        # print(reversed)
+#         # resolved = resolve(self.request.path_info)
+#         # print(resolved)
+#         # # reversed = reverse("admin:app_list", kwargs={"app_label": "auth"})
+#         # # reversed = reverse(
+#         # #     f"{resolved.app_names[0]}:{resolved.url_name}", kwargs=resolved.kwargs)
+#         # reversed = reverse(
+#         #     f"{resolved.app_names[0]}:list", kwargs={})
+#         # print(reversed)
 
-        # q = urlsplit(self.request.get_full_path()).query
-        # print(f"path: {urlsplit(self.request.get_full_path()).path}")
-        # query = parse_qs(q, keep_blank_values=False)
-        # # print(query)
-        # query.pop('per_page', None)
-        # # print(f"query: {query}")
-        # print(urlencode(query, True))
+#         # q = urlsplit(self.request.get_full_path()).query
+#         # print(f"path: {urlsplit(self.request.get_full_path()).path}")
+#         # query = parse_qs(q, keep_blank_values=False)
+#         # # print(query)
+#         # query.pop('per_page', None)
+#         # # print(f"query: {query}")
+#         # print(urlencode(query, True))
     
-        url = self.request.get_full_path()
-        url = UrlQuerystring.delete_param(url, 'page')
-        url = UrlQuerystring.delete_param(url, 'species')
+#         url = self.request.get_full_path()
+#         url = UrlQuerystring.delete_param(url, 'page')
+#         url = UrlQuerystring.delete_param(url, 'species')
 
-        cur = self.parent_context['genus_current']
+#         cur = self.parent_context['genus_current']
 
-        context['options'] = [{
-            'querystring': UrlQuerystring.delete_param(url, 'genus'),
-            'name': 'Все',
-            'selected': True if '' == cur else False,
-        }]
+#         context['options'] = [{
+#             'querystring': UrlQuerystring.delete_param(url, 'genus'),
+#             'name': 'Все',
+#             'selected': True if '' == cur else False,
+#         }]
 
-        for value in self.parent_context['genus_allowed']:
-            context['options'].append({
-                'querystring': UrlQuerystring.get_url(url, 'genus', value.id),
-                'name': value.name,
-                'selected': True if str(value.id) == cur else False,
-            })
-
-
-        return context
-
-    def render_to_response(self, context, **response_kwargs):
-        return render_to_string(self.template_name, context, request=self.request)
+#         for value in self.parent_context['genus_allowed']:
+#             context['options'].append({
+#                 'querystring': UrlQuerystring.get_url(url, 'genus', value.id),
+#                 'name': value.name,
+#                 'selected': True if str(value.id) == cur else False,
+#             })
 
 
-class PlantSpeciesFilterMixinTemplate(TemplateView):
-    parent_context = None
+#         return context
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+#     def render_to_response(self, context, **response_kwargs):
+#         return render_to_string(self.template_name, context, request=self.request)
 
-        url = self.request.get_full_path()
-        url = UrlQuerystring.delete_param(url, 'page')
 
-        cur = self.parent_context['species_current']
+# class PlantSpeciesFilterMixinTemplate(TemplateView):
+#     parent_context = None
 
-        context['links'] = [{
-            'url': UrlQuerystring.delete_param(url, 'species'),
-            'name': 'все',
-            'title': 'все',
-            'active': True if cur is None else False,
-        }]
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
 
-        for value in self.parent_context['species_allowed']:
-            genus_name = self.parent_context['genus_name']
-            species_title = value.name
-            species_name = value.name
+#         url = self.request.get_full_path()
+#         url = UrlQuerystring.delete_param(url, 'page')
 
-            if species_name.startswith(genus_name) and species_name != genus_name:
-                species_name = species_name.replace(genus_name, '').strip()
-            else:
-                if len(species_name) > 0:
-                    species_name = species_name[0].lower() + species_name[1:]
+#         cur = self.parent_context['species_current']
+
+#         context['links'] = [{
+#             'url': UrlQuerystring.delete_param(url, 'species'),
+#             'name': 'все',
+#             'title': 'все',
+#             'active': True if cur is None else False,
+#         }]
+
+#         for value in self.parent_context['species_allowed']:
+#             genus_name = self.parent_context['genus_name']
+#             species_title = value.name
+#             species_name = value.name
+
+#             if species_name.startswith(genus_name) and species_name != genus_name:
+#                 species_name = species_name.replace(genus_name, '').strip()
+#             else:
+#                 if len(species_name) > 0:
+#                     species_name = species_name[0].lower() + species_name[1:]
             
-            context['links'].append({
-                'url': UrlQuerystring.get_url(url, 'species', value.id),
-                'name': species_name,
-                'title': species_title,
-                'active': True if str(value.id) == cur else False,
-            })
+#             context['links'].append({
+#                 'url': UrlQuerystring.get_url(url, 'species', value.id),
+#                 'name': species_name,
+#                 'title': species_title,
+#                 'active': True if str(value.id) == cur else False,
+#             })
 
-        return context
+#         return context
 
-    def render_to_response(self, context, **response_kwargs):
-        return render_to_string(self.template_name, context, request=self.request)
+#     def render_to_response(self, context, **response_kwargs):
+#         return render_to_string(self.template_name, context, request=self.request)
