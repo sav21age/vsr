@@ -1,14 +1,12 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.urls import reverse
-from django.http import Http404
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, View, DetailView
 from common.mixins import LoginRequiredMixin
 from favorites.models import Favorites
 from orders.models import Order, OrderItem
 from profiles.forms import ProfileUpdateForm
-from profiles.models import Profile
 from pure_pagination.mixins import PaginationMixin
 
 
@@ -16,35 +14,23 @@ class ProfileIndex(LoginRequiredMixin, View):
     template_name = 'profiles/index.html'
 
     def get(self, request, *args, **kwargs):
-        context = {}
-
-        try:
-            context['object'] = User.objects.get(id=self.request.user.pk)
-        except User.DoesNotExist:
-            raise Http404
-
         return render(
             request=request,
-            template_name=self.template_name,
-            context=context
+            template_name=self.template_name
         )
 
 
 @login_required
 def profile_update(request):
     context = {}
-    obj = Profile.objects.get(user_id=request.user.pk)
-
-    if not obj:
-        raise Http404
-
+    
     if request.method == 'POST':
         form = ProfileUpdateForm(request.POST)
         if form.is_valid():
             clean = form.cleaned_data
-            obj.phone_number = clean['phone_number']
-            obj.save()
             user = User.objects.get(id=request.user.pk)
+            user.profile.phone_number = clean['phone_number']
+            user.profile.save()
             user.first_name = clean['first_name']
             user.last_name = clean['last_name']
             user.save()
@@ -54,9 +40,9 @@ def profile_update(request):
 
     else:
         context['form'] = ProfileUpdateForm(initial={
-            'first_name': obj.user.first_name,
-            'last_name': obj.user.last_name,
-            'phone_number': obj.phone_number,
+            'first_name': request.user.first_name,
+            'last_name': request.user.last_name,
+            'phone_number': request.user.profile.phone_number,
         })
 
     return render(

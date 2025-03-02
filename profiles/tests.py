@@ -1,5 +1,6 @@
-from django.urls import reverse
 from django.contrib.contenttypes.models import ContentType
+from django.urls import reverse
+
 from carts.models import Cart, CartItem
 from conifers.models import ConiferProductPrice
 from orders.models import Order, OrderStatus
@@ -8,6 +9,7 @@ from viride.tests import AnonymUserTestCase, AuthUserTestCase
 
 
 APP = 'profiles'
+
 URL_LIST = ['index', 'update', 'order_list', 'favorites',]
 
 fixtures = [
@@ -89,16 +91,6 @@ class ProfileAuthUserTest(AuthUserTestCase):
         response = self.client.get(
             reverse(f"{APP}:order_detail", kwargs={'pk': order.id}))
         self.assertEqual(response.status_code, 200)
-
-    # def test_profile_user_not_exists(self):
-    #     """ Test profile user not exists """
-
-    #     user = User.objects.none()
-    #     self.request.user = user
-
-    #     for url in URL_LIST:
-    #         response = self.client.get(reverse(f"{APP}:{url}"))
-    #         self.assertEqual(response.status_code, 404)
 
 
 class ProfileFormUserAuthTest(AuthUserTestCase):
