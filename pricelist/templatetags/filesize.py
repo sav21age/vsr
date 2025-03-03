@@ -10,6 +10,14 @@ def get_filesize(num):
     lst = ['Б', 'КБ', 'МБ', 'ГБ', 'ТБ']
 
     try:
+        num = int(num)
+    except ValueError:
+        return '0 Б'
+
+    if num < 0:
+        return '0 Б'
+
+    try:
         for value in lst:
             if num < 1024.0:
                 if value in lst[:2]:
@@ -18,4 +26,4 @@ def get_filesize(num):
 
             num /= 1024.0
     except:
-        return 0
+        return '0 Б'
