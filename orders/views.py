@@ -1,4 +1,3 @@
-from django.http import HttpResponse
 from django.urls import reverse
 from django.views.generic import FormView
 from django.db import transaction
@@ -6,7 +5,7 @@ from django.forms import ValidationError
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.views.decorators.cache import never_cache
 from carts.models import Cart, CartItem
 from common.loggers import logger
@@ -44,44 +43,29 @@ class CreateOrderAuthUserView(FormView):
         kwargs.update({'user': self.request.user})
         return kwargs
 
-    def get(self, *args, **kwargs):
+    def dispatch(self, request, *args, **kwargs):
         try:
-            cart = Cart.objects.get(user=self.request.user)
+            self.cart = Cart.objects.get(user=self.request.user)
         except Cart.DoesNotExist as e:
             logger.error(e)
             return redirect(reverse('carts:index'))
 
-        cart_items = CartItem.objects.filter(cart=cart)
-        if not cart_items.exists():
+        self.cart_items = CartItem.objects.filter(cart=self.cart)
+        if not self.cart_items.exists():
             return redirect(reverse('carts:index'))
 
-        return super().get(*args, **kwargs)
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        
-        cart = Cart.objects.get(user=self.request.user)
-        cart_items = CartItem.objects.filter(cart=cart)
-        
-        context['cart'] = cart
-        context['cart_items'] = cart_items
-
+        context['cart'] = self.cart
+        context['cart_items'] = self.cart_items
         return context
 
     def form_valid(self, form):
         try:
             with transaction.atomic():
                 user = self.request.user
-
-                try:
-                    cart = Cart.objects.get(user=user)
-                except Cart.DoesNotExist as e:
-                    logger.error(e)
-                    return redirect(reverse('carts:index'))
-
-                cart_items = CartItem.objects.filter(cart=cart)
-                if not cart_items.exists():
-                    return redirect(reverse('carts:index'))
 
                 customer_first_name = form.cleaned_data.get(
                     'customer_first_name', None)
@@ -110,15 +94,15 @@ class CreateOrderAuthUserView(FormView):
                     customer_email=customer_email,
                     customer_phone_number=customer_phone_number,
                     customer_comment=form.cleaned_data['customer_comment'],
-                    ip=cart.ip,
-                    user_agent=cart.user_agent,
+                    ip=self.cart.ip,
+                    user_agent=self.cart.user_agent,
                     status=OrderStatus.objects.get(id=1),
                 )
 
                 order.number = str(order.id).rjust(8, '0')
                 order.save()
 
-                for cart_item in cart_items:
+                for cart_item in self.cart_items:
                     product_name = f"{cart_item.content_object.product} {cart_item.content_object.get_complex_name}"
 
                     OrderItem.objects.create(
@@ -132,11 +116,15 @@ class CreateOrderAuthUserView(FormView):
 
                 send_order_email(order)
 
-                cart.delete()
-                cart_items.delete()
+                self.cart.delete()
+                self.cart_items.delete()
 
-        except ValidationError:
+        except ValidationError as e:
+            logger.error(e)
             return redirect('carts:index')
+        except Exception as e:
+            logger.error(e)
+            return HttpResponse(status=500)
 
         return super().form_valid(form)
 
@@ -150,47 +138,30 @@ class CreateOrderAnonymUserView(FormView):
     template_name = 'orders/create_form.html'
     form_class = CreateOrderAnonymUserForm
 
-    def get(self, *args, **kwargs):
+    def dispatch(self, request, *args, **kwargs):
         cart_id = self.request.session.get('cart_id', None)
 
         try:
-            cart = Cart.objects.get(id=cart_id)
+            self.cart = Cart.objects.get(id=cart_id)
         except Cart.DoesNotExist as e:
             logger.error(e)
             return redirect(reverse('carts:index'))
 
-        cart_items = CartItem.objects.filter(cart=cart)
-        if not cart_items.exists():
+        self.cart_items = CartItem.objects.filter(cart=self.cart)
+        if not self.cart_items.exists():
             return redirect(reverse('carts:index'))
 
-        return super().get(*args, **kwargs)
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        cart_id = self.request.session.get('cart_id', None)
-        cart = Cart.objects.get(id=cart_id)
-        cart_items = CartItem.objects.filter(cart=cart)
-        
-        context['cart'] = cart
-        context['cart_items'] = cart_items
-
+        context['cart'] = self.cart
+        context['cart_items'] = self.cart_items
         return context
 
     def form_valid(self, form):
         try:
             with transaction.atomic():
-                cart_id = self.request.session.get('cart_id', None)
-
-                try:
-                    cart = Cart.objects.get(id=cart_id)
-                except Cart.DoesNotExist as e:
-                    logger.error(e)
-                    return redirect(reverse('carts:index'))
-
-                cart_items = CartItem.objects.filter(cart=cart)
-                if not cart_items.exists():
-                    return redirect(reverse('carts:index'))
 
                 order = Order.objects.create(
                     customer_first_name=form.cleaned_data['customer_first_name'],
@@ -198,8 +169,8 @@ class CreateOrderAnonymUserView(FormView):
                     customer_email=form.cleaned_data['customer_email'],
                     customer_phone_number=form.cleaned_data['customer_phone_number'],
                     customer_comment=form.cleaned_data['customer_comment'],
-                    ip=cart.ip,
-                    user_agent=cart.user_agent,
+                    ip=self.cart.ip,
+                    user_agent=self.cart.user_agent,
                     status=OrderStatus.objects.get(id=1),
                     # confirm_code=random.randint(1000, 9999),
                     # confirmed_by_email=False,
@@ -210,7 +181,7 @@ class CreateOrderAnonymUserView(FormView):
 
                 # self.request.session['order_id'] = order.id
 
-                for cart_item in cart_items:
+                for cart_item in self.cart_items:
                     product_name = f"{cart_item.content_object.product} {cart_item.content_object.get_complex_name}"
 
                     OrderItem.objects.create(
@@ -226,11 +197,15 @@ class CreateOrderAnonymUserView(FormView):
                 
                 self.request.session.pop('cart_id')
 
-                cart.delete()
-                cart_items.delete()
+                self.cart.delete()
+                self.cart_items.delete()
 
-        except ValidationError:
-            return redirect('orders:create')
+        except ValidationError as e:
+            logger.error(e)
+            return redirect('carts:index')
+        except Exception as e:
+            logger.error(e)
+            return HttpResponse(status=500)
 
         return super().form_valid(form)
 
