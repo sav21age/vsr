@@ -1,5 +1,6 @@
 from urllib.parse import urlencode
-from django.test import TestCase, Client
+
+from django.test import Client, TestCase
 from django.urls import reverse
 
 

@@ -1,8 +1,9 @@
-from django.urls import reverse
 from django.contrib.contenttypes.models import ContentType
+from django.urls import reverse
+
+from common.tests import AnonymUserTestCase, AuthUserTestCase
 from conifers.models import ConiferProduct
 from favorites.models import Favorites
-from viride.tests import AnonymUserTestCase, AuthUserTestCase
 
 
 APP = 'favorites'
@@ -11,6 +12,7 @@ fixtures = [
     'fixtures/plants.json',
     'fixtures/conifers.json',
 ]
+
 
 class FavoritesAuthUserTest(AuthUserTestCase):
     fixtures = fixtures

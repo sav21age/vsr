@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from django.test import Client, TestCase
 from django.urls import reverse
 

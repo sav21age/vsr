@@ -2,10 +2,10 @@ from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
 
 from carts.models import Cart, CartItem
+from common.tests import AnonymUserTestCase, AuthUserTestCase
 from conifers.models import ConiferProductPrice
 from orders.models import Order, OrderStatus
 from profiles.forms import ProfileUpdateForm
-from viride.tests import AnonymUserTestCase, AuthUserTestCase
 
 
 APP = 'profiles'
@@ -20,6 +20,7 @@ fixtures = [
     'fixtures/auth.json', 
     'fixtures/profiles.json', 
 ]
+
 
 class ProfileAnonymUserTest(AnonymUserTestCase):
     fixtures = fixtures

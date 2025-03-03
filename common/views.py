@@ -1,6 +1,8 @@
-from urllib.parse import urlencode, urlparse, urlunparse, parse_qs
-from django.views.generic import TemplateView
+from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
+
 from django.template.loader import render_to_string
+from django.views.generic import TemplateView
+
 from plants.models import PlantDivision
 
 

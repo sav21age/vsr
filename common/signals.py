@@ -1,9 +1,9 @@
-from django.db.models.signals import post_save, post_delete
 from django.contrib.contenttypes.models import ContentType
-# from django.core.cache import cache
-from django.core.cache.utils import make_template_fragment_key
-from django.core.cache import caches
 from django.contrib.postgres.search import SearchVector
+from django.core.cache import caches
+from django.core.cache.utils import make_template_fragment_key
+from django.db.models.signals import post_delete, post_save
+
 from carts.models import CartItem
 from conifers.models import ConiferProduct, ConiferProductPrice
 from deciduous.models import DecProduct, DecProductPrice

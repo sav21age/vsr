@@ -1,9 +1,10 @@
 from urllib.parse import urlencode
-from django.test import TestCase, Client
+
+from django.test import Client, TestCase
 from django.urls import reverse
+
 from deciduous.forms import DecProductPriceFilterForm
 from deciduous.models import DecProduct
-
 
 APP = 'deciduous'
 

@@ -1,5 +1,6 @@
-from django.test import TestCase, Client, override_settings
+from django.test import Client, TestCase, override_settings
 from django.urls import reverse
+
 from contacts.models import WorkSchedule
 
 

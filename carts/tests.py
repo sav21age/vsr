@@ -7,7 +7,7 @@ from django.urls import reverse
 from carts.models import Cart, CartItem
 from carts.views import get_ip
 from conifers.models import ConiferProductPrice
-from viride.tests import AnonymUserTestCase, AuthUserTestCase
+from common.tests import AnonymUserTestCase, AuthUserTestCase
 
 APP = 'carts'
 

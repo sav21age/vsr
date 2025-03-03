@@ -1,8 +1,6 @@
-from django.forms import NumberInput, TextInput, Textarea
-from django.db import models
 from codemirror import CodeMirrorTextarea
-# from easy_thumbnails.fields import ThumbnailerImageField
-# from images.widgets import ImageAdminWidget
+from django.db import models
+from django.forms import NumberInput, Textarea, TextInput
 
 
 textarea_widget = Textarea(attrs={'rows': 3, 'style': 'width: 70%; font-size: 115%;'})

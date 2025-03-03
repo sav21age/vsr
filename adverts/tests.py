@@ -1,6 +1,7 @@
-from django.test import TestCase, Client
-from django.urls import reverse
 from django.http import SimpleCookie
+from django.test import Client, TestCase
+from django.urls import reverse
+
 from adverts.models import Advert
 
 

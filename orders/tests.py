@@ -1,26 +1,28 @@
 from unittest.mock import patch
-from django.urls import reverse
+
+from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 # from django.contrib.sessions.middleware import SessionMiddleware
-from django.test import TestCase, Client, override_settings
+from django.test import Client, TestCase, override_settings
+from django.urls import reverse
 from django_recaptcha.client import RecaptchaResponse
+
 from carts.models import Cart, CartItem
+from common.tests import AnonymUserTestCase, AuthUserTestCase
 from conifers.models import ConiferProduct, ConiferProductPrice
-from orders.forms import CreateOrderAuthUserForm
 from orders.models import AcceptingOrders
 from orders.views import CreateOrderAnonymUserView, CreateOrderAuthUserView
-from viride.tests import AnonymUserTestCase, AuthUserTestCase
-from django.contrib.auth.models import User
 
 
 APP = 'orders'
+
 
 fixtures = [
     'fixtures/plants.json',
     'fixtures/conifers.json',
     'fixtures/contenttypes.json',
     'fixtures/auth.json',
-    'fixtures/orders.json', 
+    'fixtures/orders.json',
 ]
 
 
@@ -114,7 +116,7 @@ class CreateOrderAuthUserFormPreFilledTest(InitialCreateOrderAuthUser):
 
         request = self.factory.post(
             reverse(f"{APP}:create"), data=form_data)
-        
+
         user = User.objects.get(pk=self.request.user.pk)
 
         user.first_name = 'Денис'
@@ -170,7 +172,7 @@ class CreateOrderAuthUserCloseUntilAprilTest(AuthUserTestCase):
         self.assertEqual(response.status_code, 404)
 
 
-#--
+# --
 
 
 class InitialCreateOrderAnonymUser(AnonymUserTestCase):
@@ -333,7 +335,7 @@ class CreateOrderAnonymUserCloseUntilAprilTest(AnonymUserTestCase):
         self.assertEqual(response.status_code, 404)
 
 
-#--
+# --
 
 
 class AcceptingOrdersTest(TestCase):
