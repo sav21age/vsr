@@ -1,11 +1,13 @@
 import json
-# from django.test import TestCase, Client, RequestFactory
-from django.urls import reverse
+
 from django.contrib.contenttypes.models import ContentType
+from django.test import RequestFactory, TestCase
+from django.urls import reverse
+
 from carts.models import Cart, CartItem
+from carts.views import get_ip
 from conifers.models import ConiferProductPrice
 from viride.tests import AnonymUserTestCase, AuthUserTestCase
-
 
 APP = 'carts'
 
@@ -16,6 +18,31 @@ fixtures = [
     'fixtures/auth.json',
     'fixtures/carts.json', 
 ]
+
+
+class GetIpTestCase(TestCase):
+
+    def setUp(self):
+        self.factory = RequestFactory()
+
+    def test_get_ip(self):
+        """
+        Test the get Client IP fuction with a request.
+        """
+
+        request = self.factory.get(reverse(f"{APP}:index"))
+        ip = get_ip(request)
+        self.assertEqual(ip, '127.0.0.1')
+        
+        request = self.factory.get(
+            reverse(f"{APP}:index"),
+            HTTP_X_FORWARDED_FOR='203.0.113.195,2001:db8:85a3:8d3:1319:8a2e:370:7348,198.51.100.178'
+        )
+        ip = get_ip(request)
+        self.assertEqual(ip, '203.0.113.195')
+
+#--
+
 
 class CartAuthUserTestCase(AuthUserTestCase):
     fixtures = fixtures
@@ -86,11 +113,10 @@ class CartAnonymUserTest(AnonymUserTestCase):
 
         self.cart_item = CartItem.objects.get(cart=self.cart)
 
+# --
 
-#--
 
-
-class IndexCartTestMixin(object):
+class IndexCartTestMixin():
     def test_show_cart_ok(self):
         """ Test show cart """
 
@@ -330,7 +356,7 @@ class AddCartAnonymUserTest(AddCartTestMixin, AnonymUserTestCase):
     #     self.assertEqual(response.status_code, 200)
 
 
-class UpdateCartTestMixin(object):
+class UpdateCartTestMixin():
     def test_get_request_fail(self):
         """ Test get request fail """
 
@@ -355,7 +381,7 @@ class UpdateCartTestMixin(object):
             reverse(f"{APP}:update"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 200)
         res = json.loads(response.content.decode('utf-8'))
-        self.assertEqual(res['cart']['total_quantity'], 2)
+        self.assertEqual(res['cart']['total_quantity'], 3)
 
     def test_update_remove_item(self):
         """  """
@@ -397,6 +423,19 @@ class UpdateCartTestMixin(object):
             reverse(f"{APP}:update"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 404)
 
+    def test_cart_item_does_not_exists(self):
+        json_data = {
+            'ci_id': self.cart_item.id,
+            'value': '+',
+        }
+
+        # Cart.objects.filter(user=self.request.user).delete()
+        CartItem.objects.filter(cart=self.cart).delete()
+
+        response = self.client.post(
+            reverse(f"{APP}:update"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 200)
+
     def test_cart_delete_500(self):
         json_data = {
             'ci_id': self.cart_item.id,
@@ -425,6 +464,10 @@ class UpdateCartAuthUserTest(UpdateCartTestMixin, AuthUserTestCase):
             },
         )
 
+        session = self.client.session
+        session['cart_id'] = self.cart.id
+        session.save()
+
         self.obj = ConiferProductPrice.objects.first()
         ct = ContentType.objects.get_for_model(self.obj)
 
@@ -433,15 +476,22 @@ class UpdateCartAuthUserTest(UpdateCartTestMixin, AuthUserTestCase):
             'ct_id': ct.id,
         }
 
-        session = self.client.session
-        session['cart_id'] = self.cart.id
-        session.save()
-
         response = self.client.post(
             reverse(f"{APP}:add"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content.decode('utf-8'),
                          '{"cart": {"total_quantity": 1}}')
+
+        json_data = {
+            'id': self.obj.id,
+            'ct_id': ct.id,
+        }
+
+        response = self.client.post(
+            reverse(f"{APP}:add"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content.decode('utf-8'),
+                         '{"cart": {"total_quantity": 2}}')
 
         self.cart_item = CartItem.objects.get(cart=self.cart)
 
@@ -463,14 +513,15 @@ class UpdateCartAnonymUserTest(UpdateCartTestMixin, AnonymUserTestCase):
         self.obj = ConiferProductPrice.objects.first()
         ct = ContentType.objects.get_for_model(self.obj)
 
-        json_data = {
-            'id': self.obj.id,
-            'ct_id': ct.id,
-        }
 
         session = self.client.session
         session['cart_id'] = self.cart.id
         session.save()
+
+        json_data = {
+            'id': self.obj.id,
+            'ct_id': ct.id,
+        }
 
         response = self.client.post(
             reverse(f"{APP}:add"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
@@ -478,13 +529,24 @@ class UpdateCartAnonymUserTest(UpdateCartTestMixin, AnonymUserTestCase):
         self.assertEqual(response.content.decode('utf-8'),
                          '{"cart": {"total_quantity": 1}}')
 
+        json_data = {
+            'id': self.obj.id,
+            'ct_id': ct.id,
+        }
+
+        response = self.client.post(
+            reverse(f"{APP}:add"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content.decode('utf-8'),
+                         '{"cart": {"total_quantity": 2}}')
+
         self.cart_item = CartItem.objects.get(cart=self.cart)
 
 
 # --
 
 
-class RemoveCartTestMixin(object):
+class RemoveCartTestMixin():
     def test_get_request_fail(self):
         """ Test get request fail """
 
@@ -517,6 +579,18 @@ class RemoveCartTestMixin(object):
         response = self.client.post(
             reverse(f"{APP}:remove"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(response.status_code, 404)
+
+    def test_cart_item_does_not_exists(self):
+        json_data = {
+            'ci_id': self.cart_item.id,
+        }
+
+        # Cart.objects.filter(user=self.request.user).delete()
+        CartItem.objects.filter(cart=self.cart).delete()
+
+        response = self.client.post(
+            reverse(f"{APP}:remove"), json_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 200)
 
     def test_cart_delete_500(self):
         json_data = {
@@ -599,3 +673,4 @@ class RemoveCartAnonymUserTest(RemoveCartTestMixin, AnonymUserTestCase):
                          '{"cart": {"total_quantity": 1}}')
 
         self.cart_item = CartItem.objects.get(cart=self.cart)
+

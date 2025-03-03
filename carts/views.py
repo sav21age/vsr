@@ -2,7 +2,6 @@ import json
 from django.contrib.contenttypes.models import ContentType
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import render
-from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
@@ -12,7 +11,7 @@ from common.loggers import logger
 
 
 @method_decorator(never_cache, name='dispatch')
-class IndexView(View):
+class CartView(View):
     template_name = 'carts/index.html'
 
     def get(self, request, *args, **kwargs):
@@ -30,20 +29,20 @@ class IndexView(View):
             try:
                 cart = Cart.objects.get(user=request.user)
                 request.session['cart_id'] = cart.id
-            except:
+            except Cart.DoesNotExist:
                 if cart_id:
                     try:
                         cart = Cart.objects.get(id=cart_id)
                         cart.user = request.user
                         cart.save()
-                    except:
-                        pass
+                    except Cart.DoesNotExist as e:
+                        logger.error(e)
         else:
             if cart_id:
                 try:
                     cart = Cart.objects.get(id=cart_id)
-                except:
-                    pass
+                except Cart.DoesNotExist as e:
+                    logger.error(e)
 
         if cart:
             cart_items = CartItem.objects.filter(cart=cart) \
@@ -62,7 +61,7 @@ class IndexView(View):
 def get_ip(request):
     x_forwarded_for = request.META.get("HTTP_X_FORWARDED_FOR")
     if x_forwarded_for:
-        ip = x_forwarded_for.split(",")[0]
+        ip = x_forwarded_for.split(',')[0]
     else:
         ip = request.META.get("REMOTE_ADDR")
     return f"{ip}"
@@ -99,8 +98,8 @@ def cart_add(request):
                 user=request.user,
                 defaults=defaults,
             )
-        except:
-            pass
+        except Exception as e:
+            logger.error(e)
 
     else:
         if not request.session.session_key:
@@ -114,8 +113,8 @@ def cart_add(request):
                     id=cart_id,
                     defaults=defaults,
                 )
-            except:
-                pass
+            except Exception as e:
+                logger.error(e)
 
         else:
             cart = Cart(**defaults)
@@ -128,7 +127,7 @@ def cart_add(request):
             cart=cart, content_type=content_type, object_id=object_id,)
         cart_item.quantity += 1
         cart_item.save()
-    except ObjectDoesNotExist:
+    except CartItem.DoesNotExist:
         CartItem.objects.create(
             cart=cart, content_type=content_type, object_id=object_id, )
 
@@ -177,11 +176,9 @@ def cart_update(request):
                 cart_item.quantity -= 1
     
         cart_item.save()
-   
-    except:
-        pass
+    except CartItem.DoesNotExist as e:
+        logger.info(e)
     
-
     cart_items = CartItem.objects.filter(cart=cart) \
         .prefetch_related('content_object')
 
@@ -223,15 +220,15 @@ def cart_remove(request):
             cart = Cart.objects.get(user=request.user)
         else:
             cart = Cart.objects.get(id=cart_id)
-    except Exception as e:
+    except Cart.DoesNotExist as e:
         logger.error(e)
         return HttpResponse(status=500)
     
     try:
         cart_item = CartItem.objects.get(cart=cart, id=cart_item_id)
         cart_item.delete()
-    except:
-        pass
+    except CartItem.DoesNotExist as e:
+        logger.info(e)
 
     cart_items = CartItem.objects.filter(cart=cart)
 
