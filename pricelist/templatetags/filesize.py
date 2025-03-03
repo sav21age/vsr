@@ -17,13 +17,10 @@ def get_filesize(num):
     if num < 0:
         return '0 Б'
 
-    try:
-        for value in lst:
-            if num < 1024.0:
-                if value in lst[:2]:
-                    return f"{num:.0f} {value}"
-                return f"{num:.1f} {value}"
+    for value in lst:
+        if num < 1024.0:
+            if value in lst[:2]:
+                return f"{num:.0f} {value}"
+            return f"{num:.1f} {value}"
 
-            num /= 1024.0
-    except:
-        return '0 Б'
+        num /= 1024.0
